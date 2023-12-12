@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_routes.dart';
@@ -6,9 +7,8 @@ import 'package:window_manager/window_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Must add this line.
-  await windowManager.ensureInitialized();
 
+  await windowManager.ensureInitialized();
   WindowOptions windowOptions = const WindowOptions(
     minimumSize: Size(1280, 768),
     center: true,
@@ -21,6 +21,7 @@ void main() async {
     await windowManager.setResizable(false);
   });
 
+  GoogleFonts.config.allowRuntimeFetching = false;
   runApp(const ProviderScope(child: MyApp()));
 }
 

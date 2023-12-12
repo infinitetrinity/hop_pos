@@ -353,7 +353,7 @@ packages:
     source: hosted
     version: "2.3.1"
   hooks_riverpod:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: hooks_riverpod
       sha256: c12a456e03ef9be65b0be66963596650ad7a3220e96c7e7b0a048562ea32d6ae
