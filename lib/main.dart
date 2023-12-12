@@ -2,8 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_routes.dart';
+import 'package:window_manager/window_manager.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Must add this line.
+  await windowManager.ensureInitialized();
+
+  WindowOptions windowOptions = const WindowOptions(
+    minimumSize: Size(1280, 768),
+    center: true,
+  );
+  windowManager.waitUntilReadyToShow(windowOptions, () async {
+    await windowManager.setTitle('HOP POS');
+    await windowManager.show();
+    await windowManager.focus();
+    await windowManager.maximize();
+    await windowManager.setResizable(false);
+  });
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
