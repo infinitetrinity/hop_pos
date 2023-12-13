@@ -42,6 +42,8 @@ class ApiService {
     try {
       await _checkInternetConnection();
 
+      print(request.getPath());
+
       final Response response = await Dio()
           .get(
             request.getPath(),
@@ -84,7 +86,7 @@ class ApiService {
     } catch (e) {
       ApiExceptions.handle(e);
 
-      if (e is ApiValidationError) {
+      if (e is ApiValidationError || e is ApiInvalidResponseError) {
         rethrow;
       }
     }

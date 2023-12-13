@@ -3,6 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
+import 'package:hop_pos/src/common/models/validation_errors.dart';
+import 'package:hop_pos/src/common/widgets/error_text.dart';
 import 'package:hop_pos/src/common/widgets/form_button.dart';
 import 'package:hop_pos/src/common/widgets/form_text_field.dart';
 import 'package:hop_pos/src/login/controllers/login_controller.dart';
@@ -16,12 +18,16 @@ class LoginForm extends HookConsumerWidget {
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final isSubmitting = useState(false);
     final form = useState(const LoginRequest());
+    final errors = useState<ValidationErrors?>(null);
 
     void onSubmit() async {
+      errors.value = null;
       isSubmitting.value = true;
 
       if (formKey.currentState!.validate()) {
-        await ref.read(loginControllerProvider.notifier).login(form.value);
+        errors.value =
+            await ref.read(loginControllerProvider.notifier).login(form.value);
+        formKey.currentState!.validate();
       }
 
       isSubmitting.value = false;
@@ -47,6 +53,7 @@ class LoginForm extends HookConsumerWidget {
                 style: AppStyles.body,
               ),
               const SizedBox(height: 25),
+              ErrorText(errors.value?.getError('general')),
               Form(
                 key: formKey,
                 child: Column(
@@ -54,23 +61,35 @@ class LoginForm extends HookConsumerWidget {
                     FormTextField(
                       isRequired: true,
                       placeholder: 'License Key',
-                      validator: (value) =>
-                          form.value.validateField('License Key', value),
+                      validator: (value) => errors.value != null
+                          ? errors.value!.getError('license_key')
+                          : form.value.validateField('License Key', value),
+                      onChanged: (value) {
+                        form.value = form.value.copyWith(licenseKey: value);
+                      },
                     ),
                     const SizedBox(height: 10),
                     FormTextField(
                       isRequired: true,
                       placeholder: 'Username',
-                      validator: (value) =>
-                          form.value.validateField('Username', value),
+                      validator: (value) => errors.value != null
+                          ? errors.value!.getError('username')
+                          : form.value.validateField('Username', value),
+                      onChanged: (value) {
+                        form.value = form.value.copyWith(username: value);
+                      },
                     ),
                     const SizedBox(height: 10),
                     FormTextField(
                       isRequired: true,
                       isPassword: true,
                       placeholder: 'Password',
-                      validator: (value) =>
-                          form.value.validateField('Password', value),
+                      validator: (value) => errors.value != null
+                          ? errors.value!.getError('password')
+                          : form.value.validateField('Password', value),
+                      onChanged: (value) {
+                        form.value = form.value.copyWith(password: value);
+                      },
                     ),
                     const SizedBox(height: 20),
                     FormButton(

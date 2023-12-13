@@ -1,4 +1,7 @@
+import 'package:hop_pos/app/app_exceptions.dart';
 import 'package:hop_pos/src/common/models/api_request.dart';
+import 'package:hop_pos/src/common/models/api_response.dart';
+import 'package:hop_pos/src/common/models/validation_errors.dart';
 import 'package:hop_pos/src/common/services/api_service.dart';
 import 'package:hop_pos/src/login/models/login_request.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -12,8 +15,27 @@ class LoginController extends _$LoginController {
     return;
   }
 
-  Future<void> login(LoginRequest request) async {
+  Future<ValidationErrors?> login(LoginRequest request) async {
     ApiService api = ref.read(apiServiceProvider);
-    await api.get(const ApiRequest(path: '/license-activation'));
+
+    try {
+      ApiResponse? response = await api.post(
+        ApiRequest(
+          path: 'license-activation',
+          data: request.toJson(),
+        ),
+      );
+    } catch (e) {
+      if (e is ApiValidationError) {
+        return e.errors;
+      }
+      if (e is ApiInvalidResponseError) {
+        return ValidationErrors(errors: {
+          'general': [e.message]
+        });
+      }
+    }
+
+    return null;
   }
 }

@@ -7,7 +7,7 @@ class ValidationErrors {
     return errors[field];
   }
 
-  String getError(String field) {
-    return errors[field][0];
+  String? getError(String field) {
+    return errors[field] == null ? null : errors[field][0];
   }
 }

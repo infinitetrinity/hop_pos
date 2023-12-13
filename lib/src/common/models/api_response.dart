@@ -40,8 +40,7 @@ class ApiResponse {
       return;
     }
 
-    throw ApiInvalidResponseError(
-        'Status code: ${response.statusCode} ${body["message"]}');
+    throw ApiInvalidResponseError(body["message"]);
   }
 
   void checkValidationException() {

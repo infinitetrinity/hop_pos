@@ -9,7 +9,7 @@ class LoginRequest with _$LoginRequest {
   const LoginRequest._();
 
   const factory LoginRequest({
-    String? licenseKey,
+    @JsonKey(name: 'license_key') String? licenseKey,
     String? username,
     String? password,
   }) = _LoginRequest;

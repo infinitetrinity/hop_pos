@@ -11,7 +11,7 @@ class ApiRequest {
   final Map<String, dynamic>? data;
 
   String getPath() {
-    return "${kReleaseMode ? prodApiBase : localApiBase}}/$path";
+    return "${kReleaseMode ? prodApiBase : localApiBase}$path";
   }
 
   String toJsonData() {

@@ -20,6 +20,7 @@ LoginRequest _$LoginRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$LoginRequest {
+  @JsonKey(name: 'license_key')
   String? get licenseKey => throw _privateConstructorUsedError;
   String? get username => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
@@ -36,7 +37,10 @@ abstract class $LoginRequestCopyWith<$Res> {
           LoginRequest value, $Res Function(LoginRequest) then) =
       _$LoginRequestCopyWithImpl<$Res, LoginRequest>;
   @useResult
-  $Res call({String? licenseKey, String? username, String? password});
+  $Res call(
+      {@JsonKey(name: 'license_key') String? licenseKey,
+      String? username,
+      String? password});
 }
 
 /// @nodoc
@@ -81,7 +85,10 @@ abstract class _$$LoginRequestImplCopyWith<$Res>
       __$$LoginRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? licenseKey, String? username, String? password});
+  $Res call(
+      {@JsonKey(name: 'license_key') String? licenseKey,
+      String? username,
+      String? password});
 }
 
 /// @nodoc
@@ -119,13 +126,17 @@ class __$$LoginRequestImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$LoginRequestImpl extends _LoginRequest {
-  const _$LoginRequestImpl({this.licenseKey, this.username, this.password})
+  const _$LoginRequestImpl(
+      {@JsonKey(name: 'license_key') this.licenseKey,
+      this.username,
+      this.password})
       : super._();
 
   factory _$LoginRequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$LoginRequestImplFromJson(json);
 
   @override
+  @JsonKey(name: 'license_key')
   final String? licenseKey;
   @override
   final String? username;
@@ -170,7 +181,7 @@ class _$LoginRequestImpl extends _LoginRequest {
 
 abstract class _LoginRequest extends LoginRequest {
   const factory _LoginRequest(
-      {final String? licenseKey,
+      {@JsonKey(name: 'license_key') final String? licenseKey,
       final String? username,
       final String? password}) = _$LoginRequestImpl;
   const _LoginRequest._() : super._();
@@ -179,6 +190,7 @@ abstract class _LoginRequest extends LoginRequest {
       _$LoginRequestImpl.fromJson;
 
   @override
+  @JsonKey(name: 'license_key')
   String? get licenseKey;
   @override
   String? get username;
