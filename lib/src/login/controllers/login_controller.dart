@@ -4,6 +4,7 @@ import 'package:hop_pos/src/common/models/api_response.dart';
 import 'package:hop_pos/src/common/models/validation_errors.dart';
 import 'package:hop_pos/src/common/services/api_service.dart';
 import 'package:hop_pos/src/login/models/login_request.dart';
+import 'package:hop_pos/src/login/state/syncing_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'login_controller.g.dart';
@@ -25,6 +26,8 @@ class LoginController extends _$LoginController {
           data: request.toJson(),
         ),
       );
+
+      ref.read(syncingStateProvider.notifier).set(true);
     } catch (e) {
       if (e is ApiValidationError) {
         return e.errors;
