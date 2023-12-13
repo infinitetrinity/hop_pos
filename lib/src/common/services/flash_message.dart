@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_global.dart';
 import 'package:hop_pos/src/common/widgets/flash_content.dart';
@@ -39,15 +40,21 @@ class FlashMessage {
       dismissible: dismissible!,
     );
 
-    snackbarKey.currentState?.hideCurrentSnackBar();
+    FToast fToast = FToast();
+    fToast.init(navigatorKey.currentContext!);
+    fToast.removeCustomToast();
 
-    snackbarKey.currentState?.showSnackBar(SnackBar(
-      backgroundColor: Colors.transparent,
-      padding: const EdgeInsets.all(0),
-      elevation: 0,
-      behavior: SnackBarBehavior.floating,
-      content: FlashContent(message: flash),
-    ));
+    fToast.showToast(
+      child: FlashContent(message: flash),
+      toastDuration: Duration(seconds: dismissible ? 3 : 15),
+      positionedToastBuilder: (context, child) {
+        return Positioned(
+          top: 20,
+          left: MediaQuery.of(context).size.width * 0.5 - 250,
+          child: child,
+        );
+      },
+    );
   }
 
   Color get bgColor {

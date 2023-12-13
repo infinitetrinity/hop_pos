@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/services/flash_message.dart';
@@ -9,9 +10,13 @@ class FlashContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FToast fToast = FToast();
+    fToast.init(context);
+
     return Stack(
       children: [
         Container(
+          constraints: const BoxConstraints(maxWidth: 600),
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
           decoration: BoxDecoration(
             color: message.bgColor,
@@ -50,7 +55,7 @@ class FlashContent extends StatelessWidget {
           top: 10,
           right: 10,
           child: GestureDetector(
-            onTap: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+            onTap: () => fToast.removeCustomToast(),
             child: const Icon(
               Icons.close,
               color: AppColors.white,

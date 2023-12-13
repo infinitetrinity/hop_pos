@@ -33,6 +33,17 @@ class MyApp extends ConsumerWidget {
     final goRouter = ref.watch(goRouterProvider);
 
     return MaterialApp.router(
+      builder: (context, child) {
+        return Overlay(
+          initialEntries: [
+            if (child != null) ...[
+              OverlayEntry(
+                builder: (context) => child,
+              ),
+            ],
+          ],
+        );
+      },
       title: 'HOP POS',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.brand700),
