@@ -15,17 +15,17 @@ class AppColors {
   static const gray900 = Color(0xFF0F172A);
   static const gray950 = Color(0xFF020617);
 
-  static const brand50 = Color(0xFFeff6ff);
-  static const brand100 = Color(0xFFdbeafe);
-  static const brand200 = Color(0xFFbfdbfe);
-  static const brand300 = Color(0xFF93c5fd);
-  static const brand400 = Color(0xFF60a5fa);
-  static const brand500 = Color(0xFF3b82f6);
-  static const brand600 = Color(0xFF2563eb);
-  static const brand700 = Color(0xFF1d4ed8);
-  static const brand800 = Color(0xFF1e40af);
-  static const brand900 = Color(0xFF1e3a8a);
-  static const brand950 = Color(0xFF172554);
+  static const brand50 = Color(0xFFebffff);
+  static const brand100 = Color(0xFFcdfcff);
+  static const brand200 = Color(0xFFa1f6ff);
+  static const brand300 = Color(0xFF60edff);
+  static const brand400 = Color(0xFF18daf8);
+  static const brand500 = Color(0xFF00bdde);
+  static const brand600 = Color(0xFF00a0c6);
+  static const brand700 = Color(0xFF087796);
+  static const brand800 = Color(0xFF10607a);
+  static const brand900 = Color(0xFF125067);
+  static const brand950 = Color(0xFF053447);
 
   static const green50 = Color(0xFFF0FDF4);
   static const green100 = Color(0xFFDCFCE7);

@@ -10,11 +10,10 @@ void main() async {
 
   await windowManager.ensureInitialized();
   WindowOptions windowOptions = const WindowOptions(
-    minimumSize: Size(1280, 768),
+    minimumSize: Size(1280, 1024),
     center: true,
   );
   windowManager.waitUntilReadyToShow(windowOptions, () async {
-    await windowManager.setTitle('HOP POS');
     await windowManager.show();
     await windowManager.focus();
     await windowManager.maximize();
