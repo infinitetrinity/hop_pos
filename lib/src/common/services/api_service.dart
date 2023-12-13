@@ -39,9 +39,9 @@ class ApiService {
   }
 
   Future<ApiResponse?> get(ApiRequest request) async {
-    await _checkInternetConnection();
-
     try {
+      await _checkInternetConnection();
+
       final Response response = await Dio()
           .get(
             request.getPath(),
@@ -64,9 +64,9 @@ class ApiService {
   }
 
   Future<ApiResponse?> post(ApiRequest request) async {
-    await _checkInternetConnection();
-
     try {
+      await _checkInternetConnection();
+
       Response response = await Dio()
           .post(
             request.getPath(),

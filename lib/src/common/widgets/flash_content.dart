@@ -37,10 +37,7 @@ class FlashContent extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       message.message!,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall!
-                          .copyWith(color: AppColors.white),
+                      style: AppStyles.body.copyWith(color: AppColors.white),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
