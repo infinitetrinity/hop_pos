@@ -15,3 +15,9 @@ extension WindowManagerExtension on WindowManager {
     await setTitle("$title | Health Outreach POS V$version");
   }
 }
+
+extension NullableStringValidation on String? {
+  bool get isNullOrEmpty {
+    return this == null || this!.trim().isEmpty;
+  }
+}

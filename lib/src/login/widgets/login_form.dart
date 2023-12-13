@@ -4,6 +4,7 @@ import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/widgets/form_button.dart';
 import 'package:hop_pos/src/common/widgets/form_text_field.dart';
+import 'package:hop_pos/src/login/models/login_request.dart';
 
 class LoginForm extends HookWidget {
   const LoginForm({super.key});
@@ -12,6 +13,7 @@ class LoginForm extends HookWidget {
   Widget build(BuildContext context) {
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final isSubmitting = useState(false);
+    final form = useState(const LoginRequest());
 
     void handleSubmit() {
       isSubmitting.value = true;
@@ -47,20 +49,26 @@ class LoginForm extends HookWidget {
                 key: formKey,
                 child: Column(
                   children: [
-                    const FormTextField(
+                    FormTextField(
                       isRequired: true,
                       placeholder: 'License Key',
+                      validator: (value) =>
+                          form.value.validateField('License Key', value),
                     ),
                     const SizedBox(height: 10),
-                    const FormTextField(
+                    FormTextField(
                       isRequired: true,
                       placeholder: 'Username',
+                      validator: (value) =>
+                          form.value.validateField('Username', value),
                     ),
                     const SizedBox(height: 10),
-                    const FormTextField(
+                    FormTextField(
                       isRequired: true,
                       isPassword: true,
                       placeholder: 'Password',
+                      validator: (value) =>
+                          form.value.validateField('Password', value),
                     ),
                     const SizedBox(height: 20),
                     FormButton(
@@ -70,7 +78,7 @@ class LoginForm extends HookWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
