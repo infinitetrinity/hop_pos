@@ -15,7 +15,7 @@ class LoginForm extends HookWidget {
     final isSubmitting = useState(false);
     final form = useState(const LoginRequest());
 
-    void handleSubmit() {
+    void onSubmit() {
       isSubmitting.value = true;
 
       if (formKey.currentState!.validate()) {
@@ -74,7 +74,7 @@ class LoginForm extends HookWidget {
                     FormButton(
                       maxWidth: null,
                       isSubmitting: isSubmitting.value,
-                      onSubmit: handleSubmit,
+                      onSubmit: onSubmit,
                     ),
                   ],
                 ),
