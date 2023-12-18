@@ -27,7 +27,7 @@ class LoginForm extends HookConsumerWidget {
       if (formKey.currentState!.validate()) {
         errors.value =
             await ref.read(loginControllerProvider.notifier).login(form.value);
-        formKey.currentState!.validate();
+        formKey.currentState?.validate();
       }
 
       isSubmitting.value = false;
@@ -61,6 +61,7 @@ class LoginForm extends HookConsumerWidget {
                     FormTextField(
                       isRequired: true,
                       placeholder: 'License Key',
+                      value: 'DYLNBRY9NP2VQRUMK8KF8X0DHMFJHSQO',
                       validator: (value) => errors.value != null
                           ? errors.value!.getError('license_key')
                           : form.value.validateField('License Key', value),
@@ -72,6 +73,7 @@ class LoginForm extends HookConsumerWidget {
                     FormTextField(
                       isRequired: true,
                       placeholder: 'Username',
+                      value: 'support',
                       validator: (value) => errors.value != null
                           ? errors.value!.getError('username')
                           : form.value.validateField('Username', value),
@@ -84,6 +86,7 @@ class LoginForm extends HookConsumerWidget {
                       isRequired: true,
                       isPassword: true,
                       placeholder: 'Password',
+                      value: 'Support@ITC789123',
                       validator: (value) => errors.value != null
                           ? errors.value!.getError('password')
                           : form.value.validateField('Password', value),
