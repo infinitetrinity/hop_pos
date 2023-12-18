@@ -250,7 +250,7 @@ packages:
     source: hosted
     version: "2.14.0"
   drift_db_viewer:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: drift_db_viewer
       sha256: d8728086823ae987c7a003cba477bc442b8ee85672ae84217171b280d9f6efd2
