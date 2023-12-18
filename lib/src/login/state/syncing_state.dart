@@ -9,7 +9,7 @@ class SyncingState extends _$SyncingState {
     return false;
   }
 
-  void set(bool syncing) {
-    state = syncing;
+  void sync() {
+    state = true;
   }
 }
