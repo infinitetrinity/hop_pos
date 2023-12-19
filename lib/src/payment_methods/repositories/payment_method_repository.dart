@@ -31,7 +31,7 @@ class PaymentMethodRepository {
   }
 
   Future<bool> update(
-      PaymentMethodsTableCompanion extra, Expression<bool> where) async {
-    return await paymentMethodDao.updateMethod(extra, where);
+      PaymentMethodsTableCompanion method, Expression<bool> where) async {
+    return await paymentMethodDao.updateMethod(method, where);
   }
 }

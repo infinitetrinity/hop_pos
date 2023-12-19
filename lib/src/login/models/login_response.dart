@@ -5,6 +5,7 @@ import 'package:hop_pos/src/company/models/company.dart';
 import 'package:hop_pos/src/payment_methods/models/payment_method.dart';
 import 'package:hop_pos/src/pos_extras/models/pos_extra.dart';
 import 'package:hop_pos/src/pos_licenses/models/pos_license.dart';
+import 'package:hop_pos/src/product_categories/models/product_category.dart';
 import 'package:hop_pos/src/receipt_settings/models/receipt_setting.dart';
 import 'package:hop_pos/src/users/models/user.dart';
 
@@ -21,6 +22,7 @@ class LoginResponse with _$LoginResponse {
     required ReceiptSetting receiptSetting,
     required List<PosExtra> posExtras,
     required List<PaymentMethod> paymentMethods,
+    required List<ProductCategory> productCategories,
   }) = _LoginResponse;
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
@@ -35,6 +37,9 @@ class LoginResponse with _$LoginResponse {
       ),
       paymentMethods: List<PaymentMethod>.from(
         json['payment_methods'].map((el) => PaymentMethod.fromJson(el)),
+      ),
+      productCategories: List<ProductCategory>.from(
+        json['product_categories'].map((el) => ProductCategory.fromJson(el)),
       ),
     );
   }
@@ -108,10 +113,23 @@ class LoginResponse with _$LoginResponse {
   List<PaymentMethodsTableCompanion> getPaymentMethodsData() {
     return paymentMethods
         .map(
-          (extra) => PaymentMethodsTableCompanion(
-            id: drift.Value(extra.id),
-            name: drift.Value(extra.name),
-            description: drift.Value(extra.description),
+          (method) => PaymentMethodsTableCompanion(
+            id: drift.Value(method.id),
+            name: drift.Value(method.name),
+            description: drift.Value(method.description),
+          ),
+        )
+        .toList();
+  }
+
+  List<ProductCategoriesTableCompanion> getProductCategoriesData() {
+    return productCategories
+        .map(
+          (category) => ProductCategoriesTableCompanion(
+            id: drift.Value(category.id),
+            name: drift.Value(category.name),
+            description: drift.Value(category.description),
+            colorCode: drift.Value(category.colorCode),
           ),
         )
         .toList();

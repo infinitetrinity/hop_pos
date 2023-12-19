@@ -1471,6 +1471,175 @@ class PaymentMethodsTableCompanion extends UpdateCompanion<PaymentMethod> {
   }
 }
 
+class $ProductCategoriesTableTable extends ProductCategoriesTable
+    with TableInfo<$ProductCategoriesTableTable, ProductCategory> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ProductCategoriesTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _colorCodeMeta =
+      const VerificationMeta('colorCode');
+  @override
+  late final GeneratedColumn<String> colorCode = GeneratedColumn<String>(
+      'color_code', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [id, name, description, colorCode];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'product_categories';
+  @override
+  VerificationContext validateIntegrity(Insertable<ProductCategory> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    }
+    if (data.containsKey('color_code')) {
+      context.handle(_colorCodeMeta,
+          colorCode.isAcceptableOrUnknown(data['color_code']!, _colorCodeMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ProductCategory map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ProductCategory(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description']),
+      colorCode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}color_code']),
+    );
+  }
+
+  @override
+  $ProductCategoriesTableTable createAlias(String alias) {
+    return $ProductCategoriesTableTable(attachedDatabase, alias);
+  }
+}
+
+class ProductCategoriesTableCompanion extends UpdateCompanion<ProductCategory> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String?> description;
+  final Value<String?> colorCode;
+  const ProductCategoriesTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.description = const Value.absent(),
+    this.colorCode = const Value.absent(),
+  });
+  ProductCategoriesTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    this.description = const Value.absent(),
+    this.colorCode = const Value.absent(),
+  }) : name = Value(name);
+  static Insertable<ProductCategory> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? description,
+    Expression<String>? colorCode,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+      if (colorCode != null) 'color_code': colorCode,
+    });
+  }
+
+  ProductCategoriesTableCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? name,
+      Value<String?>? description,
+      Value<String?>? colorCode}) {
+    return ProductCategoriesTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      colorCode: colorCode ?? this.colorCode,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (colorCode.present) {
+      map['color_code'] = Variable<String>(colorCode.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProductCategoriesTableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('colorCode: $colorCode')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   late final $UsersTableTable usersTable = $UsersTableTable(this);
@@ -1482,6 +1651,8 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final $PosExtrasTableTable posExtrasTable = $PosExtrasTableTable(this);
   late final $PaymentMethodsTableTable paymentMethodsTable =
       $PaymentMethodsTableTable(this);
+  late final $ProductCategoriesTableTable productCategoriesTable =
+      $ProductCategoriesTableTable(this);
   late final UserDao userDao = UserDao(this as AppDb);
   late final PosLicenseDao posLicenseDao = PosLicenseDao(this as AppDb);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
@@ -1490,6 +1661,8 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final PosExtraDao posExtraDao = PosExtraDao(this as AppDb);
   late final PaymentMethodDao paymentMethodDao =
       PaymentMethodDao(this as AppDb);
+  late final ProductCategoryDao productCategoryDao =
+      ProductCategoryDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1500,7 +1673,8 @@ abstract class _$AppDb extends GeneratedDatabase {
         companyTable,
         receiptSettingsTable,
         posExtrasTable,
-        paymentMethodsTable
+        paymentMethodsTable,
+        productCategoriesTable
       ];
 }
 

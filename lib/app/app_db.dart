@@ -14,6 +14,9 @@ import 'package:hop_pos/src/pos_extras/models/pos_extras_table.dart';
 import 'package:hop_pos/src/pos_licenses/daos/pos_license_dao.dart';
 import 'package:hop_pos/src/pos_licenses/models/pos_license.dart';
 import 'package:hop_pos/src/pos_licenses/models/pos_licenses_table.dart';
+import 'package:hop_pos/src/product_categories/daos/product_category_dao.dart';
+import 'package:hop_pos/src/product_categories/models/product_categories_table.dart';
+import 'package:hop_pos/src/product_categories/models/product_category.dart';
 import 'package:hop_pos/src/receipt_settings/daos/receipt_setting_dao.dart';
 import 'package:hop_pos/src/receipt_settings/models/receipt_setting.dart';
 import 'package:hop_pos/src/receipt_settings/models/receipt_settings_table.dart';
@@ -40,6 +43,7 @@ AppDb appDb(AppDbRef ref) {
   ReceiptSettingsTable,
   PosExtrasTable,
   PaymentMethodsTable,
+  ProductCategoriesTable,
 ], daos: [
   UserDao,
   PosLicenseDao,
@@ -47,6 +51,7 @@ AppDb appDb(AppDbRef ref) {
   ReceiptSettingDao,
   PosExtraDao,
   PaymentMethodDao,
+  ProductCategoryDao,
 ])
 class AppDb extends _$AppDb {
   AppDb._init() : super(initDb());

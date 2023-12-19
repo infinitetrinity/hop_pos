@@ -22,6 +22,8 @@ mixin _$LoginResponse {
   ReceiptSetting get receiptSetting => throw _privateConstructorUsedError;
   List<PosExtra> get posExtras => throw _privateConstructorUsedError;
   List<PaymentMethod> get paymentMethods => throw _privateConstructorUsedError;
+  List<ProductCategory> get productCategories =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LoginResponseCopyWith<LoginResponse> get copyWith =>
@@ -40,7 +42,8 @@ abstract class $LoginResponseCopyWith<$Res> {
       Company company,
       ReceiptSetting receiptSetting,
       List<PosExtra> posExtras,
-      List<PaymentMethod> paymentMethods});
+      List<PaymentMethod> paymentMethods,
+      List<ProductCategory> productCategories});
 
   $UserCopyWith<$Res> get user;
   $PosLicenseCopyWith<$Res> get posLicense;
@@ -67,6 +70,7 @@ class _$LoginResponseCopyWithImpl<$Res, $Val extends LoginResponse>
     Object? receiptSetting = null,
     Object? posExtras = null,
     Object? paymentMethods = null,
+    Object? productCategories = null,
   }) {
     return _then(_value.copyWith(
       user: null == user
@@ -93,6 +97,10 @@ class _$LoginResponseCopyWithImpl<$Res, $Val extends LoginResponse>
           ? _value.paymentMethods
           : paymentMethods // ignore: cast_nullable_to_non_nullable
               as List<PaymentMethod>,
+      productCategories: null == productCategories
+          ? _value.productCategories
+          : productCategories // ignore: cast_nullable_to_non_nullable
+              as List<ProductCategory>,
     ) as $Val);
   }
 
@@ -143,7 +151,8 @@ abstract class _$$LoginResponseImplCopyWith<$Res>
       Company company,
       ReceiptSetting receiptSetting,
       List<PosExtra> posExtras,
-      List<PaymentMethod> paymentMethods});
+      List<PaymentMethod> paymentMethods,
+      List<ProductCategory> productCategories});
 
   @override
   $UserCopyWith<$Res> get user;
@@ -172,6 +181,7 @@ class __$$LoginResponseImplCopyWithImpl<$Res>
     Object? receiptSetting = null,
     Object? posExtras = null,
     Object? paymentMethods = null,
+    Object? productCategories = null,
   }) {
     return _then(_$LoginResponseImpl(
       user: null == user
@@ -198,6 +208,10 @@ class __$$LoginResponseImplCopyWithImpl<$Res>
           ? _value._paymentMethods
           : paymentMethods // ignore: cast_nullable_to_non_nullable
               as List<PaymentMethod>,
+      productCategories: null == productCategories
+          ? _value._productCategories
+          : productCategories // ignore: cast_nullable_to_non_nullable
+              as List<ProductCategory>,
     ));
   }
 }
@@ -211,9 +225,11 @@ class _$LoginResponseImpl extends _LoginResponse {
       required this.company,
       required this.receiptSetting,
       required final List<PosExtra> posExtras,
-      required final List<PaymentMethod> paymentMethods})
+      required final List<PaymentMethod> paymentMethods,
+      required final List<ProductCategory> productCategories})
       : _posExtras = posExtras,
         _paymentMethods = paymentMethods,
+        _productCategories = productCategories,
         super._();
 
   @override
@@ -240,9 +256,18 @@ class _$LoginResponseImpl extends _LoginResponse {
     return EqualUnmodifiableListView(_paymentMethods);
   }
 
+  final List<ProductCategory> _productCategories;
+  @override
+  List<ProductCategory> get productCategories {
+    if (_productCategories is EqualUnmodifiableListView)
+      return _productCategories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_productCategories);
+  }
+
   @override
   String toString() {
-    return 'LoginResponse(user: $user, posLicense: $posLicense, company: $company, receiptSetting: $receiptSetting, posExtras: $posExtras, paymentMethods: $paymentMethods)';
+    return 'LoginResponse(user: $user, posLicense: $posLicense, company: $company, receiptSetting: $receiptSetting, posExtras: $posExtras, paymentMethods: $paymentMethods, productCategories: $productCategories)';
   }
 
   @override
@@ -259,7 +284,9 @@ class _$LoginResponseImpl extends _LoginResponse {
             const DeepCollectionEquality()
                 .equals(other._posExtras, _posExtras) &&
             const DeepCollectionEquality()
-                .equals(other._paymentMethods, _paymentMethods));
+                .equals(other._paymentMethods, _paymentMethods) &&
+            const DeepCollectionEquality()
+                .equals(other._productCategories, _productCategories));
   }
 
   @override
@@ -270,7 +297,8 @@ class _$LoginResponseImpl extends _LoginResponse {
       company,
       receiptSetting,
       const DeepCollectionEquality().hash(_posExtras),
-      const DeepCollectionEquality().hash(_paymentMethods));
+      const DeepCollectionEquality().hash(_paymentMethods),
+      const DeepCollectionEquality().hash(_productCategories));
 
   @JsonKey(ignore: true)
   @override
@@ -281,12 +309,14 @@ class _$LoginResponseImpl extends _LoginResponse {
 
 abstract class _LoginResponse extends LoginResponse {
   const factory _LoginResponse(
-      {required final User user,
-      required final PosLicense posLicense,
-      required final Company company,
-      required final ReceiptSetting receiptSetting,
-      required final List<PosExtra> posExtras,
-      required final List<PaymentMethod> paymentMethods}) = _$LoginResponseImpl;
+          {required final User user,
+          required final PosLicense posLicense,
+          required final Company company,
+          required final ReceiptSetting receiptSetting,
+          required final List<PosExtra> posExtras,
+          required final List<PaymentMethod> paymentMethods,
+          required final List<ProductCategory> productCategories}) =
+      _$LoginResponseImpl;
   const _LoginResponse._() : super._();
 
   @override
@@ -301,6 +331,8 @@ abstract class _LoginResponse extends LoginResponse {
   List<PosExtra> get posExtras;
   @override
   List<PaymentMethod> get paymentMethods;
+  @override
+  List<ProductCategory> get productCategories;
   @override
   @JsonKey(ignore: true)
   _$$LoginResponseImplCopyWith<_$LoginResponseImpl> get copyWith =>
