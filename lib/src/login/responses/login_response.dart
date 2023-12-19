@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/common/models/api_response.dart';
 import 'package:hop_pos/src/company/models/company.dart';
+import 'package:hop_pos/src/pos_extras/models/pos_extra.dart';
 import 'package:hop_pos/src/pos_licenses/models/pos_license.dart';
 import 'package:hop_pos/src/receipt_settings/models/receipt_setting.dart';
 import 'package:hop_pos/src/users/models/user.dart';
@@ -68,16 +69,37 @@ class LoginResponse extends ApiResponse {
   ReceiptSettingsTableCompanion get receiptSettingData {
     return ReceiptSettingsTableCompanion(
       id: Value(receiptSetting.id),
-      footerText: Value.ofNullable(receiptSetting.footerText),
-      outstandingSpecimenTitle: Value.ofNullable(receiptSetting.footerText),
+      footerText: Value(receiptSetting.footerText),
+      outstandingSpecimenTitle: Value(receiptSetting.footerText),
       outstandingSpecimenNoticeTitle:
-          Value.ofNullable(receiptSetting.outstandingSpecimenNoticeTitle),
+          Value(receiptSetting.outstandingSpecimenNoticeTitle),
       outstandingSpecimenNotice:
-          Value.ofNullable(receiptSetting.outstandingSpecimenNotice),
-      utfTitle: Value.ofNullable(receiptSetting.utfTitle),
-      utfNotice: Value.ofNullable(receiptSetting.utfNotice),
-      stfTitle: Value.ofNullable(receiptSetting.stfTitle),
-      stfNotice: Value.ofNullable(receiptSetting.stfNotice),
+          Value(receiptSetting.outstandingSpecimenNotice),
+      utfTitle: Value(receiptSetting.utfTitle),
+      utfNotice: Value(receiptSetting.utfNotice),
+      stfTitle: Value(receiptSetting.stfTitle),
+      stfNotice: Value(receiptSetting.stfNotice),
     );
+  }
+
+  List<PosExtra> get posExtras {
+    return List<PosExtra>.from(
+        data['pos_extras'].map((el) => PosExtra.fromJson(el)));
+  }
+
+  List<PosExtrasTableCompanion> get posExtrasData {
+    return posExtras
+        .map(
+          (extra) => PosExtrasTableCompanion(
+            id: Value(extra.id),
+            name: Value(extra.name),
+            description: Value(extra.description),
+            type: Value(extra.type),
+            amount: Value(extra.amount),
+            amountType: Value(extra.amountType),
+            isActive: Value(extra.isActive),
+          ),
+        )
+        .toList();
   }
 }
