@@ -30,7 +30,9 @@ class LoginForm extends HookConsumerWidget {
         formKey.currentState?.validate();
       }
 
-      isSubmitting.value = false;
+      if (context.mounted) {
+        isSubmitting.value = false;
+      }
     }
 
     return Expanded(

@@ -1,26 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'login_controller.dart';
+part of 'pos_license_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loginControllerHash() => r'dce2192f3fec13a9601100b513146a342be16317';
+String _$posLicenseRepoHash() => r'e0821b3408bd0d3f4a97e5001c2ac5d210e841b2';
 
-/// See also [LoginController].
-@ProviderFor(LoginController)
-final loginControllerProvider =
-    AutoDisposeNotifierProvider<LoginController, void>.internal(
-  LoginController.new,
-  name: r'loginControllerProvider',
+/// See also [posLicenseRepo].
+@ProviderFor(posLicenseRepo)
+final posLicenseRepoProvider =
+    AutoDisposeProvider<PosLicenseRepository>.internal(
+  posLicenseRepo,
+  name: r'posLicenseRepoProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$loginControllerHash,
+      : _$posLicenseRepoHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$LoginController = AutoDisposeNotifier<void>;
+typedef PosLicenseRepoRef = AutoDisposeProviderRef<PosLicenseRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

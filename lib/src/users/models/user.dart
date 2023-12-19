@@ -14,7 +14,7 @@ class User with _$User {
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
-  static get table {
+  static String get table {
     return 'users';
   }
 }
