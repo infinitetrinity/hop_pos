@@ -9,6 +9,7 @@ import 'package:hop_pos/src/login/models/login_request.dart';
 import 'package:hop_pos/src/login/responses/login_response.dart';
 import 'package:hop_pos/src/login/state/syncing_state.dart';
 import 'package:hop_pos/src/pos_licenses/repositories/pos_license_repository.dart';
+import 'package:hop_pos/src/receipt_settings/repositories/receipt_setting_repository.dart';
 import 'package:hop_pos/src/users/repositories/user_repository.dart';
 import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -58,10 +59,13 @@ class LoginController extends _$LoginController {
       UserRepository userRepo = ref.read(userRepoProvider);
       PosLicenseRepository licenseRepo = ref.read(posLicenseRepoProvider);
       CompanyRepository companyRepo = ref.read(companyRepoProvider);
+      ReceiptSettingRepository receiptSettingRepo =
+          ref.read(receiptSettingRepoProvider);
 
       await userRepo.insert(response.userData);
       await licenseRepo.insert(response.licenseData);
       await companyRepo.insert(response.companyData);
+      await receiptSettingRepo.insert(response.receiptSettingData);
 
       flashMessage.flash(message: 'Initial sync completed.');
     } catch (e, stackTrace) {

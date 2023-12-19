@@ -3,6 +3,7 @@ import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/common/models/api_response.dart';
 import 'package:hop_pos/src/company/models/company.dart';
 import 'package:hop_pos/src/pos_licenses/models/pos_license.dart';
+import 'package:hop_pos/src/receipt_settings/models/receipt_setting.dart';
 import 'package:hop_pos/src/users/models/user.dart';
 
 class LoginResponse extends ApiResponse {
@@ -57,6 +58,26 @@ class LoginResponse extends ApiResponse {
       fax: Value(company.fax),
       website: Value(company.website),
       coRegistrationNo: Value(company.coRegistrationNo),
+    );
+  }
+
+  ReceiptSetting get receiptSetting {
+    return ReceiptSetting.fromJson(data['receipt_settings']);
+  }
+
+  ReceiptSettingsTableCompanion get receiptSettingData {
+    return ReceiptSettingsTableCompanion(
+      id: Value(receiptSetting.id),
+      footerText: Value.ofNullable(receiptSetting.footerText),
+      outstandingSpecimenTitle: Value.ofNullable(receiptSetting.footerText),
+      outstandingSpecimenNoticeTitle:
+          Value.ofNullable(receiptSetting.outstandingSpecimenNoticeTitle),
+      outstandingSpecimenNotice:
+          Value.ofNullable(receiptSetting.outstandingSpecimenNotice),
+      utfTitle: Value.ofNullable(receiptSetting.utfTitle),
+      utfNotice: Value.ofNullable(receiptSetting.utfNotice),
+      stfTitle: Value.ofNullable(receiptSetting.stfTitle),
+      stfNotice: Value.ofNullable(receiptSetting.stfNotice),
     );
   }
 }

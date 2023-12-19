@@ -22,15 +22,15 @@ Company _$CompanyFromJson(Map<String, dynamic> json) {
 mixin _$Company {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get address => throw _privateConstructorUsedError;
+  String? get address => throw _privateConstructorUsedError;
   @JsonKey(name: 'postal_code')
-  String get postalCode => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get telephone => throw _privateConstructorUsedError;
-  String get fax => throw _privateConstructorUsedError;
-  String get website => throw _privateConstructorUsedError;
+  String? get postalCode => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  String? get telephone => throw _privateConstructorUsedError;
+  String? get fax => throw _privateConstructorUsedError;
+  String? get website => throw _privateConstructorUsedError;
   @JsonKey(name: 'co_registration_no')
-  String get coRegistrationNo => throw _privateConstructorUsedError;
+  String? get coRegistrationNo => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,13 +45,13 @@ abstract class $CompanyCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
-      String address,
-      @JsonKey(name: 'postal_code') String postalCode,
-      String email,
-      String telephone,
-      String fax,
-      String website,
-      @JsonKey(name: 'co_registration_no') String coRegistrationNo});
+      String? address,
+      @JsonKey(name: 'postal_code') String? postalCode,
+      String? email,
+      String? telephone,
+      String? fax,
+      String? website,
+      @JsonKey(name: 'co_registration_no') String? coRegistrationNo});
 }
 
 /// @nodoc
@@ -69,13 +69,13 @@ class _$CompanyCopyWithImpl<$Res, $Val extends Company>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? address = null,
-    Object? postalCode = null,
-    Object? email = null,
-    Object? telephone = null,
-    Object? fax = null,
-    Object? website = null,
-    Object? coRegistrationNo = null,
+    Object? address = freezed,
+    Object? postalCode = freezed,
+    Object? email = freezed,
+    Object? telephone = freezed,
+    Object? fax = freezed,
+    Object? website = freezed,
+    Object? coRegistrationNo = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -86,34 +86,34 @@ class _$CompanyCopyWithImpl<$Res, $Val extends Company>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      address: null == address
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String,
-      postalCode: null == postalCode
+              as String?,
+      postalCode: freezed == postalCode
           ? _value.postalCode
           : postalCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
+              as String?,
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      telephone: null == telephone
+              as String?,
+      telephone: freezed == telephone
           ? _value.telephone
           : telephone // ignore: cast_nullable_to_non_nullable
-              as String,
-      fax: null == fax
+              as String?,
+      fax: freezed == fax
           ? _value.fax
           : fax // ignore: cast_nullable_to_non_nullable
-              as String,
-      website: null == website
+              as String?,
+      website: freezed == website
           ? _value.website
           : website // ignore: cast_nullable_to_non_nullable
-              as String,
-      coRegistrationNo: null == coRegistrationNo
+              as String?,
+      coRegistrationNo: freezed == coRegistrationNo
           ? _value.coRegistrationNo
           : coRegistrationNo // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -128,13 +128,13 @@ abstract class _$$CompanyImplCopyWith<$Res> implements $CompanyCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
-      String address,
-      @JsonKey(name: 'postal_code') String postalCode,
-      String email,
-      String telephone,
-      String fax,
-      String website,
-      @JsonKey(name: 'co_registration_no') String coRegistrationNo});
+      String? address,
+      @JsonKey(name: 'postal_code') String? postalCode,
+      String? email,
+      String? telephone,
+      String? fax,
+      String? website,
+      @JsonKey(name: 'co_registration_no') String? coRegistrationNo});
 }
 
 /// @nodoc
@@ -150,13 +150,13 @@ class __$$CompanyImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? address = null,
-    Object? postalCode = null,
-    Object? email = null,
-    Object? telephone = null,
-    Object? fax = null,
-    Object? website = null,
-    Object? coRegistrationNo = null,
+    Object? address = freezed,
+    Object? postalCode = freezed,
+    Object? email = freezed,
+    Object? telephone = freezed,
+    Object? fax = freezed,
+    Object? website = freezed,
+    Object? coRegistrationNo = freezed,
   }) {
     return _then(_$CompanyImpl(
       id: null == id
@@ -167,34 +167,34 @@ class __$$CompanyImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      address: null == address
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String,
-      postalCode: null == postalCode
+              as String?,
+      postalCode: freezed == postalCode
           ? _value.postalCode
           : postalCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
+              as String?,
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      telephone: null == telephone
+              as String?,
+      telephone: freezed == telephone
           ? _value.telephone
           : telephone // ignore: cast_nullable_to_non_nullable
-              as String,
-      fax: null == fax
+              as String?,
+      fax: freezed == fax
           ? _value.fax
           : fax // ignore: cast_nullable_to_non_nullable
-              as String,
-      website: null == website
+              as String?,
+      website: freezed == website
           ? _value.website
           : website // ignore: cast_nullable_to_non_nullable
-              as String,
-      coRegistrationNo: null == coRegistrationNo
+              as String?,
+      coRegistrationNo: freezed == coRegistrationNo
           ? _value.coRegistrationNo
           : coRegistrationNo // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -205,13 +205,13 @@ class _$CompanyImpl implements _Company {
   const _$CompanyImpl(
       {required this.id,
       required this.name,
-      required this.address,
-      @JsonKey(name: 'postal_code') required this.postalCode,
-      required this.email,
-      required this.telephone,
-      required this.fax,
-      required this.website,
-      @JsonKey(name: 'co_registration_no') required this.coRegistrationNo});
+      this.address,
+      @JsonKey(name: 'postal_code') this.postalCode,
+      this.email,
+      this.telephone,
+      this.fax,
+      this.website,
+      @JsonKey(name: 'co_registration_no') this.coRegistrationNo});
 
   factory _$CompanyImpl.fromJson(Map<String, dynamic> json) =>
       _$$CompanyImplFromJson(json);
@@ -221,21 +221,21 @@ class _$CompanyImpl implements _Company {
   @override
   final String name;
   @override
-  final String address;
+  final String? address;
   @override
   @JsonKey(name: 'postal_code')
-  final String postalCode;
+  final String? postalCode;
   @override
-  final String email;
+  final String? email;
   @override
-  final String telephone;
+  final String? telephone;
   @override
-  final String fax;
+  final String? fax;
   @override
-  final String website;
+  final String? website;
   @override
   @JsonKey(name: 'co_registration_no')
-  final String coRegistrationNo;
+  final String? coRegistrationNo;
 
   @override
   String toString() {
@@ -284,14 +284,14 @@ abstract class _Company implements Company {
   const factory _Company(
       {required final int id,
       required final String name,
-      required final String address,
-      @JsonKey(name: 'postal_code') required final String postalCode,
-      required final String email,
-      required final String telephone,
-      required final String fax,
-      required final String website,
+      final String? address,
+      @JsonKey(name: 'postal_code') final String? postalCode,
+      final String? email,
+      final String? telephone,
+      final String? fax,
+      final String? website,
       @JsonKey(name: 'co_registration_no')
-      required final String coRegistrationNo}) = _$CompanyImpl;
+      final String? coRegistrationNo}) = _$CompanyImpl;
 
   factory _Company.fromJson(Map<String, dynamic> json) = _$CompanyImpl.fromJson;
 
@@ -300,21 +300,21 @@ abstract class _Company implements Company {
   @override
   String get name;
   @override
-  String get address;
+  String? get address;
   @override
   @JsonKey(name: 'postal_code')
-  String get postalCode;
+  String? get postalCode;
   @override
-  String get email;
+  String? get email;
   @override
-  String get telephone;
+  String? get telephone;
   @override
-  String get fax;
+  String? get fax;
   @override
-  String get website;
+  String? get website;
   @override
   @JsonKey(name: 'co_registration_no')
-  String get coRegistrationNo;
+  String? get coRegistrationNo;
   @override
   @JsonKey(ignore: true)
   _$$CompanyImplCopyWith<_$CompanyImpl> get copyWith =>

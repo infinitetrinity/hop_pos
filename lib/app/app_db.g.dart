@@ -469,56 +469,56 @@ class $CompanyTableTable extends CompanyTable
       const VerificationMeta('address');
   @override
   late final GeneratedColumn<String> address = GeneratedColumn<String>(
-      'address', aliasedName, false,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      'address', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 999),
       type: DriftSqlType.string,
-      requiredDuringInsert: true);
+      requiredDuringInsert: false);
   static const VerificationMeta _postalCodeMeta =
       const VerificationMeta('postalCode');
   @override
   late final GeneratedColumn<String> postalCode = GeneratedColumn<String>(
-      'postal_code', aliasedName, false,
+      'postal_code', aliasedName, true,
       additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
       type: DriftSqlType.string,
-      requiredDuringInsert: true);
+      requiredDuringInsert: false);
   static const VerificationMeta _emailMeta = const VerificationMeta('email');
   @override
   late final GeneratedColumn<String> email = GeneratedColumn<String>(
-      'email', aliasedName, false,
+      'email', aliasedName, true,
       additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
       type: DriftSqlType.string,
-      requiredDuringInsert: true);
+      requiredDuringInsert: false);
   static const VerificationMeta _telephoneMeta =
       const VerificationMeta('telephone');
   @override
   late final GeneratedColumn<String> telephone = GeneratedColumn<String>(
-      'telephone', aliasedName, false,
+      'telephone', aliasedName, true,
       additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
       type: DriftSqlType.string,
-      requiredDuringInsert: true);
+      requiredDuringInsert: false);
   static const VerificationMeta _faxMeta = const VerificationMeta('fax');
   @override
   late final GeneratedColumn<String> fax = GeneratedColumn<String>(
-      'fax', aliasedName, false,
+      'fax', aliasedName, true,
       additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
       type: DriftSqlType.string,
-      requiredDuringInsert: true);
+      requiredDuringInsert: false);
   static const VerificationMeta _websiteMeta =
       const VerificationMeta('website');
   @override
   late final GeneratedColumn<String> website = GeneratedColumn<String>(
-      'website', aliasedName, false,
+      'website', aliasedName, true,
       additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
       type: DriftSqlType.string,
-      requiredDuringInsert: true);
+      requiredDuringInsert: false);
   static const VerificationMeta _coRegistrationNoMeta =
       const VerificationMeta('coRegistrationNo');
   @override
   late final GeneratedColumn<String> coRegistrationNo = GeneratedColumn<String>(
-      'co_registration_no', aliasedName, false,
+      'co_registration_no', aliasedName, true,
       additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
       type: DriftSqlType.string,
-      requiredDuringInsert: true);
+      requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -553,48 +553,34 @@ class $CompanyTableTable extends CompanyTable
     if (data.containsKey('address')) {
       context.handle(_addressMeta,
           address.isAcceptableOrUnknown(data['address']!, _addressMeta));
-    } else if (isInserting) {
-      context.missing(_addressMeta);
     }
     if (data.containsKey('postal_code')) {
       context.handle(
           _postalCodeMeta,
           postalCode.isAcceptableOrUnknown(
               data['postal_code']!, _postalCodeMeta));
-    } else if (isInserting) {
-      context.missing(_postalCodeMeta);
     }
     if (data.containsKey('email')) {
       context.handle(
           _emailMeta, email.isAcceptableOrUnknown(data['email']!, _emailMeta));
-    } else if (isInserting) {
-      context.missing(_emailMeta);
     }
     if (data.containsKey('telephone')) {
       context.handle(_telephoneMeta,
           telephone.isAcceptableOrUnknown(data['telephone']!, _telephoneMeta));
-    } else if (isInserting) {
-      context.missing(_telephoneMeta);
     }
     if (data.containsKey('fax')) {
       context.handle(
           _faxMeta, fax.isAcceptableOrUnknown(data['fax']!, _faxMeta));
-    } else if (isInserting) {
-      context.missing(_faxMeta);
     }
     if (data.containsKey('website')) {
       context.handle(_websiteMeta,
           website.isAcceptableOrUnknown(data['website']!, _websiteMeta));
-    } else if (isInserting) {
-      context.missing(_websiteMeta);
     }
     if (data.containsKey('co_registration_no')) {
       context.handle(
           _coRegistrationNoMeta,
           coRegistrationNo.isAcceptableOrUnknown(
               data['co_registration_no']!, _coRegistrationNoMeta));
-    } else if (isInserting) {
-      context.missing(_coRegistrationNoMeta);
     }
     return context;
   }
@@ -610,19 +596,19 @@ class $CompanyTableTable extends CompanyTable
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       address: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}address'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}address']),
       postalCode: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}postal_code'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}postal_code']),
       email: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}email'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}email']),
       telephone: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}telephone'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}telephone']),
       fax: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}fax'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}fax']),
       website: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}website'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}website']),
       coRegistrationNo: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}co_registration_no'])!,
+          DriftSqlType.string, data['${effectivePrefix}co_registration_no']),
     );
   }
 
@@ -635,13 +621,13 @@ class $CompanyTableTable extends CompanyTable
 class CompanyTableCompanion extends UpdateCompanion<Company> {
   final Value<int> id;
   final Value<String> name;
-  final Value<String> address;
-  final Value<String> postalCode;
-  final Value<String> email;
-  final Value<String> telephone;
-  final Value<String> fax;
-  final Value<String> website;
-  final Value<String> coRegistrationNo;
+  final Value<String?> address;
+  final Value<String?> postalCode;
+  final Value<String?> email;
+  final Value<String?> telephone;
+  final Value<String?> fax;
+  final Value<String?> website;
+  final Value<String?> coRegistrationNo;
   const CompanyTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
@@ -656,21 +642,14 @@ class CompanyTableCompanion extends UpdateCompanion<Company> {
   CompanyTableCompanion.insert({
     this.id = const Value.absent(),
     required String name,
-    required String address,
-    required String postalCode,
-    required String email,
-    required String telephone,
-    required String fax,
-    required String website,
-    required String coRegistrationNo,
-  })  : name = Value(name),
-        address = Value(address),
-        postalCode = Value(postalCode),
-        email = Value(email),
-        telephone = Value(telephone),
-        fax = Value(fax),
-        website = Value(website),
-        coRegistrationNo = Value(coRegistrationNo);
+    this.address = const Value.absent(),
+    this.postalCode = const Value.absent(),
+    this.email = const Value.absent(),
+    this.telephone = const Value.absent(),
+    this.fax = const Value.absent(),
+    this.website = const Value.absent(),
+    this.coRegistrationNo = const Value.absent(),
+  }) : name = Value(name);
   static Insertable<Company> custom({
     Expression<int>? id,
     Expression<String>? name,
@@ -698,13 +677,13 @@ class CompanyTableCompanion extends UpdateCompanion<Company> {
   CompanyTableCompanion copyWith(
       {Value<int>? id,
       Value<String>? name,
-      Value<String>? address,
-      Value<String>? postalCode,
-      Value<String>? email,
-      Value<String>? telephone,
-      Value<String>? fax,
-      Value<String>? website,
-      Value<String>? coRegistrationNo}) {
+      Value<String?>? address,
+      Value<String?>? postalCode,
+      Value<String?>? email,
+      Value<String?>? telephone,
+      Value<String?>? fax,
+      Value<String?>? website,
+      Value<String?>? coRegistrationNo}) {
     return CompanyTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -768,21 +747,351 @@ class CompanyTableCompanion extends UpdateCompanion<Company> {
   }
 }
 
+class $ReceiptSettingsTableTable extends ReceiptSettingsTable
+    with TableInfo<$ReceiptSettingsTableTable, ReceiptSetting> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ReceiptSettingsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _footerTextMeta =
+      const VerificationMeta('footerText');
+  @override
+  late final GeneratedColumn<String> footerText = GeneratedColumn<String>(
+      'footer_text', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 999),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _outstandingSpecimenTitleMeta =
+      const VerificationMeta('outstandingSpecimenTitle');
+  @override
+  late final GeneratedColumn<String> outstandingSpecimenTitle =
+      GeneratedColumn<String>('outstanding_specimen_title', aliasedName, true,
+          additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 999),
+          type: DriftSqlType.string,
+          requiredDuringInsert: false);
+  static const VerificationMeta _outstandingSpecimenNoticeTitleMeta =
+      const VerificationMeta('outstandingSpecimenNoticeTitle');
+  @override
+  late final GeneratedColumn<String> outstandingSpecimenNoticeTitle =
+      GeneratedColumn<String>(
+          'outstanding_specimen_notice_title', aliasedName, true,
+          additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 999),
+          type: DriftSqlType.string,
+          requiredDuringInsert: false);
+  static const VerificationMeta _outstandingSpecimenNoticeMeta =
+      const VerificationMeta('outstandingSpecimenNotice');
+  @override
+  late final GeneratedColumn<String> outstandingSpecimenNotice =
+      GeneratedColumn<String>('outstanding_specimen_notice', aliasedName, true,
+          additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 999),
+          type: DriftSqlType.string,
+          requiredDuringInsert: false);
+  static const VerificationMeta _utfTitleMeta =
+      const VerificationMeta('utfTitle');
+  @override
+  late final GeneratedColumn<String> utfTitle = GeneratedColumn<String>(
+      'utf_title', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 999),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _utfNoticeMeta =
+      const VerificationMeta('utfNotice');
+  @override
+  late final GeneratedColumn<String> utfNotice = GeneratedColumn<String>(
+      'utf_notice', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 999),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _stfTitleMeta =
+      const VerificationMeta('stfTitle');
+  @override
+  late final GeneratedColumn<String> stfTitle = GeneratedColumn<String>(
+      'stf_title', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 999),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _stfNoticeMeta =
+      const VerificationMeta('stfNotice');
+  @override
+  late final GeneratedColumn<String> stfNotice = GeneratedColumn<String>(
+      'stf_notice', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 999),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        footerText,
+        outstandingSpecimenTitle,
+        outstandingSpecimenNoticeTitle,
+        outstandingSpecimenNotice,
+        utfTitle,
+        utfNotice,
+        stfTitle,
+        stfNotice
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'receipt_settings_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<ReceiptSetting> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('footer_text')) {
+      context.handle(
+          _footerTextMeta,
+          footerText.isAcceptableOrUnknown(
+              data['footer_text']!, _footerTextMeta));
+    }
+    if (data.containsKey('outstanding_specimen_title')) {
+      context.handle(
+          _outstandingSpecimenTitleMeta,
+          outstandingSpecimenTitle.isAcceptableOrUnknown(
+              data['outstanding_specimen_title']!,
+              _outstandingSpecimenTitleMeta));
+    }
+    if (data.containsKey('outstanding_specimen_notice_title')) {
+      context.handle(
+          _outstandingSpecimenNoticeTitleMeta,
+          outstandingSpecimenNoticeTitle.isAcceptableOrUnknown(
+              data['outstanding_specimen_notice_title']!,
+              _outstandingSpecimenNoticeTitleMeta));
+    }
+    if (data.containsKey('outstanding_specimen_notice')) {
+      context.handle(
+          _outstandingSpecimenNoticeMeta,
+          outstandingSpecimenNotice.isAcceptableOrUnknown(
+              data['outstanding_specimen_notice']!,
+              _outstandingSpecimenNoticeMeta));
+    }
+    if (data.containsKey('utf_title')) {
+      context.handle(_utfTitleMeta,
+          utfTitle.isAcceptableOrUnknown(data['utf_title']!, _utfTitleMeta));
+    }
+    if (data.containsKey('utf_notice')) {
+      context.handle(_utfNoticeMeta,
+          utfNotice.isAcceptableOrUnknown(data['utf_notice']!, _utfNoticeMeta));
+    }
+    if (data.containsKey('stf_title')) {
+      context.handle(_stfTitleMeta,
+          stfTitle.isAcceptableOrUnknown(data['stf_title']!, _stfTitleMeta));
+    }
+    if (data.containsKey('stf_notice')) {
+      context.handle(_stfNoticeMeta,
+          stfNotice.isAcceptableOrUnknown(data['stf_notice']!, _stfNoticeMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ReceiptSetting map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ReceiptSetting(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      footerText: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}footer_text']),
+      outstandingSpecimenTitle: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}outstanding_specimen_title']),
+      outstandingSpecimenNoticeTitle: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}outstanding_specimen_notice_title']),
+      outstandingSpecimenNotice: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}outstanding_specimen_notice']),
+      utfTitle: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}utf_title']),
+      utfNotice: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}utf_notice']),
+      stfTitle: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}stf_title']),
+      stfNotice: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}stf_notice']),
+    );
+  }
+
+  @override
+  $ReceiptSettingsTableTable createAlias(String alias) {
+    return $ReceiptSettingsTableTable(attachedDatabase, alias);
+  }
+}
+
+class ReceiptSettingsTableCompanion extends UpdateCompanion<ReceiptSetting> {
+  final Value<int> id;
+  final Value<String?> footerText;
+  final Value<String?> outstandingSpecimenTitle;
+  final Value<String?> outstandingSpecimenNoticeTitle;
+  final Value<String?> outstandingSpecimenNotice;
+  final Value<String?> utfTitle;
+  final Value<String?> utfNotice;
+  final Value<String?> stfTitle;
+  final Value<String?> stfNotice;
+  const ReceiptSettingsTableCompanion({
+    this.id = const Value.absent(),
+    this.footerText = const Value.absent(),
+    this.outstandingSpecimenTitle = const Value.absent(),
+    this.outstandingSpecimenNoticeTitle = const Value.absent(),
+    this.outstandingSpecimenNotice = const Value.absent(),
+    this.utfTitle = const Value.absent(),
+    this.utfNotice = const Value.absent(),
+    this.stfTitle = const Value.absent(),
+    this.stfNotice = const Value.absent(),
+  });
+  ReceiptSettingsTableCompanion.insert({
+    this.id = const Value.absent(),
+    this.footerText = const Value.absent(),
+    this.outstandingSpecimenTitle = const Value.absent(),
+    this.outstandingSpecimenNoticeTitle = const Value.absent(),
+    this.outstandingSpecimenNotice = const Value.absent(),
+    this.utfTitle = const Value.absent(),
+    this.utfNotice = const Value.absent(),
+    this.stfTitle = const Value.absent(),
+    this.stfNotice = const Value.absent(),
+  });
+  static Insertable<ReceiptSetting> custom({
+    Expression<int>? id,
+    Expression<String>? footerText,
+    Expression<String>? outstandingSpecimenTitle,
+    Expression<String>? outstandingSpecimenNoticeTitle,
+    Expression<String>? outstandingSpecimenNotice,
+    Expression<String>? utfTitle,
+    Expression<String>? utfNotice,
+    Expression<String>? stfTitle,
+    Expression<String>? stfNotice,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (footerText != null) 'footer_text': footerText,
+      if (outstandingSpecimenTitle != null)
+        'outstanding_specimen_title': outstandingSpecimenTitle,
+      if (outstandingSpecimenNoticeTitle != null)
+        'outstanding_specimen_notice_title': outstandingSpecimenNoticeTitle,
+      if (outstandingSpecimenNotice != null)
+        'outstanding_specimen_notice': outstandingSpecimenNotice,
+      if (utfTitle != null) 'utf_title': utfTitle,
+      if (utfNotice != null) 'utf_notice': utfNotice,
+      if (stfTitle != null) 'stf_title': stfTitle,
+      if (stfNotice != null) 'stf_notice': stfNotice,
+    });
+  }
+
+  ReceiptSettingsTableCompanion copyWith(
+      {Value<int>? id,
+      Value<String?>? footerText,
+      Value<String?>? outstandingSpecimenTitle,
+      Value<String?>? outstandingSpecimenNoticeTitle,
+      Value<String?>? outstandingSpecimenNotice,
+      Value<String?>? utfTitle,
+      Value<String?>? utfNotice,
+      Value<String?>? stfTitle,
+      Value<String?>? stfNotice}) {
+    return ReceiptSettingsTableCompanion(
+      id: id ?? this.id,
+      footerText: footerText ?? this.footerText,
+      outstandingSpecimenTitle:
+          outstandingSpecimenTitle ?? this.outstandingSpecimenTitle,
+      outstandingSpecimenNoticeTitle:
+          outstandingSpecimenNoticeTitle ?? this.outstandingSpecimenNoticeTitle,
+      outstandingSpecimenNotice:
+          outstandingSpecimenNotice ?? this.outstandingSpecimenNotice,
+      utfTitle: utfTitle ?? this.utfTitle,
+      utfNotice: utfNotice ?? this.utfNotice,
+      stfTitle: stfTitle ?? this.stfTitle,
+      stfNotice: stfNotice ?? this.stfNotice,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (footerText.present) {
+      map['footer_text'] = Variable<String>(footerText.value);
+    }
+    if (outstandingSpecimenTitle.present) {
+      map['outstanding_specimen_title'] =
+          Variable<String>(outstandingSpecimenTitle.value);
+    }
+    if (outstandingSpecimenNoticeTitle.present) {
+      map['outstanding_specimen_notice_title'] =
+          Variable<String>(outstandingSpecimenNoticeTitle.value);
+    }
+    if (outstandingSpecimenNotice.present) {
+      map['outstanding_specimen_notice'] =
+          Variable<String>(outstandingSpecimenNotice.value);
+    }
+    if (utfTitle.present) {
+      map['utf_title'] = Variable<String>(utfTitle.value);
+    }
+    if (utfNotice.present) {
+      map['utf_notice'] = Variable<String>(utfNotice.value);
+    }
+    if (stfTitle.present) {
+      map['stf_title'] = Variable<String>(stfTitle.value);
+    }
+    if (stfNotice.present) {
+      map['stf_notice'] = Variable<String>(stfNotice.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReceiptSettingsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('footerText: $footerText, ')
+          ..write('outstandingSpecimenTitle: $outstandingSpecimenTitle, ')
+          ..write(
+              'outstandingSpecimenNoticeTitle: $outstandingSpecimenNoticeTitle, ')
+          ..write('outstandingSpecimenNotice: $outstandingSpecimenNotice, ')
+          ..write('utfTitle: $utfTitle, ')
+          ..write('utfNotice: $utfNotice, ')
+          ..write('stfTitle: $stfTitle, ')
+          ..write('stfNotice: $stfNotice')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   late final $UsersTableTable usersTable = $UsersTableTable(this);
   late final $PosLicensesTableTable posLicensesTable =
       $PosLicensesTableTable(this);
   late final $CompanyTableTable companyTable = $CompanyTableTable(this);
+  late final $ReceiptSettingsTableTable receiptSettingsTable =
+      $ReceiptSettingsTableTable(this);
   late final UserDao userDao = UserDao(this as AppDb);
   late final PosLicenseDao posLicenseDao = PosLicenseDao(this as AppDb);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
+  late final ReceiptSettingDao receiptSettingDao =
+      ReceiptSettingDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [usersTable, posLicensesTable, companyTable];
+      [usersTable, posLicensesTable, companyTable, receiptSettingsTable];
 }
 
 // **************************************************************************

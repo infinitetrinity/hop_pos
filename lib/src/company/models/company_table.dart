@@ -7,11 +7,11 @@ class CompanyTable extends Table {
   String get tableName => Company.table;
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text().withLength(max: 255)();
-  TextColumn get address => text().withLength(max: 255)();
-  TextColumn get postalCode => text().withLength(max: 255)();
-  TextColumn get email => text().withLength(max: 255)();
-  TextColumn get telephone => text().withLength(max: 255)();
-  TextColumn get fax => text().withLength(max: 255)();
-  TextColumn get website => text().withLength(max: 255)();
-  TextColumn get coRegistrationNo => text().withLength(max: 255)();
+  TextColumn get address => text().nullable().withLength(max: 999)();
+  TextColumn get postalCode => text().nullable().withLength(max: 255)();
+  TextColumn get email => text().nullable().withLength(max: 255)();
+  TextColumn get telephone => text().nullable().withLength(max: 255)();
+  TextColumn get fax => text().nullable().withLength(max: 255)();
+  TextColumn get website => text().nullable().withLength(max: 255)();
+  TextColumn get coRegistrationNo => text().nullable().withLength(max: 255)();
 }

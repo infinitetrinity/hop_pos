@@ -8,6 +8,9 @@ import 'package:hop_pos/src/company/models/company_table.dart';
 import 'package:hop_pos/src/pos_licenses/daos/pos_license_dao.dart';
 import 'package:hop_pos/src/pos_licenses/models/pos_license.dart';
 import 'package:hop_pos/src/pos_licenses/models/pos_licenses_table.dart';
+import 'package:hop_pos/src/receipt_settings/daos/receipt_setting_dao.dart';
+import 'package:hop_pos/src/receipt_settings/models/receipt_setting.dart';
+import 'package:hop_pos/src/receipt_settings/models/receipt_settings_table.dart';
 import 'package:hop_pos/src/users/daos/user_dao.dart';
 import 'package:hop_pos/src/users/models/user.dart';
 import 'package:hop_pos/src/users/models/users_table.dart';
@@ -28,10 +31,12 @@ AppDb appDb(AppDbRef ref) {
   UsersTable,
   PosLicensesTable,
   CompanyTable,
+  ReceiptSettingsTable,
 ], daos: [
   UserDao,
   PosLicenseDao,
   CompanyDao,
+  ReceiptSettingDao,
 ])
 class AppDb extends _$AppDb {
   AppDb._init() : super(initDb());

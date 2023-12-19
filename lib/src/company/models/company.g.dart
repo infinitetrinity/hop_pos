@@ -10,13 +10,13 @@ _$CompanyImpl _$$CompanyImplFromJson(Map<String, dynamic> json) =>
     _$CompanyImpl(
       id: json['id'] as int,
       name: json['name'] as String,
-      address: json['address'] as String,
-      postalCode: json['postal_code'] as String,
-      email: json['email'] as String,
-      telephone: json['telephone'] as String,
-      fax: json['fax'] as String,
-      website: json['website'] as String,
-      coRegistrationNo: json['co_registration_no'] as String,
+      address: json['address'] as String?,
+      postalCode: json['postal_code'] as String?,
+      email: json['email'] as String?,
+      telephone: json['telephone'] as String?,
+      fax: json['fax'] as String?,
+      website: json['website'] as String?,
+      coRegistrationNo: json['co_registration_no'] as String?,
     );
 
 Map<String, dynamic> _$$CompanyImplToJson(_$CompanyImpl instance) =>
