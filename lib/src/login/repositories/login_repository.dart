@@ -1,6 +1,7 @@
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/company/daos/company_dao.dart';
-import 'package:hop_pos/src/login/models/initial_sync_data.dart';
+import 'package:hop_pos/src/login/models/login_response.dart';
+import 'package:hop_pos/src/payment_methods/daos/payment_method_dao.dart';
 import 'package:hop_pos/src/pos_extras/daos/pos_extra_dao.dart';
 import 'package:hop_pos/src/pos_licenses/daos/pos_license_dao.dart';
 import 'package:hop_pos/src/receipt_settings/daos/receipt_setting_dao.dart';
@@ -20,6 +21,8 @@ LoginRepository loginRepo(LoginRepoRef ref) {
     receiptSettingDao:
         ref.watch(appDbProvider.select((prov) => prov.receiptSettingDao)),
     posExtraDao: ref.watch(appDbProvider.select((prov) => prov.posExtraDao)),
+    paymentMethodDao:
+        ref.watch(appDbProvider.select((prov) => prov.paymentMethodDao)),
   );
 }
 
@@ -30,6 +33,7 @@ class LoginRepository {
   final CompanyDao companyDao;
   final ReceiptSettingDao receiptSettingDao;
   final PosExtraDao posExtraDao;
+  final PaymentMethodDao paymentMethodDao;
 
   LoginRepository({
     required this.db,
@@ -38,16 +42,19 @@ class LoginRepository {
     required this.companyDao,
     required this.receiptSettingDao,
     required this.posExtraDao,
+    required this.paymentMethodDao,
   });
 
-  Future<void> sync(InitialSyncData data) async {
+  Future<void> sync(LoginResponse response) async {
     return await db.transaction(() async {
-      await userDao.insertUser(data.user);
-      await posLicenseDao.insertLicense(data.posLicense);
-      await companyDao.insertCompany(data.company);
-      await receiptSettingDao.insertSetting(data.receiptSettings);
-      final extras = await posExtraDao.insertExtras(data.posExtras);
-      print(extras);
+      await userDao.insertUser(response.getUserData());
+      await posLicenseDao.insertLicense(response.getPosLicenseData());
+      await companyDao.insertCompany(response.getCompanyData());
+      await receiptSettingDao.insertSetting(response.getReceiptSettingData());
+      await posExtraDao.insertExtras(response.getPosExtrasData());
+      final methods = await paymentMethodDao
+          .insertMethods(response.getPaymentMethodsData());
+      print(methods);
     });
   }
 }

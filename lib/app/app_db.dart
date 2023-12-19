@@ -5,6 +5,9 @@ import 'package:drift/native.dart';
 import 'package:hop_pos/src/company/daos/company_dao.dart';
 import 'package:hop_pos/src/company/models/company.dart';
 import 'package:hop_pos/src/company/models/company_table.dart';
+import 'package:hop_pos/src/payment_methods/daos/payment_method_dao.dart';
+import 'package:hop_pos/src/payment_methods/models/payment_method.dart';
+import 'package:hop_pos/src/payment_methods/models/payment_methods_table.dart';
 import 'package:hop_pos/src/pos_extras/daos/pos_extra_dao.dart';
 import 'package:hop_pos/src/pos_extras/models/pos_extra.dart';
 import 'package:hop_pos/src/pos_extras/models/pos_extras_table.dart';
@@ -36,12 +39,14 @@ AppDb appDb(AppDbRef ref) {
   CompanyTable,
   ReceiptSettingsTable,
   PosExtrasTable,
+  PaymentMethodsTable,
 ], daos: [
   UserDao,
   PosLicenseDao,
   CompanyDao,
   ReceiptSettingDao,
   PosExtraDao,
+  PaymentMethodDao,
 ])
 class AppDb extends _$AppDb {
   AppDb._init() : super(initDb());

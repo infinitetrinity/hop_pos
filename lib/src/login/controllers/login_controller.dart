@@ -5,8 +5,8 @@ import 'package:hop_pos/src/common/models/validation_errors.dart';
 import 'package:hop_pos/src/common/services/api_service.dart';
 import 'package:hop_pos/src/common/services/flash_message.dart';
 import 'package:hop_pos/src/login/models/login_request.dart';
+import 'package:hop_pos/src/login/models/login_response.dart';
 import 'package:hop_pos/src/login/repositories/login_repository.dart';
-import 'package:hop_pos/src/login/responses/login_response.dart';
 import 'package:hop_pos/src/login/state/syncing_state.dart';
 import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -32,7 +32,7 @@ class LoginController extends _$LoginController {
       );
 
       if (response != null) {
-        await _syncInitialisationData(LoginResponse(response));
+        await _syncInitialisationData(LoginResponse.fromJson(response.data));
       }
     } catch (e) {
       if (e is ApiValidationError) {
@@ -54,8 +54,7 @@ class LoginController extends _$LoginController {
 
     try {
       LoginRepository repo = ref.read(loginRepoProvider);
-      await repo.sync(response.initalSyncData);
-
+      await repo.sync(response);
       flashMessage.flash(message: 'Initial sync completed.');
     } catch (e, stackTrace) {
       final logger = Logger();

@@ -1,26 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'login_controller.dart';
+part of 'payment_method_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loginControllerHash() => r'509381b83e62d661b4184e4f313f162648e49b4a';
+String _$paymentMethodRepoHash() => r'3114a1051618d239d4094acdba07834ec8ae50e9';
 
-/// See also [LoginController].
-@ProviderFor(LoginController)
-final loginControllerProvider =
-    AutoDisposeNotifierProvider<LoginController, void>.internal(
-  LoginController.new,
-  name: r'loginControllerProvider',
+/// See also [paymentMethodRepo].
+@ProviderFor(paymentMethodRepo)
+final paymentMethodRepoProvider =
+    AutoDisposeProvider<PaymentMethodRepository>.internal(
+  paymentMethodRepo,
+  name: r'paymentMethodRepoProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$loginControllerHash,
+      : _$paymentMethodRepoHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$LoginController = AutoDisposeNotifier<void>;
+typedef PaymentMethodRepoRef = AutoDisposeProviderRef<PaymentMethodRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
