@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'pos_extra.freezed.dart';
-part 'pos_extra.g.dart';
 
 @freezed
 class PosExtra with _$PosExtra {
@@ -12,11 +11,20 @@ class PosExtra with _$PosExtra {
     required String type,
     required double amount,
     @JsonKey(name: 'amount_type') required String amountType,
-    required bool isActive,
+    @JsonKey(name: 'is_active') required bool isActive,
   }) = _PosExtra;
 
-  factory PosExtra.fromJson(Map<String, dynamic> json) =>
-      _$PosExtraFromJson(json);
+  factory PosExtra.fromJson(Map<String, dynamic> json) {
+    return PosExtra(
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      type: json['type'],
+      amount: double.tryParse(json['amount']) ?? 0,
+      amountType: json['amount_type'],
+      isActive: json['is_active'],
+    );
+  }
 
   static String get table {
     return 'pos_extras';

@@ -14,10 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-PosExtra _$PosExtraFromJson(Map<String, dynamic> json) {
-  return _PosExtra.fromJson(json);
-}
-
 /// @nodoc
 mixin _$PosExtra {
   int get id => throw _privateConstructorUsedError;
@@ -27,9 +23,9 @@ mixin _$PosExtra {
   double get amount => throw _privateConstructorUsedError;
   @JsonKey(name: 'amount_type')
   String get amountType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_active')
   bool get isActive => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $PosExtraCopyWith<PosExtra> get copyWith =>
       throw _privateConstructorUsedError;
@@ -47,7 +43,7 @@ abstract class $PosExtraCopyWith<$Res> {
       String type,
       double amount,
       @JsonKey(name: 'amount_type') String amountType,
-      bool isActive});
+      @JsonKey(name: 'is_active') bool isActive});
 }
 
 /// @nodoc
@@ -119,7 +115,7 @@ abstract class _$$PosExtraImplCopyWith<$Res>
       String type,
       double amount,
       @JsonKey(name: 'amount_type') String amountType,
-      bool isActive});
+      @JsonKey(name: 'is_active') bool isActive});
 }
 
 /// @nodoc
@@ -175,7 +171,7 @@ class __$$PosExtraImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$PosExtraImpl implements _PosExtra {
   const _$PosExtraImpl(
       {required this.id,
@@ -184,10 +180,7 @@ class _$PosExtraImpl implements _PosExtra {
       required this.type,
       required this.amount,
       @JsonKey(name: 'amount_type') required this.amountType,
-      required this.isActive});
-
-  factory _$PosExtraImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PosExtraImplFromJson(json);
+      @JsonKey(name: 'is_active') required this.isActive});
 
   @override
   final int id;
@@ -203,6 +196,7 @@ class _$PosExtraImpl implements _PosExtra {
   @JsonKey(name: 'amount_type')
   final String amountType;
   @override
+  @JsonKey(name: 'is_active')
   final bool isActive;
 
   @override
@@ -227,7 +221,6 @@ class _$PosExtraImpl implements _PosExtra {
                 other.isActive == isActive));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType, id, name, description, type, amount, amountType, isActive);
@@ -237,27 +230,18 @@ class _$PosExtraImpl implements _PosExtra {
   @pragma('vm:prefer-inline')
   _$$PosExtraImplCopyWith<_$PosExtraImpl> get copyWith =>
       __$$PosExtraImplCopyWithImpl<_$PosExtraImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PosExtraImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _PosExtra implements PosExtra {
   const factory _PosExtra(
-      {required final int id,
-      required final String name,
-      final String? description,
-      required final String type,
-      required final double amount,
-      @JsonKey(name: 'amount_type') required final String amountType,
-      required final bool isActive}) = _$PosExtraImpl;
-
-  factory _PosExtra.fromJson(Map<String, dynamic> json) =
-      _$PosExtraImpl.fromJson;
+          {required final int id,
+          required final String name,
+          final String? description,
+          required final String type,
+          required final double amount,
+          @JsonKey(name: 'amount_type') required final String amountType,
+          @JsonKey(name: 'is_active') required final bool isActive}) =
+      _$PosExtraImpl;
 
   @override
   int get id;
@@ -273,6 +257,7 @@ abstract class _PosExtra implements PosExtra {
   @JsonKey(name: 'amount_type')
   String get amountType;
   @override
+  @JsonKey(name: 'is_active')
   bool get isActive;
   @override
   @JsonKey(ignore: true)

@@ -4,7 +4,7 @@ import 'package:hop_pos/src/receipt_settings/models/receipt_setting.dart';
 @UseRowClass(ReceiptSetting)
 class ReceiptSettingsTable extends Table {
   @override
-  String get tableName => ReceiptSetting.table;
+  String get tableName => 'receipt_settings';
   IntColumn get id => integer().autoIncrement()();
   TextColumn get footerText => text().nullable().withLength(max: 999)();
   TextColumn get outstandingSpecimenTitle =>

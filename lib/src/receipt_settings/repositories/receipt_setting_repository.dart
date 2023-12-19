@@ -21,12 +21,12 @@ class ReceiptSettingRepository {
     required this.receiptSettingDao,
   });
 
-  Future<ReceiptSetting> insert(ReceiptSettingsTableCompanion setting) {
-    return receiptSettingDao.insertSetting(setting);
+  Future<ReceiptSetting> insert(ReceiptSettingsTableCompanion setting) async {
+    return await receiptSettingDao.insertSetting(setting);
   }
 
   Future<bool> update(
-      ReceiptSettingsTableCompanion setting, Expression<bool> where) {
-    return receiptSettingDao.updateSetting(setting, where);
+      ReceiptSettingsTableCompanion setting, Expression<bool> where) async {
+    return await receiptSettingDao.updateSetting(setting, where);
   }
 }

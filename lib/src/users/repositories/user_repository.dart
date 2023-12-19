@@ -20,11 +20,11 @@ class UserRepository {
     required this.userDao,
   });
 
-  Future<User> insert(UsersTableCompanion user) {
-    return userDao.insertUser(user);
+  Future<User> insert(UsersTableCompanion user) async {
+    return await userDao.insertUser(user);
   }
 
-  Future<bool> update(UsersTableCompanion user, Expression<bool> where) {
-    return userDao.updateUser(user, where);
+  Future<bool> update(UsersTableCompanion user, Expression<bool> where) async {
+    return await userDao.updateUser(user, where);
   }
 }

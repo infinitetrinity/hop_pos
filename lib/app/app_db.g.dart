@@ -47,7 +47,7 @@ class $UsersTableTable extends UsersTable
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'users_table';
+  static const String $name = 'users';
   @override
   VerificationContext validateIntegrity(Insertable<User> instance,
       {bool isInserting = false}) {
@@ -248,7 +248,7 @@ class $PosLicensesTableTable extends PosLicensesTable
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'pos_licenses_table';
+  static const String $name = 'pos_licenses';
   @override
   VerificationContext validateIntegrity(Insertable<PosLicense> instance,
       {bool isInserting = false}) {
@@ -535,7 +535,7 @@ class $CompanyTableTable extends CompanyTable
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'company_table';
+  static const String $name = 'company';
   @override
   VerificationContext validateIntegrity(Insertable<Company> instance,
       {bool isInserting = false}) {
@@ -843,7 +843,7 @@ class $ReceiptSettingsTableTable extends ReceiptSettingsTable
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'receipt_settings_table';
+  static const String $name = 'receipt_settings';
   @override
   VerificationContext validateIntegrity(Insertable<ReceiptSetting> instance,
       {bool isInserting = false}) {
@@ -1139,7 +1139,7 @@ class $PosExtrasTableTable extends PosExtrasTable
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'pos_extras_table';
+  static const String $name = 'pos_extras';
   @override
   VerificationContext validateIntegrity(Insertable<PosExtra> instance,
       {bool isInserting = false}) {

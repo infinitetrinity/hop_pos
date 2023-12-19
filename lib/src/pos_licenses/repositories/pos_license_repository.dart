@@ -21,12 +21,12 @@ class PosLicenseRepository {
     required this.posLicenseDao,
   });
 
-  Future<PosLicense> insert(PosLicensesTableCompanion license) {
-    return posLicenseDao.insertLicense(license);
+  Future<PosLicense> insert(PosLicensesTableCompanion license) async {
+    return await posLicenseDao.insertLicense(license);
   }
 
   Future<bool> update(
-      PosLicensesTableCompanion license, Expression<bool> where) {
-    return posLicenseDao.updateLicense(license, where);
+      PosLicensesTableCompanion license, Expression<bool> where) async {
+    return await posLicenseDao.updateLicense(license, where);
   }
 }

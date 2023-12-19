@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/common/models/api_response.dart';
 import 'package:hop_pos/src/company/models/company.dart';
+import 'package:hop_pos/src/login/models/initial_sync_data.dart';
 import 'package:hop_pos/src/pos_extras/models/pos_extra.dart';
 import 'package:hop_pos/src/pos_licenses/models/pos_license.dart';
 import 'package:hop_pos/src/receipt_settings/models/receipt_setting.dart';
@@ -11,6 +12,16 @@ class LoginResponse extends ApiResponse {
   final ApiResponse res;
 
   LoginResponse(this.res) : super(res.response);
+
+  InitialSyncData get initalSyncData {
+    return InitialSyncData(
+      user: userData,
+      posLicense: licenseData,
+      company: companyData,
+      receiptSettings: receiptSettingData,
+      posExtras: posExtrasData,
+    );
+  }
 
   String get token {
     return data['access_token'];
