@@ -5,6 +5,7 @@ import 'package:hop_pos/src/payment_methods/daos/payment_method_dao.dart';
 import 'package:hop_pos/src/pos_extras/daos/pos_extra_dao.dart';
 import 'package:hop_pos/src/pos_licenses/daos/pos_license_dao.dart';
 import 'package:hop_pos/src/product_categories/daos/product_category_dao.dart';
+import 'package:hop_pos/src/products/dao/product_dao.dart';
 import 'package:hop_pos/src/receipt_settings/daos/receipt_setting_dao.dart';
 import 'package:hop_pos/src/users/daos/user_dao.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -26,6 +27,7 @@ LoginRepository loginRepo(LoginRepoRef ref) {
         ref.watch(appDbProvider.select((prov) => prov.paymentMethodDao)),
     productCategoryDao:
         ref.watch(appDbProvider.select((prov) => prov.productCategoryDao)),
+    productDao: ref.watch(appDbProvider.select((prov) => prov.productDao)),
   );
 }
 
@@ -38,6 +40,7 @@ class LoginRepository {
   final PosExtraDao posExtraDao;
   final PaymentMethodDao paymentMethodDao;
   final ProductCategoryDao productCategoryDao;
+  final ProductDao productDao;
 
   LoginRepository({
     required this.db,
@@ -48,6 +51,7 @@ class LoginRepository {
     required this.posExtraDao,
     required this.paymentMethodDao,
     required this.productCategoryDao,
+    required this.productDao,
   });
 
   Future<void> sync(LoginResponse response) async {
@@ -60,6 +64,7 @@ class LoginRepository {
       await paymentMethodDao.insertMethods(response.getPaymentMethodsData());
       await productCategoryDao
           .insertCategories(response.getProductCategoriesData());
+      await productDao.insertProducts(response.getProductsData());
     });
   }
 }

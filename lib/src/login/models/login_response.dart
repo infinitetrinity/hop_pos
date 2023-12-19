@@ -6,6 +6,7 @@ import 'package:hop_pos/src/payment_methods/models/payment_method.dart';
 import 'package:hop_pos/src/pos_extras/models/pos_extra.dart';
 import 'package:hop_pos/src/pos_licenses/models/pos_license.dart';
 import 'package:hop_pos/src/product_categories/models/product_category.dart';
+import 'package:hop_pos/src/products/models/product.dart';
 import 'package:hop_pos/src/receipt_settings/models/receipt_setting.dart';
 import 'package:hop_pos/src/users/models/user.dart';
 
@@ -23,6 +24,7 @@ class LoginResponse with _$LoginResponse {
     required List<PosExtra> posExtras,
     required List<PaymentMethod> paymentMethods,
     required List<ProductCategory> productCategories,
+    required List<Product> products,
   }) = _LoginResponse;
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
@@ -40,6 +42,9 @@ class LoginResponse with _$LoginResponse {
       ),
       productCategories: List<ProductCategory>.from(
         json['product_categories'].map((el) => ProductCategory.fromJson(el)),
+      ),
+      products: List<Product>.from(
+        json['products'].map((el) => Product.fromJson(el)),
       ),
     );
   }
@@ -130,6 +135,22 @@ class LoginResponse with _$LoginResponse {
             name: drift.Value(category.name),
             description: drift.Value(category.description),
             colorCode: drift.Value(category.colorCode),
+          ),
+        )
+        .toList();
+  }
+
+  List<ProductsTableCompanion> getProductsData() {
+    return products
+        .map(
+          (product) => ProductsTableCompanion(
+            id: drift.Value(product.id),
+            name: drift.Value(product.name),
+            sku: drift.Value(product.sku),
+            price: drift.Value(product.price),
+            description: drift.Value(product.description),
+            colorCode: drift.Value(product.colorCode),
+            categoryId: drift.Value(product.categoryId),
           ),
         )
         .toList();

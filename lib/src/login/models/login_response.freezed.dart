@@ -24,6 +24,7 @@ mixin _$LoginResponse {
   List<PaymentMethod> get paymentMethods => throw _privateConstructorUsedError;
   List<ProductCategory> get productCategories =>
       throw _privateConstructorUsedError;
+  List<Product> get products => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LoginResponseCopyWith<LoginResponse> get copyWith =>
@@ -43,7 +44,8 @@ abstract class $LoginResponseCopyWith<$Res> {
       ReceiptSetting receiptSetting,
       List<PosExtra> posExtras,
       List<PaymentMethod> paymentMethods,
-      List<ProductCategory> productCategories});
+      List<ProductCategory> productCategories,
+      List<Product> products});
 
   $UserCopyWith<$Res> get user;
   $PosLicenseCopyWith<$Res> get posLicense;
@@ -71,6 +73,7 @@ class _$LoginResponseCopyWithImpl<$Res, $Val extends LoginResponse>
     Object? posExtras = null,
     Object? paymentMethods = null,
     Object? productCategories = null,
+    Object? products = null,
   }) {
     return _then(_value.copyWith(
       user: null == user
@@ -101,6 +104,10 @@ class _$LoginResponseCopyWithImpl<$Res, $Val extends LoginResponse>
           ? _value.productCategories
           : productCategories // ignore: cast_nullable_to_non_nullable
               as List<ProductCategory>,
+      products: null == products
+          ? _value.products
+          : products // ignore: cast_nullable_to_non_nullable
+              as List<Product>,
     ) as $Val);
   }
 
@@ -152,7 +159,8 @@ abstract class _$$LoginResponseImplCopyWith<$Res>
       ReceiptSetting receiptSetting,
       List<PosExtra> posExtras,
       List<PaymentMethod> paymentMethods,
-      List<ProductCategory> productCategories});
+      List<ProductCategory> productCategories,
+      List<Product> products});
 
   @override
   $UserCopyWith<$Res> get user;
@@ -182,6 +190,7 @@ class __$$LoginResponseImplCopyWithImpl<$Res>
     Object? posExtras = null,
     Object? paymentMethods = null,
     Object? productCategories = null,
+    Object? products = null,
   }) {
     return _then(_$LoginResponseImpl(
       user: null == user
@@ -212,6 +221,10 @@ class __$$LoginResponseImplCopyWithImpl<$Res>
           ? _value._productCategories
           : productCategories // ignore: cast_nullable_to_non_nullable
               as List<ProductCategory>,
+      products: null == products
+          ? _value._products
+          : products // ignore: cast_nullable_to_non_nullable
+              as List<Product>,
     ));
   }
 }
@@ -226,10 +239,12 @@ class _$LoginResponseImpl extends _LoginResponse {
       required this.receiptSetting,
       required final List<PosExtra> posExtras,
       required final List<PaymentMethod> paymentMethods,
-      required final List<ProductCategory> productCategories})
+      required final List<ProductCategory> productCategories,
+      required final List<Product> products})
       : _posExtras = posExtras,
         _paymentMethods = paymentMethods,
         _productCategories = productCategories,
+        _products = products,
         super._();
 
   @override
@@ -265,9 +280,17 @@ class _$LoginResponseImpl extends _LoginResponse {
     return EqualUnmodifiableListView(_productCategories);
   }
 
+  final List<Product> _products;
+  @override
+  List<Product> get products {
+    if (_products is EqualUnmodifiableListView) return _products;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_products);
+  }
+
   @override
   String toString() {
-    return 'LoginResponse(user: $user, posLicense: $posLicense, company: $company, receiptSetting: $receiptSetting, posExtras: $posExtras, paymentMethods: $paymentMethods, productCategories: $productCategories)';
+    return 'LoginResponse(user: $user, posLicense: $posLicense, company: $company, receiptSetting: $receiptSetting, posExtras: $posExtras, paymentMethods: $paymentMethods, productCategories: $productCategories, products: $products)';
   }
 
   @override
@@ -286,7 +309,8 @@ class _$LoginResponseImpl extends _LoginResponse {
             const DeepCollectionEquality()
                 .equals(other._paymentMethods, _paymentMethods) &&
             const DeepCollectionEquality()
-                .equals(other._productCategories, _productCategories));
+                .equals(other._productCategories, _productCategories) &&
+            const DeepCollectionEquality().equals(other._products, _products));
   }
 
   @override
@@ -298,7 +322,8 @@ class _$LoginResponseImpl extends _LoginResponse {
       receiptSetting,
       const DeepCollectionEquality().hash(_posExtras),
       const DeepCollectionEquality().hash(_paymentMethods),
-      const DeepCollectionEquality().hash(_productCategories));
+      const DeepCollectionEquality().hash(_productCategories),
+      const DeepCollectionEquality().hash(_products));
 
   @JsonKey(ignore: true)
   @override
@@ -309,14 +334,14 @@ class _$LoginResponseImpl extends _LoginResponse {
 
 abstract class _LoginResponse extends LoginResponse {
   const factory _LoginResponse(
-          {required final User user,
-          required final PosLicense posLicense,
-          required final Company company,
-          required final ReceiptSetting receiptSetting,
-          required final List<PosExtra> posExtras,
-          required final List<PaymentMethod> paymentMethods,
-          required final List<ProductCategory> productCategories}) =
-      _$LoginResponseImpl;
+      {required final User user,
+      required final PosLicense posLicense,
+      required final Company company,
+      required final ReceiptSetting receiptSetting,
+      required final List<PosExtra> posExtras,
+      required final List<PaymentMethod> paymentMethods,
+      required final List<ProductCategory> productCategories,
+      required final List<Product> products}) = _$LoginResponseImpl;
   const _LoginResponse._() : super._();
 
   @override
@@ -333,6 +358,8 @@ abstract class _LoginResponse extends LoginResponse {
   List<PaymentMethod> get paymentMethods;
   @override
   List<ProductCategory> get productCategories;
+  @override
+  List<Product> get products;
   @override
   @JsonKey(ignore: true)
   _$$LoginResponseImplCopyWith<_$LoginResponseImpl> get copyWith =>
