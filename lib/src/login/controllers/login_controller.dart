@@ -4,6 +4,7 @@ import 'package:hop_pos/src/common/models/api_response.dart';
 import 'package:hop_pos/src/common/models/validation_errors.dart';
 import 'package:hop_pos/src/common/services/api_service.dart';
 import 'package:hop_pos/src/common/services/flash_message.dart';
+import 'package:hop_pos/src/company/repositories/company_repository.dart';
 import 'package:hop_pos/src/login/models/login_request.dart';
 import 'package:hop_pos/src/login/responses/login_response.dart';
 import 'package:hop_pos/src/login/state/syncing_state.dart';
@@ -56,9 +57,11 @@ class LoginController extends _$LoginController {
     try {
       UserRepository userRepo = ref.read(userRepoProvider);
       PosLicenseRepository licenseRepo = ref.read(posLicenseRepoProvider);
+      CompanyRepository companyRepo = ref.read(companyRepoProvider);
 
       await userRepo.insert(response.userData);
       await licenseRepo.insert(response.licenseData);
+      await companyRepo.insert(response.companyData);
 
       flashMessage.flash(message: 'Initial sync completed.');
     } catch (e, stackTrace) {

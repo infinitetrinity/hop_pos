@@ -443,19 +443,346 @@ class PosLicensesTableCompanion extends UpdateCompanion<PosLicense> {
   }
 }
 
+class $CompanyTableTable extends CompanyTable
+    with TableInfo<$CompanyTableTable, Company> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CompanyTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _addressMeta =
+      const VerificationMeta('address');
+  @override
+  late final GeneratedColumn<String> address = GeneratedColumn<String>(
+      'address', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _postalCodeMeta =
+      const VerificationMeta('postalCode');
+  @override
+  late final GeneratedColumn<String> postalCode = GeneratedColumn<String>(
+      'postal_code', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+      'email', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _telephoneMeta =
+      const VerificationMeta('telephone');
+  @override
+  late final GeneratedColumn<String> telephone = GeneratedColumn<String>(
+      'telephone', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _faxMeta = const VerificationMeta('fax');
+  @override
+  late final GeneratedColumn<String> fax = GeneratedColumn<String>(
+      'fax', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _websiteMeta =
+      const VerificationMeta('website');
+  @override
+  late final GeneratedColumn<String> website = GeneratedColumn<String>(
+      'website', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _coRegistrationNoMeta =
+      const VerificationMeta('coRegistrationNo');
+  @override
+  late final GeneratedColumn<String> coRegistrationNo = GeneratedColumn<String>(
+      'co_registration_no', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        name,
+        address,
+        postalCode,
+        email,
+        telephone,
+        fax,
+        website,
+        coRegistrationNo
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'company_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<Company> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('address')) {
+      context.handle(_addressMeta,
+          address.isAcceptableOrUnknown(data['address']!, _addressMeta));
+    } else if (isInserting) {
+      context.missing(_addressMeta);
+    }
+    if (data.containsKey('postal_code')) {
+      context.handle(
+          _postalCodeMeta,
+          postalCode.isAcceptableOrUnknown(
+              data['postal_code']!, _postalCodeMeta));
+    } else if (isInserting) {
+      context.missing(_postalCodeMeta);
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+          _emailMeta, email.isAcceptableOrUnknown(data['email']!, _emailMeta));
+    } else if (isInserting) {
+      context.missing(_emailMeta);
+    }
+    if (data.containsKey('telephone')) {
+      context.handle(_telephoneMeta,
+          telephone.isAcceptableOrUnknown(data['telephone']!, _telephoneMeta));
+    } else if (isInserting) {
+      context.missing(_telephoneMeta);
+    }
+    if (data.containsKey('fax')) {
+      context.handle(
+          _faxMeta, fax.isAcceptableOrUnknown(data['fax']!, _faxMeta));
+    } else if (isInserting) {
+      context.missing(_faxMeta);
+    }
+    if (data.containsKey('website')) {
+      context.handle(_websiteMeta,
+          website.isAcceptableOrUnknown(data['website']!, _websiteMeta));
+    } else if (isInserting) {
+      context.missing(_websiteMeta);
+    }
+    if (data.containsKey('co_registration_no')) {
+      context.handle(
+          _coRegistrationNoMeta,
+          coRegistrationNo.isAcceptableOrUnknown(
+              data['co_registration_no']!, _coRegistrationNoMeta));
+    } else if (isInserting) {
+      context.missing(_coRegistrationNoMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Company map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Company(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      address: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}address'])!,
+      postalCode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}postal_code'])!,
+      email: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}email'])!,
+      telephone: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}telephone'])!,
+      fax: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}fax'])!,
+      website: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}website'])!,
+      coRegistrationNo: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}co_registration_no'])!,
+    );
+  }
+
+  @override
+  $CompanyTableTable createAlias(String alias) {
+    return $CompanyTableTable(attachedDatabase, alias);
+  }
+}
+
+class CompanyTableCompanion extends UpdateCompanion<Company> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String> address;
+  final Value<String> postalCode;
+  final Value<String> email;
+  final Value<String> telephone;
+  final Value<String> fax;
+  final Value<String> website;
+  final Value<String> coRegistrationNo;
+  const CompanyTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.address = const Value.absent(),
+    this.postalCode = const Value.absent(),
+    this.email = const Value.absent(),
+    this.telephone = const Value.absent(),
+    this.fax = const Value.absent(),
+    this.website = const Value.absent(),
+    this.coRegistrationNo = const Value.absent(),
+  });
+  CompanyTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required String address,
+    required String postalCode,
+    required String email,
+    required String telephone,
+    required String fax,
+    required String website,
+    required String coRegistrationNo,
+  })  : name = Value(name),
+        address = Value(address),
+        postalCode = Value(postalCode),
+        email = Value(email),
+        telephone = Value(telephone),
+        fax = Value(fax),
+        website = Value(website),
+        coRegistrationNo = Value(coRegistrationNo);
+  static Insertable<Company> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? address,
+    Expression<String>? postalCode,
+    Expression<String>? email,
+    Expression<String>? telephone,
+    Expression<String>? fax,
+    Expression<String>? website,
+    Expression<String>? coRegistrationNo,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (address != null) 'address': address,
+      if (postalCode != null) 'postal_code': postalCode,
+      if (email != null) 'email': email,
+      if (telephone != null) 'telephone': telephone,
+      if (fax != null) 'fax': fax,
+      if (website != null) 'website': website,
+      if (coRegistrationNo != null) 'co_registration_no': coRegistrationNo,
+    });
+  }
+
+  CompanyTableCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? name,
+      Value<String>? address,
+      Value<String>? postalCode,
+      Value<String>? email,
+      Value<String>? telephone,
+      Value<String>? fax,
+      Value<String>? website,
+      Value<String>? coRegistrationNo}) {
+    return CompanyTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      address: address ?? this.address,
+      postalCode: postalCode ?? this.postalCode,
+      email: email ?? this.email,
+      telephone: telephone ?? this.telephone,
+      fax: fax ?? this.fax,
+      website: website ?? this.website,
+      coRegistrationNo: coRegistrationNo ?? this.coRegistrationNo,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (address.present) {
+      map['address'] = Variable<String>(address.value);
+    }
+    if (postalCode.present) {
+      map['postal_code'] = Variable<String>(postalCode.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (telephone.present) {
+      map['telephone'] = Variable<String>(telephone.value);
+    }
+    if (fax.present) {
+      map['fax'] = Variable<String>(fax.value);
+    }
+    if (website.present) {
+      map['website'] = Variable<String>(website.value);
+    }
+    if (coRegistrationNo.present) {
+      map['co_registration_no'] = Variable<String>(coRegistrationNo.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CompanyTableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('address: $address, ')
+          ..write('postalCode: $postalCode, ')
+          ..write('email: $email, ')
+          ..write('telephone: $telephone, ')
+          ..write('fax: $fax, ')
+          ..write('website: $website, ')
+          ..write('coRegistrationNo: $coRegistrationNo')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   late final $UsersTableTable usersTable = $UsersTableTable(this);
   late final $PosLicensesTableTable posLicensesTable =
       $PosLicensesTableTable(this);
+  late final $CompanyTableTable companyTable = $CompanyTableTable(this);
   late final UserDao userDao = UserDao(this as AppDb);
   late final PosLicenseDao posLicenseDao = PosLicenseDao(this as AppDb);
+  late final CompanyDao companyDao = CompanyDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [usersTable, posLicensesTable];
+      [usersTable, posLicensesTable, companyTable];
 }
 
 // **************************************************************************

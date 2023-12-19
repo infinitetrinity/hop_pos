@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:hop_pos/src/company/daos/company_dao.dart';
+import 'package:hop_pos/src/company/models/company.dart';
+import 'package:hop_pos/src/company/models/company_table.dart';
 import 'package:hop_pos/src/pos_licenses/daos/pos_license_dao.dart';
 import 'package:hop_pos/src/pos_licenses/models/pos_license.dart';
 import 'package:hop_pos/src/pos_licenses/models/pos_licenses_table.dart';
@@ -24,9 +27,11 @@ AppDb appDb(AppDbRef ref) {
 @DriftDatabase(tables: [
   UsersTable,
   PosLicensesTable,
+  CompanyTable,
 ], daos: [
   UserDao,
   PosLicenseDao,
+  CompanyDao,
 ])
 class AppDb extends _$AppDb {
   AppDb._init() : super(initDb());

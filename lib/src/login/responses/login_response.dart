@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/common/models/api_response.dart';
+import 'package:hop_pos/src/company/models/company.dart';
 import 'package:hop_pos/src/pos_licenses/models/pos_license.dart';
 import 'package:hop_pos/src/users/models/user.dart';
 
@@ -38,6 +39,24 @@ class LoginResponse extends ApiResponse {
       password: Value(license.password),
       isActive: Value(license.isActive),
       isActivated: Value(license.isActivated),
+    );
+  }
+
+  Company get company {
+    return Company.fromJson(data['company']);
+  }
+
+  CompanyTableCompanion get companyData {
+    return CompanyTableCompanion(
+      id: Value(company.id),
+      name: Value(company.name),
+      address: Value(company.address),
+      postalCode: Value(company.postalCode),
+      email: Value(company.email),
+      telephone: Value(company.telephone),
+      fax: Value(company.fax),
+      website: Value(company.website),
+      coRegistrationNo: Value(company.coRegistrationNo),
     );
   }
 }
