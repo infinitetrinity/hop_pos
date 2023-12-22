@@ -76,9 +76,14 @@ class AppDb extends _$AppDb {
   }
 
   Future<void> deleteDb() async {
+    await instance.close();
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, name));
-    await file.delete();
+    final exists = await file.exists();
+    if (exists) {
+      print('deleting database');
+      await file.delete();
+    }
   }
 
   static LazyDatabase initDb() {

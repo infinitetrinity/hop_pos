@@ -8,7 +8,6 @@ class User with _$User {
   const factory User({
     required int id,
     @JsonKey(name: 'full_name') required String fullName,
-    @JsonKey(name: 'access_token') String? accessToken,
     @JsonKey(name: 'last_synced_at') DateTime? lastSyncedAt,
   }) = _User;
 

@@ -1,13 +1,6 @@
 import 'package:hop_pos/app/app_db.dart';
-import 'package:hop_pos/src/company/daos/company_dao.dart';
+import 'package:hop_pos/src/common/services/auth_token.dart';
 import 'package:hop_pos/src/login/models/login_response.dart';
-import 'package:hop_pos/src/payment_methods/daos/payment_method_dao.dart';
-import 'package:hop_pos/src/pos_extras/daos/pos_extra_dao.dart';
-import 'package:hop_pos/src/pos_licenses/daos/pos_license_dao.dart';
-import 'package:hop_pos/src/product_categories/daos/product_category_dao.dart';
-import 'package:hop_pos/src/products/dao/product_dao.dart';
-import 'package:hop_pos/src/receipt_settings/daos/receipt_setting_dao.dart';
-import 'package:hop_pos/src/users/daos/user_dao.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'login_repository.g.dart';
@@ -16,55 +9,31 @@ part 'login_repository.g.dart';
 LoginRepository loginRepo(LoginRepoRef ref) {
   return LoginRepository(
     db: ref.watch(appDbProvider),
-    userDao: ref.watch(appDbProvider.select((prov) => prov.userDao)),
-    posLicenseDao:
-        ref.watch(appDbProvider.select((prov) => prov.posLicenseDao)),
-    companyDao: ref.watch(appDbProvider.select((prov) => prov.companyDao)),
-    receiptSettingDao:
-        ref.watch(appDbProvider.select((prov) => prov.receiptSettingDao)),
-    posExtraDao: ref.watch(appDbProvider.select((prov) => prov.posExtraDao)),
-    paymentMethodDao:
-        ref.watch(appDbProvider.select((prov) => prov.paymentMethodDao)),
-    productCategoryDao:
-        ref.watch(appDbProvider.select((prov) => prov.productCategoryDao)),
-    productDao: ref.watch(appDbProvider.select((prov) => prov.productDao)),
   );
 }
 
 class LoginRepository {
   final AppDb db;
-  final UserDao userDao;
-  final PosLicenseDao posLicenseDao;
-  final CompanyDao companyDao;
-  final ReceiptSettingDao receiptSettingDao;
-  final PosExtraDao posExtraDao;
-  final PaymentMethodDao paymentMethodDao;
-  final ProductCategoryDao productCategoryDao;
-  final ProductDao productDao;
 
   LoginRepository({
     required this.db,
-    required this.userDao,
-    required this.posLicenseDao,
-    required this.companyDao,
-    required this.receiptSettingDao,
-    required this.posExtraDao,
-    required this.paymentMethodDao,
-    required this.productCategoryDao,
-    required this.productDao,
   });
 
   Future<void> sync(LoginResponse response) async {
+    await db.deleteDb();
+    await AuthToken.setAuthToken(response.accessToken);
+
     return await db.transaction(() async {
-      await userDao.insertUser(response.getUserData());
-      await posLicenseDao.insertLicense(response.getPosLicenseData());
-      await companyDao.insertCompany(response.getCompanyData());
-      await receiptSettingDao.insertSetting(response.getReceiptSettingData());
-      await posExtraDao.insertExtras(response.getPosExtrasData());
-      await paymentMethodDao.insertMethods(response.getPaymentMethodsData());
-      await productCategoryDao
+      await db.userDao.insertUser(response.getUserData());
+      await db.posLicenseDao.insertLicense(response.getPosLicenseData());
+      await db.companyDao.insertCompany(response.getCompanyData());
+      await db.receiptSettingDao
+          .insertSetting(response.getReceiptSettingData());
+      await db.posExtraDao.insertExtras(response.getPosExtrasData());
+      await db.paymentMethodDao.insertMethods(response.getPaymentMethodsData());
+      await db.productCategoryDao
           .insertCategories(response.getProductCategoriesData());
-      await productDao.insertProducts(response.getProductsData());
+      await db.productDao.insertProducts(response.getProductsData());
     });
   }
 }

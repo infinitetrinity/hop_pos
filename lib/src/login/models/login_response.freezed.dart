@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LoginResponse {
+  String get accessToken => throw _privateConstructorUsedError;
   User get user => throw _privateConstructorUsedError;
   PosLicense get posLicense => throw _privateConstructorUsedError;
   Company get company => throw _privateConstructorUsedError;
@@ -38,7 +39,8 @@ abstract class $LoginResponseCopyWith<$Res> {
       _$LoginResponseCopyWithImpl<$Res, LoginResponse>;
   @useResult
   $Res call(
-      {User user,
+      {String accessToken,
+      User user,
       PosLicense posLicense,
       Company company,
       ReceiptSetting receiptSetting,
@@ -66,6 +68,7 @@ class _$LoginResponseCopyWithImpl<$Res, $Val extends LoginResponse>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? accessToken = null,
     Object? user = null,
     Object? posLicense = null,
     Object? company = null,
@@ -76,6 +79,10 @@ class _$LoginResponseCopyWithImpl<$Res, $Val extends LoginResponse>
     Object? products = null,
   }) {
     return _then(_value.copyWith(
+      accessToken: null == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
+              as String,
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -153,7 +160,8 @@ abstract class _$$LoginResponseImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {User user,
+      {String accessToken,
+      User user,
       PosLicense posLicense,
       Company company,
       ReceiptSetting receiptSetting,
@@ -183,6 +191,7 @@ class __$$LoginResponseImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? accessToken = null,
     Object? user = null,
     Object? posLicense = null,
     Object? company = null,
@@ -193,6 +202,10 @@ class __$$LoginResponseImplCopyWithImpl<$Res>
     Object? products = null,
   }) {
     return _then(_$LoginResponseImpl(
+      accessToken: null == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
+              as String,
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -233,7 +246,8 @@ class __$$LoginResponseImplCopyWithImpl<$Res>
 
 class _$LoginResponseImpl extends _LoginResponse {
   const _$LoginResponseImpl(
-      {required this.user,
+      {required this.accessToken,
+      required this.user,
       required this.posLicense,
       required this.company,
       required this.receiptSetting,
@@ -247,6 +261,8 @@ class _$LoginResponseImpl extends _LoginResponse {
         _products = products,
         super._();
 
+  @override
+  final String accessToken;
   @override
   final User user;
   @override
@@ -290,7 +306,7 @@ class _$LoginResponseImpl extends _LoginResponse {
 
   @override
   String toString() {
-    return 'LoginResponse(user: $user, posLicense: $posLicense, company: $company, receiptSetting: $receiptSetting, posExtras: $posExtras, paymentMethods: $paymentMethods, productCategories: $productCategories, products: $products)';
+    return 'LoginResponse(accessToken: $accessToken, user: $user, posLicense: $posLicense, company: $company, receiptSetting: $receiptSetting, posExtras: $posExtras, paymentMethods: $paymentMethods, productCategories: $productCategories, products: $products)';
   }
 
   @override
@@ -298,6 +314,8 @@ class _$LoginResponseImpl extends _LoginResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoginResponseImpl &&
+            (identical(other.accessToken, accessToken) ||
+                other.accessToken == accessToken) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.posLicense, posLicense) ||
                 other.posLicense == posLicense) &&
@@ -316,6 +334,7 @@ class _$LoginResponseImpl extends _LoginResponse {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      accessToken,
       user,
       posLicense,
       company,
@@ -334,7 +353,8 @@ class _$LoginResponseImpl extends _LoginResponse {
 
 abstract class _LoginResponse extends LoginResponse {
   const factory _LoginResponse(
-      {required final User user,
+      {required final String accessToken,
+      required final User user,
       required final PosLicense posLicense,
       required final Company company,
       required final ReceiptSetting receiptSetting,
@@ -344,6 +364,8 @@ abstract class _LoginResponse extends LoginResponse {
       required final List<Product> products}) = _$LoginResponseImpl;
   const _LoginResponse._() : super._();
 
+  @override
+  String get accessToken;
   @override
   User get user;
   @override

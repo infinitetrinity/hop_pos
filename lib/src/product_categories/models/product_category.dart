@@ -15,6 +15,12 @@ class ProductCategory with _$ProductCategory {
   factory ProductCategory.fromJson(Map<String, dynamic> json) =>
       _$ProductCategoryFromJson(json);
 
+  static List<ProductCategory> fromJsonList(dynamic data) {
+    return List<ProductCategory>.from(
+      data.map((el) => ProductCategory.fromJson(el)),
+    );
+  }
+
   static String get table {
     return 'product_categories';
   }

@@ -23,8 +23,6 @@ mixin _$User {
   int get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'full_name')
   String get fullName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'access_token')
-  String? get accessToken => throw _privateConstructorUsedError;
   @JsonKey(name: 'last_synced_at')
   DateTime? get lastSyncedAt => throw _privateConstructorUsedError;
 
@@ -41,7 +39,6 @@ abstract class $UserCopyWith<$Res> {
   $Res call(
       {int id,
       @JsonKey(name: 'full_name') String fullName,
-      @JsonKey(name: 'access_token') String? accessToken,
       @JsonKey(name: 'last_synced_at') DateTime? lastSyncedAt});
 }
 
@@ -60,7 +57,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   $Res call({
     Object? id = null,
     Object? fullName = null,
-    Object? accessToken = freezed,
     Object? lastSyncedAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -72,10 +68,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String,
-      accessToken: freezed == accessToken
-          ? _value.accessToken
-          : accessToken // ignore: cast_nullable_to_non_nullable
-              as String?,
       lastSyncedAt: freezed == lastSyncedAt
           ? _value.lastSyncedAt
           : lastSyncedAt // ignore: cast_nullable_to_non_nullable
@@ -94,7 +86,6 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   $Res call(
       {int id,
       @JsonKey(name: 'full_name') String fullName,
-      @JsonKey(name: 'access_token') String? accessToken,
       @JsonKey(name: 'last_synced_at') DateTime? lastSyncedAt});
 }
 
@@ -110,7 +101,6 @@ class __$$UserImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? fullName = null,
-    Object? accessToken = freezed,
     Object? lastSyncedAt = freezed,
   }) {
     return _then(_$UserImpl(
@@ -122,10 +112,6 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String,
-      accessToken: freezed == accessToken
-          ? _value.accessToken
-          : accessToken // ignore: cast_nullable_to_non_nullable
-              as String?,
       lastSyncedAt: freezed == lastSyncedAt
           ? _value.lastSyncedAt
           : lastSyncedAt // ignore: cast_nullable_to_non_nullable
@@ -140,7 +126,6 @@ class _$UserImpl implements _User {
   const _$UserImpl(
       {required this.id,
       @JsonKey(name: 'full_name') required this.fullName,
-      @JsonKey(name: 'access_token') this.accessToken,
       @JsonKey(name: 'last_synced_at') this.lastSyncedAt});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
@@ -152,15 +137,12 @@ class _$UserImpl implements _User {
   @JsonKey(name: 'full_name')
   final String fullName;
   @override
-  @JsonKey(name: 'access_token')
-  final String? accessToken;
-  @override
   @JsonKey(name: 'last_synced_at')
   final DateTime? lastSyncedAt;
 
   @override
   String toString() {
-    return 'User(id: $id, fullName: $fullName, accessToken: $accessToken, lastSyncedAt: $lastSyncedAt)';
+    return 'User(id: $id, fullName: $fullName, lastSyncedAt: $lastSyncedAt)';
   }
 
   @override
@@ -171,16 +153,13 @@ class _$UserImpl implements _User {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.fullName, fullName) ||
                 other.fullName == fullName) &&
-            (identical(other.accessToken, accessToken) ||
-                other.accessToken == accessToken) &&
             (identical(other.lastSyncedAt, lastSyncedAt) ||
                 other.lastSyncedAt == lastSyncedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, fullName, accessToken, lastSyncedAt);
+  int get hashCode => Object.hash(runtimeType, id, fullName, lastSyncedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -200,7 +179,6 @@ abstract class _User implements User {
   const factory _User(
           {required final int id,
           @JsonKey(name: 'full_name') required final String fullName,
-          @JsonKey(name: 'access_token') final String? accessToken,
           @JsonKey(name: 'last_synced_at') final DateTime? lastSyncedAt}) =
       _$UserImpl;
 
@@ -211,9 +189,6 @@ abstract class _User implements User {
   @override
   @JsonKey(name: 'full_name')
   String get fullName;
-  @override
-  @JsonKey(name: 'access_token')
-  String? get accessToken;
   @override
   @JsonKey(name: 'last_synced_at')
   DateTime? get lastSyncedAt;

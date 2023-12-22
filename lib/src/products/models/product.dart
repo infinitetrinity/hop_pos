@@ -26,6 +26,12 @@ class Product with _$Product {
     );
   }
 
+  static List<Product> fromJsonList(dynamic data) {
+    return List<Product>.from(
+      data.map((el) => Product.fromJson(el)),
+    );
+  }
+
   static String get table {
     return 'products';
   }

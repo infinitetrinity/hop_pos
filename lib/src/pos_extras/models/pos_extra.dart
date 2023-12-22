@@ -26,6 +26,12 @@ class PosExtra with _$PosExtra {
     );
   }
 
+  static List<PosExtra> fromJsonList(dynamic data) {
+    return List<PosExtra>.from(
+      data.map((el) => PosExtra.fromJson(el)),
+    );
+  }
+
   static String get table {
     return 'pos_extras';
   }

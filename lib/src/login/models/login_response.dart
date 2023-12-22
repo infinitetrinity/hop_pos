@@ -17,6 +17,7 @@ class LoginResponse with _$LoginResponse {
   const LoginResponse._();
 
   const factory LoginResponse({
+    required String accessToken,
     required User user,
     required PosLicense posLicense,
     required Company company,
@@ -29,23 +30,16 @@ class LoginResponse with _$LoginResponse {
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
-      user: User.fromJson(json['user'])
-          .copyWith(accessToken: json['access_token']),
+      accessToken: json['access_token'],
+      user: User.fromJson(json['user']),
       posLicense: PosLicense.fromJson(json['pos_license']),
       company: Company.fromJson(json['company']),
       receiptSetting: ReceiptSetting.fromJson(json['receipt_settings']),
-      posExtras: List<PosExtra>.from(
-        json['pos_extras'].map((el) => PosExtra.fromJson(el)),
-      ),
-      paymentMethods: List<PaymentMethod>.from(
-        json['payment_methods'].map((el) => PaymentMethod.fromJson(el)),
-      ),
-      productCategories: List<ProductCategory>.from(
-        json['product_categories'].map((el) => ProductCategory.fromJson(el)),
-      ),
-      products: List<Product>.from(
-        json['products'].map((el) => Product.fromJson(el)),
-      ),
+      posExtras: PosExtra.fromJsonList(json['pos_extras']),
+      paymentMethods: PaymentMethod.fromJsonList(json['payment_methods']),
+      productCategories:
+          ProductCategory.fromJsonList(json['product_categories']),
+      products: Product.fromJsonList(json['products']),
     );
   }
 
@@ -53,7 +47,6 @@ class LoginResponse with _$LoginResponse {
     return UsersTableCompanion(
       id: drift.Value(user.id),
       fullName: drift.Value(user.fullName),
-      accessToken: drift.Value.ofNullable(user.accessToken),
     );
   }
 

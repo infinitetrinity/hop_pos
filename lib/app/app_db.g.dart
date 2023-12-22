@@ -26,14 +26,6 @@ class $UsersTableTable extends UsersTable
       additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
       type: DriftSqlType.string,
       requiredDuringInsert: true);
-  static const VerificationMeta _accessTokenMeta =
-      const VerificationMeta('accessToken');
-  @override
-  late final GeneratedColumn<String> accessToken = GeneratedColumn<String>(
-      'access_token', aliasedName, false,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
-      type: DriftSqlType.string,
-      requiredDuringInsert: true);
   static const VerificationMeta _lastSyncedAtMeta =
       const VerificationMeta('lastSyncedAt');
   @override
@@ -41,8 +33,7 @@ class $UsersTableTable extends UsersTable
       'last_synced_at', aliasedName, true,
       type: DriftSqlType.dateTime, requiredDuringInsert: false);
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, fullName, accessToken, lastSyncedAt];
+  List<GeneratedColumn> get $columns => [id, fullName, lastSyncedAt];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -61,14 +52,6 @@ class $UsersTableTable extends UsersTable
           fullName.isAcceptableOrUnknown(data['full_name']!, _fullNameMeta));
     } else if (isInserting) {
       context.missing(_fullNameMeta);
-    }
-    if (data.containsKey('access_token')) {
-      context.handle(
-          _accessTokenMeta,
-          accessToken.isAcceptableOrUnknown(
-              data['access_token']!, _accessTokenMeta));
-    } else if (isInserting) {
-      context.missing(_accessTokenMeta);
     }
     if (data.containsKey('last_synced_at')) {
       context.handle(
@@ -89,8 +72,6 @@ class $UsersTableTable extends UsersTable
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       fullName: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}full_name'])!,
-      accessToken: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}access_token'])!,
       lastSyncedAt: attachedDatabase.typeMapping.read(
           DriftSqlType.dateTime, data['${effectivePrefix}last_synced_at']),
     );
@@ -105,31 +86,25 @@ class $UsersTableTable extends UsersTable
 class UsersTableCompanion extends UpdateCompanion<User> {
   final Value<int> id;
   final Value<String> fullName;
-  final Value<String> accessToken;
   final Value<DateTime?> lastSyncedAt;
   const UsersTableCompanion({
     this.id = const Value.absent(),
     this.fullName = const Value.absent(),
-    this.accessToken = const Value.absent(),
     this.lastSyncedAt = const Value.absent(),
   });
   UsersTableCompanion.insert({
     this.id = const Value.absent(),
     required String fullName,
-    required String accessToken,
     this.lastSyncedAt = const Value.absent(),
-  })  : fullName = Value(fullName),
-        accessToken = Value(accessToken);
+  }) : fullName = Value(fullName);
   static Insertable<User> custom({
     Expression<int>? id,
     Expression<String>? fullName,
-    Expression<String>? accessToken,
     Expression<DateTime>? lastSyncedAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (fullName != null) 'full_name': fullName,
-      if (accessToken != null) 'access_token': accessToken,
       if (lastSyncedAt != null) 'last_synced_at': lastSyncedAt,
     });
   }
@@ -137,12 +112,10 @@ class UsersTableCompanion extends UpdateCompanion<User> {
   UsersTableCompanion copyWith(
       {Value<int>? id,
       Value<String>? fullName,
-      Value<String>? accessToken,
       Value<DateTime?>? lastSyncedAt}) {
     return UsersTableCompanion(
       id: id ?? this.id,
       fullName: fullName ?? this.fullName,
-      accessToken: accessToken ?? this.accessToken,
       lastSyncedAt: lastSyncedAt ?? this.lastSyncedAt,
     );
   }
@@ -156,9 +129,6 @@ class UsersTableCompanion extends UpdateCompanion<User> {
     if (fullName.present) {
       map['full_name'] = Variable<String>(fullName.value);
     }
-    if (accessToken.present) {
-      map['access_token'] = Variable<String>(accessToken.value);
-    }
     if (lastSyncedAt.present) {
       map['last_synced_at'] = Variable<DateTime>(lastSyncedAt.value);
     }
@@ -170,7 +140,6 @@ class UsersTableCompanion extends UpdateCompanion<User> {
     return (StringBuffer('UsersTableCompanion(')
           ..write('id: $id, ')
           ..write('fullName: $fullName, ')
-          ..write('accessToken: $accessToken, ')
           ..write('lastSyncedAt: $lastSyncedAt')
           ..write(')'))
         .toString();

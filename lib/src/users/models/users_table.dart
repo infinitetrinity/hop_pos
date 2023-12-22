@@ -7,6 +7,5 @@ class UsersTable extends Table {
   String get tableName => 'users';
   IntColumn get id => integer().autoIncrement()();
   TextColumn get fullName => text().withLength(max: 255)();
-  TextColumn get accessToken => text().withLength(max: 255)();
   DateTimeColumn get lastSyncedAt => dateTime().nullable()();
 }
