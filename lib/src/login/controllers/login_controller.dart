@@ -1,3 +1,4 @@
+import 'package:hop_pos/app/api_routes.dart';
 import 'package:hop_pos/app/app_exceptions.dart';
 import 'package:hop_pos/src/common/models/api_request.dart';
 import 'package:hop_pos/src/common/models/api_response.dart';
@@ -21,20 +22,25 @@ class LoginController extends _$LoginController {
   }
 
   Future<ValidationErrors?> login(LoginRequest request) async {
+    FlashMessage flashMessage = ref.read(flashMessageProvider);
     ApiService api = ref.read(apiServiceProvider);
 
     try {
       ApiResponse? response = await api.post(
         ApiRequest(
-          path: 'license-activation',
+          path: ApiRoutes.activateLicense,
           data: request.toJson(),
         ),
       );
 
       if (response != null) {
+        await ref.read(syncingStateProvider.notifier).syncing();
         await _syncInitialisationData(LoginResponse.fromJson(response.data));
+        await _downloadInitData();
+        await ref.read(syncingStateProvider.notifier).syncing(isSyncing: false);
+        flashMessage.flash(message: 'Initial sync completed.');
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
       if (e is ApiValidationError) {
         return e.errors;
       }
@@ -43,29 +49,61 @@ class LoginController extends _$LoginController {
           'general': [e.message]
         });
       }
+      final logger = Logger();
+      logger.e("Login error", error: e, stackTrace: stackTrace);
+
+      flashMessage.flash(
+        message: 'Unexpected error in logging in',
+        type: FlashMessageType.error,
+      );
     }
 
     return null;
   }
 
+  Future<void> _downloadInitData({int page = 1}) async {
+    FlashMessage flashMessage = ref.read(flashMessageProvider);
+    ApiService api = ref.read(apiServiceProvider);
+
+    try {
+      ApiResponse? response = await api.post(
+        ApiRequest(path: ApiRoutes.downloadInitData, data: {
+          'page': page,
+        }),
+      );
+
+      if (response != null) {
+        print(response.data);
+      }
+    } catch (e, stackTrace) {
+      final logger = Logger();
+      logger.e("Download initial data error", error: e, stackTrace: stackTrace);
+
+      flashMessage.flash(
+        message: 'Unexpected error in dowloading data',
+        type: FlashMessageType.error,
+      );
+
+      rethrow;
+    }
+  }
+
   Future<void> _syncInitialisationData(LoginResponse response) async {
     FlashMessage flashMessage = ref.read(flashMessageProvider);
-    await ref.read(syncingStateProvider.notifier).syncing();
 
     try {
       LoginRepository repo = ref.read(loginRepoProvider);
       await repo.sync(response);
-      flashMessage.flash(message: 'Initial sync completed.');
     } catch (e, stackTrace) {
       final logger = Logger();
       logger.e("Initial sync error", error: e, stackTrace: stackTrace);
 
       flashMessage.flash(
-        message: 'Unexpected Error',
+        message: 'Unexpected error in syncing data',
         type: FlashMessageType.error,
       );
-    }
 
-    await ref.read(syncingStateProvider.notifier).syncing(isSyncing: false);
+      rethrow;
+    }
   }
 }
