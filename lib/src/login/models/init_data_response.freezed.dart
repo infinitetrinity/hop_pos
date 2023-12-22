@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$InitDataResponse {
   bool get hasNextPage => throw _privateConstructorUsedError;
   List<Customer> get customers => throw _privateConstructorUsedError;
+  List<Screening> get screenings => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $InitDataResponseCopyWith<InitDataResponse> get copyWith =>
@@ -30,7 +31,8 @@ abstract class $InitDataResponseCopyWith<$Res> {
           InitDataResponse value, $Res Function(InitDataResponse) then) =
       _$InitDataResponseCopyWithImpl<$Res, InitDataResponse>;
   @useResult
-  $Res call({bool hasNextPage, List<Customer> customers});
+  $Res call(
+      {bool hasNextPage, List<Customer> customers, List<Screening> screenings});
 }
 
 /// @nodoc
@@ -48,6 +50,7 @@ class _$InitDataResponseCopyWithImpl<$Res, $Val extends InitDataResponse>
   $Res call({
     Object? hasNextPage = null,
     Object? customers = null,
+    Object? screenings = null,
   }) {
     return _then(_value.copyWith(
       hasNextPage: null == hasNextPage
@@ -58,6 +61,10 @@ class _$InitDataResponseCopyWithImpl<$Res, $Val extends InitDataResponse>
           ? _value.customers
           : customers // ignore: cast_nullable_to_non_nullable
               as List<Customer>,
+      screenings: null == screenings
+          ? _value.screenings
+          : screenings // ignore: cast_nullable_to_non_nullable
+              as List<Screening>,
     ) as $Val);
   }
 }
@@ -70,7 +77,8 @@ abstract class _$$InitDataResponseImplCopyWith<$Res>
       __$$InitDataResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool hasNextPage, List<Customer> customers});
+  $Res call(
+      {bool hasNextPage, List<Customer> customers, List<Screening> screenings});
 }
 
 /// @nodoc
@@ -86,6 +94,7 @@ class __$$InitDataResponseImplCopyWithImpl<$Res>
   $Res call({
     Object? hasNextPage = null,
     Object? customers = null,
+    Object? screenings = null,
   }) {
     return _then(_$InitDataResponseImpl(
       hasNextPage: null == hasNextPage
@@ -96,6 +105,10 @@ class __$$InitDataResponseImplCopyWithImpl<$Res>
           ? _value._customers
           : customers // ignore: cast_nullable_to_non_nullable
               as List<Customer>,
+      screenings: null == screenings
+          ? _value._screenings
+          : screenings // ignore: cast_nullable_to_non_nullable
+              as List<Screening>,
     ));
   }
 }
@@ -104,8 +117,11 @@ class __$$InitDataResponseImplCopyWithImpl<$Res>
 
 class _$InitDataResponseImpl extends _InitDataResponse {
   const _$InitDataResponseImpl(
-      {required this.hasNextPage, required final List<Customer> customers})
+      {required this.hasNextPage,
+      required final List<Customer> customers,
+      required final List<Screening> screenings})
       : _customers = customers,
+        _screenings = screenings,
         super._();
 
   @override
@@ -118,9 +134,17 @@ class _$InitDataResponseImpl extends _InitDataResponse {
     return EqualUnmodifiableListView(_customers);
   }
 
+  final List<Screening> _screenings;
+  @override
+  List<Screening> get screenings {
+    if (_screenings is EqualUnmodifiableListView) return _screenings;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_screenings);
+  }
+
   @override
   String toString() {
-    return 'InitDataResponse(hasNextPage: $hasNextPage, customers: $customers)';
+    return 'InitDataResponse(hasNextPage: $hasNextPage, customers: $customers, screenings: $screenings)';
   }
 
   @override
@@ -131,12 +155,17 @@ class _$InitDataResponseImpl extends _InitDataResponse {
             (identical(other.hasNextPage, hasNextPage) ||
                 other.hasNextPage == hasNextPage) &&
             const DeepCollectionEquality()
-                .equals(other._customers, _customers));
+                .equals(other._customers, _customers) &&
+            const DeepCollectionEquality()
+                .equals(other._screenings, _screenings));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, hasNextPage,
-      const DeepCollectionEquality().hash(_customers));
+  int get hashCode => Object.hash(
+      runtimeType,
+      hasNextPage,
+      const DeepCollectionEquality().hash(_customers),
+      const DeepCollectionEquality().hash(_screenings));
 
   @JsonKey(ignore: true)
   @override
@@ -149,13 +178,16 @@ class _$InitDataResponseImpl extends _InitDataResponse {
 abstract class _InitDataResponse extends InitDataResponse {
   const factory _InitDataResponse(
       {required final bool hasNextPage,
-      required final List<Customer> customers}) = _$InitDataResponseImpl;
+      required final List<Customer> customers,
+      required final List<Screening> screenings}) = _$InitDataResponseImpl;
   const _InitDataResponse._() : super._();
 
   @override
   bool get hasNextPage;
   @override
   List<Customer> get customers;
+  @override
+  List<Screening> get screenings;
   @override
   @JsonKey(ignore: true)
   _$$InitDataResponseImplCopyWith<_$InitDataResponseImpl> get copyWith =>

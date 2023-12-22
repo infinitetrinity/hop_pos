@@ -23,6 +23,7 @@ class LoginRepository {
   Future<void> setInitData(InitDataResponse response) async {
     return await db.transaction(() async {
       await db.customerDao.insertCustomers(response.getCustomersData());
+      await db.screeningDao.insertScreenings(response.getScreeningsData());
     });
   }
 

@@ -2126,6 +2126,146 @@ class CustomersTableCompanion extends UpdateCompanion<Customer> {
   }
 }
 
+class $ScreeningsTableTable extends ScreeningsTable
+    with TableInfo<$ScreeningsTableTable, Screening> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ScreeningsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _corporateMeta =
+      const VerificationMeta('corporate');
+  @override
+  late final GeneratedColumn<String> corporate = GeneratedColumn<String>(
+      'corporate', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [id, name, corporate];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'screenings';
+  @override
+  VerificationContext validateIntegrity(Insertable<Screening> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('corporate')) {
+      context.handle(_corporateMeta,
+          corporate.isAcceptableOrUnknown(data['corporate']!, _corporateMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Screening map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Screening(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      corporate: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}corporate']),
+    );
+  }
+
+  @override
+  $ScreeningsTableTable createAlias(String alias) {
+    return $ScreeningsTableTable(attachedDatabase, alias);
+  }
+}
+
+class ScreeningsTableCompanion extends UpdateCompanion<Screening> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String?> corporate;
+  const ScreeningsTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.corporate = const Value.absent(),
+  });
+  ScreeningsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    this.corporate = const Value.absent(),
+  }) : name = Value(name);
+  static Insertable<Screening> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? corporate,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (corporate != null) 'corporate': corporate,
+    });
+  }
+
+  ScreeningsTableCompanion copyWith(
+      {Value<int>? id, Value<String>? name, Value<String?>? corporate}) {
+    return ScreeningsTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      corporate: corporate ?? this.corporate,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (corporate.present) {
+      map['corporate'] = Variable<String>(corporate.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ScreeningsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('corporate: $corporate')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   late final $UsersTableTable usersTable = $UsersTableTable(this);
@@ -2141,6 +2281,8 @@ abstract class _$AppDb extends GeneratedDatabase {
       $ProductCategoriesTableTable(this);
   late final $ProductsTableTable productsTable = $ProductsTableTable(this);
   late final $CustomersTableTable customersTable = $CustomersTableTable(this);
+  late final $ScreeningsTableTable screeningsTable =
+      $ScreeningsTableTable(this);
   late final UserDao userDao = UserDao(this as AppDb);
   late final PosLicenseDao posLicenseDao = PosLicenseDao(this as AppDb);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
@@ -2153,6 +2295,7 @@ abstract class _$AppDb extends GeneratedDatabase {
       ProductCategoryDao(this as AppDb);
   late final ProductDao productDao = ProductDao(this as AppDb);
   late final CustomerDao customerDao = CustomerDao(this as AppDb);
+  late final ScreeningDao screeningDao = ScreeningDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2166,7 +2309,8 @@ abstract class _$AppDb extends GeneratedDatabase {
         paymentMethodsTable,
         productCategoriesTable,
         productsTable,
-        customersTable
+        customersTable,
+        screeningsTable
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
