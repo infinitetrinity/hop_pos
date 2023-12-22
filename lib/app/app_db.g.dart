@@ -1859,6 +1859,273 @@ class ProductsTableCompanion extends UpdateCompanion<Product> {
   }
 }
 
+class $CustomersTableTable extends CustomersTable
+    with TableInfo<$CustomersTableTable, Customer> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CustomersTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _fullNameMeta =
+      const VerificationMeta('fullName');
+  @override
+  late final GeneratedColumn<String> fullName = GeneratedColumn<String>(
+      'full_name', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _nricMeta = const VerificationMeta('nric');
+  @override
+  late final GeneratedColumn<String> nric = GeneratedColumn<String>(
+      'nric', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _dobMeta = const VerificationMeta('dob');
+  @override
+  late final GeneratedColumn<DateTime> dob = GeneratedColumn<DateTime>(
+      'dob', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _genderMeta = const VerificationMeta('gender');
+  @override
+  late final GeneratedColumn<String> gender = GeneratedColumn<String>(
+      'gender', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+      'email', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _mobileNoMeta =
+      const VerificationMeta('mobileNo');
+  @override
+  late final GeneratedColumn<String> mobileNo = GeneratedColumn<String>(
+      'mobile_no', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _isPendingMeta =
+      const VerificationMeta('isPending');
+  @override
+  late final GeneratedColumn<bool> isPending = GeneratedColumn<bool>(
+      'is_pending', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_pending" IN (0, 1))'));
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, fullName, nric, dob, gender, email, mobileNo, isPending];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'customers';
+  @override
+  VerificationContext validateIntegrity(Insertable<Customer> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('full_name')) {
+      context.handle(_fullNameMeta,
+          fullName.isAcceptableOrUnknown(data['full_name']!, _fullNameMeta));
+    } else if (isInserting) {
+      context.missing(_fullNameMeta);
+    }
+    if (data.containsKey('nric')) {
+      context.handle(
+          _nricMeta, nric.isAcceptableOrUnknown(data['nric']!, _nricMeta));
+    }
+    if (data.containsKey('dob')) {
+      context.handle(
+          _dobMeta, dob.isAcceptableOrUnknown(data['dob']!, _dobMeta));
+    }
+    if (data.containsKey('gender')) {
+      context.handle(_genderMeta,
+          gender.isAcceptableOrUnknown(data['gender']!, _genderMeta));
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+          _emailMeta, email.isAcceptableOrUnknown(data['email']!, _emailMeta));
+    }
+    if (data.containsKey('mobile_no')) {
+      context.handle(_mobileNoMeta,
+          mobileNo.isAcceptableOrUnknown(data['mobile_no']!, _mobileNoMeta));
+    }
+    if (data.containsKey('is_pending')) {
+      context.handle(_isPendingMeta,
+          isPending.isAcceptableOrUnknown(data['is_pending']!, _isPendingMeta));
+    } else if (isInserting) {
+      context.missing(_isPendingMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Customer map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Customer(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      fullName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}full_name'])!,
+      nric: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}nric']),
+      dob: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}dob']),
+      gender: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}gender']),
+      email: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}email']),
+      mobileNo: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}mobile_no']),
+      isPending: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_pending'])!,
+    );
+  }
+
+  @override
+  $CustomersTableTable createAlias(String alias) {
+    return $CustomersTableTable(attachedDatabase, alias);
+  }
+}
+
+class CustomersTableCompanion extends UpdateCompanion<Customer> {
+  final Value<int> id;
+  final Value<String> fullName;
+  final Value<String?> nric;
+  final Value<DateTime?> dob;
+  final Value<String?> gender;
+  final Value<String?> email;
+  final Value<String?> mobileNo;
+  final Value<bool> isPending;
+  const CustomersTableCompanion({
+    this.id = const Value.absent(),
+    this.fullName = const Value.absent(),
+    this.nric = const Value.absent(),
+    this.dob = const Value.absent(),
+    this.gender = const Value.absent(),
+    this.email = const Value.absent(),
+    this.mobileNo = const Value.absent(),
+    this.isPending = const Value.absent(),
+  });
+  CustomersTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String fullName,
+    this.nric = const Value.absent(),
+    this.dob = const Value.absent(),
+    this.gender = const Value.absent(),
+    this.email = const Value.absent(),
+    this.mobileNo = const Value.absent(),
+    required bool isPending,
+  })  : fullName = Value(fullName),
+        isPending = Value(isPending);
+  static Insertable<Customer> custom({
+    Expression<int>? id,
+    Expression<String>? fullName,
+    Expression<String>? nric,
+    Expression<DateTime>? dob,
+    Expression<String>? gender,
+    Expression<String>? email,
+    Expression<String>? mobileNo,
+    Expression<bool>? isPending,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (fullName != null) 'full_name': fullName,
+      if (nric != null) 'nric': nric,
+      if (dob != null) 'dob': dob,
+      if (gender != null) 'gender': gender,
+      if (email != null) 'email': email,
+      if (mobileNo != null) 'mobile_no': mobileNo,
+      if (isPending != null) 'is_pending': isPending,
+    });
+  }
+
+  CustomersTableCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? fullName,
+      Value<String?>? nric,
+      Value<DateTime?>? dob,
+      Value<String?>? gender,
+      Value<String?>? email,
+      Value<String?>? mobileNo,
+      Value<bool>? isPending}) {
+    return CustomersTableCompanion(
+      id: id ?? this.id,
+      fullName: fullName ?? this.fullName,
+      nric: nric ?? this.nric,
+      dob: dob ?? this.dob,
+      gender: gender ?? this.gender,
+      email: email ?? this.email,
+      mobileNo: mobileNo ?? this.mobileNo,
+      isPending: isPending ?? this.isPending,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (fullName.present) {
+      map['full_name'] = Variable<String>(fullName.value);
+    }
+    if (nric.present) {
+      map['nric'] = Variable<String>(nric.value);
+    }
+    if (dob.present) {
+      map['dob'] = Variable<DateTime>(dob.value);
+    }
+    if (gender.present) {
+      map['gender'] = Variable<String>(gender.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (mobileNo.present) {
+      map['mobile_no'] = Variable<String>(mobileNo.value);
+    }
+    if (isPending.present) {
+      map['is_pending'] = Variable<bool>(isPending.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CustomersTableCompanion(')
+          ..write('id: $id, ')
+          ..write('fullName: $fullName, ')
+          ..write('nric: $nric, ')
+          ..write('dob: $dob, ')
+          ..write('gender: $gender, ')
+          ..write('email: $email, ')
+          ..write('mobileNo: $mobileNo, ')
+          ..write('isPending: $isPending')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   late final $UsersTableTable usersTable = $UsersTableTable(this);
@@ -1873,6 +2140,7 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final $ProductCategoriesTableTable productCategoriesTable =
       $ProductCategoriesTableTable(this);
   late final $ProductsTableTable productsTable = $ProductsTableTable(this);
+  late final $CustomersTableTable customersTable = $CustomersTableTable(this);
   late final UserDao userDao = UserDao(this as AppDb);
   late final PosLicenseDao posLicenseDao = PosLicenseDao(this as AppDb);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
@@ -1884,6 +2152,7 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final ProductCategoryDao productCategoryDao =
       ProductCategoryDao(this as AppDb);
   late final ProductDao productDao = ProductDao(this as AppDb);
+  late final CustomerDao customerDao = CustomerDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1896,7 +2165,8 @@ abstract class _$AppDb extends GeneratedDatabase {
         posExtrasTable,
         paymentMethodsTable,
         productCategoriesTable,
-        productsTable
+        productsTable,
+        customersTable
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(

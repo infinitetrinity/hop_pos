@@ -5,6 +5,7 @@ import 'package:hop_pos/src/common/models/api_response.dart';
 import 'package:hop_pos/src/common/models/validation_errors.dart';
 import 'package:hop_pos/src/common/services/api_service.dart';
 import 'package:hop_pos/src/common/services/flash_message.dart';
+import 'package:hop_pos/src/login/models/init_data_response.dart';
 import 'package:hop_pos/src/login/models/login_request.dart';
 import 'package:hop_pos/src/login/models/login_response.dart';
 import 'package:hop_pos/src/login/repositories/login_repository.dart';
@@ -62,6 +63,7 @@ class LoginController extends _$LoginController {
   }
 
   Future<void> _downloadInitData({int page = 1}) async {
+    print('Downloading page $page');
     FlashMessage flashMessage = ref.read(flashMessageProvider);
     ApiService api = ref.read(apiServiceProvider);
 
@@ -73,14 +75,21 @@ class LoginController extends _$LoginController {
       );
 
       if (response != null) {
-        print(response.data);
+        LoginRepository repo = ref.read(loginRepoProvider);
+        InitDataResponse initDataResponse =
+            InitDataResponse.fromJson(response.data);
+        await repo.setInitData(initDataResponse);
+
+        if (initDataResponse.hasNextPage) {
+          await _downloadInitData(page: page + 1);
+        }
       }
     } catch (e, stackTrace) {
       final logger = Logger();
       logger.e("Download initial data error", error: e, stackTrace: stackTrace);
 
       flashMessage.flash(
-        message: 'Unexpected error in dowloading data',
+        message: 'Unexpected error in syncing initial data',
         type: FlashMessageType.error,
       );
 

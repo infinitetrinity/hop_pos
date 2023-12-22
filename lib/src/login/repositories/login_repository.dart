@@ -1,5 +1,6 @@
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/common/services/auth_token.dart';
+import 'package:hop_pos/src/login/models/init_data_response.dart';
 import 'package:hop_pos/src/login/models/login_response.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -18,6 +19,12 @@ class LoginRepository {
   LoginRepository({
     required this.db,
   });
+
+  Future<void> setInitData(InitDataResponse response) async {
+    return await db.transaction(() async {
+      await db.customerDao.insertCustomers(response.getCustomersData());
+    });
+  }
 
   Future<void> sync(LoginResponse response) async {
     await db.deleteDb();
