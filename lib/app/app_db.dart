@@ -96,14 +96,14 @@ class AppDb extends _$AppDb {
   }
 
   Future<void> deleteDb() async {
-    await instance.close();
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, name));
-    final exists = await file.exists();
-    if (exists) {
-      print('deleting database');
-      await file.delete();
-    }
+    print('deleting database');
+    return transaction(() async {
+      await customStatement('PRAGMA foreign_keys = OFF');
+      for (final table in allTables) {
+        await delete(table).go();
+      }
+      await customStatement('PRAGMA foreign_keys = ON');
+    });
   }
 
   static LazyDatabase initDb() {
