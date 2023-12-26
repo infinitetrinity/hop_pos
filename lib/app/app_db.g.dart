@@ -2266,6 +2266,179 @@ class ScreeningsTableCompanion extends UpdateCompanion<Screening> {
   }
 }
 
+class $ScreeningVenuesTableTable extends ScreeningVenuesTable
+    with TableInfo<$ScreeningVenuesTableTable, ScreeningVenue> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ScreeningVenuesTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _fullAddressMeta =
+      const VerificationMeta('fullAddress');
+  @override
+  late final GeneratedColumn<String> fullAddress = GeneratedColumn<String>(
+      'full_address', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 999),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _screeningFormIdMeta =
+      const VerificationMeta('screeningFormId');
+  @override
+  late final GeneratedColumn<int> screeningFormId = GeneratedColumn<int>(
+      'screening_form_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES screenings (id) ON DELETE CASCADE'));
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, name, fullAddress, screeningFormId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'screening_venues';
+  @override
+  VerificationContext validateIntegrity(Insertable<ScreeningVenue> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('full_address')) {
+      context.handle(
+          _fullAddressMeta,
+          fullAddress.isAcceptableOrUnknown(
+              data['full_address']!, _fullAddressMeta));
+    }
+    if (data.containsKey('screening_form_id')) {
+      context.handle(
+          _screeningFormIdMeta,
+          screeningFormId.isAcceptableOrUnknown(
+              data['screening_form_id']!, _screeningFormIdMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ScreeningVenue map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ScreeningVenue(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      fullAddress: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}full_address']),
+      screeningFormId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}screening_form_id']),
+    );
+  }
+
+  @override
+  $ScreeningVenuesTableTable createAlias(String alias) {
+    return $ScreeningVenuesTableTable(attachedDatabase, alias);
+  }
+}
+
+class ScreeningVenuesTableCompanion extends UpdateCompanion<ScreeningVenue> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String?> fullAddress;
+  final Value<int?> screeningFormId;
+  const ScreeningVenuesTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.fullAddress = const Value.absent(),
+    this.screeningFormId = const Value.absent(),
+  });
+  ScreeningVenuesTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    this.fullAddress = const Value.absent(),
+    this.screeningFormId = const Value.absent(),
+  }) : name = Value(name);
+  static Insertable<ScreeningVenue> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? fullAddress,
+    Expression<int>? screeningFormId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (fullAddress != null) 'full_address': fullAddress,
+      if (screeningFormId != null) 'screening_form_id': screeningFormId,
+    });
+  }
+
+  ScreeningVenuesTableCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? name,
+      Value<String?>? fullAddress,
+      Value<int?>? screeningFormId}) {
+    return ScreeningVenuesTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      fullAddress: fullAddress ?? this.fullAddress,
+      screeningFormId: screeningFormId ?? this.screeningFormId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (fullAddress.present) {
+      map['full_address'] = Variable<String>(fullAddress.value);
+    }
+    if (screeningFormId.present) {
+      map['screening_form_id'] = Variable<int>(screeningFormId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ScreeningVenuesTableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('fullAddress: $fullAddress, ')
+          ..write('screeningFormId: $screeningFormId')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   late final $UsersTableTable usersTable = $UsersTableTable(this);
@@ -2283,6 +2456,8 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final $CustomersTableTable customersTable = $CustomersTableTable(this);
   late final $ScreeningsTableTable screeningsTable =
       $ScreeningsTableTable(this);
+  late final $ScreeningVenuesTableTable screeningVenuesTable =
+      $ScreeningVenuesTableTable(this);
   late final UserDao userDao = UserDao(this as AppDb);
   late final PosLicenseDao posLicenseDao = PosLicenseDao(this as AppDb);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
@@ -2296,6 +2471,8 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final ProductDao productDao = ProductDao(this as AppDb);
   late final CustomerDao customerDao = CustomerDao(this as AppDb);
   late final ScreeningDao screeningDao = ScreeningDao(this as AppDb);
+  late final ScreeningVenueDao screeningVenueDao =
+      ScreeningVenueDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2310,7 +2487,8 @@ abstract class _$AppDb extends GeneratedDatabase {
         productCategoriesTable,
         productsTable,
         customersTable,
-        screeningsTable
+        screeningsTable,
+        screeningVenuesTable
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
@@ -2320,6 +2498,13 @@ abstract class _$AppDb extends GeneratedDatabase {
                 limitUpdateKind: UpdateKind.delete),
             result: [
               TableUpdate('products', kind: UpdateKind.update),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('screenings',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('screening_venues', kind: UpdateKind.delete),
             ],
           ),
         ],

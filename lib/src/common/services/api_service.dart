@@ -26,6 +26,7 @@ class ApiService {
     String? token = await AuthToken.getAuthToken();
     if (token != null) {
       header['Authorization'] = 'Bearer $token';
+      print(token);
     }
 
     return header;
