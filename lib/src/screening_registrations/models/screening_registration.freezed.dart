@@ -21,7 +21,7 @@ ScreeningRegistration _$ScreeningRegistrationFromJson(
 
 /// @nodoc
 mixin _$ScreeningRegistration {
-  int get index => throw _privateConstructorUsedError;
+  int? get index => throw _privateConstructorUsedError;
   @JsonKey(name: 'customer_id')
   int get customerId => throw _privateConstructorUsedError;
   @JsonKey(name: 'timeslot_id')
@@ -40,7 +40,7 @@ abstract class $ScreeningRegistrationCopyWith<$Res> {
       _$ScreeningRegistrationCopyWithImpl<$Res, ScreeningRegistration>;
   @useResult
   $Res call(
-      {int index,
+      {int? index,
       @JsonKey(name: 'customer_id') int customerId,
       @JsonKey(name: 'timeslot_id') int timeslotId});
 }
@@ -59,15 +59,15 @@ class _$ScreeningRegistrationCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? index = null,
+    Object? index = freezed,
     Object? customerId = null,
     Object? timeslotId = null,
   }) {
     return _then(_value.copyWith(
-      index: null == index
+      index: freezed == index
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       customerId: null == customerId
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
@@ -90,7 +90,7 @@ abstract class _$$ScreeningRegistrationImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int index,
+      {int? index,
       @JsonKey(name: 'customer_id') int customerId,
       @JsonKey(name: 'timeslot_id') int timeslotId});
 }
@@ -107,15 +107,15 @@ class __$$ScreeningRegistrationImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? index = null,
+    Object? index = freezed,
     Object? customerId = null,
     Object? timeslotId = null,
   }) {
     return _then(_$ScreeningRegistrationImpl(
-      index: null == index
+      index: freezed == index
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       customerId: null == customerId
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
@@ -132,7 +132,7 @@ class __$$ScreeningRegistrationImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ScreeningRegistrationImpl implements _ScreeningRegistration {
   const _$ScreeningRegistrationImpl(
-      {required this.index,
+      {this.index,
       @JsonKey(name: 'customer_id') required this.customerId,
       @JsonKey(name: 'timeslot_id') required this.timeslotId});
 
@@ -140,7 +140,7 @@ class _$ScreeningRegistrationImpl implements _ScreeningRegistration {
       _$$ScreeningRegistrationImplFromJson(json);
 
   @override
-  final int index;
+  final int? index;
   @override
   @JsonKey(name: 'customer_id')
   final int customerId;
@@ -186,7 +186,7 @@ class _$ScreeningRegistrationImpl implements _ScreeningRegistration {
 
 abstract class _ScreeningRegistration implements ScreeningRegistration {
   const factory _ScreeningRegistration(
-          {required final int index,
+          {final int? index,
           @JsonKey(name: 'customer_id') required final int customerId,
           @JsonKey(name: 'timeslot_id') required final int timeslotId}) =
       _$ScreeningRegistrationImpl;
@@ -195,7 +195,7 @@ abstract class _ScreeningRegistration implements ScreeningRegistration {
       _$ScreeningRegistrationImpl.fromJson;
 
   @override
-  int get index;
+  int? get index;
   @override
   @JsonKey(name: 'customer_id')
   int get customerId;

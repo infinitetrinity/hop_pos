@@ -2756,8 +2756,8 @@ class $ScreeningRegistrationsTableTable extends ScreeningRegistrationsTable
   static const VerificationMeta _indexMeta = const VerificationMeta('index');
   @override
   late final GeneratedColumn<int> index = GeneratedColumn<int>(
-      'index', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      'index', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
   static const VerificationMeta _customerIdMeta =
       const VerificationMeta('customerId');
   @override
@@ -2792,8 +2792,6 @@ class $ScreeningRegistrationsTableTable extends ScreeningRegistrationsTable
     if (data.containsKey('index')) {
       context.handle(
           _indexMeta, index.isAcceptableOrUnknown(data['index']!, _indexMeta));
-    } else if (isInserting) {
-      context.missing(_indexMeta);
     }
     if (data.containsKey('customer_id')) {
       context.handle(
@@ -2821,7 +2819,7 @@ class $ScreeningRegistrationsTableTable extends ScreeningRegistrationsTable
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ScreeningRegistration(
       index: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}index'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}index']),
       customerId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}customer_id'])!,
       timeslotId: attachedDatabase.typeMapping
@@ -2837,7 +2835,7 @@ class $ScreeningRegistrationsTableTable extends ScreeningRegistrationsTable
 
 class ScreeningRegistrationsTableCompanion
     extends UpdateCompanion<ScreeningRegistration> {
-  final Value<int> index;
+  final Value<int?> index;
   final Value<int> customerId;
   final Value<int> timeslotId;
   final Value<int> rowid;
@@ -2848,12 +2846,11 @@ class ScreeningRegistrationsTableCompanion
     this.rowid = const Value.absent(),
   });
   ScreeningRegistrationsTableCompanion.insert({
-    required int index,
+    this.index = const Value.absent(),
     required int customerId,
     required int timeslotId,
     this.rowid = const Value.absent(),
-  })  : index = Value(index),
-        customerId = Value(customerId),
+  })  : customerId = Value(customerId),
         timeslotId = Value(timeslotId);
   static Insertable<ScreeningRegistration> custom({
     Expression<int>? index,
@@ -2870,7 +2867,7 @@ class ScreeningRegistrationsTableCompanion
   }
 
   ScreeningRegistrationsTableCompanion copyWith(
-      {Value<int>? index,
+      {Value<int?>? index,
       Value<int>? customerId,
       Value<int>? timeslotId,
       Value<int>? rowid}) {

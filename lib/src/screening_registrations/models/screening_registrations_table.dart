@@ -7,7 +7,7 @@ import 'package:hop_pos/src/screening_timeslots/models/screening_timeslots_table
 class ScreeningRegistrationsTable extends Table {
   @override
   String get tableName => 'screening_registrations';
-  IntColumn get index => integer()();
+  IntColumn get index => integer().nullable()();
   IntColumn get customerId =>
       integer().references(CustomersTable, #id, onDelete: KeyAction.cascade)();
   IntColumn get timeslotId => integer()
