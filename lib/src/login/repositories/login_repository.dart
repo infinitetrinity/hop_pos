@@ -29,6 +29,8 @@ class LoginRepository {
           .insertScreeningVenues(response.getScreeningVenuesData());
       await db.screeningTimeslotDao
           .insertScreeningTimeslots(response.getScreeningTimeslotsData());
+      await db.screeningRegistrationDao.insertScreeningRegistrations(
+          response.getScreeningRegistrationsData());
     });
   }
 

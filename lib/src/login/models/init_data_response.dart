@@ -2,6 +2,7 @@ import 'package:drift/drift.dart' as drift;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
+import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot.dart';
 import 'package:hop_pos/src/screening_venues/models/screening_venue.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
@@ -18,6 +19,7 @@ class InitDataResponse with _$InitDataResponse {
     required List<Screening> screenings,
     required List<ScreeningVenue> venues,
     required List<ScreeningTimeslot> timeslots,
+    required List<ScreeningRegistration> registrations,
   }) = _InitDataResponse;
 
   factory InitDataResponse.fromJson(Map<String, dynamic> json) {
@@ -28,6 +30,8 @@ class InitDataResponse with _$InitDataResponse {
       venues: ScreeningVenue.fromJsonList(json['screening_venues']['data']),
       timeslots:
           ScreeningTimeslot.fromJsonList(json['screening_timeslots']['data']),
+      registrations: ScreeningRegistration.fromJsonList(
+          json['screening_registrations']['data']),
     );
   }
 
@@ -94,6 +98,18 @@ class InitDataResponse with _$InitDataResponse {
                 drift.Value(timeslot.specimenCollectionVenue),
             screeningId: drift.Value(timeslot.screeningId),
             venueId: drift.Value(timeslot.venueId),
+          ),
+        )
+        .toList();
+  }
+
+  List<ScreeningRegistrationsTableCompanion> getScreeningRegistrationsData() {
+    return registrations
+        .map(
+          (registration) => ScreeningRegistrationsTableCompanion(
+            index: drift.Value(registration.index),
+            customerId: drift.Value(registration.customerId),
+            timeslotId: drift.Value(registration.timeslotId),
           ),
         )
         .toList();

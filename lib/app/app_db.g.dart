@@ -2747,6 +2747,171 @@ class ScreeningTimeslotsTableCompanion
   }
 }
 
+class $ScreeningRegistrationsTableTable extends ScreeningRegistrationsTable
+    with TableInfo<$ScreeningRegistrationsTableTable, ScreeningRegistration> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ScreeningRegistrationsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _indexMeta = const VerificationMeta('index');
+  @override
+  late final GeneratedColumn<int> index = GeneratedColumn<int>(
+      'index', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _customerIdMeta =
+      const VerificationMeta('customerId');
+  @override
+  late final GeneratedColumn<int> customerId = GeneratedColumn<int>(
+      'customer_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES customers (id) ON DELETE CASCADE'));
+  static const VerificationMeta _timeslotIdMeta =
+      const VerificationMeta('timeslotId');
+  @override
+  late final GeneratedColumn<int> timeslotId = GeneratedColumn<int>(
+      'timeslot_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES screening_timeslots (id) ON DELETE CASCADE'));
+  @override
+  List<GeneratedColumn> get $columns => [index, customerId, timeslotId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'screening_registrations';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<ScreeningRegistration> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('index')) {
+      context.handle(
+          _indexMeta, index.isAcceptableOrUnknown(data['index']!, _indexMeta));
+    } else if (isInserting) {
+      context.missing(_indexMeta);
+    }
+    if (data.containsKey('customer_id')) {
+      context.handle(
+          _customerIdMeta,
+          customerId.isAcceptableOrUnknown(
+              data['customer_id']!, _customerIdMeta));
+    } else if (isInserting) {
+      context.missing(_customerIdMeta);
+    }
+    if (data.containsKey('timeslot_id')) {
+      context.handle(
+          _timeslotIdMeta,
+          timeslotId.isAcceptableOrUnknown(
+              data['timeslot_id']!, _timeslotIdMeta));
+    } else if (isInserting) {
+      context.missing(_timeslotIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  ScreeningRegistration map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ScreeningRegistration(
+      index: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}index'])!,
+      customerId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}customer_id'])!,
+      timeslotId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}timeslot_id'])!,
+    );
+  }
+
+  @override
+  $ScreeningRegistrationsTableTable createAlias(String alias) {
+    return $ScreeningRegistrationsTableTable(attachedDatabase, alias);
+  }
+}
+
+class ScreeningRegistrationsTableCompanion
+    extends UpdateCompanion<ScreeningRegistration> {
+  final Value<int> index;
+  final Value<int> customerId;
+  final Value<int> timeslotId;
+  final Value<int> rowid;
+  const ScreeningRegistrationsTableCompanion({
+    this.index = const Value.absent(),
+    this.customerId = const Value.absent(),
+    this.timeslotId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ScreeningRegistrationsTableCompanion.insert({
+    required int index,
+    required int customerId,
+    required int timeslotId,
+    this.rowid = const Value.absent(),
+  })  : index = Value(index),
+        customerId = Value(customerId),
+        timeslotId = Value(timeslotId);
+  static Insertable<ScreeningRegistration> custom({
+    Expression<int>? index,
+    Expression<int>? customerId,
+    Expression<int>? timeslotId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (index != null) 'index': index,
+      if (customerId != null) 'customer_id': customerId,
+      if (timeslotId != null) 'timeslot_id': timeslotId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ScreeningRegistrationsTableCompanion copyWith(
+      {Value<int>? index,
+      Value<int>? customerId,
+      Value<int>? timeslotId,
+      Value<int>? rowid}) {
+    return ScreeningRegistrationsTableCompanion(
+      index: index ?? this.index,
+      customerId: customerId ?? this.customerId,
+      timeslotId: timeslotId ?? this.timeslotId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (index.present) {
+      map['index'] = Variable<int>(index.value);
+    }
+    if (customerId.present) {
+      map['customer_id'] = Variable<int>(customerId.value);
+    }
+    if (timeslotId.present) {
+      map['timeslot_id'] = Variable<int>(timeslotId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ScreeningRegistrationsTableCompanion(')
+          ..write('index: $index, ')
+          ..write('customerId: $customerId, ')
+          ..write('timeslotId: $timeslotId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   late final $UsersTableTable usersTable = $UsersTableTable(this);
@@ -2768,6 +2933,8 @@ abstract class _$AppDb extends GeneratedDatabase {
       $ScreeningVenuesTableTable(this);
   late final $ScreeningTimeslotsTableTable screeningTimeslotsTable =
       $ScreeningTimeslotsTableTable(this);
+  late final $ScreeningRegistrationsTableTable screeningRegistrationsTable =
+      $ScreeningRegistrationsTableTable(this);
   late final UserDao userDao = UserDao(this as AppDb);
   late final PosLicenseDao posLicenseDao = PosLicenseDao(this as AppDb);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
@@ -2785,6 +2952,8 @@ abstract class _$AppDb extends GeneratedDatabase {
       ScreeningVenueDao(this as AppDb);
   late final ScreeningTimeslotDao screeningTimeslotDao =
       ScreeningTimeslotDao(this as AppDb);
+  late final ScreeningRegistrationDao screeningRegistrationDao =
+      ScreeningRegistrationDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2801,7 +2970,8 @@ abstract class _$AppDb extends GeneratedDatabase {
         customersTable,
         screeningsTable,
         screeningVenuesTable,
-        screeningTimeslotsTable
+        screeningTimeslotsTable,
+        screeningRegistrationsTable
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
@@ -2832,6 +3002,20 @@ abstract class _$AppDb extends GeneratedDatabase {
                 limitUpdateKind: UpdateKind.delete),
             result: [
               TableUpdate('screening_timeslots', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('customers',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('screening_registrations', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('screening_timeslots',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('screening_registrations', kind: UpdateKind.delete),
             ],
           ),
         ],

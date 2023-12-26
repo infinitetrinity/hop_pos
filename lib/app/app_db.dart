@@ -26,6 +26,9 @@ import 'package:hop_pos/src/products/models/products_table.dart';
 import 'package:hop_pos/src/receipt_settings/daos/receipt_setting_dao.dart';
 import 'package:hop_pos/src/receipt_settings/models/receipt_setting.dart';
 import 'package:hop_pos/src/receipt_settings/models/receipt_settings_table.dart';
+import 'package:hop_pos/src/screening_registrations/daos/screening_registration_dao.dart';
+import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
+import 'package:hop_pos/src/screening_registrations/models/screening_registrations_table.dart';
 import 'package:hop_pos/src/screening_timeslots/daos/screening_timeslot_dao.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslots_table.dart';
@@ -64,6 +67,7 @@ AppDb appDb(AppDbRef ref) {
   ScreeningsTable,
   ScreeningVenuesTable,
   ScreeningTimeslotsTable,
+  ScreeningRegistrationsTable,
 ], daos: [
   UserDao,
   PosLicenseDao,
@@ -77,6 +81,7 @@ AppDb appDb(AppDbRef ref) {
   ScreeningDao,
   ScreeningVenueDao,
   ScreeningTimeslotDao,
+  ScreeningRegistrationDao,
 ])
 class AppDb extends _$AppDb {
   AppDb._init() : super(initDb());
