@@ -57,6 +57,8 @@ class LoginController extends _$LoginController {
         message: 'Unexpected error in logging in',
         type: FlashMessageType.error,
       );
+
+      await ref.read(syncingStateProvider.notifier).syncing(isSyncing: false);
     }
 
     return null;

@@ -9,7 +9,7 @@ part of 'screening_registration.dart';
 _$ScreeningRegistrationImpl _$$ScreeningRegistrationImplFromJson(
         Map<String, dynamic> json) =>
     _$ScreeningRegistrationImpl(
-      index: json['index'] as int?,
+      index: json['index'] as String?,
       customerId: json['customer_id'] as int,
       timeslotId: json['timeslot_id'] as int,
     );

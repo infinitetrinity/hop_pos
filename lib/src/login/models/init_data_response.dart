@@ -2,6 +2,7 @@ import 'package:drift/drift.dart' as drift;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
+import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot.dart';
 import 'package:hop_pos/src/screening_venues/models/screening_venue.dart';
@@ -20,6 +21,7 @@ class InitDataResponse with _$InitDataResponse {
     required List<ScreeningVenue> venues,
     required List<ScreeningTimeslot> timeslots,
     required List<ScreeningRegistration> registrations,
+    required List<Order> orders,
   }) = _InitDataResponse;
 
   factory InitDataResponse.fromJson(Map<String, dynamic> json) {
@@ -32,6 +34,7 @@ class InitDataResponse with _$InitDataResponse {
           ScreeningTimeslot.fromJsonList(json['screening_timeslots']['data']),
       registrations: ScreeningRegistration.fromJsonList(
           json['screening_registrations']['data']),
+      orders: Order.fromJsonList(json['orders']['data']),
     );
   }
 
@@ -110,6 +113,31 @@ class InitDataResponse with _$InitDataResponse {
             index: drift.Value(registration.index),
             customerId: drift.Value(registration.customerId),
             timeslotId: drift.Value(registration.timeslotId),
+          ),
+        )
+        .toList();
+  }
+
+  List<OrdersTableCompanion> getOrdersData() {
+    return orders
+        .map(
+          (order) => OrdersTableCompanion(
+            id: drift.Value(order.id),
+            isStf: drift.Value(order.isStf),
+            isUtf: drift.Value(order.isUtf),
+            salesNote: drift.Value(order.salesNote),
+            invoiceNo: drift.Value(order.invoiceNo),
+            invoicePrefix: drift.Value(order.invoicePrefix),
+            discount: drift.Value(order.discount),
+            discountType: drift.Value(order.discountType),
+            subtotal: drift.Value(order.subtotal),
+            extrasTotal: drift.Value(order.extrasTotal),
+            netTotal: drift.Value(order.netTotal),
+            rounding: drift.Value(order.rounding),
+            licenseId: drift.Value(order.licenseId),
+            screeningId: drift.Value(order.screeningId),
+            customerId: drift.Value(order.customerId),
+            createdAt: drift.Value(order.createdAt),
           ),
         )
         .toList();

@@ -6,7 +6,7 @@ part 'screening_registration.g.dart';
 @freezed
 class ScreeningRegistration with _$ScreeningRegistration {
   const factory ScreeningRegistration({
-    int? index,
+    String? index,
     @JsonKey(name: 'customer_id') required int customerId,
     @JsonKey(name: 'timeslot_id') required int timeslotId,
   }) = _ScreeningRegistration;

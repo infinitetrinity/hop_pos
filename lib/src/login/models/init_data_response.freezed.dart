@@ -23,6 +23,7 @@ mixin _$InitDataResponse {
   List<ScreeningTimeslot> get timeslots => throw _privateConstructorUsedError;
   List<ScreeningRegistration> get registrations =>
       throw _privateConstructorUsedError;
+  List<Order> get orders => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $InitDataResponseCopyWith<InitDataResponse> get copyWith =>
@@ -41,7 +42,8 @@ abstract class $InitDataResponseCopyWith<$Res> {
       List<Screening> screenings,
       List<ScreeningVenue> venues,
       List<ScreeningTimeslot> timeslots,
-      List<ScreeningRegistration> registrations});
+      List<ScreeningRegistration> registrations,
+      List<Order> orders});
 }
 
 /// @nodoc
@@ -63,6 +65,7 @@ class _$InitDataResponseCopyWithImpl<$Res, $Val extends InitDataResponse>
     Object? venues = null,
     Object? timeslots = null,
     Object? registrations = null,
+    Object? orders = null,
   }) {
     return _then(_value.copyWith(
       hasNextPage: null == hasNextPage
@@ -89,6 +92,10 @@ class _$InitDataResponseCopyWithImpl<$Res, $Val extends InitDataResponse>
           ? _value.registrations
           : registrations // ignore: cast_nullable_to_non_nullable
               as List<ScreeningRegistration>,
+      orders: null == orders
+          ? _value.orders
+          : orders // ignore: cast_nullable_to_non_nullable
+              as List<Order>,
     ) as $Val);
   }
 }
@@ -107,7 +114,8 @@ abstract class _$$InitDataResponseImplCopyWith<$Res>
       List<Screening> screenings,
       List<ScreeningVenue> venues,
       List<ScreeningTimeslot> timeslots,
-      List<ScreeningRegistration> registrations});
+      List<ScreeningRegistration> registrations,
+      List<Order> orders});
 }
 
 /// @nodoc
@@ -127,6 +135,7 @@ class __$$InitDataResponseImplCopyWithImpl<$Res>
     Object? venues = null,
     Object? timeslots = null,
     Object? registrations = null,
+    Object? orders = null,
   }) {
     return _then(_$InitDataResponseImpl(
       hasNextPage: null == hasNextPage
@@ -153,6 +162,10 @@ class __$$InitDataResponseImplCopyWithImpl<$Res>
           ? _value._registrations
           : registrations // ignore: cast_nullable_to_non_nullable
               as List<ScreeningRegistration>,
+      orders: null == orders
+          ? _value._orders
+          : orders // ignore: cast_nullable_to_non_nullable
+              as List<Order>,
     ));
   }
 }
@@ -166,12 +179,14 @@ class _$InitDataResponseImpl extends _InitDataResponse {
       required final List<Screening> screenings,
       required final List<ScreeningVenue> venues,
       required final List<ScreeningTimeslot> timeslots,
-      required final List<ScreeningRegistration> registrations})
+      required final List<ScreeningRegistration> registrations,
+      required final List<Order> orders})
       : _customers = customers,
         _screenings = screenings,
         _venues = venues,
         _timeslots = timeslots,
         _registrations = registrations,
+        _orders = orders,
         super._();
 
   @override
@@ -216,9 +231,17 @@ class _$InitDataResponseImpl extends _InitDataResponse {
     return EqualUnmodifiableListView(_registrations);
   }
 
+  final List<Order> _orders;
+  @override
+  List<Order> get orders {
+    if (_orders is EqualUnmodifiableListView) return _orders;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_orders);
+  }
+
   @override
   String toString() {
-    return 'InitDataResponse(hasNextPage: $hasNextPage, customers: $customers, screenings: $screenings, venues: $venues, timeslots: $timeslots, registrations: $registrations)';
+    return 'InitDataResponse(hasNextPage: $hasNextPage, customers: $customers, screenings: $screenings, venues: $venues, timeslots: $timeslots, registrations: $registrations, orders: $orders)';
   }
 
   @override
@@ -236,7 +259,8 @@ class _$InitDataResponseImpl extends _InitDataResponse {
             const DeepCollectionEquality()
                 .equals(other._timeslots, _timeslots) &&
             const DeepCollectionEquality()
-                .equals(other._registrations, _registrations));
+                .equals(other._registrations, _registrations) &&
+            const DeepCollectionEquality().equals(other._orders, _orders));
   }
 
   @override
@@ -247,7 +271,8 @@ class _$InitDataResponseImpl extends _InitDataResponse {
       const DeepCollectionEquality().hash(_screenings),
       const DeepCollectionEquality().hash(_venues),
       const DeepCollectionEquality().hash(_timeslots),
-      const DeepCollectionEquality().hash(_registrations));
+      const DeepCollectionEquality().hash(_registrations),
+      const DeepCollectionEquality().hash(_orders));
 
   @JsonKey(ignore: true)
   @override
@@ -259,13 +284,13 @@ class _$InitDataResponseImpl extends _InitDataResponse {
 
 abstract class _InitDataResponse extends InitDataResponse {
   const factory _InitDataResponse(
-          {required final bool hasNextPage,
-          required final List<Customer> customers,
-          required final List<Screening> screenings,
-          required final List<ScreeningVenue> venues,
-          required final List<ScreeningTimeslot> timeslots,
-          required final List<ScreeningRegistration> registrations}) =
-      _$InitDataResponseImpl;
+      {required final bool hasNextPage,
+      required final List<Customer> customers,
+      required final List<Screening> screenings,
+      required final List<ScreeningVenue> venues,
+      required final List<ScreeningTimeslot> timeslots,
+      required final List<ScreeningRegistration> registrations,
+      required final List<Order> orders}) = _$InitDataResponseImpl;
   const _InitDataResponse._() : super._();
 
   @override
@@ -280,6 +305,8 @@ abstract class _InitDataResponse extends InitDataResponse {
   List<ScreeningTimeslot> get timeslots;
   @override
   List<ScreeningRegistration> get registrations;
+  @override
+  List<Order> get orders;
   @override
   @JsonKey(ignore: true)
   _$$InitDataResponseImplCopyWith<_$InitDataResponseImpl> get copyWith =>

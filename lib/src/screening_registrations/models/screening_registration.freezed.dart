@@ -21,7 +21,7 @@ ScreeningRegistration _$ScreeningRegistrationFromJson(
 
 /// @nodoc
 mixin _$ScreeningRegistration {
-  int? get index => throw _privateConstructorUsedError;
+  String? get index => throw _privateConstructorUsedError;
   @JsonKey(name: 'customer_id')
   int get customerId => throw _privateConstructorUsedError;
   @JsonKey(name: 'timeslot_id')
@@ -40,7 +40,7 @@ abstract class $ScreeningRegistrationCopyWith<$Res> {
       _$ScreeningRegistrationCopyWithImpl<$Res, ScreeningRegistration>;
   @useResult
   $Res call(
-      {int? index,
+      {String? index,
       @JsonKey(name: 'customer_id') int customerId,
       @JsonKey(name: 'timeslot_id') int timeslotId});
 }
@@ -67,7 +67,7 @@ class _$ScreeningRegistrationCopyWithImpl<$Res,
       index: freezed == index
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       customerId: null == customerId
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
@@ -90,7 +90,7 @@ abstract class _$$ScreeningRegistrationImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int? index,
+      {String? index,
       @JsonKey(name: 'customer_id') int customerId,
       @JsonKey(name: 'timeslot_id') int timeslotId});
 }
@@ -115,7 +115,7 @@ class __$$ScreeningRegistrationImplCopyWithImpl<$Res>
       index: freezed == index
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       customerId: null == customerId
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
@@ -140,7 +140,7 @@ class _$ScreeningRegistrationImpl implements _ScreeningRegistration {
       _$$ScreeningRegistrationImplFromJson(json);
 
   @override
-  final int? index;
+  final String? index;
   @override
   @JsonKey(name: 'customer_id')
   final int customerId;
@@ -186,7 +186,7 @@ class _$ScreeningRegistrationImpl implements _ScreeningRegistration {
 
 abstract class _ScreeningRegistration implements ScreeningRegistration {
   const factory _ScreeningRegistration(
-          {final int? index,
+          {final String? index,
           @JsonKey(name: 'customer_id') required final int customerId,
           @JsonKey(name: 'timeslot_id') required final int timeslotId}) =
       _$ScreeningRegistrationImpl;
@@ -195,7 +195,7 @@ abstract class _ScreeningRegistration implements ScreeningRegistration {
       _$ScreeningRegistrationImpl.fromJson;
 
   @override
-  int? get index;
+  String? get index;
   @override
   @JsonKey(name: 'customer_id')
   int get customerId;

@@ -31,6 +31,7 @@ class LoginRepository {
           .insertScreeningTimeslots(response.getScreeningTimeslotsData());
       // await db.screeningRegistrationDao.insertScreeningRegistrations(
       //     response.getScreeningRegistrationsData());
+      // await db.orderDao.insertOrders(response.getOrdersData());
     });
   }
 
