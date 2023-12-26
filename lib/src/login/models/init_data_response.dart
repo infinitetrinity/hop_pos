@@ -2,6 +2,7 @@ import 'package:drift/drift.dart' as drift;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
+import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot.dart';
 import 'package:hop_pos/src/screening_venues/models/screening_venue.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 
@@ -16,14 +17,18 @@ class InitDataResponse with _$InitDataResponse {
     required List<Customer> customers,
     required List<Screening> screenings,
     required List<ScreeningVenue> venues,
+    required List<ScreeningTimeslot> timeslots,
   }) = _InitDataResponse;
 
   factory InitDataResponse.fromJson(Map<String, dynamic> json) {
     return InitDataResponse(
-        hasNextPage: _checkHasNextPage(json),
-        customers: Customer.fromJsonList(json['customers']['data']),
-        screenings: Screening.fromJsonList(json['screenings']['data']),
-        venues: ScreeningVenue.fromJsonList(json['screening_venues']['data']));
+      hasNextPage: _checkHasNextPage(json),
+      customers: Customer.fromJsonList(json['customers']['data']),
+      screenings: Screening.fromJsonList(json['screenings']['data']),
+      venues: ScreeningVenue.fromJsonList(json['screening_venues']['data']),
+      timeslots:
+          ScreeningTimeslot.fromJsonList(json['screening_timeslots']['data']),
+    );
   }
 
   static bool _checkHasNextPage(Map<String, dynamic> data) {
@@ -64,11 +69,31 @@ class InitDataResponse with _$InitDataResponse {
   List<ScreeningVenuesTableCompanion> getScreeningVenuesData() {
     return venues
         .map(
-          (screening) => ScreeningVenuesTableCompanion(
-            id: drift.Value(screening.id),
-            name: drift.Value(screening.name),
-            fullAddress: drift.Value(screening.fullAddress),
-            screeningFormId: drift.Value(screening.screeningFormId),
+          (venue) => ScreeningVenuesTableCompanion(
+            id: drift.Value(venue.id),
+            name: drift.Value(venue.name),
+            fullAddress: drift.Value(venue.fullAddress),
+            screeningFormId: drift.Value(venue.screeningFormId),
+          ),
+        )
+        .toList();
+  }
+
+  List<ScreeningTimeslotsTableCompanion> getScreeningTimeslotsData() {
+    return timeslots
+        .map(
+          (timeslot) => ScreeningTimeslotsTableCompanion(
+            id: drift.Value(timeslot.id),
+            dateAndTime: drift.Value(timeslot.dateAndTime),
+            slots: drift.Value(timeslot.slots),
+            specimenCollectionDate:
+                drift.Value(timeslot.specimenCollectionDate),
+            specimenCollectionTime:
+                drift.Value(timeslot.specimenCollectionTime),
+            specimenCollectionVenue:
+                drift.Value(timeslot.specimenCollectionVenue),
+            screeningId: drift.Value(timeslot.screeningId),
+            venueId: drift.Value(timeslot.venueId),
           ),
         )
         .toList();

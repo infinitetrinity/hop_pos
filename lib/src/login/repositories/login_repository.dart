@@ -21,9 +21,14 @@ class LoginRepository {
   });
 
   Future<void> setInitData(InitDataResponse response) async {
+    print('setting data');
     return await db.transaction(() async {
       await db.customerDao.insertCustomers(response.getCustomersData());
       await db.screeningDao.insertScreenings(response.getScreeningsData());
+      await db.screeningVenueDao
+          .insertScreeningVenues(response.getScreeningVenuesData());
+      await db.screeningTimeslotDao
+          .insertScreeningTimeslots(response.getScreeningTimeslotsData());
     });
   }
 

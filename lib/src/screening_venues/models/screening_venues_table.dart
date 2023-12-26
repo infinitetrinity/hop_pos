@@ -9,7 +9,6 @@ class ScreeningVenuesTable extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text().withLength(max: 255)();
   TextColumn get fullAddress => text().withLength(max: 999).nullable()();
-  IntColumn get screeningFormId => integer()
-      .nullable()
-      .references(ScreeningsTable, #id, onDelete: KeyAction.cascade)();
+  IntColumn get screeningFormId =>
+      integer().references(ScreeningsTable, #id, onDelete: KeyAction.cascade)();
 }

@@ -2300,9 +2300,9 @@ class $ScreeningVenuesTableTable extends ScreeningVenuesTable
       const VerificationMeta('screeningFormId');
   @override
   late final GeneratedColumn<int> screeningFormId = GeneratedColumn<int>(
-      'screening_form_id', aliasedName, true,
+      'screening_form_id', aliasedName, false,
       type: DriftSqlType.int,
-      requiredDuringInsert: false,
+      requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'REFERENCES screenings (id) ON DELETE CASCADE'));
   @override
@@ -2338,6 +2338,8 @@ class $ScreeningVenuesTableTable extends ScreeningVenuesTable
           _screeningFormIdMeta,
           screeningFormId.isAcceptableOrUnknown(
               data['screening_form_id']!, _screeningFormIdMeta));
+    } else if (isInserting) {
+      context.missing(_screeningFormIdMeta);
     }
     return context;
   }
@@ -2355,7 +2357,7 @@ class $ScreeningVenuesTableTable extends ScreeningVenuesTable
       fullAddress: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}full_address']),
       screeningFormId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}screening_form_id']),
+          .read(DriftSqlType.int, data['${effectivePrefix}screening_form_id'])!,
     );
   }
 
@@ -2369,7 +2371,7 @@ class ScreeningVenuesTableCompanion extends UpdateCompanion<ScreeningVenue> {
   final Value<int> id;
   final Value<String> name;
   final Value<String?> fullAddress;
-  final Value<int?> screeningFormId;
+  final Value<int> screeningFormId;
   const ScreeningVenuesTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
@@ -2380,8 +2382,9 @@ class ScreeningVenuesTableCompanion extends UpdateCompanion<ScreeningVenue> {
     this.id = const Value.absent(),
     required String name,
     this.fullAddress = const Value.absent(),
-    this.screeningFormId = const Value.absent(),
-  }) : name = Value(name);
+    required int screeningFormId,
+  })  : name = Value(name),
+        screeningFormId = Value(screeningFormId);
   static Insertable<ScreeningVenue> custom({
     Expression<int>? id,
     Expression<String>? name,
@@ -2400,7 +2403,7 @@ class ScreeningVenuesTableCompanion extends UpdateCompanion<ScreeningVenue> {
       {Value<int>? id,
       Value<String>? name,
       Value<String?>? fullAddress,
-      Value<int?>? screeningFormId}) {
+      Value<int>? screeningFormId}) {
     return ScreeningVenuesTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -2439,6 +2442,311 @@ class ScreeningVenuesTableCompanion extends UpdateCompanion<ScreeningVenue> {
   }
 }
 
+class $ScreeningTimeslotsTableTable extends ScreeningTimeslotsTable
+    with TableInfo<$ScreeningTimeslotsTableTable, ScreeningTimeslot> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ScreeningTimeslotsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _dateAndTimeMeta =
+      const VerificationMeta('dateAndTime');
+  @override
+  late final GeneratedColumn<DateTime> dateAndTime = GeneratedColumn<DateTime>(
+      'date_and_time', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _slotsMeta = const VerificationMeta('slots');
+  @override
+  late final GeneratedColumn<int> slots = GeneratedColumn<int>(
+      'slots', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _specimenCollectionDateMeta =
+      const VerificationMeta('specimenCollectionDate');
+  @override
+  late final GeneratedColumn<DateTime> specimenCollectionDate =
+      GeneratedColumn<DateTime>('specimen_collection_date', aliasedName, true,
+          type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _specimenCollectionTimeMeta =
+      const VerificationMeta('specimenCollectionTime');
+  @override
+  late final GeneratedColumn<String> specimenCollectionTime =
+      GeneratedColumn<String>('specimen_collection_time', aliasedName, true,
+          additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+          type: DriftSqlType.string,
+          requiredDuringInsert: false);
+  static const VerificationMeta _specimenCollectionVenueMeta =
+      const VerificationMeta('specimenCollectionVenue');
+  @override
+  late final GeneratedColumn<String> specimenCollectionVenue =
+      GeneratedColumn<String>('specimen_collection_venue', aliasedName, true,
+          additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 999),
+          type: DriftSqlType.string,
+          requiredDuringInsert: false);
+  static const VerificationMeta _screeningIdMeta =
+      const VerificationMeta('screeningId');
+  @override
+  late final GeneratedColumn<int> screeningId = GeneratedColumn<int>(
+      'screening_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES screenings (id) ON DELETE CASCADE'));
+  static const VerificationMeta _venueIdMeta =
+      const VerificationMeta('venueId');
+  @override
+  late final GeneratedColumn<int> venueId = GeneratedColumn<int>(
+      'venue_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES screening_venues (id) ON DELETE CASCADE'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        dateAndTime,
+        slots,
+        specimenCollectionDate,
+        specimenCollectionTime,
+        specimenCollectionVenue,
+        screeningId,
+        venueId
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'screening_timeslots';
+  @override
+  VerificationContext validateIntegrity(Insertable<ScreeningTimeslot> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('date_and_time')) {
+      context.handle(
+          _dateAndTimeMeta,
+          dateAndTime.isAcceptableOrUnknown(
+              data['date_and_time']!, _dateAndTimeMeta));
+    } else if (isInserting) {
+      context.missing(_dateAndTimeMeta);
+    }
+    if (data.containsKey('slots')) {
+      context.handle(
+          _slotsMeta, slots.isAcceptableOrUnknown(data['slots']!, _slotsMeta));
+    } else if (isInserting) {
+      context.missing(_slotsMeta);
+    }
+    if (data.containsKey('specimen_collection_date')) {
+      context.handle(
+          _specimenCollectionDateMeta,
+          specimenCollectionDate.isAcceptableOrUnknown(
+              data['specimen_collection_date']!, _specimenCollectionDateMeta));
+    }
+    if (data.containsKey('specimen_collection_time')) {
+      context.handle(
+          _specimenCollectionTimeMeta,
+          specimenCollectionTime.isAcceptableOrUnknown(
+              data['specimen_collection_time']!, _specimenCollectionTimeMeta));
+    }
+    if (data.containsKey('specimen_collection_venue')) {
+      context.handle(
+          _specimenCollectionVenueMeta,
+          specimenCollectionVenue.isAcceptableOrUnknown(
+              data['specimen_collection_venue']!,
+              _specimenCollectionVenueMeta));
+    }
+    if (data.containsKey('screening_id')) {
+      context.handle(
+          _screeningIdMeta,
+          screeningId.isAcceptableOrUnknown(
+              data['screening_id']!, _screeningIdMeta));
+    } else if (isInserting) {
+      context.missing(_screeningIdMeta);
+    }
+    if (data.containsKey('venue_id')) {
+      context.handle(_venueIdMeta,
+          venueId.isAcceptableOrUnknown(data['venue_id']!, _venueIdMeta));
+    } else if (isInserting) {
+      context.missing(_venueIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ScreeningTimeslot map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ScreeningTimeslot(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      dateAndTime: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}date_and_time'])!,
+      slots: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}slots'])!,
+      specimenCollectionDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime,
+          data['${effectivePrefix}specimen_collection_date']),
+      specimenCollectionTime: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}specimen_collection_time']),
+      specimenCollectionVenue: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}specimen_collection_venue']),
+      screeningId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}screening_id'])!,
+      venueId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}venue_id'])!,
+    );
+  }
+
+  @override
+  $ScreeningTimeslotsTableTable createAlias(String alias) {
+    return $ScreeningTimeslotsTableTable(attachedDatabase, alias);
+  }
+}
+
+class ScreeningTimeslotsTableCompanion
+    extends UpdateCompanion<ScreeningTimeslot> {
+  final Value<int> id;
+  final Value<DateTime> dateAndTime;
+  final Value<int> slots;
+  final Value<DateTime?> specimenCollectionDate;
+  final Value<String?> specimenCollectionTime;
+  final Value<String?> specimenCollectionVenue;
+  final Value<int> screeningId;
+  final Value<int> venueId;
+  const ScreeningTimeslotsTableCompanion({
+    this.id = const Value.absent(),
+    this.dateAndTime = const Value.absent(),
+    this.slots = const Value.absent(),
+    this.specimenCollectionDate = const Value.absent(),
+    this.specimenCollectionTime = const Value.absent(),
+    this.specimenCollectionVenue = const Value.absent(),
+    this.screeningId = const Value.absent(),
+    this.venueId = const Value.absent(),
+  });
+  ScreeningTimeslotsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required DateTime dateAndTime,
+    required int slots,
+    this.specimenCollectionDate = const Value.absent(),
+    this.specimenCollectionTime = const Value.absent(),
+    this.specimenCollectionVenue = const Value.absent(),
+    required int screeningId,
+    required int venueId,
+  })  : dateAndTime = Value(dateAndTime),
+        slots = Value(slots),
+        screeningId = Value(screeningId),
+        venueId = Value(venueId);
+  static Insertable<ScreeningTimeslot> custom({
+    Expression<int>? id,
+    Expression<DateTime>? dateAndTime,
+    Expression<int>? slots,
+    Expression<DateTime>? specimenCollectionDate,
+    Expression<String>? specimenCollectionTime,
+    Expression<String>? specimenCollectionVenue,
+    Expression<int>? screeningId,
+    Expression<int>? venueId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (dateAndTime != null) 'date_and_time': dateAndTime,
+      if (slots != null) 'slots': slots,
+      if (specimenCollectionDate != null)
+        'specimen_collection_date': specimenCollectionDate,
+      if (specimenCollectionTime != null)
+        'specimen_collection_time': specimenCollectionTime,
+      if (specimenCollectionVenue != null)
+        'specimen_collection_venue': specimenCollectionVenue,
+      if (screeningId != null) 'screening_id': screeningId,
+      if (venueId != null) 'venue_id': venueId,
+    });
+  }
+
+  ScreeningTimeslotsTableCompanion copyWith(
+      {Value<int>? id,
+      Value<DateTime>? dateAndTime,
+      Value<int>? slots,
+      Value<DateTime?>? specimenCollectionDate,
+      Value<String?>? specimenCollectionTime,
+      Value<String?>? specimenCollectionVenue,
+      Value<int>? screeningId,
+      Value<int>? venueId}) {
+    return ScreeningTimeslotsTableCompanion(
+      id: id ?? this.id,
+      dateAndTime: dateAndTime ?? this.dateAndTime,
+      slots: slots ?? this.slots,
+      specimenCollectionDate:
+          specimenCollectionDate ?? this.specimenCollectionDate,
+      specimenCollectionTime:
+          specimenCollectionTime ?? this.specimenCollectionTime,
+      specimenCollectionVenue:
+          specimenCollectionVenue ?? this.specimenCollectionVenue,
+      screeningId: screeningId ?? this.screeningId,
+      venueId: venueId ?? this.venueId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (dateAndTime.present) {
+      map['date_and_time'] = Variable<DateTime>(dateAndTime.value);
+    }
+    if (slots.present) {
+      map['slots'] = Variable<int>(slots.value);
+    }
+    if (specimenCollectionDate.present) {
+      map['specimen_collection_date'] =
+          Variable<DateTime>(specimenCollectionDate.value);
+    }
+    if (specimenCollectionTime.present) {
+      map['specimen_collection_time'] =
+          Variable<String>(specimenCollectionTime.value);
+    }
+    if (specimenCollectionVenue.present) {
+      map['specimen_collection_venue'] =
+          Variable<String>(specimenCollectionVenue.value);
+    }
+    if (screeningId.present) {
+      map['screening_id'] = Variable<int>(screeningId.value);
+    }
+    if (venueId.present) {
+      map['venue_id'] = Variable<int>(venueId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ScreeningTimeslotsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('dateAndTime: $dateAndTime, ')
+          ..write('slots: $slots, ')
+          ..write('specimenCollectionDate: $specimenCollectionDate, ')
+          ..write('specimenCollectionTime: $specimenCollectionTime, ')
+          ..write('specimenCollectionVenue: $specimenCollectionVenue, ')
+          ..write('screeningId: $screeningId, ')
+          ..write('venueId: $venueId')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   late final $UsersTableTable usersTable = $UsersTableTable(this);
@@ -2458,6 +2766,8 @@ abstract class _$AppDb extends GeneratedDatabase {
       $ScreeningsTableTable(this);
   late final $ScreeningVenuesTableTable screeningVenuesTable =
       $ScreeningVenuesTableTable(this);
+  late final $ScreeningTimeslotsTableTable screeningTimeslotsTable =
+      $ScreeningTimeslotsTableTable(this);
   late final UserDao userDao = UserDao(this as AppDb);
   late final PosLicenseDao posLicenseDao = PosLicenseDao(this as AppDb);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
@@ -2473,6 +2783,8 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final ScreeningDao screeningDao = ScreeningDao(this as AppDb);
   late final ScreeningVenueDao screeningVenueDao =
       ScreeningVenueDao(this as AppDb);
+  late final ScreeningTimeslotDao screeningTimeslotDao =
+      ScreeningTimeslotDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2488,7 +2800,8 @@ abstract class _$AppDb extends GeneratedDatabase {
         productsTable,
         customersTable,
         screeningsTable,
-        screeningVenuesTable
+        screeningVenuesTable,
+        screeningTimeslotsTable
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
@@ -2505,6 +2818,20 @@ abstract class _$AppDb extends GeneratedDatabase {
                 limitUpdateKind: UpdateKind.delete),
             result: [
               TableUpdate('screening_venues', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('screenings',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('screening_timeslots', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('screening_venues',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('screening_timeslots', kind: UpdateKind.delete),
             ],
           ),
         ],
