@@ -1,26 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'login_controller.dart';
+part of 'order_item_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loginControllerHash() => r'3a7ee7623098fdcdf26df8ad6397dcdf7f058aa7';
+String _$orderItemRepoHash() => r'7b71e9dbd3f8cf5657b89fc3347115ed74e17035';
 
-/// See also [LoginController].
-@ProviderFor(LoginController)
-final loginControllerProvider =
-    AutoDisposeNotifierProvider<LoginController, void>.internal(
-  LoginController.new,
-  name: r'loginControllerProvider',
+/// See also [orderItemRepo].
+@ProviderFor(orderItemRepo)
+final orderItemRepoProvider = AutoDisposeProvider<OrderItemRepository>.internal(
+  orderItemRepo,
+  name: r'orderItemRepoProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$loginControllerHash,
+      : _$orderItemRepoHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$LoginController = AutoDisposeNotifier<void>;
+typedef OrderItemRepoRef = AutoDisposeProviderRef<OrderItemRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

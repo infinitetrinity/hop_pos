@@ -2,6 +2,7 @@ import 'package:drift/drift.dart' as drift;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
+import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot.dart';
@@ -22,26 +23,36 @@ class InitDataResponse with _$InitDataResponse {
     required List<ScreeningTimeslot> timeslots,
     required List<ScreeningRegistration> registrations,
     required List<Order> orders,
+    required List<OrderItem> orderItems,
   }) = _InitDataResponse;
 
-  factory InitDataResponse.fromJson(Map<String, dynamic> json) {
+  factory InitDataResponse.fromJson(Map<String, dynamic> json, bool isSecondary) {
     return InitDataResponse(
-      hasNextPage: _checkHasNextPage(json),
+      hasNextPage: _checkHasNextPage(json, isSecondary),
       customers: Customer.fromJsonList(json['customers']['data']),
       screenings: Screening.fromJsonList(json['screenings']['data']),
       venues: ScreeningVenue.fromJsonList(json['screening_venues']['data']),
-      timeslots:
-          ScreeningTimeslot.fromJsonList(json['screening_timeslots']['data']),
-      registrations: ScreeningRegistration.fromJsonList(
-          json['screening_registrations']['data']),
+      timeslots: ScreeningTimeslot.fromJsonList(json['screening_timeslots']['data']),
+      registrations: ScreeningRegistration.fromJsonList(json['screening_registrations']['data']),
       orders: Order.fromJsonList(json['orders']['data']),
+      orderItems: OrderItem.fromJsonList(json['order_items']['data']),
     );
   }
 
-  static bool _checkHasNextPage(Map<String, dynamic> data) {
-    return data.values.any(
-      (el) => el['meta']['has_more_pages'] ?? false,
-    );
+  static bool _checkHasNextPage(Map<String, dynamic> data, bool isSecondary) {
+    final keysToCheck =
+        isSecondary ? ['screening_registrations', 'orders', 'order_items'] : ['customers', 'screenings', 'screening_venues', 'screening_timeslots'];
+
+    for (String key in keysToCheck) {
+      if (data.containsKey(key)) {
+        bool hasMorePages = data[key]['meta']['has_more_pages'] ?? false;
+        if (hasMorePages) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   List<CustomersTableCompanion> getCustomersData() {
@@ -93,12 +104,9 @@ class InitDataResponse with _$InitDataResponse {
             id: drift.Value(timeslot.id),
             dateAndTime: drift.Value(timeslot.dateAndTime),
             slots: drift.Value(timeslot.slots),
-            specimenCollectionDate:
-                drift.Value(timeslot.specimenCollectionDate),
-            specimenCollectionTime:
-                drift.Value(timeslot.specimenCollectionTime),
-            specimenCollectionVenue:
-                drift.Value(timeslot.specimenCollectionVenue),
+            specimenCollectionDate: drift.Value(timeslot.specimenCollectionDate),
+            specimenCollectionTime: drift.Value(timeslot.specimenCollectionTime),
+            specimenCollectionVenue: drift.Value(timeslot.specimenCollectionVenue),
             screeningId: drift.Value(timeslot.screeningId),
             venueId: drift.Value(timeslot.venueId),
           ),
@@ -138,6 +146,27 @@ class InitDataResponse with _$InitDataResponse {
             screeningId: drift.Value(order.screeningId),
             customerId: drift.Value(order.customerId),
             createdAt: drift.Value(order.createdAt),
+          ),
+        )
+        .toList();
+  }
+
+  List<OrderItemsTableCompanion> getOrderItemsData() {
+    return orderItems
+        .map(
+          (item) => OrderItemsTableCompanion(
+            id: drift.Value(item.id),
+            name: drift.Value(item.name),
+            sku: drift.Value(item.sku),
+            description: drift.Value(item.description),
+            price: drift.Value(item.price),
+            discount: drift.Value(item.discount),
+            discountType: drift.Value(item.discountType),
+            netPrice: drift.Value(item.netPrice),
+            isCustom: drift.Value(item.isCustom),
+            cartId: drift.Value(item.cartId),
+            productId: drift.Value(item.productId),
+            orderId: drift.Value(item.orderId),
           ),
         )
         .toList();

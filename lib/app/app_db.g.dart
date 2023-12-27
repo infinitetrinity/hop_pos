@@ -3419,6 +3419,397 @@ class OrdersTableCompanion extends UpdateCompanion<Order> {
   }
 }
 
+class $OrderItemsTableTable extends OrderItemsTable
+    with TableInfo<$OrderItemsTableTable, OrderItem> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $OrderItemsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _skuMeta = const VerificationMeta('sku');
+  @override
+  late final GeneratedColumn<String> sku = GeneratedColumn<String>(
+      'sku', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _priceMeta = const VerificationMeta('price');
+  @override
+  late final GeneratedColumn<double> price = GeneratedColumn<double>(
+      'price', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _discountMeta =
+      const VerificationMeta('discount');
+  @override
+  late final GeneratedColumn<double> discount = GeneratedColumn<double>(
+      'discount', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
+  static const VerificationMeta _discountTypeMeta =
+      const VerificationMeta('discountType');
+  @override
+  late final GeneratedColumn<String> discountType = GeneratedColumn<String>(
+      'discount_type', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _netPriceMeta =
+      const VerificationMeta('netPrice');
+  @override
+  late final GeneratedColumn<double> netPrice = GeneratedColumn<double>(
+      'net_price', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _isCustomMeta =
+      const VerificationMeta('isCustom');
+  @override
+  late final GeneratedColumn<bool> isCustom = GeneratedColumn<bool>(
+      'is_custom', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_custom" IN (0, 1))'));
+  static const VerificationMeta _cartIdMeta = const VerificationMeta('cartId');
+  @override
+  late final GeneratedColumn<int> cartId = GeneratedColumn<int>(
+      'cart_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _productIdMeta =
+      const VerificationMeta('productId');
+  @override
+  late final GeneratedColumn<int> productId = GeneratedColumn<int>(
+      'product_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES products (id) ON DELETE SET NULL'));
+  static const VerificationMeta _orderIdMeta =
+      const VerificationMeta('orderId');
+  @override
+  late final GeneratedColumn<int> orderId = GeneratedColumn<int>(
+      'order_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES orders (id) ON DELETE CASCADE'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        name,
+        sku,
+        description,
+        price,
+        discount,
+        discountType,
+        netPrice,
+        isCustom,
+        cartId,
+        productId,
+        orderId
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'order_items';
+  @override
+  VerificationContext validateIntegrity(Insertable<OrderItem> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('sku')) {
+      context.handle(
+          _skuMeta, sku.isAcceptableOrUnknown(data['sku']!, _skuMeta));
+    } else if (isInserting) {
+      context.missing(_skuMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    }
+    if (data.containsKey('price')) {
+      context.handle(
+          _priceMeta, price.isAcceptableOrUnknown(data['price']!, _priceMeta));
+    } else if (isInserting) {
+      context.missing(_priceMeta);
+    }
+    if (data.containsKey('discount')) {
+      context.handle(_discountMeta,
+          discount.isAcceptableOrUnknown(data['discount']!, _discountMeta));
+    }
+    if (data.containsKey('discount_type')) {
+      context.handle(
+          _discountTypeMeta,
+          discountType.isAcceptableOrUnknown(
+              data['discount_type']!, _discountTypeMeta));
+    }
+    if (data.containsKey('net_price')) {
+      context.handle(_netPriceMeta,
+          netPrice.isAcceptableOrUnknown(data['net_price']!, _netPriceMeta));
+    } else if (isInserting) {
+      context.missing(_netPriceMeta);
+    }
+    if (data.containsKey('is_custom')) {
+      context.handle(_isCustomMeta,
+          isCustom.isAcceptableOrUnknown(data['is_custom']!, _isCustomMeta));
+    } else if (isInserting) {
+      context.missing(_isCustomMeta);
+    }
+    if (data.containsKey('cart_id')) {
+      context.handle(_cartIdMeta,
+          cartId.isAcceptableOrUnknown(data['cart_id']!, _cartIdMeta));
+    }
+    if (data.containsKey('product_id')) {
+      context.handle(_productIdMeta,
+          productId.isAcceptableOrUnknown(data['product_id']!, _productIdMeta));
+    }
+    if (data.containsKey('order_id')) {
+      context.handle(_orderIdMeta,
+          orderId.isAcceptableOrUnknown(data['order_id']!, _orderIdMeta));
+    } else if (isInserting) {
+      context.missing(_orderIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  OrderItem map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return OrderItem(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      sku: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}sku'])!,
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description']),
+      price: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}price'])!,
+      discount: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}discount']),
+      discountType: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}discount_type']),
+      netPrice: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}net_price'])!,
+      isCustom: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_custom'])!,
+      cartId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}cart_id']),
+      productId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}product_id']),
+      orderId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}order_id'])!,
+    );
+  }
+
+  @override
+  $OrderItemsTableTable createAlias(String alias) {
+    return $OrderItemsTableTable(attachedDatabase, alias);
+  }
+}
+
+class OrderItemsTableCompanion extends UpdateCompanion<OrderItem> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String> sku;
+  final Value<String?> description;
+  final Value<double> price;
+  final Value<double?> discount;
+  final Value<String?> discountType;
+  final Value<double> netPrice;
+  final Value<bool> isCustom;
+  final Value<int?> cartId;
+  final Value<int?> productId;
+  final Value<int> orderId;
+  const OrderItemsTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.sku = const Value.absent(),
+    this.description = const Value.absent(),
+    this.price = const Value.absent(),
+    this.discount = const Value.absent(),
+    this.discountType = const Value.absent(),
+    this.netPrice = const Value.absent(),
+    this.isCustom = const Value.absent(),
+    this.cartId = const Value.absent(),
+    this.productId = const Value.absent(),
+    this.orderId = const Value.absent(),
+  });
+  OrderItemsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required String sku,
+    this.description = const Value.absent(),
+    required double price,
+    this.discount = const Value.absent(),
+    this.discountType = const Value.absent(),
+    required double netPrice,
+    required bool isCustom,
+    this.cartId = const Value.absent(),
+    this.productId = const Value.absent(),
+    required int orderId,
+  })  : name = Value(name),
+        sku = Value(sku),
+        price = Value(price),
+        netPrice = Value(netPrice),
+        isCustom = Value(isCustom),
+        orderId = Value(orderId);
+  static Insertable<OrderItem> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? sku,
+    Expression<String>? description,
+    Expression<double>? price,
+    Expression<double>? discount,
+    Expression<String>? discountType,
+    Expression<double>? netPrice,
+    Expression<bool>? isCustom,
+    Expression<int>? cartId,
+    Expression<int>? productId,
+    Expression<int>? orderId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (sku != null) 'sku': sku,
+      if (description != null) 'description': description,
+      if (price != null) 'price': price,
+      if (discount != null) 'discount': discount,
+      if (discountType != null) 'discount_type': discountType,
+      if (netPrice != null) 'net_price': netPrice,
+      if (isCustom != null) 'is_custom': isCustom,
+      if (cartId != null) 'cart_id': cartId,
+      if (productId != null) 'product_id': productId,
+      if (orderId != null) 'order_id': orderId,
+    });
+  }
+
+  OrderItemsTableCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? name,
+      Value<String>? sku,
+      Value<String?>? description,
+      Value<double>? price,
+      Value<double?>? discount,
+      Value<String?>? discountType,
+      Value<double>? netPrice,
+      Value<bool>? isCustom,
+      Value<int?>? cartId,
+      Value<int?>? productId,
+      Value<int>? orderId}) {
+    return OrderItemsTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      sku: sku ?? this.sku,
+      description: description ?? this.description,
+      price: price ?? this.price,
+      discount: discount ?? this.discount,
+      discountType: discountType ?? this.discountType,
+      netPrice: netPrice ?? this.netPrice,
+      isCustom: isCustom ?? this.isCustom,
+      cartId: cartId ?? this.cartId,
+      productId: productId ?? this.productId,
+      orderId: orderId ?? this.orderId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (sku.present) {
+      map['sku'] = Variable<String>(sku.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (price.present) {
+      map['price'] = Variable<double>(price.value);
+    }
+    if (discount.present) {
+      map['discount'] = Variable<double>(discount.value);
+    }
+    if (discountType.present) {
+      map['discount_type'] = Variable<String>(discountType.value);
+    }
+    if (netPrice.present) {
+      map['net_price'] = Variable<double>(netPrice.value);
+    }
+    if (isCustom.present) {
+      map['is_custom'] = Variable<bool>(isCustom.value);
+    }
+    if (cartId.present) {
+      map['cart_id'] = Variable<int>(cartId.value);
+    }
+    if (productId.present) {
+      map['product_id'] = Variable<int>(productId.value);
+    }
+    if (orderId.present) {
+      map['order_id'] = Variable<int>(orderId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('OrderItemsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('sku: $sku, ')
+          ..write('description: $description, ')
+          ..write('price: $price, ')
+          ..write('discount: $discount, ')
+          ..write('discountType: $discountType, ')
+          ..write('netPrice: $netPrice, ')
+          ..write('isCustom: $isCustom, ')
+          ..write('cartId: $cartId, ')
+          ..write('productId: $productId, ')
+          ..write('orderId: $orderId')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   late final $UsersTableTable usersTable = $UsersTableTable(this);
@@ -3443,6 +3834,8 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final $ScreeningRegistrationsTableTable screeningRegistrationsTable =
       $ScreeningRegistrationsTableTable(this);
   late final $OrdersTableTable ordersTable = $OrdersTableTable(this);
+  late final $OrderItemsTableTable orderItemsTable =
+      $OrderItemsTableTable(this);
   late final UserDao userDao = UserDao(this as AppDb);
   late final PosLicenseDao posLicenseDao = PosLicenseDao(this as AppDb);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
@@ -3463,6 +3856,7 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final ScreeningRegistrationDao screeningRegistrationDao =
       ScreeningRegistrationDao(this as AppDb);
   late final OrderDao orderDao = OrderDao(this as AppDb);
+  late final OrderItemDao orderItemDao = OrderItemDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -3481,7 +3875,8 @@ abstract class _$AppDb extends GeneratedDatabase {
         screeningVenuesTable,
         screeningTimeslotsTable,
         screeningRegistrationsTable,
-        ordersTable
+        ordersTable,
+        orderItemsTable
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
@@ -3540,6 +3935,20 @@ abstract class _$AppDb extends GeneratedDatabase {
                 limitUpdateKind: UpdateKind.delete),
             result: [
               TableUpdate('orders', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('products',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('order_items', kind: UpdateKind.update),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('orders',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('order_items', kind: UpdateKind.delete),
             ],
           ),
         ],

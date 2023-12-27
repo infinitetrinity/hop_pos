@@ -21,7 +21,7 @@ class LoginRepository {
   });
 
   Future<void> setInitData(InitDataResponse response) async {
-    print('setting data');
+    print('setting primary data');
     return await db.transaction(() async {
       await db.customerDao.insertCustomers(response.getCustomersData());
       await db.screeningDao.insertScreenings(response.getScreeningsData());
@@ -35,6 +35,7 @@ class LoginRepository {
     return await db.transaction(() async {
       await db.screeningRegistrationDao.insertScreeningRegistrations(response.getScreeningRegistrationsData());
       await db.orderDao.insertOrders(response.getOrdersData());
+      await db.orderItemDao.insertOrderItems(response.getOrderItemsData());
     });
   }
 
@@ -42,6 +43,7 @@ class LoginRepository {
     await db.deleteDb();
     await AuthToken.setAuthToken(response.accessToken);
 
+    print('setting settings');
     return await db.transaction(() async {
       await db.userDao.insertUser(response.getUserData());
       await db.posLicenseDao.insertLicense(response.getPosLicenseData());

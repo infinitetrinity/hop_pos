@@ -8,6 +8,9 @@ import 'package:hop_pos/src/company/models/company_table.dart';
 import 'package:hop_pos/src/customers/daos/customer_dao.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/customers/models/customers_table.dart';
+import 'package:hop_pos/src/order_items/daos/order_item_dao.dart';
+import 'package:hop_pos/src/order_items/models/order_item.dart';
+import 'package:hop_pos/src/order_items/models/order_items_table.dart';
 import 'package:hop_pos/src/orders/daos/order_dao.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/orders_table.dart';
@@ -72,6 +75,7 @@ AppDb appDb(AppDbRef ref) {
   ScreeningTimeslotsTable,
   ScreeningRegistrationsTable,
   OrdersTable,
+  OrderItemsTable,
 ], daos: [
   UserDao,
   PosLicenseDao,
@@ -87,6 +91,7 @@ AppDb appDb(AppDbRef ref) {
   ScreeningTimeslotDao,
   ScreeningRegistrationDao,
   OrderDao,
+  OrderItemDao,
 ])
 class AppDb extends _$AppDb {
   AppDb._init() : super(initDb());
