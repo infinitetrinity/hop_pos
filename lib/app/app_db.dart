@@ -8,6 +8,9 @@ import 'package:hop_pos/src/company/models/company_table.dart';
 import 'package:hop_pos/src/customers/daos/customer_dao.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/customers/models/customers_table.dart';
+import 'package:hop_pos/src/order_extras/daos/order_extra_dao.dart';
+import 'package:hop_pos/src/order_extras/models/order_extra.dart';
+import 'package:hop_pos/src/order_extras/models/order_extras_table.dart';
 import 'package:hop_pos/src/order_items/daos/order_item_dao.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/order_items/models/order_items_table.dart';
@@ -76,6 +79,7 @@ AppDb appDb(AppDbRef ref) {
   ScreeningRegistrationsTable,
   OrdersTable,
   OrderItemsTable,
+  OrderExtrasTable,
 ], daos: [
   UserDao,
   PosLicenseDao,
@@ -92,6 +96,7 @@ AppDb appDb(AppDbRef ref) {
   ScreeningRegistrationDao,
   OrderDao,
   OrderItemDao,
+  OrderExtraDao,
 ])
 class AppDb extends _$AppDb {
   AppDb._init() : super(initDb());

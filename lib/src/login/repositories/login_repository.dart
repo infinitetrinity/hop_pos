@@ -36,6 +36,7 @@ class LoginRepository {
       await db.screeningRegistrationDao.insertScreeningRegistrations(response.getScreeningRegistrationsData());
       await db.orderDao.insertOrders(response.getOrdersData());
       await db.orderItemDao.insertOrderItems(response.getOrderItemsData());
+      await db.orderExtraDao.insertOrderExtras(response.getOrderExtrasData());
     });
   }
 

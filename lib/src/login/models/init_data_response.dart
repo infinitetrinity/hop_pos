@@ -2,6 +2,7 @@ import 'package:drift/drift.dart' as drift;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
+import 'package:hop_pos/src/order_extras/models/order_extra.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
@@ -24,6 +25,7 @@ class InitDataResponse with _$InitDataResponse {
     required List<ScreeningRegistration> registrations,
     required List<Order> orders,
     required List<OrderItem> orderItems,
+    required List<OrderExtra> orderExtras,
   }) = _InitDataResponse;
 
   factory InitDataResponse.fromJson(Map<String, dynamic> json, bool isSecondary) {
@@ -36,12 +38,14 @@ class InitDataResponse with _$InitDataResponse {
       registrations: ScreeningRegistration.fromJsonList(json['screening_registrations']['data']),
       orders: Order.fromJsonList(json['orders']['data']),
       orderItems: OrderItem.fromJsonList(json['order_items']['data']),
+      orderExtras: OrderExtra.fromJsonList(json['order_extras']['data']),
     );
   }
 
   static bool _checkHasNextPage(Map<String, dynamic> data, bool isSecondary) {
-    final keysToCheck =
-        isSecondary ? ['screening_registrations', 'orders', 'order_items'] : ['customers', 'screenings', 'screening_venues', 'screening_timeslots'];
+    final keysToCheck = isSecondary
+        ? ['screening_registrations', 'orders', 'order_items', 'order_extras']
+        : ['customers', 'screenings', 'screening_venues', 'screening_timeslots'];
 
     for (String key in keysToCheck) {
       if (data.containsKey(key)) {
@@ -167,6 +171,24 @@ class InitDataResponse with _$InitDataResponse {
             cartId: drift.Value(item.cartId),
             productId: drift.Value(item.productId),
             orderId: drift.Value(item.orderId),
+          ),
+        )
+        .toList();
+  }
+
+  List<OrderExtrasTableCompanion> getOrderExtrasData() {
+    return orderExtras
+        .map(
+          (extra) => OrderExtrasTableCompanion(
+            id: drift.Value(extra.id),
+            name: drift.Value(extra.name),
+            type: drift.Value(extra.type),
+            description: drift.Value(extra.description),
+            amount: drift.Value(extra.amount),
+            amountType: drift.Value(extra.amountType),
+            calculatedAmount: drift.Value(extra.calculatedAmount),
+            extraId: drift.Value(extra.extraId),
+            orderId: drift.Value(extra.orderId),
           ),
         )
         .toList();

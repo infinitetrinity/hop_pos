@@ -3810,6 +3810,325 @@ class OrderItemsTableCompanion extends UpdateCompanion<OrderItem> {
   }
 }
 
+class $OrderExtrasTableTable extends OrderExtrasTable
+    with TableInfo<$OrderExtrasTableTable, OrderExtra> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $OrderExtrasTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+      'type', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _amountMeta = const VerificationMeta('amount');
+  @override
+  late final GeneratedColumn<double> amount = GeneratedColumn<double>(
+      'amount', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _amountTypeMeta =
+      const VerificationMeta('amountType');
+  @override
+  late final GeneratedColumn<String> amountType = GeneratedColumn<String>(
+      'amount_type', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _calculatedAmountMeta =
+      const VerificationMeta('calculatedAmount');
+  @override
+  late final GeneratedColumn<double> calculatedAmount = GeneratedColumn<double>(
+      'calculated_amount', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _extraIdMeta =
+      const VerificationMeta('extraId');
+  @override
+  late final GeneratedColumn<int> extraId = GeneratedColumn<int>(
+      'extra_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES pos_extras (id) ON DELETE SET NULL'));
+  static const VerificationMeta _orderIdMeta =
+      const VerificationMeta('orderId');
+  @override
+  late final GeneratedColumn<int> orderId = GeneratedColumn<int>(
+      'order_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES orders (id) ON DELETE CASCADE'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        name,
+        type,
+        description,
+        amount,
+        amountType,
+        calculatedAmount,
+        extraId,
+        orderId
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'order_extras';
+  @override
+  VerificationContext validateIntegrity(Insertable<OrderExtra> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+          _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    }
+    if (data.containsKey('amount')) {
+      context.handle(_amountMeta,
+          amount.isAcceptableOrUnknown(data['amount']!, _amountMeta));
+    } else if (isInserting) {
+      context.missing(_amountMeta);
+    }
+    if (data.containsKey('amount_type')) {
+      context.handle(
+          _amountTypeMeta,
+          amountType.isAcceptableOrUnknown(
+              data['amount_type']!, _amountTypeMeta));
+    } else if (isInserting) {
+      context.missing(_amountTypeMeta);
+    }
+    if (data.containsKey('calculated_amount')) {
+      context.handle(
+          _calculatedAmountMeta,
+          calculatedAmount.isAcceptableOrUnknown(
+              data['calculated_amount']!, _calculatedAmountMeta));
+    } else if (isInserting) {
+      context.missing(_calculatedAmountMeta);
+    }
+    if (data.containsKey('extra_id')) {
+      context.handle(_extraIdMeta,
+          extraId.isAcceptableOrUnknown(data['extra_id']!, _extraIdMeta));
+    }
+    if (data.containsKey('order_id')) {
+      context.handle(_orderIdMeta,
+          orderId.isAcceptableOrUnknown(data['order_id']!, _orderIdMeta));
+    } else if (isInserting) {
+      context.missing(_orderIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  OrderExtra map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return OrderExtra(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      type: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}type'])!,
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description']),
+      amount: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}amount'])!,
+      amountType: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}amount_type'])!,
+      calculatedAmount: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}calculated_amount'])!,
+      extraId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}extra_id']),
+      orderId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}order_id'])!,
+    );
+  }
+
+  @override
+  $OrderExtrasTableTable createAlias(String alias) {
+    return $OrderExtrasTableTable(attachedDatabase, alias);
+  }
+}
+
+class OrderExtrasTableCompanion extends UpdateCompanion<OrderExtra> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String> type;
+  final Value<String?> description;
+  final Value<double> amount;
+  final Value<String> amountType;
+  final Value<double> calculatedAmount;
+  final Value<int?> extraId;
+  final Value<int> orderId;
+  const OrderExtrasTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.type = const Value.absent(),
+    this.description = const Value.absent(),
+    this.amount = const Value.absent(),
+    this.amountType = const Value.absent(),
+    this.calculatedAmount = const Value.absent(),
+    this.extraId = const Value.absent(),
+    this.orderId = const Value.absent(),
+  });
+  OrderExtrasTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required String type,
+    this.description = const Value.absent(),
+    required double amount,
+    required String amountType,
+    required double calculatedAmount,
+    this.extraId = const Value.absent(),
+    required int orderId,
+  })  : name = Value(name),
+        type = Value(type),
+        amount = Value(amount),
+        amountType = Value(amountType),
+        calculatedAmount = Value(calculatedAmount),
+        orderId = Value(orderId);
+  static Insertable<OrderExtra> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? type,
+    Expression<String>? description,
+    Expression<double>? amount,
+    Expression<String>? amountType,
+    Expression<double>? calculatedAmount,
+    Expression<int>? extraId,
+    Expression<int>? orderId,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (type != null) 'type': type,
+      if (description != null) 'description': description,
+      if (amount != null) 'amount': amount,
+      if (amountType != null) 'amount_type': amountType,
+      if (calculatedAmount != null) 'calculated_amount': calculatedAmount,
+      if (extraId != null) 'extra_id': extraId,
+      if (orderId != null) 'order_id': orderId,
+    });
+  }
+
+  OrderExtrasTableCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? name,
+      Value<String>? type,
+      Value<String?>? description,
+      Value<double>? amount,
+      Value<String>? amountType,
+      Value<double>? calculatedAmount,
+      Value<int?>? extraId,
+      Value<int>? orderId}) {
+    return OrderExtrasTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      type: type ?? this.type,
+      description: description ?? this.description,
+      amount: amount ?? this.amount,
+      amountType: amountType ?? this.amountType,
+      calculatedAmount: calculatedAmount ?? this.calculatedAmount,
+      extraId: extraId ?? this.extraId,
+      orderId: orderId ?? this.orderId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (amount.present) {
+      map['amount'] = Variable<double>(amount.value);
+    }
+    if (amountType.present) {
+      map['amount_type'] = Variable<String>(amountType.value);
+    }
+    if (calculatedAmount.present) {
+      map['calculated_amount'] = Variable<double>(calculatedAmount.value);
+    }
+    if (extraId.present) {
+      map['extra_id'] = Variable<int>(extraId.value);
+    }
+    if (orderId.present) {
+      map['order_id'] = Variable<int>(orderId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('OrderExtrasTableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('type: $type, ')
+          ..write('description: $description, ')
+          ..write('amount: $amount, ')
+          ..write('amountType: $amountType, ')
+          ..write('calculatedAmount: $calculatedAmount, ')
+          ..write('extraId: $extraId, ')
+          ..write('orderId: $orderId')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   late final $UsersTableTable usersTable = $UsersTableTable(this);
@@ -3836,6 +4155,8 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final $OrdersTableTable ordersTable = $OrdersTableTable(this);
   late final $OrderItemsTableTable orderItemsTable =
       $OrderItemsTableTable(this);
+  late final $OrderExtrasTableTable orderExtrasTable =
+      $OrderExtrasTableTable(this);
   late final UserDao userDao = UserDao(this as AppDb);
   late final PosLicenseDao posLicenseDao = PosLicenseDao(this as AppDb);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
@@ -3857,6 +4178,7 @@ abstract class _$AppDb extends GeneratedDatabase {
       ScreeningRegistrationDao(this as AppDb);
   late final OrderDao orderDao = OrderDao(this as AppDb);
   late final OrderItemDao orderItemDao = OrderItemDao(this as AppDb);
+  late final OrderExtraDao orderExtraDao = OrderExtraDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -3876,7 +4198,8 @@ abstract class _$AppDb extends GeneratedDatabase {
         screeningTimeslotsTable,
         screeningRegistrationsTable,
         ordersTable,
-        orderItemsTable
+        orderItemsTable,
+        orderExtrasTable
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
@@ -3949,6 +4272,20 @@ abstract class _$AppDb extends GeneratedDatabase {
                 limitUpdateKind: UpdateKind.delete),
             result: [
               TableUpdate('order_items', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('pos_extras',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('order_extras', kind: UpdateKind.update),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('orders',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('order_extras', kind: UpdateKind.delete),
             ],
           ),
         ],
