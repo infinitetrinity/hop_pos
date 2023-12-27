@@ -25,13 +25,16 @@ class LoginRepository {
     return await db.transaction(() async {
       await db.customerDao.insertCustomers(response.getCustomersData());
       await db.screeningDao.insertScreenings(response.getScreeningsData());
-      await db.screeningVenueDao
-          .insertScreeningVenues(response.getScreeningVenuesData());
-      await db.screeningTimeslotDao
-          .insertScreeningTimeslots(response.getScreeningTimeslotsData());
-      // await db.screeningRegistrationDao.insertScreeningRegistrations(
-      //     response.getScreeningRegistrationsData());
-      // await db.orderDao.insertOrders(response.getOrdersData());
+      await db.screeningVenueDao.insertScreeningVenues(response.getScreeningVenuesData());
+      await db.screeningTimeslotDao.insertScreeningTimeslots(response.getScreeningTimeslotsData());
+    });
+  }
+
+  Future<void> setSecondaryData(InitDataResponse response) async {
+    print('setting secondary data');
+    return await db.transaction(() async {
+      await db.screeningRegistrationDao.insertScreeningRegistrations(response.getScreeningRegistrationsData());
+      await db.orderDao.insertOrders(response.getOrdersData());
     });
   }
 
@@ -43,12 +46,10 @@ class LoginRepository {
       await db.userDao.insertUser(response.getUserData());
       await db.posLicenseDao.insertLicense(response.getPosLicenseData());
       await db.companyDao.insertCompany(response.getCompanyData());
-      await db.receiptSettingDao
-          .insertSetting(response.getReceiptSettingData());
+      await db.receiptSettingDao.insertSetting(response.getReceiptSettingData());
       await db.posExtraDao.insertExtras(response.getPosExtrasData());
       await db.paymentMethodDao.insertMethods(response.getPaymentMethodsData());
-      await db.productCategoryDao
-          .insertCategories(response.getProductCategoriesData());
+      await db.productCategoryDao.insertCategories(response.getProductCategoriesData());
       await db.productDao.insertProducts(response.getProductsData());
     });
   }
