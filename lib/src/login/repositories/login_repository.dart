@@ -21,31 +21,25 @@ class LoginRepository {
   });
 
   Future<void> setInitData(InitDataResponse response) async {
-    print('setting primary data');
-    return await db.transaction(() async {
+    await db.customStatement('PRAGMA foreign_keys = OFF');
+    await db.transaction(() async {
       await db.customerDao.insertCustomers(response.getCustomersData());
       await db.screeningDao.insertScreenings(response.getScreeningsData());
       await db.screeningVenueDao.insertScreeningVenues(response.getScreeningVenuesData());
       await db.screeningTimeslotDao.insertScreeningTimeslots(response.getScreeningTimeslotsData());
-    });
-  }
-
-  Future<void> setSecondaryData(InitDataResponse response) async {
-    print('setting secondary data');
-    return await db.transaction(() async {
       await db.screeningRegistrationDao.insertScreeningRegistrations(response.getScreeningRegistrationsData());
       await db.orderDao.insertOrders(response.getOrdersData());
       await db.orderItemDao.insertOrderItems(response.getOrderItemsData());
       await db.orderExtraDao.insertOrderExtras(response.getOrderExtrasData());
       await db.orderPaymentDao.insertOrderPayments(response.getOrderPaymentsData());
     });
+    await db.customStatement('PRAGMA foreign_keys = ON');
   }
 
   Future<void> sync(LoginResponse response) async {
     await db.deleteDb();
     await AuthToken.setAuthToken(response.accessToken);
 
-    print('setting settings');
     return await db.transaction(() async {
       await db.userDao.insertUser(response.getUserData());
       await db.posLicenseDao.insertLicense(response.getPosLicenseData());

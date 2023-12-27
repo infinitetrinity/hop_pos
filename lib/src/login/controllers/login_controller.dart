@@ -38,7 +38,6 @@ class LoginController extends _$LoginController {
         await ref.read(syncingStateProvider.notifier).syncing();
         await _syncInitialisationData(LoginResponse.fromJson(response.data));
         await _downloadInitData();
-        await _downloadInitData(isSecondary: true);
         await ref.read(syncingStateProvider.notifier).syncing(isSyncing: false);
         flashMessage.flash(message: 'Initial sync completed.');
       }
@@ -65,8 +64,8 @@ class LoginController extends _$LoginController {
     return null;
   }
 
-  Future<void> _downloadInitData({int page = 1, bool isSecondary = false}) async {
-    print('Downloading page $page for ${isSecondary ? 'secondary' : 'init'}');
+  Future<void> _downloadInitData({int page = 1}) async {
+    print('Downloading page $page');
     FlashMessage flashMessage = ref.read(flashMessageProvider);
     ApiService api = ref.read(apiServiceProvider);
 
@@ -79,14 +78,12 @@ class LoginController extends _$LoginController {
 
       if (response != null) {
         LoginRepository repo = ref.read(loginRepoProvider);
-        InitDataResponse initDataResponse = InitDataResponse.fromJson(response.data, isSecondary);
-
-        isSecondary ? await repo.setSecondaryData(initDataResponse) : await repo.setInitData(initDataResponse);
+        InitDataResponse initDataResponse = InitDataResponse.fromJson(response.data);
+        await repo.setInitData(initDataResponse);
 
         if (initDataResponse.hasNextPage) {
           await _downloadInitData(
             page: page + 1,
-            isSecondary: isSecondary,
           );
         }
       }

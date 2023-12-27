@@ -30,9 +30,9 @@ class InitDataResponse with _$InitDataResponse {
     required List<OrderPayment> orderPayments,
   }) = _InitDataResponse;
 
-  factory InitDataResponse.fromJson(Map<String, dynamic> json, bool isSecondary) {
+  factory InitDataResponse.fromJson(Map<String, dynamic> json) {
     return InitDataResponse(
-      hasNextPage: _checkHasNextPage(json, isSecondary),
+      hasNextPage: _checkHasNextPage(json),
       customers: Customer.fromJsonList(json['customers']['data']),
       screenings: Screening.fromJsonList(json['screenings']['data']),
       venues: ScreeningVenue.fromJsonList(json['screening_venues']['data']),
@@ -45,21 +45,10 @@ class InitDataResponse with _$InitDataResponse {
     );
   }
 
-  static bool _checkHasNextPage(Map<String, dynamic> data, bool isSecondary) {
-    final keysToCheck = isSecondary
-        ? ['screening_registrations', 'orders', 'order_items', 'order_extras', 'order_payments']
-        : ['customers', 'screenings', 'screening_venues', 'screening_timeslots'];
-
-    for (String key in keysToCheck) {
-      if (data.containsKey(key)) {
-        bool hasMorePages = data[key]['meta']['has_more_pages'] ?? false;
-        if (hasMorePages) {
-          return true;
-        }
-      }
-    }
-
-    return false;
+  static bool _checkHasNextPage(Map<String, dynamic> data) {
+    return data.values.any(
+      (el) => el['meta']['has_more_pages'] ?? false,
+    );
   }
 
   List<CustomersTableCompanion> getCustomersData() {
