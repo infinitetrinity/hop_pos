@@ -4,6 +4,7 @@ import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/order_extras/models/order_extra.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
+import 'package:hop_pos/src/order_payments/models/order_payment.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot.dart';
@@ -26,6 +27,7 @@ class InitDataResponse with _$InitDataResponse {
     required List<Order> orders,
     required List<OrderItem> orderItems,
     required List<OrderExtra> orderExtras,
+    required List<OrderPayment> orderPayments,
   }) = _InitDataResponse;
 
   factory InitDataResponse.fromJson(Map<String, dynamic> json, bool isSecondary) {
@@ -39,12 +41,13 @@ class InitDataResponse with _$InitDataResponse {
       orders: Order.fromJsonList(json['orders']['data']),
       orderItems: OrderItem.fromJsonList(json['order_items']['data']),
       orderExtras: OrderExtra.fromJsonList(json['order_extras']['data']),
+      orderPayments: OrderPayment.fromJsonList(json['order_payments']['data']),
     );
   }
 
   static bool _checkHasNextPage(Map<String, dynamic> data, bool isSecondary) {
     final keysToCheck = isSecondary
-        ? ['screening_registrations', 'orders', 'order_items', 'order_extras']
+        ? ['screening_registrations', 'orders', 'order_items', 'order_extras', 'order_payments']
         : ['customers', 'screenings', 'screening_venues', 'screening_timeslots'];
 
     for (String key in keysToCheck) {
@@ -189,6 +192,20 @@ class InitDataResponse with _$InitDataResponse {
             calculatedAmount: drift.Value(extra.calculatedAmount),
             extraId: drift.Value(extra.extraId),
             orderId: drift.Value(extra.orderId),
+          ),
+        )
+        .toList();
+  }
+
+  List<OrderPaymentsTableCompanion> getOrderPaymentsData() {
+    return orderPayments
+        .map(
+          (payment) => OrderPaymentsTableCompanion(
+            id: drift.Value(payment.id),
+            amount: drift.Value(payment.amount),
+            orderId: drift.Value(payment.orderId),
+            paymentMethodId: drift.Value(payment.paymentMethodId),
+            createdAt: drift.Value(payment.createdAt),
           ),
         )
         .toList();

@@ -4129,6 +4129,205 @@ class OrderExtrasTableCompanion extends UpdateCompanion<OrderExtra> {
   }
 }
 
+class $OrderPaymentsTableTable extends OrderPaymentsTable
+    with TableInfo<$OrderPaymentsTableTable, OrderPayment> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $OrderPaymentsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _amountMeta = const VerificationMeta('amount');
+  @override
+  late final GeneratedColumn<double> amount = GeneratedColumn<double>(
+      'amount', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _orderIdMeta =
+      const VerificationMeta('orderId');
+  @override
+  late final GeneratedColumn<int> orderId = GeneratedColumn<int>(
+      'order_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES orders (id) ON DELETE CASCADE'));
+  static const VerificationMeta _paymentMethodIdMeta =
+      const VerificationMeta('paymentMethodId');
+  @override
+  late final GeneratedColumn<int> paymentMethodId = GeneratedColumn<int>(
+      'payment_method_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES payment_methods (id) ON DELETE SET NULL'));
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, amount, orderId, paymentMethodId, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'order_payments';
+  @override
+  VerificationContext validateIntegrity(Insertable<OrderPayment> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('amount')) {
+      context.handle(_amountMeta,
+          amount.isAcceptableOrUnknown(data['amount']!, _amountMeta));
+    } else if (isInserting) {
+      context.missing(_amountMeta);
+    }
+    if (data.containsKey('order_id')) {
+      context.handle(_orderIdMeta,
+          orderId.isAcceptableOrUnknown(data['order_id']!, _orderIdMeta));
+    } else if (isInserting) {
+      context.missing(_orderIdMeta);
+    }
+    if (data.containsKey('payment_method_id')) {
+      context.handle(
+          _paymentMethodIdMeta,
+          paymentMethodId.isAcceptableOrUnknown(
+              data['payment_method_id']!, _paymentMethodIdMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  OrderPayment map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return OrderPayment(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      amount: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}amount'])!,
+      orderId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}order_id'])!,
+      paymentMethodId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}payment_method_id']),
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+    );
+  }
+
+  @override
+  $OrderPaymentsTableTable createAlias(String alias) {
+    return $OrderPaymentsTableTable(attachedDatabase, alias);
+  }
+}
+
+class OrderPaymentsTableCompanion extends UpdateCompanion<OrderPayment> {
+  final Value<int> id;
+  final Value<double> amount;
+  final Value<int> orderId;
+  final Value<int?> paymentMethodId;
+  final Value<DateTime> createdAt;
+  const OrderPaymentsTableCompanion({
+    this.id = const Value.absent(),
+    this.amount = const Value.absent(),
+    this.orderId = const Value.absent(),
+    this.paymentMethodId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  OrderPaymentsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required double amount,
+    required int orderId,
+    this.paymentMethodId = const Value.absent(),
+    required DateTime createdAt,
+  })  : amount = Value(amount),
+        orderId = Value(orderId),
+        createdAt = Value(createdAt);
+  static Insertable<OrderPayment> custom({
+    Expression<int>? id,
+    Expression<double>? amount,
+    Expression<int>? orderId,
+    Expression<int>? paymentMethodId,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (amount != null) 'amount': amount,
+      if (orderId != null) 'order_id': orderId,
+      if (paymentMethodId != null) 'payment_method_id': paymentMethodId,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  OrderPaymentsTableCompanion copyWith(
+      {Value<int>? id,
+      Value<double>? amount,
+      Value<int>? orderId,
+      Value<int?>? paymentMethodId,
+      Value<DateTime>? createdAt}) {
+    return OrderPaymentsTableCompanion(
+      id: id ?? this.id,
+      amount: amount ?? this.amount,
+      orderId: orderId ?? this.orderId,
+      paymentMethodId: paymentMethodId ?? this.paymentMethodId,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (amount.present) {
+      map['amount'] = Variable<double>(amount.value);
+    }
+    if (orderId.present) {
+      map['order_id'] = Variable<int>(orderId.value);
+    }
+    if (paymentMethodId.present) {
+      map['payment_method_id'] = Variable<int>(paymentMethodId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('OrderPaymentsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('amount: $amount, ')
+          ..write('orderId: $orderId, ')
+          ..write('paymentMethodId: $paymentMethodId, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   late final $UsersTableTable usersTable = $UsersTableTable(this);
@@ -4157,6 +4356,8 @@ abstract class _$AppDb extends GeneratedDatabase {
       $OrderItemsTableTable(this);
   late final $OrderExtrasTableTable orderExtrasTable =
       $OrderExtrasTableTable(this);
+  late final $OrderPaymentsTableTable orderPaymentsTable =
+      $OrderPaymentsTableTable(this);
   late final UserDao userDao = UserDao(this as AppDb);
   late final PosLicenseDao posLicenseDao = PosLicenseDao(this as AppDb);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
@@ -4179,6 +4380,7 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final OrderDao orderDao = OrderDao(this as AppDb);
   late final OrderItemDao orderItemDao = OrderItemDao(this as AppDb);
   late final OrderExtraDao orderExtraDao = OrderExtraDao(this as AppDb);
+  late final OrderPaymentDao orderPaymentDao = OrderPaymentDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -4199,7 +4401,8 @@ abstract class _$AppDb extends GeneratedDatabase {
         screeningRegistrationsTable,
         ordersTable,
         orderItemsTable,
-        orderExtrasTable
+        orderExtrasTable,
+        orderPaymentsTable
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
@@ -4286,6 +4489,20 @@ abstract class _$AppDb extends GeneratedDatabase {
                 limitUpdateKind: UpdateKind.delete),
             result: [
               TableUpdate('order_extras', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('orders',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('order_payments', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('payment_methods',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('order_payments', kind: UpdateKind.update),
             ],
           ),
         ],
