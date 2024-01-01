@@ -43,8 +43,6 @@ class ApiService {
     try {
       await _checkInternetConnection();
 
-      print(request.getPath());
-
       final Response response = await Dio()
           .get(
             request.getPath(),

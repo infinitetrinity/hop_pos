@@ -37,17 +37,13 @@ class LoginResponse with _$LoginResponse {
       receiptSetting: ReceiptSetting.fromJson(json['receipt_settings']),
       posExtras: PosExtra.fromJsonList(json['pos_extras']),
       paymentMethods: PaymentMethod.fromJsonList(json['payment_methods']),
-      productCategories:
-          ProductCategory.fromJsonList(json['product_categories']),
+      productCategories: ProductCategory.fromJsonList(json['product_categories']),
       products: Product.fromJsonList(json['products']),
     );
   }
 
   UsersTableCompanion getUserData() {
-    return UsersTableCompanion(
-      id: drift.Value(user.id),
-      fullName: drift.Value(user.fullName),
-    );
+    return user.toData();
   }
 
   PosLicensesTableCompanion getPosLicenseData() {
@@ -81,10 +77,8 @@ class LoginResponse with _$LoginResponse {
       id: drift.Value(receiptSetting.id),
       footerText: drift.Value(receiptSetting.footerText),
       outstandingSpecimenTitle: drift.Value(receiptSetting.footerText),
-      outstandingSpecimenNoticeTitle:
-          drift.Value(receiptSetting.outstandingSpecimenNoticeTitle),
-      outstandingSpecimenNotice:
-          drift.Value(receiptSetting.outstandingSpecimenNotice),
+      outstandingSpecimenNoticeTitle: drift.Value(receiptSetting.outstandingSpecimenNoticeTitle),
+      outstandingSpecimenNotice: drift.Value(receiptSetting.outstandingSpecimenNotice),
       utfTitle: drift.Value(receiptSetting.utfTitle),
       utfNotice: drift.Value(receiptSetting.utfNotice),
       stfTitle: drift.Value(receiptSetting.stfTitle),

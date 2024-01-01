@@ -25,6 +25,7 @@ class LoginController extends _$LoginController {
   Future<ValidationErrors?> login(LoginRequest request) async {
     FlashMessage flashMessage = ref.read(flashMessageProvider);
     ApiService api = ref.read(apiServiceProvider);
+    SyncingState syncNotifier = ref.read(syncingStateProvider.notifier);
 
     try {
       ApiResponse? response = await api.post(
@@ -35,10 +36,10 @@ class LoginController extends _$LoginController {
       );
 
       if (response != null) {
-        await ref.read(syncingStateProvider.notifier).syncing();
+        await syncNotifier.syncing();
         await _syncInitialisationData(LoginResponse.fromJson(response.data));
         await _downloadInitData();
-        await ref.read(syncingStateProvider.notifier).syncing(isSyncing: false);
+        await syncNotifier.synced();
         flashMessage.flash(message: 'Initial sync completed.');
       }
     } catch (e, stackTrace) {
@@ -58,14 +59,13 @@ class LoginController extends _$LoginController {
         type: FlashMessageType.error,
       );
     } finally {
-      await ref.read(syncingStateProvider.notifier).syncing(isSyncing: false);
+      await syncNotifier.syncing(isSyncing: false);
     }
 
     return null;
   }
 
   Future<void> _downloadInitData({int page = 1}) async {
-    print('Downloading page $page');
     FlashMessage flashMessage = ref.read(flashMessageProvider);
     ApiService api = ref.read(apiServiceProvider);
 

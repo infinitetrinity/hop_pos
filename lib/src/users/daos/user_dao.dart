@@ -13,9 +13,19 @@ class UserDao extends DatabaseAccessor<AppDb> with _$UserDaoMixin {
     return await into(usersTable).insertReturning(user);
   }
 
-  Future<bool> updateUser(
-      UsersTableCompanion user, Expression<bool> where) async {
+  Future<bool> updateUser(UsersTableCompanion user, Expression<bool> where) async {
     final count = await (update(usersTable)..where((_) => where)).write(user);
     return count > 0;
+  }
+
+  Future<bool> updateLastSyncedNow() async {
+    final user = await (select(usersTable)..limit(1)).getSingle();
+    final updatedUser = user
+        .copyWith(
+          lastSyncedAt: DateTime.now(),
+        )
+        .getData();
+
+    return await updateUser(updatedUser, db.usersTable.id.equals(user.id));
   }
 }

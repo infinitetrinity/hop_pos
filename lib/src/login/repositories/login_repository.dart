@@ -51,4 +51,8 @@ class LoginRepository {
       await db.productDao.insertProducts(response.getProductsData());
     });
   }
+
+  Future<void> synced() async {
+    await db.userDao.updateLastSyncedNow();
+  }
 }

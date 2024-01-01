@@ -6,7 +6,7 @@ part of 'syncing_state.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$syncingStateHash() => r'c1462ee46b0b46f51580192de6a788ed60cd3952';
+String _$syncingStateHash() => r'95c802304015a612ffa268f0047c3e36d72f15e5';
 
 /// See also [SyncingState].
 @ProviderFor(SyncingState)

@@ -1,3 +1,4 @@
+import 'package:hop_pos/src/login/repositories/login_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'syncing_state.g.dart';
@@ -11,5 +12,11 @@ class SyncingState extends _$SyncingState {
 
   syncing({bool isSyncing = true}) {
     state = isSyncing;
+  }
+
+  synced() async {
+    LoginRepository repo = ref.read(loginRepoProvider);
+    await repo.synced();
+    state = true;
   }
 }
