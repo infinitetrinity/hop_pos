@@ -24,7 +24,7 @@ class UserDao extends DatabaseAccessor<AppDb> with _$UserDaoMixin {
         .copyWith(
           lastSyncedAt: DateTime.now(),
         )
-        .getData();
+        .toData();
 
     return await updateUser(updatedUser, db.usersTable.id.equals(user.id));
   }

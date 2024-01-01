@@ -7,11 +7,14 @@ import 'package:hop_pos/src/common/models/validation_errors.dart';
 import 'package:hop_pos/src/common/widgets/error_text.dart';
 import 'package:hop_pos/src/common/widgets/form_button.dart';
 import 'package:hop_pos/src/common/widgets/form_text_field.dart';
-import 'package:hop_pos/src/login/controllers/login_controller.dart';
 import 'package:hop_pos/src/login/models/login_request.dart';
 
 class LoginForm extends HookConsumerWidget {
-  const LoginForm({super.key});
+  const LoginForm({
+    required this.onSubmit,
+    super.key,
+  });
+  final Future<ValidationErrors?> Function(LoginRequest request) onSubmit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,14 +23,18 @@ class LoginForm extends HookConsumerWidget {
     final form = useState(const LoginRequest());
     final errors = useState<ValidationErrors?>(null);
 
-    void onSubmit() async {
+    void handleSubmit() async {
       errors.value = null;
       isSubmitting.value = true;
 
       if (formKey.currentState!.validate()) {
-        errors.value =
-            await ref.read(loginControllerProvider.notifier).login(form.value);
-        formKey.currentState?.validate();
+        final result = await onSubmit(form.value);
+        print('result $result');
+
+        if (result is ValidationErrors) {
+          errors.value = result;
+          formKey.currentState?.validate();
+        }
       }
 
       if (context.mounted) {
@@ -64,9 +71,7 @@ class LoginForm extends HookConsumerWidget {
                       isRequired: true,
                       placeholder: 'License Key',
                       value: 'DYLNBRY9NP2VQRUMK8KF8X0DHMFJHSQO',
-                      validator: (value) => errors.value != null
-                          ? errors.value!.getError('license_key')
-                          : form.value.validateField('License Key', value),
+                      validator: (value) => errors.value != null ? errors.value!.getError('license_key') : form.value.validateField('License Key', value),
                       onChanged: (value) {
                         form.value = form.value.copyWith(licenseKey: value);
                       },
@@ -76,9 +81,7 @@ class LoginForm extends HookConsumerWidget {
                       isRequired: true,
                       placeholder: 'Username',
                       value: 'support',
-                      validator: (value) => errors.value != null
-                          ? errors.value!.getError('username')
-                          : form.value.validateField('Username', value),
+                      validator: (value) => errors.value != null ? errors.value!.getError('username') : form.value.validateField('Username', value),
                       onChanged: (value) {
                         form.value = form.value.copyWith(username: value);
                       },
@@ -89,9 +92,7 @@ class LoginForm extends HookConsumerWidget {
                       isPassword: true,
                       placeholder: 'Password',
                       value: 'Support@ITC789123',
-                      validator: (value) => errors.value != null
-                          ? errors.value!.getError('password')
-                          : form.value.validateField('Password', value),
+                      validator: (value) => errors.value != null ? errors.value!.getError('password') : form.value.validateField('Password', value),
                       onChanged: (value) {
                         form.value = form.value.copyWith(password: value);
                       },
@@ -100,7 +101,7 @@ class LoginForm extends HookConsumerWidget {
                     FormButton(
                       maxWidth: null,
                       isSubmitting: isSubmitting.value,
-                      onSubmit: onSubmit,
+                      onSubmit: handleSubmit,
                     ),
                   ],
                 ),

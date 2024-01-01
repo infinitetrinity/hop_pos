@@ -21,6 +21,7 @@ class LoginRepository {
   });
 
   Future<void> setInitData(InitDataResponse response) async {
+    print('setting init data');
     await db.customStatement('PRAGMA foreign_keys = OFF');
     await db.transaction(() async {
       await db.customerDao.insertCustomers(response.getCustomersData());
@@ -40,6 +41,7 @@ class LoginRepository {
     await db.deleteDb();
     await AuthToken.setAuthToken(response.accessToken);
 
+    print('syncing');
     return await db.transaction(() async {
       await db.userDao.insertUser(response.getUserData());
       await db.posLicenseDao.insertLicense(response.getPosLicenseData());

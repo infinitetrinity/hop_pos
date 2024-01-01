@@ -58,6 +58,10 @@ class LoginController extends _$LoginController {
         message: 'Unexpected error in logging in',
         type: FlashMessageType.error,
       );
+
+      return const ValidationErrors(errors: {
+        'general': 'Unexpected error in logging in',
+      });
     } finally {
       await syncNotifier.syncing(isSyncing: false);
     }
