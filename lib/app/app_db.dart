@@ -53,6 +53,7 @@ import 'package:hop_pos/src/screenings/models/screenings_table.dart';
 import 'package:hop_pos/src/users/daos/user_dao.dart';
 import 'package:hop_pos/src/users/models/user.dart';
 import 'package:hop_pos/src/users/models/users_table.dart';
+import 'package:logger/logger.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -61,8 +62,9 @@ part 'app_db.g.dart';
 
 @Riverpod(keepAlive: true)
 AppDb appDb(AppDbRef ref) {
-  final db = AppDb.instance;
+  final db = AppDb();
   ref.onDispose(() => db.close());
+
   return db;
 }
 
@@ -104,8 +106,7 @@ AppDb appDb(AppDbRef ref) {
   OrderPaymentDao,
 ])
 class AppDb extends _$AppDb {
-  AppDb._init() : super(initDb());
-  static final AppDb instance = AppDb._init();
+  AppDb() : super(_initDb());
 
   @override
   int get schemaVersion => 1;
@@ -120,8 +121,8 @@ class AppDb extends _$AppDb {
     );
   }
 
-  Future<void> deleteDb() async {
-    print('deleting database');
+  Future<void> clearDb() async {
+    print('clearing database');
     return transaction(() async {
       await customStatement('PRAGMA foreign_keys = OFF');
       for (final table in allTables) {
@@ -131,7 +132,25 @@ class AppDb extends _$AppDb {
     });
   }
 
-  static LazyDatabase initDb() {
+  Future<void> deleteDb() async {
+    print('deleting database');
+    await close();
+    await Future.delayed(const Duration(seconds: 3));
+    final dbFolder = await getApplicationDocumentsDirectory();
+    final file = File(p.join(dbFolder.path, name));
+    final exists = await file.exists();
+    if (exists) {
+      try {
+        await file.delete();
+      } catch (e, stackTrace) {
+        final logger = Logger();
+        logger.e("Fail to delete db", error: e, stackTrace: stackTrace);
+        rethrow;
+      }
+    }
+  }
+
+  static LazyDatabase _initDb() {
     print('opening database');
     return LazyDatabase(() async {
       final dbFolder = await getApplicationDocumentsDirectory();

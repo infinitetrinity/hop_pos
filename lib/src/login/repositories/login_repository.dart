@@ -38,7 +38,6 @@ class LoginRepository {
   }
 
   Future<void> sync(LoginResponse response) async {
-    await db.deleteDb();
     await AuthToken.setAuthToken(response.accessToken);
 
     print('syncing');

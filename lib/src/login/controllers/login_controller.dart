@@ -1,4 +1,5 @@
 import 'package:hop_pos/app/api_routes.dart';
+import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/app/app_exceptions.dart';
 import 'package:hop_pos/src/common/models/api_request.dart';
 import 'package:hop_pos/src/common/models/api_response.dart';
@@ -22,7 +23,7 @@ class LoginController extends _$LoginController {
     return;
   }
 
-  Future<ValidationErrors?> login(LoginRequest request) async {
+  Future<dynamic> login(LoginRequest request) async {
     FlashMessage flashMessage = ref.read(flashMessageProvider);
     ApiService api = ref.read(apiServiceProvider);
     SyncingState syncNotifier = ref.read(syncingStateProvider.notifier);
@@ -35,13 +36,17 @@ class LoginController extends _$LoginController {
         ),
       );
 
-      if (response != null) {
-        await syncNotifier.syncing();
-        await _syncInitialisationData(LoginResponse.fromJson(response.data));
-        await _downloadInitData();
-        await syncNotifier.synced();
-        flashMessage.flash(message: 'Initial sync completed.');
+      if (response == null) {
+        return false;
       }
+
+      await syncNotifier.syncing();
+      await _syncInitialisationData(LoginResponse.fromJson(response.data));
+      await _downloadInitData();
+      await syncNotifier.synced();
+      flashMessage.flash(message: 'Initial sync completed.');
+
+      return true;
     } catch (e, stackTrace) {
       if (e is ApiValidationError) {
         return e.errors;
@@ -51,6 +56,7 @@ class LoginController extends _$LoginController {
           'general': [e.message]
         });
       }
+
       final logger = Logger();
       logger.e("Login error", error: e, stackTrace: stackTrace);
 
@@ -58,15 +64,11 @@ class LoginController extends _$LoginController {
         message: 'Unexpected error in logging in',
         type: FlashMessageType.error,
       );
-
-      return const ValidationErrors(errors: {
-        'general': 'Unexpected error in logging in',
-      });
     } finally {
       await syncNotifier.syncing(isSyncing: false);
     }
 
-    return null;
+    return false;
   }
 
   Future<void> _downloadInitData({int page = 1}) async {
@@ -86,9 +88,9 @@ class LoginController extends _$LoginController {
         await repo.setInitData(initDataResponse);
 
         if (initDataResponse.hasNextPage) {
-          await _downloadInitData(
-            page: page + 1,
-          );
+          // await _downloadInitData(
+          //   page: page + 1,
+          // );
         }
       }
     } catch (e, stackTrace) {
@@ -109,6 +111,10 @@ class LoginController extends _$LoginController {
 
     try {
       LoginRepository repo = ref.read(loginRepoProvider);
+      AppDb db = ref.read(appDbProvider);
+      await db.deleteDb();
+      ref.invalidate(appDbProvider);
+
       await repo.sync(response);
     } catch (e, stackTrace) {
       final logger = Logger();
