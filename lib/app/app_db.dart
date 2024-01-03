@@ -62,7 +62,7 @@ part 'app_db.g.dart';
 
 @Riverpod(keepAlive: true)
 AppDb appDb(AppDbRef ref) {
-  final db = AppDb();
+  final db = AppDb.getInstance();
   ref.onDispose(() => db.close());
 
   return db;
@@ -106,7 +106,13 @@ AppDb appDb(AppDbRef ref) {
   OrderPaymentDao,
 ])
 class AppDb extends _$AppDb {
-  AppDb() : super(_initDb());
+  AppDb._init() : super(_initDb());
+  static AppDb? _instance;
+
+  factory AppDb.getInstance() {
+    _instance ??= AppDb._init();
+    return _instance!;
+  }
 
   @override
   int get schemaVersion => 1;
@@ -142,6 +148,7 @@ class AppDb extends _$AppDb {
     if (exists) {
       try {
         await file.delete();
+        _instance = null;
       } catch (e, stackTrace) {
         final logger = Logger();
         logger.e("Fail to delete db", error: e, stackTrace: stackTrace);

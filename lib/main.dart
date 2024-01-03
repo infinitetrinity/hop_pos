@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
-import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/app/app_routes.dart';
 import 'package:hop_pos/src/common/widgets/main_app.dart';
 import 'package:window_manager/window_manager.dart';
@@ -34,7 +33,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final goRouter = ref.watch(goRouterProvider);
 
-    final db = ref.watch(appDbProvider);
+    //final db = ref.watch(appDbProvider);
     //db.deleteDb();
 
     return MaterialApp.router(

@@ -110,11 +110,11 @@ class LoginController extends _$LoginController {
     FlashMessage flashMessage = ref.read(flashMessageProvider);
 
     try {
-      LoginRepository repo = ref.read(loginRepoProvider);
       AppDb db = ref.read(appDbProvider);
       await db.deleteDb();
       ref.invalidate(appDbProvider);
 
+      LoginRepository repo = ref.read(loginRepoProvider);
       await repo.sync(response);
     } catch (e, stackTrace) {
       final logger = Logger();
