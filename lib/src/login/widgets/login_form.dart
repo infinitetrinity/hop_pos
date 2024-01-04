@@ -29,8 +29,6 @@ class LoginForm extends HookConsumerWidget {
 
       if (formKey.currentState!.validate()) {
         final result = await onSubmit(form.value);
-        print('result $result');
-
         if (result is ValidationErrors) {
           errors.value = result;
           formKey.currentState?.validate();

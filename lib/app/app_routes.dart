@@ -26,7 +26,6 @@ GoRouter goRouter(GoRouterRef ref) {
       if (ignoreRoutes.contains(state.fullPath)) {
         return null;
       }
-
       if (state.fullPath == LoginRoute().location) {
         return isAuthenticated ? HomeRoute().location : null;
       }
