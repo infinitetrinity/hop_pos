@@ -6,12 +6,12 @@ part of 'syncing_state.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$syncingStateHash() => r'95c802304015a612ffa268f0047c3e36d72f15e5';
+String _$syncingStateHash() => r'b6b9bf2cef056689ea1ec1d908f1d6af02d08a31';
 
 /// See also [SyncingState].
 @ProviderFor(SyncingState)
 final syncingStateProvider =
-    AutoDisposeNotifierProvider<SyncingState, bool>.internal(
+    AutoDisposeNotifierProvider<SyncingState, SyncingProgress>.internal(
   SyncingState.new,
   name: r'syncingStateProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final syncingStateProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$SyncingState = AutoDisposeNotifier<bool>;
+typedef _$SyncingState = AutoDisposeNotifier<SyncingProgress>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

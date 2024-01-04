@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$InitDataResponse {
   bool get hasNextPage => throw _privateConstructorUsedError;
+  int get lastPage => throw _privateConstructorUsedError;
   List<Customer> get customers => throw _privateConstructorUsedError;
   List<Screening> get screenings => throw _privateConstructorUsedError;
   List<ScreeningVenue> get venues => throw _privateConstructorUsedError;
@@ -41,6 +42,7 @@ abstract class $InitDataResponseCopyWith<$Res> {
   @useResult
   $Res call(
       {bool hasNextPage,
+      int lastPage,
       List<Customer> customers,
       List<Screening> screenings,
       List<ScreeningVenue> venues,
@@ -66,6 +68,7 @@ class _$InitDataResponseCopyWithImpl<$Res, $Val extends InitDataResponse>
   @override
   $Res call({
     Object? hasNextPage = null,
+    Object? lastPage = null,
     Object? customers = null,
     Object? screenings = null,
     Object? venues = null,
@@ -81,6 +84,10 @@ class _$InitDataResponseCopyWithImpl<$Res, $Val extends InitDataResponse>
           ? _value.hasNextPage
           : hasNextPage // ignore: cast_nullable_to_non_nullable
               as bool,
+      lastPage: null == lastPage
+          ? _value.lastPage
+          : lastPage // ignore: cast_nullable_to_non_nullable
+              as int,
       customers: null == customers
           ? _value.customers
           : customers // ignore: cast_nullable_to_non_nullable
@@ -131,6 +138,7 @@ abstract class _$$InitDataResponseImplCopyWith<$Res>
   @useResult
   $Res call(
       {bool hasNextPage,
+      int lastPage,
       List<Customer> customers,
       List<Screening> screenings,
       List<ScreeningVenue> venues,
@@ -154,6 +162,7 @@ class __$$InitDataResponseImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? hasNextPage = null,
+    Object? lastPage = null,
     Object? customers = null,
     Object? screenings = null,
     Object? venues = null,
@@ -169,6 +178,10 @@ class __$$InitDataResponseImplCopyWithImpl<$Res>
           ? _value.hasNextPage
           : hasNextPage // ignore: cast_nullable_to_non_nullable
               as bool,
+      lastPage: null == lastPage
+          ? _value.lastPage
+          : lastPage // ignore: cast_nullable_to_non_nullable
+              as int,
       customers: null == customers
           ? _value._customers
           : customers // ignore: cast_nullable_to_non_nullable
@@ -214,6 +227,7 @@ class __$$InitDataResponseImplCopyWithImpl<$Res>
 class _$InitDataResponseImpl extends _InitDataResponse {
   const _$InitDataResponseImpl(
       {required this.hasNextPage,
+      required this.lastPage,
       required final List<Customer> customers,
       required final List<Screening> screenings,
       required final List<ScreeningVenue> venues,
@@ -236,6 +250,8 @@ class _$InitDataResponseImpl extends _InitDataResponse {
 
   @override
   final bool hasNextPage;
+  @override
+  final int lastPage;
   final List<Customer> _customers;
   @override
   List<Customer> get customers {
@@ -310,7 +326,7 @@ class _$InitDataResponseImpl extends _InitDataResponse {
 
   @override
   String toString() {
-    return 'InitDataResponse(hasNextPage: $hasNextPage, customers: $customers, screenings: $screenings, venues: $venues, timeslots: $timeslots, registrations: $registrations, orders: $orders, orderItems: $orderItems, orderExtras: $orderExtras, orderPayments: $orderPayments)';
+    return 'InitDataResponse(hasNextPage: $hasNextPage, lastPage: $lastPage, customers: $customers, screenings: $screenings, venues: $venues, timeslots: $timeslots, registrations: $registrations, orders: $orders, orderItems: $orderItems, orderExtras: $orderExtras, orderPayments: $orderPayments)';
   }
 
   @override
@@ -320,6 +336,8 @@ class _$InitDataResponseImpl extends _InitDataResponse {
             other is _$InitDataResponseImpl &&
             (identical(other.hasNextPage, hasNextPage) ||
                 other.hasNextPage == hasNextPage) &&
+            (identical(other.lastPage, lastPage) ||
+                other.lastPage == lastPage) &&
             const DeepCollectionEquality()
                 .equals(other._customers, _customers) &&
             const DeepCollectionEquality()
@@ -342,6 +360,7 @@ class _$InitDataResponseImpl extends _InitDataResponse {
   int get hashCode => Object.hash(
       runtimeType,
       hasNextPage,
+      lastPage,
       const DeepCollectionEquality().hash(_customers),
       const DeepCollectionEquality().hash(_screenings),
       const DeepCollectionEquality().hash(_venues),
@@ -363,6 +382,7 @@ class _$InitDataResponseImpl extends _InitDataResponse {
 abstract class _InitDataResponse extends InitDataResponse {
   const factory _InitDataResponse(
           {required final bool hasNextPage,
+          required final int lastPage,
           required final List<Customer> customers,
           required final List<Screening> screenings,
           required final List<ScreeningVenue> venues,
@@ -377,6 +397,8 @@ abstract class _InitDataResponse extends InitDataResponse {
 
   @override
   bool get hasNextPage;
+  @override
+  int get lastPage;
   @override
   List<Customer> get customers;
   @override

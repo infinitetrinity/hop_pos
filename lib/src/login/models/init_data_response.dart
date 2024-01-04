@@ -19,6 +19,7 @@ class InitDataResponse with _$InitDataResponse {
 
   const factory InitDataResponse({
     required bool hasNextPage,
+    required int lastPage,
     required List<Customer> customers,
     required List<Screening> screenings,
     required List<ScreeningVenue> venues,
@@ -33,6 +34,7 @@ class InitDataResponse with _$InitDataResponse {
   factory InitDataResponse.fromJson(Map<String, dynamic> json) {
     return InitDataResponse(
       hasNextPage: _checkHasNextPage(json),
+      lastPage: _getLastPage(json),
       customers: Customer.fromJsonList(json['customers']['data']),
       screenings: Screening.fromJsonList(json['screenings']['data']),
       venues: ScreeningVenue.fromJsonList(json['screening_venues']['data']),
@@ -48,6 +50,13 @@ class InitDataResponse with _$InitDataResponse {
   static bool _checkHasNextPage(Map<String, dynamic> data) {
     return data.values.any(
       (el) => el['meta']['has_more_pages'] ?? false,
+    );
+  }
+
+  static int _getLastPage(Map<String, dynamic> data) {
+    return data.values.fold(
+      0,
+      (maxPage, el) => (el['meta']['last_page'] ?? 0) > maxPage ? (el['meta']['last_page'] ?? 0) : maxPage,
     );
   }
 

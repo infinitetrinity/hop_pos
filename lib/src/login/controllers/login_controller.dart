@@ -85,12 +85,13 @@ class LoginController extends _$LoginController {
       if (response != null) {
         LoginRepository repo = ref.read(loginRepoProvider);
         InitDataResponse initDataResponse = InitDataResponse.fromJson(response.data);
+        ref.read(syncingStateProvider.notifier).syncing(currentPage: page, lastPage: initDataResponse.lastPage);
         await repo.setInitData(initDataResponse);
 
         if (initDataResponse.hasNextPage) {
-          // await _downloadInitData(
-          //   page: page + 1,
-          // );
+          await _downloadInitData(
+            page: page + 1,
+          );
         }
       }
     } catch (e, stackTrace) {

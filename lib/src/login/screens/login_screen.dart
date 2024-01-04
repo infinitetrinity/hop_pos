@@ -4,6 +4,7 @@ import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/src/common/models/validation_errors.dart';
 import 'package:hop_pos/src/login/controllers/login_controller.dart';
 import 'package:hop_pos/src/login/models/login_request.dart';
+import 'package:hop_pos/src/login/models/syncing_progress.dart';
 import 'package:hop_pos/src/login/state/syncing_state.dart';
 import 'package:hop_pos/src/login/widgets/login_background.dart';
 import 'package:hop_pos/src/login/widgets/login_form.dart';
@@ -14,7 +15,7 @@ class LoginScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool isSyncing = ref.watch(syncingStateProvider);
+    SyncingProgress syncingState = ref.watch(syncingStateProvider);
 
     Future<ValidationErrors?> onSubmit(LoginRequest request) async {
       final result = await ref.read(loginControllerProvider.notifier).login(request);
@@ -33,7 +34,7 @@ class LoginScreen extends HookConsumerWidget {
         child: Row(
           children: [
             const LoginBackground(),
-            isSyncing
+            syncingState.isSyncing
                 ? const SyncingContent()
                 : LoginForm(
                     onSubmit: onSubmit,
