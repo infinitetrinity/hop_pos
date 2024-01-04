@@ -20,6 +20,10 @@ class UserRepository {
     required this.userDao,
   });
 
+  Future<User?> getFirst() async {
+    return await userDao.getFirst();
+  }
+
   Future<User> insert(UsersTableCompanion user) async {
     return await userDao.insertUser(user);
   }

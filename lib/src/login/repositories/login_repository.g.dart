@@ -6,7 +6,7 @@ part of 'login_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loginRepoHash() => r'6b8b4940a1365b91f0162079ec75a1db7bef3d72';
+String _$loginRepoHash() => r'01ba2a4db31ae31c61a703c0383e7d24a298cb00';
 
 /// See also [loginRepo].
 @ProviderFor(loginRepo)

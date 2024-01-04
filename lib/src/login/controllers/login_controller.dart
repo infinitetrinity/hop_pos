@@ -19,7 +19,7 @@ part 'login_controller.g.dart';
 @riverpod
 class LoginController extends _$LoginController {
   @override
-  void build() {
+  void build() async {
     return;
   }
 

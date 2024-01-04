@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'login_routes.dart';
+part of 'setup_routes.dart';
 
 // **************************************************************************
 // GoRouterGenerator
 // **************************************************************************
 
 List<RouteBase> get $appRoutes => [
-      $loginRoute,
+      $setupRoute,
     ];
 
-RouteBase get $loginRoute => GoRouteData.$route(
-      path: '/login',
-      factory: $LoginRouteExtension._fromState,
+RouteBase get $setupRoute => GoRouteData.$route(
+      path: '/',
+      factory: $SetupRouteExtension._fromState,
     );
 
-extension $LoginRouteExtension on LoginRoute {
-  static LoginRoute _fromState(GoRouterState state) => LoginRoute();
+extension $SetupRouteExtension on SetupRoute {
+  static SetupRoute _fromState(GoRouterState state) => SetupRoute();
 
   String get location => GoRouteData.$location(
-        '/login',
+        '/',
       );
 
   void go(BuildContext context) => context.go(location);

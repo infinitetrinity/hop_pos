@@ -1,7 +1,7 @@
 import 'package:hop_pos/app/app_db.dart';
-import 'package:hop_pos/src/common/services/auth_token.dart';
 import 'package:hop_pos/src/login/models/init_data_response.dart';
 import 'package:hop_pos/src/login/models/login_response.dart';
+import 'package:hop_pos/src/users/states/auth_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'login_repository.g.dart';
@@ -10,14 +10,17 @@ part 'login_repository.g.dart';
 LoginRepository loginRepo(LoginRepoRef ref) {
   return LoginRepository(
     db: ref.watch(appDbProvider),
+    authState: ref.watch(authStateProvider.notifier),
   );
 }
 
 class LoginRepository {
   final AppDb db;
+  final AuthState authState;
 
   LoginRepository({
     required this.db,
+    required this.authState,
   });
 
   Future<void> setInitData(InitDataResponse response) async {
@@ -38,10 +41,8 @@ class LoginRepository {
   }
 
   Future<void> sync(LoginResponse response) async {
-    await AuthToken.setAuthToken(response.accessToken);
-
     print('syncing');
-    return await db.transaction(() async {
+    await db.transaction(() async {
       await db.userDao.insertUser(response.getUserData());
       await db.posLicenseDao.insertLicense(response.getPosLicenseData());
       await db.companyDao.insertCompany(response.getCompanyData());
@@ -51,6 +52,8 @@ class LoginRepository {
       await db.productCategoryDao.insertCategories(response.getProductCategoriesData());
       await db.productDao.insertProducts(response.getProductsData());
     });
+
+    return await authState.login(response.user, response.accessToken);
   }
 
   Future<void> synced() async {

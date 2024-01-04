@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hop_pos/app/app_assets.dart';
 
 class LoginBackground extends StatelessWidget {
   const LoginBackground({super.key});
@@ -10,7 +11,7 @@ class LoginBackground extends StatelessWidget {
       child: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/login_bg.png"),
+            image: AssetImage(AppAssets.loginBg),
             fit: BoxFit.cover,
           ),
         ),

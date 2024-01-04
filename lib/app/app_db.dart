@@ -141,7 +141,6 @@ class AppDb extends _$AppDb {
   Future<void> deleteDb() async {
     print('deleting database');
     await close();
-    await Future.delayed(const Duration(seconds: 3));
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, name));
     final exists = await file.exists();

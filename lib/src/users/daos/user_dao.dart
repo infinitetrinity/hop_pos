@@ -9,6 +9,12 @@ part 'user_dao.g.dart';
 class UserDao extends DatabaseAccessor<AppDb> with _$UserDaoMixin {
   UserDao(AppDb db) : super(db);
 
+  Future<User?> getFirst() async {
+    final query = select(usersTable);
+
+    return query.getSingleOrNull();
+  }
+
   Future<User> insertUser(UsersTableCompanion user) async {
     return await into(usersTable).insertReturning(user);
   }
