@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/routes/home_routes.dart';
-import 'package:hop_pos/routes/login_routes.dart';
+import 'package:hop_pos/routes/order_routes.dart';
 import 'package:hop_pos/src/common/widgets/header_logo.dart';
 import 'package:hop_pos/src/common/widgets/nav_item.dart';
 import 'package:hop_pos/src/common/widgets/sync_button.dart';
@@ -35,13 +35,13 @@ class Header extends StatelessWidget {
                   NavItem(
                     icon: Icons.list,
                     title: 'Sales',
-                    path: LoginRoute().location,
+                    path: OrderRoute().location,
                   ),
                   const SizedBox(width: 25),
                   NavItem(
                     icon: Icons.list,
                     title: 'Incomplete Sales',
-                    path: LoginRoute().location,
+                    path: IncompleteOrderRoute().location,
                   ),
                   const SizedBox(width: 25),
                   const SyncButton(),

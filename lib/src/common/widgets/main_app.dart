@@ -20,9 +20,7 @@ class MainApp extends HookConsumerWidget {
     void onCltrDPressed() {
       if (kDebugMode) {
         final router = ref.read(goRouterProvider);
-        router.routerDelegate.currentConfiguration.uri.path == DbScreenRoute().location
-            ? router.go(LoginRoute().location)
-            : router.go(DbScreenRoute().location);
+        router.routeInformationProvider.value.uri.path == DbScreenRoute().location ? router.go(LoginRoute().location) : router.go(DbScreenRoute().location);
       }
     }
 

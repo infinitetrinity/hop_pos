@@ -13,22 +13,23 @@ class NavItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isSelected = ref.watch(goRouterProvider.select((prov) => prov.routerDelegate.currentConfiguration.uri.path == path));
+    final currentPath = ref.watch(goRouterProvider).routeInformationProvider.value.uri.path;
+    final isSelected = currentPath == path || currentPath == '/login' && path == '/home';
 
-    return Container(
-      height: 66,
-      decoration: BoxDecoration(
-        border: Border(
-          top: const BorderSide(width: 4, color: Colors.transparent),
-          bottom: BorderSide(width: 4, color: isSelected ? AppColors.white : Colors.transparent),
+    return GestureDetector(
+      onTap: () {
+        context.push(path);
+      },
+      child: Container(
+        height: 66,
+        decoration: BoxDecoration(
+          border: Border(
+            top: const BorderSide(width: 4, color: Colors.transparent),
+            bottom: BorderSide(width: 4, color: isSelected ? AppColors.white : Colors.transparent),
+          ),
         ),
-      ),
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: GestureDetector(
-          onTap: () {
-            context.push(path);
-          },
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
           child: Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),

@@ -67,6 +67,7 @@ class SyncButton extends HookConsumerWidget {
                   color: AppColors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 17,
+                  letterSpacing: 1,
                 ),
               ),
             Text(
