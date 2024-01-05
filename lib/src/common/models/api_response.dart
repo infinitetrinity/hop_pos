@@ -4,8 +4,15 @@ import 'package:hop_pos/src/common/models/validation_errors.dart';
 
 class ApiResponse {
   final Response response;
+  final bool supressError;
 
-  ApiResponse(this.response) {
+  ApiResponse({
+    required this.response,
+    this.supressError = false,
+  }) {
+    if (supressError) {
+      return;
+    }
     checkValidationException();
     checkApiError();
     checkInvalidResponse();

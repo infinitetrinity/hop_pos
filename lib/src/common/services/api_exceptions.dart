@@ -9,16 +9,16 @@ class ApiExceptions {
   static bool errorHandled = false;
   static FlashMessage flashMessage = FlashMessage();
 
-  static void handle(dynamic e) {
+  static void handle(dynamic exception) {
     errorHandled = false;
-    _handleNoInternetConnection(e);
-    _handleTimeoutOutError(e);
-    _handleApiValidationError(e);
-    _handleApiError(e);
-    _handleApiInvalidResponse(e);
+    _handleNoInternetConnection(exception);
+    _handleTimeoutOutError(exception);
+    _handleApiValidationError(exception);
+    _handleApiError(exception);
+    _handleApiInvalidResponse(exception);
 
     if (!errorHandled) {
-      _handleApiUnknownError(e);
+      _handleApiUnknownError(exception);
     }
   }
 
@@ -35,8 +35,7 @@ class ApiExceptions {
   }
 
   static void _handleTimeoutOutError(exception) {
-    if (exception is! TimeoutException &&
-        exception.toString() != "Connection timed out") {
+    if (exception is! TimeoutException && exception.toString() != "Connection timed out") {
       return;
     }
 

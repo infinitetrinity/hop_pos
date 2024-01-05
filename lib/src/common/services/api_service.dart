@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:hop_pos/app/api_routes.dart';
 import 'package:hop_pos/app/app_exceptions.dart';
 import 'package:hop_pos/src/common/models/api_request.dart';
 import 'package:hop_pos/src/common/models/api_response.dart';
@@ -39,6 +40,25 @@ class ApiService {
     }
   }
 
+  Future<bool> checkServerConnection() async {
+    print('check server connection');
+    final hasInternet = await InternetConnectionChecker().hasConnection;
+    if (!hasInternet) {
+      return false;
+    }
+
+    try {
+      ApiResponse? result = await get(const ApiRequest(
+        path: ApiRoutes.serverStatus,
+        supressError: true,
+      ));
+
+      return result != null;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<ApiResponse?> get(ApiRequest request) async {
     try {
       await _checkInternetConnection();
@@ -52,8 +72,12 @@ class ApiService {
           )
           .timeout(const Duration(seconds: timeOutInSeconds));
 
-      return ApiResponse(response);
+      return ApiResponse(response: response, supressError: request.supressError);
     } catch (e) {
+      if (request.supressError) {
+        return null;
+      }
+
       ApiExceptions.handle(e);
 
       if (e is ApiValidationError) {
@@ -81,8 +105,12 @@ class ApiService {
           )
           .timeout(const Duration(seconds: timeOutInSeconds));
 
-      return ApiResponse(response);
+      return ApiResponse(response: response, supressError: request.supressError);
     } catch (e) {
+      if (request.supressError) {
+        return null;
+      }
+
       ApiExceptions.handle(e);
 
       if (e is ApiValidationError || e is ApiInvalidResponseError) {
