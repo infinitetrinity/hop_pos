@@ -8,27 +8,27 @@ part 'auth_state.g.dart';
 @riverpod
 class AuthState extends _$AuthState {
   @override
-  User? build() {
-    return null;
+  Future<User?> build() async {
+    return _init();
   }
 
-  init() async {
+  _init() async {
     UserRepository repo = ref.watch(userRepoProvider);
     User? user = await repo.getFirst();
-    state = user;
+    return user;
   }
 
   reset() {
-    state = null;
+    state = const AsyncValue.data(null);
   }
 
   login(User user, String accessToken) async {
-    state = user;
+    state = AsyncValue.data(user);
     await AuthToken.setAuthToken(accessToken);
   }
 
   Future<bool> isLogin() async {
     final token = await AuthToken.getAuthToken();
-    return state != null && token != null;
+    return token != null;
   }
 }

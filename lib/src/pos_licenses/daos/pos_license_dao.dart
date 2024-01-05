@@ -9,14 +9,18 @@ part 'pos_license_dao.g.dart';
 class PosLicenseDao extends DatabaseAccessor<AppDb> with _$PosLicenseDaoMixin {
   PosLicenseDao(AppDb db) : super(db);
 
+  Future<PosLicense?> getFirst() async {
+    final query = select(posLicensesTable);
+
+    return query.getSingleOrNull();
+  }
+
   Future<PosLicense> insertLicense(PosLicensesTableCompanion license) async {
     return await into(posLicensesTable).insertReturning(license);
   }
 
-  Future<bool> updateLicense(
-      PosLicensesTableCompanion license, Expression<bool> where) async {
-    final count =
-        await (update(posLicensesTable)..where((_) => where)).write(license);
+  Future<bool> updateLicense(PosLicensesTableCompanion license, Expression<bool> where) async {
+    final count = await (update(posLicensesTable)..where((_) => where)).write(license);
     return count > 0;
   }
 }

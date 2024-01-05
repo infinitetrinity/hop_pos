@@ -9,8 +9,7 @@ part 'pos_license_repository.g.dart';
 @riverpod
 PosLicenseRepository posLicenseRepo(PosLicenseRepoRef ref) {
   return PosLicenseRepository(
-    posLicenseDao:
-        ref.watch(appDbProvider.select((prov) => prov.posLicenseDao)),
+    posLicenseDao: ref.watch(appDbProvider.select((prov) => prov.posLicenseDao)),
   );
 }
 
@@ -21,12 +20,15 @@ class PosLicenseRepository {
     required this.posLicenseDao,
   });
 
+  Future<PosLicense?> getFirst() async {
+    return await posLicenseDao.getFirst();
+  }
+
   Future<PosLicense> insert(PosLicensesTableCompanion license) async {
     return await posLicenseDao.insertLicense(license);
   }
 
-  Future<bool> update(
-      PosLicensesTableCompanion license, Expression<bool> where) async {
+  Future<bool> update(PosLicensesTableCompanion license, Expression<bool> where) async {
     return await posLicenseDao.updateLicense(license, where);
   }
 }

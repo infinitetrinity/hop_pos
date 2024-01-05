@@ -5,6 +5,7 @@ import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/services/flash_message.dart';
 import 'package:hop_pos/src/common/states/server_connection_state.dart';
+import 'package:hop_pos/src/pos_licenses/states/pos_license_state.dart';
 
 class SyncButton extends HookConsumerWidget {
   const SyncButton({super.key});
@@ -12,21 +13,21 @@ class SyncButton extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isConnecting = useState(false);
-    final severState = ref.watch(severConnectionStateProvider);
+    final isConnected = ref.watch(severConnectionStateProvider).asData?.value;
+    final posLicense = ref.watch(posLicenseStateProvider).asData?.value;
 
     Color getBackgroundColor() {
-      return severState.maybeWhen(
-        data: (status) => status ? AppColors.green600 : AppColors.red600,
-        orElse: () => isConnecting.value ? AppColors.yellow600 : AppColors.green600,
-      );
+      if (isConnecting.value || isConnected == null) {
+        return AppColors.yellow600;
+      }
+
+      return isConnected == true ? AppColors.green600 : AppColors.red600;
     }
 
     onPressed() async {
-      if (isConnecting.value) {
+      if (isConnecting.value || isConnected == null) {
         return;
       }
-
-      final isConnected = await ref.read(severConnectionStateProvider.future);
 
       if (isConnected) {
         print('to sync');
@@ -55,20 +56,26 @@ class SyncButton extends HookConsumerWidget {
           }),
         ),
         onPressed: onPressed,
-        child: severState.when(
-          data: (status) => Text(
-            status ? 'Click to sync' : 'Click to connect',
-            style: AppStyles.body.copyWith(
-              color: AppColors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (posLicense != null)
+              Text(
+                posLicense.name,
+                overflow: TextOverflow.ellipsis,
+                style: AppStyles.body.copyWith(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                ),
+              ),
+            Text(
+              isConnected == true ? 'Click to sync' : (isConnecting.value ? 'Connecting...' : 'Click to connect'),
+              style: AppStyles.body.copyWith(
+                color: AppColors.white,
+              ),
             ),
-          ),
-          error: (e, s) => const SizedBox(),
-          loading: () => Text(
-            isConnecting.value ? 'Connecting..' : 'Click to sync',
-            style: AppStyles.body.copyWith(
-              color: AppColors.white,
-            ),
-          ),
+          ],
         ),
       ),
     );

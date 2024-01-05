@@ -16,7 +16,11 @@ class Layout extends StatelessWidget {
           children: [
             const Header(),
             const SizedBox(height: 50),
-            content,
+            Container(
+              constraints: const BoxConstraints(maxWidth: 1280),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 25),
+              child: content,
+            ),
           ],
         ),
       ),

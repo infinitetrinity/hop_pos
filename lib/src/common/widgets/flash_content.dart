@@ -31,8 +31,7 @@ class FlashContent extends StatelessWidget {
                   children: [
                     Text(
                       message.headerText,
-                      style: AppStyles.body.copyWith(
-                          color: AppColors.white, fontWeight: FontWeight.w600),
+                      style: AppStyles.body.copyWith(color: AppColors.white, fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 2),
                     Text(
@@ -51,12 +50,15 @@ class FlashContent extends StatelessWidget {
         Positioned(
           top: 10,
           right: 10,
-          child: GestureDetector(
-            onTap: () => fToast.removeCustomToast(),
-            child: const Icon(
-              Icons.close,
-              color: AppColors.white,
-              size: 20,
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: () => fToast.removeCustomToast(),
+              child: const Icon(
+                Icons.close,
+                color: AppColors.white,
+                size: 20,
+              ),
             ),
           ),
         )

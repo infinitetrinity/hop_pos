@@ -12,10 +12,7 @@ class SetupService extends _$SetupService {
     return;
   }
 
-  Future<void> setupApp() async {
-    print('setting up');
-    await ref.read(authStateProvider.notifier).init();
-  }
+  Future<void> setupApp() async {}
 
   Future<void> resetApp() async {
     print('reset app');
