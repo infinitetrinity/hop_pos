@@ -9,28 +9,31 @@ class ServerConnectionStatus extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final severState = ref.watch(serverConnectionStateProvider);
+    final severState = ref.watch(severConnectionStateProvider);
 
-    return severState.when(
-      data: (status) => Row(
-        children: [
-          Container(
-            width: 6,
-            height: 6,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: status ? AppColors.green600 : AppColors.red600,
+    return Row(
+      children: [
+        Container(
+          width: 6,
+          height: 6,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: severState.maybeWhen(
+              data: (status) => status ? AppColors.green600 : AppColors.red600,
+              orElse: () => AppColors.yellow600,
             ),
           ),
-          const SizedBox(width: 5),
-          Text(
-            status ? 'Connected to server' : 'Not connected to server',
-            style: AppStyles.bodySmall.copyWith(fontStyle: FontStyle.italic),
+        ),
+        const SizedBox(width: 5),
+        Text(
+          severState.when(
+            data: (status) => status ? 'Connected to server' : 'Not connected to server',
+            loading: () => 'Connecting to sever',
+            error: (e, st) => '',
           ),
-        ],
-      ),
-      loading: () => Container(),
-      error: (e, st) => Container(),
+          style: AppStyles.bodySmall.copyWith(fontStyle: FontStyle.italic),
+        ),
+      ],
     );
   }
 }

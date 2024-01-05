@@ -4,6 +4,7 @@ import 'package:hop_pos/routes/home_routes.dart';
 import 'package:hop_pos/routes/login_routes.dart';
 import 'package:hop_pos/src/common/widgets/header_logo.dart';
 import 'package:hop_pos/src/common/widgets/nav_item.dart';
+import 'package:hop_pos/src/common/widgets/sync_button.dart';
 
 class Header extends StatelessWidget {
   const Header({super.key});
@@ -42,6 +43,8 @@ class Header extends StatelessWidget {
                     title: 'Incomplete Sales',
                     path: LoginRoute().location,
                   ),
+                  const SizedBox(width: 25),
+                  const SyncButton(),
                 ],
               )
             ],

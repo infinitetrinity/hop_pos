@@ -6,23 +6,30 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'server_connection_state.g.dart';
 
 @Riverpod(keepAlive: true)
-Stream<bool> serverConnectionState(ServerConnectionStateRef ref) {
-  ApiService api = ref.read(apiServiceProvider);
-  final controller = StreamController<bool>();
-  controller.add(false);
+class SeverConnectionState extends _$SeverConnectionState {
+  Timer? _timer;
 
-  Timer.run(() async {
-    controller.add(await api.checkServerConnection());
-  });
+  @override
+  Future<bool> build() async {
+    activateCheckConnectionTimer();
+    return await checkServerConnection();
+  }
 
-  final timer = Timer.periodic(const Duration(seconds: 30), (timer) async {
-    controller.add(await api.checkServerConnection());
-  });
+  FutureOr<bool> checkServerConnection() async {
+    state = const AsyncLoading();
+    ApiService api = ref.read(apiServiceProvider);
+    final result = await api.checkServerConnection();
+    state = AsyncValue.data(result);
+    return result;
+  }
 
-  ref.onDispose(() {
-    controller.close();
-    timer.cancel();
-  });
+  void activateCheckConnectionTimer() {
+    _timer = Timer.periodic(const Duration(minutes: 2), (timer) async {
+      state = AsyncValue.data(await checkServerConnection());
+    });
 
-  return controller.stream;
+    ref.onDispose(() {
+      _timer?.cancel();
+    });
+  }
 }
