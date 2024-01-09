@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'home_routes.dart';
+part of 'screening_routes.dart';
 
 // **************************************************************************
 // GoRouterGenerator
 // **************************************************************************
 
 List<RouteBase> get $appRoutes => [
-      $homeRoute,
+      $screeningRoute,
     ];
 
-RouteBase get $homeRoute => GoRouteData.$route(
-      path: '/home',
-      factory: $HomeRouteExtension._fromState,
+RouteBase get $screeningRoute => GoRouteData.$route(
+      path: '/screening',
+      factory: $ScreeningRouteExtension._fromState,
     );
 
-extension $HomeRouteExtension on HomeRoute {
-  static HomeRoute _fromState(GoRouterState state) => HomeRoute();
+extension $ScreeningRouteExtension on ScreeningRoute {
+  static ScreeningRoute _fromState(GoRouterState state) => ScreeningRoute();
 
   String get location => GoRouteData.$location(
-        '/home',
+        '/screening',
       );
 
   void go(BuildContext context) => context.go(location);

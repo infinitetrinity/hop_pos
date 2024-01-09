@@ -1,9 +1,9 @@
 import 'package:go_router/go_router.dart';
 import 'package:hop_pos/app/app_global.dart';
 import 'package:hop_pos/routes/db_routes.dart';
-import 'package:hop_pos/routes/home_routes.dart';
 import 'package:hop_pos/routes/login_routes.dart';
 import 'package:hop_pos/routes/order_routes.dart';
+import 'package:hop_pos/routes/screening_routes.dart';
 import 'package:hop_pos/routes/setup_routes.dart';
 import 'package:hop_pos/src/users/states/auth_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -18,7 +18,7 @@ GoRouter goRouter(GoRouterRef ref) {
       $dbScreenRoute,
       $setupRoute,
       $loginRoute,
-      $homeRoute,
+      $screeningRoute,
       $orderRoute,
     ],
     redirect: (context, state) async {
@@ -29,7 +29,7 @@ GoRouter goRouter(GoRouterRef ref) {
         return null;
       }
       if (state.fullPath == LoginRoute().location) {
-        return isAuthenticated ? HomeRoute().location : null;
+        return isAuthenticated ? ScreeningRoute().location : null;
       }
 
       return isAuthenticated ? null : LoginRoute().location;
