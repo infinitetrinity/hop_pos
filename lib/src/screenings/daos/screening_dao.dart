@@ -9,12 +9,29 @@ part 'screening_dao.g.dart';
 class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
   ScreeningDao(AppDb db) : super(db);
 
+  Stream<List<Screening>> getAll(String? search) {
+    final query = select(screeningsTable);
+
+    if (search?.isNotEmpty == true) {
+      query.where((table) => table.name.like("%$search%"));
+    }
+
+    query.orderBy([(table) => OrderingTerm.desc(table.name)]);
+    return query.watch();
+  }
+
+  Future<List<Screening>> search(String search) {
+    final query = select(screeningsTable)..where((table) => table.name.like("%$search%"));
+    query.orderBy([(table) => OrderingTerm.desc(table.id)]);
+    query.limit(20);
+    return query.get();
+  }
+
   Future<Screening> insertScreening(ScreeningsTableCompanion screening) async {
     return await into(screeningsTable).insertReturning(screening);
   }
 
-  Future<List<Screening>> insertScreenings(
-      List<ScreeningsTableCompanion> screenings) async {
+  Future<List<Screening>> insertScreenings(List<ScreeningsTableCompanion> screenings) async {
     return await transaction(() async {
       List<Future<Screening>> insertFutures = [];
 
@@ -27,10 +44,8 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
     });
   }
 
-  Future<bool> updateScreening(
-      ScreeningsTableCompanion screening, Expression<bool> where) async {
-    final count =
-        await (update(screeningsTable)..where((_) => where)).write(screening);
+  Future<bool> updateScreening(ScreeningsTableCompanion screening, Expression<bool> where) async {
+    final count = await (update(screeningsTable)..where((_) => where)).write(screening);
     return count > 0;
   }
 }

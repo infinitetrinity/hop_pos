@@ -1,18 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/src/common/widgets/layout.dart';
-import 'package:hop_pos/src/common/widgets/server_connection_status.dart';
+import 'package:hop_pos/src/screenings/widgets/screening_search_input.dart';
 
 class ScreeningScreen extends ConsumerWidget {
   const ScreeningScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Layout(
-      Column(
+    return Layout(
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Screening Screen'),
-          ServerConnectionStatus(),
+          const Flexible(
+            flex: 3,
+            child: Column(
+              children: [
+                ScreeningSearchInput(),
+              ],
+            ),
+          ),
+          const SizedBox(width: 40),
+          Flexible(
+            flex: 2,
+            child: Column(
+              children: [
+                Container(
+                  color: AppColors.white,
+                  width: double.infinity,
+                  height: 400,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

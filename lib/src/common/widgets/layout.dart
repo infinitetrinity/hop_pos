@@ -11,11 +11,10 @@ class Layout extends StatelessWidget {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        color: AppColors.white,
+        color: AppColors.gray200,
         child: Column(
           children: [
             const Header(),
-            const SizedBox(height: 50),
             Container(
               width: double.infinity,
               constraints: const BoxConstraints(maxWidth: 1280),

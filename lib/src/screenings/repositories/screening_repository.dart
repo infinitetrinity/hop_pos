@@ -20,17 +20,23 @@ class ScreeningRepository {
     required this.screeningDao,
   });
 
+  Stream<List<Screening>> getAll(String? search) {
+    return screeningDao.getAll(search);
+  }
+
+  Future<List<Screening>> search(String search) {
+    return screeningDao.search(search);
+  }
+
   Future<Screening> insert(ScreeningsTableCompanion screening) async {
     return await screeningDao.insertScreening(screening);
   }
 
-  Future<List<Screening>> insertMany(
-      List<ScreeningsTableCompanion> screenings) async {
+  Future<List<Screening>> insertMany(List<ScreeningsTableCompanion> screenings) async {
     return await screeningDao.insertScreenings(screenings);
   }
 
-  Future<bool> update(
-      ScreeningsTableCompanion screening, Expression<bool> where) async {
+  Future<bool> update(ScreeningsTableCompanion screening, Expression<bool> where) async {
     return await screeningDao.updateScreening(screening, where);
   }
 }
