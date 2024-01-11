@@ -1,11 +1,15 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
+import 'package:hop_pos/src/screening_timeslots/models/screening_timeslots_table.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:hop_pos/src/screenings/models/screenings_table.dart';
 
 part 'screening_dao.g.dart';
 
-@DriftAccessor(tables: [ScreeningsTable])
+@DriftAccessor(tables: [
+  ScreeningsTable,
+  ScreeningTimeslotsTable,
+])
 class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
   ScreeningDao(AppDb db) : super(db);
 
@@ -18,6 +22,31 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
 
     query.orderBy([(table) => OrderingTerm.desc(table.name)]);
     return query.watch();
+  }
+
+  Stream<List<Screening>> getUpcoming() {
+    final query = select(screeningsTable).join(
+      [
+        innerJoin(
+          screeningTimeslotsTable,
+          screeningTimeslotsTable.screeningId.equalsExp(
+            screeningsTable.id,
+          ),
+        ),
+      ],
+    );
+
+    query.where(screeningTimeslotsTable.dateAndTime.isSmallerOrEqualValue(DateTime.now()));
+
+    query.groupBy([screeningsTable.id]);
+    query.orderBy([OrderingTerm.desc(screeningTimeslotsTable.dateAndTime)]);
+    query.limit(60);
+
+    return query.watch().map((rows) {
+      return rows.map((row) {
+        return row.readTable(screeningsTable);
+      }).toList();
+    });
   }
 
   Future<List<Screening>> search(String search) {

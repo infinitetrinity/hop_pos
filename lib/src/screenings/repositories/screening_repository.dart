@@ -24,6 +24,10 @@ class ScreeningRepository {
     return screeningDao.getAll(search);
   }
 
+  Stream<List<Screening>> getUpcoming() {
+    return screeningDao.getUpcoming();
+  }
+
   Future<List<Screening>> search(String search) {
     return screeningDao.search(search);
   }

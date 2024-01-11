@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/src/common/widgets/layout.dart';
 import 'package:hop_pos/src/screenings/widgets/screening_search_input.dart';
+import 'package:hop_pos/src/screenings/widgets/screenings_list.dart';
 
 class ScreeningScreen extends ConsumerWidget {
   const ScreeningScreen({super.key});
@@ -18,6 +19,8 @@ class ScreeningScreen extends ConsumerWidget {
             child: Column(
               children: [
                 ScreeningSearchInput(),
+                SizedBox(height: 30),
+                ScreeningsList(),
               ],
             ),
           ),

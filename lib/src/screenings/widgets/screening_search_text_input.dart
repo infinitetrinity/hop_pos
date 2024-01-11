@@ -9,6 +9,12 @@ class ScreeningSearchTextInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    focusNode.addListener(() {
+      if (!focusNode.hasFocus) {
+        controller.text = "";
+      }
+    });
+
     return TextField(
       controller: controller,
       focusNode: focusNode,

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_routes.dart';
+import 'package:hop_pos/src/common/services/custom_scroll_behavior.dart';
 import 'package:hop_pos/src/common/widgets/main_app.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -37,6 +38,7 @@ class MyApp extends ConsumerWidget {
     //db.deleteDb();
 
     return MaterialApp.router(
+      scrollBehavior: CustomScrollBehavior(),
       builder: (context, child) {
         return MainApp(content: child!);
       },

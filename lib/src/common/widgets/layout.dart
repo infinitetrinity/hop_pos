@@ -16,6 +16,7 @@ class Layout extends StatelessWidget {
           children: [
             const Header(),
             Container(
+              height: MediaQuery.of(context).size.height - 100,
               width: double.infinity,
               constraints: const BoxConstraints(maxWidth: 1280),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 25),
