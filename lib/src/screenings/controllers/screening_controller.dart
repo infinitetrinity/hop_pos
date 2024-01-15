@@ -25,6 +25,6 @@ class ScreeningController extends _$ScreeningController {
       state = AsyncValue.data([screening, ...(state.asData?.value ?? [])]);
     }
 
-    ref.read(selectedScreeningStateProvider.notifier).toggle(selected);
+    ref.read(selectedScreeningStateProvider.notifier).set(selected);
   }
 }

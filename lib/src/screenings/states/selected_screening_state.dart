@@ -10,7 +10,7 @@ class SelectedScreeningState extends _$SelectedScreeningState {
     return null;
   }
 
-  void toggle(ScreeningWithVenuesAndTimeslots screening) {
-    state = state == screening ? null : screening;
+  void set(ScreeningWithVenuesAndTimeslots screening) {
+    state = screening;
   }
 }

@@ -7,7 +7,7 @@ part of 'selected_screening_state.dart';
 // **************************************************************************
 
 String _$selectedScreeningStateHash() =>
-    r'7957a9c128e45bdf450145ffc789d9b43a016012';
+    r'c2cceb6e728339435a862fdc757bb114f032e251';
 
 /// See also [SelectedScreeningState].
 @ProviderFor(SelectedScreeningState)
