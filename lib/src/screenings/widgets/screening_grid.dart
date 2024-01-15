@@ -1,17 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hop_pos/app/app_colors.dart';
+import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 
-class ScreeningGrid extends StatelessWidget {
-  const ScreeningGrid({super.key, required this.screening});
-  final Screening screening;
+class ScreeningGrid extends HookWidget {
+  const ScreeningGrid({super.key, required this.screenings});
+  final Screening screenings;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColors.white,
-      height: 50,
-      child: Text(screening.name),
+    final isHover = useState(false);
+
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => isHover.value = true,
+      onExit: (_) => isHover.value = false,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        color: isHover.value ? AppColors.brand600 : AppColors.white,
+        child: Center(
+          child: Text(
+            screenings.name,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 5,
+            style: AppStyles.body.copyWith(
+              color: isHover.value ? AppColors.white : AppColors.gray800,
+              fontWeight: FontWeight.bold,
+              height: 1.15,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

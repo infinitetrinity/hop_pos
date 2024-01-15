@@ -15,7 +15,7 @@ class ScreeningScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Flexible(
-            flex: 3,
+            flex: 4,
             child: Column(
               children: [
                 ScreeningSearchInput(),
@@ -24,7 +24,7 @@ class ScreeningScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const SizedBox(width: 40),
+          const SizedBox(width: 30),
           Flexible(
             flex: 2,
             child: Column(

@@ -22,7 +22,10 @@ class ScreeningsList extends ConsumerWidget {
 
     return screeningsAsync.when(
       data: (screenings) => ScreeningCarousel(screenings: getChunkedScreenings(screenings)),
-      error: (err, stack) => Container(child: const Text('error')),
+      error: (err, stack) {
+        print(err);
+        return Container(child: const Text('error'));
+      },
       loading: () => Container(
         child: const Text('loading'),
       ),

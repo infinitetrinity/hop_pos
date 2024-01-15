@@ -32,20 +32,18 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
           screeningTimeslotsTable.screeningId.equalsExp(
             screeningsTable.id,
           ),
+          useColumns: false,
         ),
       ],
     );
 
-    query.where(screeningTimeslotsTable.dateAndTime.isSmallerOrEqualValue(DateTime.now()));
-
+    query.where(screeningTimeslotsTable.dateAndTime.isBetweenValues(DateTime.now(), DateTime.now().add(const Duration(days: 7))));
+    query.orderBy([OrderingTerm.asc(screeningTimeslotsTable.dateAndTime)]);
     query.groupBy([screeningsTable.id]);
-    query.orderBy([OrderingTerm.desc(screeningTimeslotsTable.dateAndTime)]);
     query.limit(60);
 
     return query.watch().map((rows) {
-      return rows.map((row) {
-        return row.readTable(screeningsTable);
-      }).toList();
+      return rows.map((row) => row.readTable(screeningsTable)).toList();
     });
   }
 

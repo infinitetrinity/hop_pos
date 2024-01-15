@@ -29,7 +29,7 @@ class _ScreeningCarouselState extends State<ScreeningCarousel> {
                     currentPage.value = index;
                   },
                   viewportFraction: 1,
-                  height: 650.0,
+                  height: 750,
                   enableInfiniteScroll: false,
                 ),
                 carouselController: controller,
@@ -41,13 +41,13 @@ class _ScreeningCarouselState extends State<ScreeningCarousel> {
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 4,
-                        mainAxisSpacing: 20,
-                        crossAxisSpacing: 20,
-                        childAspectRatio: 1.5,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                        childAspectRatio: 1.4,
                       ),
                       itemCount: items.length,
                       itemBuilder: (context, index) => ScreeningGrid(
-                        screening: items[index],
+                        screenings: items[index],
                       ),
                     ),
                   );
