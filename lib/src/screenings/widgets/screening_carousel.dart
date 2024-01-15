@@ -45,7 +45,7 @@ class _ScreeningCarouselState extends ConsumerState<ScreeningCarousel> {
                     currentPage.value = index;
                   },
                   viewportFraction: 1,
-                  height: 750,
+                  height: 725,
                   enableInfiniteScroll: false,
                 ),
                 carouselController: controller,
@@ -59,7 +59,7 @@ class _ScreeningCarouselState extends ConsumerState<ScreeningCarousel> {
                         crossAxisCount: 4,
                         mainAxisSpacing: 10,
                         crossAxisSpacing: 10,
-                        childAspectRatio: 1.4,
+                        childAspectRatio: 1.45,
                       ),
                       itemCount: items.length,
                       itemBuilder: (context, index) => ScreeningGrid(

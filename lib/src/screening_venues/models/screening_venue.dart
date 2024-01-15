@@ -12,8 +12,7 @@ class ScreeningVenue with _$ScreeningVenue {
     @JsonKey(name: 'screening_form_id') required int screeningFormId,
   }) = _ScreeningVenue;
 
-  factory ScreeningVenue.fromJson(Map<String, dynamic> json) =>
-      _$ScreeningVenueFromJson(json);
+  factory ScreeningVenue.fromJson(Map<String, dynamic> json) => _$ScreeningVenueFromJson(json);
 
   static List<ScreeningVenue> fromJsonList(dynamic data) {
     return List<ScreeningVenue>.from(

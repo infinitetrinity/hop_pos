@@ -12,6 +12,7 @@ class ServerConnectionStatus extends ConsumerWidget {
     final severState = ref.watch(severConnectionStateProvider);
 
     return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Container(
           width: 6,
@@ -31,7 +32,10 @@ class ServerConnectionStatus extends ConsumerWidget {
             loading: () => 'Connecting to sever',
             error: (e, st) => '',
           ),
-          style: AppStyles.bodySmall.copyWith(fontStyle: FontStyle.italic),
+          style: AppStyles.bodySmall.copyWith(
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ],
     );

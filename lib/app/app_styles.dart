@@ -12,10 +12,10 @@ class AppStyles {
         height: 1.17,
       );
   static TextStyle get body => raleway.copyWith(
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w600,
         fontSize: 14,
         height: 1.5,
-        color: AppColors.gray800,
+        color: AppColors.gray700,
       );
   static TextStyle get bodySmall => body.copyWith(
         fontSize: 12,

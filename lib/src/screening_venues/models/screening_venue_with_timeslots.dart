@@ -12,5 +12,31 @@ class ScreeningVenueWithTimeslots with _$ScreeningVenueWithTimeslots {
     required List<ScreeningTimeslot> timeslots,
   }) = _ScreeningVenueWithTimeslots;
 
+  const ScreeningVenueWithTimeslots._();
+
   factory ScreeningVenueWithTimeslots.fromJson(Map<String, dynamic> json) => _$ScreeningVenueWithTimeslotsFromJson(json);
+
+  List<ScreeningTimeslot> get orderedTimeslots {
+    final now = DateTime.now().toLocal();
+    final midnight = DateTime(now.year, now.month, now.day);
+
+    final result = [...timeslots];
+    result.sort((a, b) {
+      final aIsUpcoming = a.dateAndTime.isAfter(midnight);
+      final bIsUpcoming = b.dateAndTime.isAfter(midnight);
+
+      if (aIsUpcoming && !bIsUpcoming) {
+        return -1;
+      }
+
+      if (!aIsUpcoming && bIsUpcoming) {
+        return 1;
+      }
+
+      final dateComparison = a.dateAndTime.compareTo(b.dateAndTime);
+      return aIsUpcoming ? dateComparison : -dateComparison;
+    });
+
+    return result;
+  }
 }

@@ -12,5 +12,11 @@ class ScreeningWithVenuesAndTimeslots with _$ScreeningWithVenuesAndTimeslots {
     required List<ScreeningVenueWithTimeslots> venuesWithTimeslots,
   }) = _ScreeningWithVenuesAndTimeslots;
 
+  const ScreeningWithVenuesAndTimeslots._();
+
   factory ScreeningWithVenuesAndTimeslots.fromJson(Map<String, dynamic> json) => _$ScreeningWithVenuesAndTimeslotsFromJson(json);
+
+  get timeslotsCount {
+    return venuesWithTimeslots.map((venue) => venue.timeslots.length).fold(0, (sum, count) => sum + count);
+  }
 }

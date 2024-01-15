@@ -54,20 +54,15 @@ class FormTextField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController controller =
-        useTextEditingController(text: "${prefix ?? ''}$value${suffix ?? ''}");
+    final TextEditingController controller = useTextEditingController(text: "${prefix ?? ''}$value${suffix ?? ''}");
 
     if ((suffix?.length ?? 0) > 0) {
       final offset = controller.text.length - (suffix?.length ?? 0);
-      controller.selection =
-          TextSelection.collapsed(offset: offset > 0 ? offset : 0);
+      controller.selection = TextSelection.collapsed(offset: offset > 0 ? offset : 0);
     }
 
     useEffect(() {
-      if (controller.text.isEmpty &&
-          value != null &&
-          value!.isNotEmpty &&
-          value != '0.0') {
+      if (controller.text.isEmpty && value != null && value!.isNotEmpty && value != '0.0') {
         controller.text = "${prefix ?? ''}$value${suffix ?? ''}";
         final offset = controller.text.length - (suffix?.length ?? 0);
         controller.selection = TextSelection.collapsed(offset: offset);
@@ -105,8 +100,7 @@ class FormTextField extends HookWidget {
                 decoration: InputDecoration(
                   errorMaxLines: 2,
                   filled: true,
-                  errorStyle:
-                      AppStyles.bodySmall.copyWith(color: AppColors.red600),
+                  errorStyle: AppStyles.bodySmall.copyWith(color: AppColors.red600),
                   contentPadding: const EdgeInsets.all(10),
                   enabledBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(3)),
@@ -124,7 +118,7 @@ class FormTextField extends HookWidget {
                     borderRadius: BorderRadius.all(Radius.circular(3)),
                     borderSide: BorderSide(width: 1, color: AppColors.red600),
                   ),
-                  fillColor: isDisabled ? AppColors.gray100 : backgroundColor,
+                  fillColor: isDisabled ? AppColors.gray200 : backgroundColor,
                   hoverColor: Colors.transparent,
                   hintText: placeholder,
                   prefixIcon: prefixIcon,

@@ -127,11 +127,11 @@ class __$$ScreeningVenueWithTimeslotsImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ScreeningVenueWithTimeslotsImpl
-    implements _ScreeningVenueWithTimeslots {
+class _$ScreeningVenueWithTimeslotsImpl extends _ScreeningVenueWithTimeslots {
   const _$ScreeningVenueWithTimeslotsImpl(
       {required this.venue, required final List<ScreeningTimeslot> timeslots})
-      : _timeslots = timeslots;
+      : _timeslots = timeslots,
+        super._();
 
   factory _$ScreeningVenueWithTimeslotsImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -183,11 +183,12 @@ class _$ScreeningVenueWithTimeslotsImpl
 }
 
 abstract class _ScreeningVenueWithTimeslots
-    implements ScreeningVenueWithTimeslots {
+    extends ScreeningVenueWithTimeslots {
   const factory _ScreeningVenueWithTimeslots(
           {required final ScreeningVenue venue,
           required final List<ScreeningTimeslot> timeslots}) =
       _$ScreeningVenueWithTimeslotsImpl;
+  const _ScreeningVenueWithTimeslots._() : super._();
 
   factory _ScreeningVenueWithTimeslots.fromJson(Map<String, dynamic> json) =
       _$ScreeningVenueWithTimeslotsImpl.fromJson;

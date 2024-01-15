@@ -80,6 +80,8 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
     );
 
     query.where(screeningsTable.id.equals(screening.id));
+
+    query.orderBy([OrderingTerm.asc(screeningTimeslotsTable.dateAndTime)]);
     query.groupBy([screeningsTable.id, screeningVenuesTable.id, screeningTimeslotsTable.id]);
 
     final takenSlots = screeningRegistrationsTable.timeslotId.count();

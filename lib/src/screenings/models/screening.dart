@@ -11,8 +11,7 @@ class Screening with _$Screening {
     String? corporate,
   }) = _Screening;
 
-  factory Screening.fromJson(Map<String, dynamic> json) =>
-      _$ScreeningFromJson(json);
+  factory Screening.fromJson(Map<String, dynamic> json) => _$ScreeningFromJson(json);
 
   static List<Screening> fromJsonList(dynamic data) {
     return List<Screening>.from(

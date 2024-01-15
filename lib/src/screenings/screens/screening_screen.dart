@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/src/common/widgets/layout.dart';
+import 'package:hop_pos/src/common/widgets/server_connection_status.dart';
 import 'package:hop_pos/src/screenings/widgets/screening_search_input.dart';
 import 'package:hop_pos/src/screenings/widgets/screenings_list.dart';
+import 'package:hop_pos/src/screenings/widgets/selected_screening.dart';
 
 class ScreeningScreen extends ConsumerWidget {
   const ScreeningScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Layout(
+    return const Layout(
       Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Flexible(
+          Flexible(
             flex: 4,
             child: Column(
               children: [
@@ -24,16 +25,14 @@ class ScreeningScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const SizedBox(width: 30),
+          SizedBox(width: 30),
           Flexible(
             flex: 2,
             child: Column(
               children: [
-                Container(
-                  color: AppColors.white,
-                  width: double.infinity,
-                  height: 400,
-                ),
+                SelectedScreening(),
+                SizedBox(height: 50),
+                ServerConnectionStatus(),
               ],
             ),
           ),

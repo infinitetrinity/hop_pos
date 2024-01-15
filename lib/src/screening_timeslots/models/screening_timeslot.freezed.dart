@@ -212,7 +212,7 @@ class __$$ScreeningTimeslotImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ScreeningTimeslotImpl implements _ScreeningTimeslot {
+class _$ScreeningTimeslotImpl extends _ScreeningTimeslot {
   const _$ScreeningTimeslotImpl(
       {required this.id,
       @JsonKey(name: 'date_time') required this.dateAndTime,
@@ -222,7 +222,8 @@ class _$ScreeningTimeslotImpl implements _ScreeningTimeslot {
       @JsonKey(name: 'specimen_collection_venue') this.specimenCollectionVenue,
       @JsonKey(name: 'screening_id') required this.screeningId,
       @JsonKey(name: 'venue_id') required this.venueId,
-      this.customersCount});
+      this.customersCount})
+      : super._();
 
   factory _$ScreeningTimeslotImpl.fromJson(Map<String, dynamic> json) =>
       _$$ScreeningTimeslotImplFromJson(json);
@@ -309,7 +310,7 @@ class _$ScreeningTimeslotImpl implements _ScreeningTimeslot {
   }
 }
 
-abstract class _ScreeningTimeslot implements ScreeningTimeslot {
+abstract class _ScreeningTimeslot extends ScreeningTimeslot {
   const factory _ScreeningTimeslot(
       {required final int id,
       @JsonKey(name: 'date_time') required final DateTime dateAndTime,
@@ -323,6 +324,7 @@ abstract class _ScreeningTimeslot implements ScreeningTimeslot {
       @JsonKey(name: 'screening_id') required final int screeningId,
       @JsonKey(name: 'venue_id') required final int venueId,
       final int? customersCount}) = _$ScreeningTimeslotImpl;
+  const _ScreeningTimeslot._() : super._();
 
   factory _ScreeningTimeslot.fromJson(Map<String, dynamic> json) =
       _$ScreeningTimeslotImpl.fromJson;

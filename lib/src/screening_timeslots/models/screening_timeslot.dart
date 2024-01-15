@@ -1,4 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hop_pos/app/app_extension.dart';
+import 'package:intl/intl.dart';
 
 part 'screening_timeslot.freezed.dart';
 part 'screening_timeslot.g.dart';
@@ -17,6 +19,8 @@ class ScreeningTimeslot with _$ScreeningTimeslot {
     int? customersCount,
   }) = _ScreeningTimeslot;
 
+  const ScreeningTimeslot._();
+
   factory ScreeningTimeslot.fromJson(Map<String, dynamic> json) => _$ScreeningTimeslotFromJson(json);
 
   static List<ScreeningTimeslot> fromJsonList(dynamic data) {
@@ -27,5 +31,21 @@ class ScreeningTimeslot with _$ScreeningTimeslot {
 
   static String get table {
     return 'screening_timeslots';
+  }
+
+  String get displayDateTime {
+    return DateFormat('hh:mm a, dd MMM yyyy').format(dateAndTime);
+  }
+
+  String get displaySlots {
+    return "$customersCount out of $slots slots";
+  }
+
+  bool get hasSpecimentCollection {
+    return specimenCollectionDate != null || !specimenCollectionTime.isNullOrEmpty || !specimenCollectionVenue.isNullOrEmpty;
+  }
+
+  String? get displaySpecimenCollectionDate {
+    return specimenCollectionDate == null ? null : DateFormat('dd MMM yyyy').format(specimenCollectionDate!);
   }
 }
