@@ -13,29 +13,31 @@ class ScreeningTile extends HookWidget {
     final isHover = useState(false);
 
     return MouseRegion(
+      cursor: SystemMouseCursors.click,
       onEnter: (_) => isHover.value = true,
       onExit: (_) => isHover.value = false,
-      child: ListTile(
-        onTap: () {},
-        contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-        tileColor: AppColors.white,
-        splashColor: AppColors.brand600,
-        title: Text(
-          screening.name,
-          overflow: TextOverflow.ellipsis,
-          style: AppStyles.body.copyWith(
-            fontWeight: FontWeight.w600,
-            color: isHover.value ? AppColors.white : AppColors.gray800,
-          ),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+        color: isHover.value ? AppColors.brand600 : AppColors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              screening.name,
+              overflow: TextOverflow.ellipsis,
+              style: AppStyles.body.copyWith(
+                fontWeight: FontWeight.w600,
+                color: isHover.value ? AppColors.white : AppColors.gray800,
+              ),
+            ),
+            Text(
+              screening.corporate ?? '',
+              style: AppStyles.bodySmall.copyWith(
+                color: isHover.value ? AppColors.white : AppColors.gray800,
+              ),
+            ),
+          ],
         ),
-        subtitle: Text(
-          screening.corporate ?? '',
-          style: AppStyles.bodySmall.copyWith(
-            color: isHover.value ? AppColors.white : AppColors.gray800,
-          ),
-        ),
-        hoverColor: AppColors.brand600,
-        horizontalTitleGap: 10,
       ),
     );
   }

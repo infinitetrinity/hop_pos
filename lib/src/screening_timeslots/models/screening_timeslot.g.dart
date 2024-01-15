@@ -19,6 +19,7 @@ _$ScreeningTimeslotImpl _$$ScreeningTimeslotImplFromJson(
       specimenCollectionVenue: json['specimen_collection_venue'] as String?,
       screeningId: json['screening_id'] as int,
       venueId: json['venue_id'] as int,
+      customersCount: json['customersCount'] as int?,
     );
 
 Map<String, dynamic> _$$ScreeningTimeslotImplToJson(
@@ -33,4 +34,5 @@ Map<String, dynamic> _$$ScreeningTimeslotImplToJson(
       'specimen_collection_venue': instance.specimenCollectionVenue,
       'screening_id': instance.screeningId,
       'venue_id': instance.venueId,
+      'customersCount': instance.customersCount,
     };

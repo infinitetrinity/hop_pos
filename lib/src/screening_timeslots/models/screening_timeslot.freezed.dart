@@ -34,6 +34,7 @@ mixin _$ScreeningTimeslot {
   int get screeningId => throw _privateConstructorUsedError;
   @JsonKey(name: 'venue_id')
   int get venueId => throw _privateConstructorUsedError;
+  int? get customersCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -57,7 +58,8 @@ abstract class $ScreeningTimeslotCopyWith<$Res> {
       @JsonKey(name: 'specimen_collection_venue')
       String? specimenCollectionVenue,
       @JsonKey(name: 'screening_id') int screeningId,
-      @JsonKey(name: 'venue_id') int venueId});
+      @JsonKey(name: 'venue_id') int venueId,
+      int? customersCount});
 }
 
 /// @nodoc
@@ -81,6 +83,7 @@ class _$ScreeningTimeslotCopyWithImpl<$Res, $Val extends ScreeningTimeslot>
     Object? specimenCollectionVenue = freezed,
     Object? screeningId = null,
     Object? venueId = null,
+    Object? customersCount = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -115,6 +118,10 @@ class _$ScreeningTimeslotCopyWithImpl<$Res, $Val extends ScreeningTimeslot>
           ? _value.venueId
           : venueId // ignore: cast_nullable_to_non_nullable
               as int,
+      customersCount: freezed == customersCount
+          ? _value.customersCount
+          : customersCount // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -137,7 +144,8 @@ abstract class _$$ScreeningTimeslotImplCopyWith<$Res>
       @JsonKey(name: 'specimen_collection_venue')
       String? specimenCollectionVenue,
       @JsonKey(name: 'screening_id') int screeningId,
-      @JsonKey(name: 'venue_id') int venueId});
+      @JsonKey(name: 'venue_id') int venueId,
+      int? customersCount});
 }
 
 /// @nodoc
@@ -159,6 +167,7 @@ class __$$ScreeningTimeslotImplCopyWithImpl<$Res>
     Object? specimenCollectionVenue = freezed,
     Object? screeningId = null,
     Object? venueId = null,
+    Object? customersCount = freezed,
   }) {
     return _then(_$ScreeningTimeslotImpl(
       id: null == id
@@ -193,6 +202,10 @@ class __$$ScreeningTimeslotImplCopyWithImpl<$Res>
           ? _value.venueId
           : venueId // ignore: cast_nullable_to_non_nullable
               as int,
+      customersCount: freezed == customersCount
+          ? _value.customersCount
+          : customersCount // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -208,7 +221,8 @@ class _$ScreeningTimeslotImpl implements _ScreeningTimeslot {
       @JsonKey(name: 'specimen_collection_time') this.specimenCollectionTime,
       @JsonKey(name: 'specimen_collection_venue') this.specimenCollectionVenue,
       @JsonKey(name: 'screening_id') required this.screeningId,
-      @JsonKey(name: 'venue_id') required this.venueId});
+      @JsonKey(name: 'venue_id') required this.venueId,
+      this.customersCount});
 
   factory _$ScreeningTimeslotImpl.fromJson(Map<String, dynamic> json) =>
       _$$ScreeningTimeslotImplFromJson(json);
@@ -235,10 +249,12 @@ class _$ScreeningTimeslotImpl implements _ScreeningTimeslot {
   @override
   @JsonKey(name: 'venue_id')
   final int venueId;
+  @override
+  final int? customersCount;
 
   @override
   String toString() {
-    return 'ScreeningTimeslot(id: $id, dateAndTime: $dateAndTime, slots: $slots, specimenCollectionDate: $specimenCollectionDate, specimenCollectionTime: $specimenCollectionTime, specimenCollectionVenue: $specimenCollectionVenue, screeningId: $screeningId, venueId: $venueId)';
+    return 'ScreeningTimeslot(id: $id, dateAndTime: $dateAndTime, slots: $slots, specimenCollectionDate: $specimenCollectionDate, specimenCollectionTime: $specimenCollectionTime, specimenCollectionVenue: $specimenCollectionVenue, screeningId: $screeningId, venueId: $venueId, customersCount: $customersCount)';
   }
 
   @override
@@ -259,7 +275,9 @@ class _$ScreeningTimeslotImpl implements _ScreeningTimeslot {
                 other.specimenCollectionVenue == specimenCollectionVenue) &&
             (identical(other.screeningId, screeningId) ||
                 other.screeningId == screeningId) &&
-            (identical(other.venueId, venueId) || other.venueId == venueId));
+            (identical(other.venueId, venueId) || other.venueId == venueId) &&
+            (identical(other.customersCount, customersCount) ||
+                other.customersCount == customersCount));
   }
 
   @JsonKey(ignore: true)
@@ -273,7 +291,8 @@ class _$ScreeningTimeslotImpl implements _ScreeningTimeslot {
       specimenCollectionTime,
       specimenCollectionVenue,
       screeningId,
-      venueId);
+      venueId,
+      customersCount);
 
   @JsonKey(ignore: true)
   @override
@@ -292,18 +311,18 @@ class _$ScreeningTimeslotImpl implements _ScreeningTimeslot {
 
 abstract class _ScreeningTimeslot implements ScreeningTimeslot {
   const factory _ScreeningTimeslot(
-          {required final int id,
-          @JsonKey(name: 'date_time') required final DateTime dateAndTime,
-          required final int slots,
-          @JsonKey(name: 'specimen_collection_date')
-          final DateTime? specimenCollectionDate,
-          @JsonKey(name: 'specimen_collection_time')
-          final String? specimenCollectionTime,
-          @JsonKey(name: 'specimen_collection_venue')
-          final String? specimenCollectionVenue,
-          @JsonKey(name: 'screening_id') required final int screeningId,
-          @JsonKey(name: 'venue_id') required final int venueId}) =
-      _$ScreeningTimeslotImpl;
+      {required final int id,
+      @JsonKey(name: 'date_time') required final DateTime dateAndTime,
+      required final int slots,
+      @JsonKey(name: 'specimen_collection_date')
+      final DateTime? specimenCollectionDate,
+      @JsonKey(name: 'specimen_collection_time')
+      final String? specimenCollectionTime,
+      @JsonKey(name: 'specimen_collection_venue')
+      final String? specimenCollectionVenue,
+      @JsonKey(name: 'screening_id') required final int screeningId,
+      @JsonKey(name: 'venue_id') required final int venueId,
+      final int? customersCount}) = _$ScreeningTimeslotImpl;
 
   factory _ScreeningTimeslot.fromJson(Map<String, dynamic> json) =
       _$ScreeningTimeslotImpl.fromJson;
@@ -330,6 +349,8 @@ abstract class _ScreeningTimeslot implements ScreeningTimeslot {
   @override
   @JsonKey(name: 'venue_id')
   int get venueId;
+  @override
+  int? get customersCount;
   @override
   @JsonKey(ignore: true)
   _$$ScreeningTimeslotImplCopyWith<_$ScreeningTimeslotImpl> get copyWith =>

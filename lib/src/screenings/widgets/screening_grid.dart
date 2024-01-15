@@ -1,34 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
+import 'package:hop_pos/src/screenings/controllers/screening_controller.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
+import 'package:hop_pos/src/screenings/states/selected_screening_state.dart';
 
-class ScreeningGrid extends HookWidget {
-  const ScreeningGrid({super.key, required this.screenings});
-  final Screening screenings;
+class ScreeningGrid extends HookConsumerWidget {
+  const ScreeningGrid({super.key, required this.screening});
+  final Screening screening;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isHover = useState(false);
+    final selectedScreening = ref.watch(selectedScreeningStateProvider);
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) => isHover.value = true,
       onExit: (_) => isHover.value = false,
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        color: isHover.value ? AppColors.brand600 : AppColors.white,
-        child: Center(
-          child: Text(
-            screenings.name,
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 5,
-            style: AppStyles.body.copyWith(
-              color: isHover.value ? AppColors.white : AppColors.gray800,
-              fontWeight: FontWeight.bold,
-              height: 1.15,
+      child: GestureDetector(
+        onTap: () async {
+          await ref.read(screeningControllerProvider.notifier).selectScreening(screening);
+        },
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          color: selectedScreening?.screening.id == screening.id || isHover.value ? AppColors.brand600 : AppColors.white,
+          child: Center(
+            child: Text(
+              screening.name,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 5,
+              style: AppStyles.body.copyWith(
+                color: selectedScreening?.screening.id == screening.id || isHover.value ? AppColors.white : AppColors.gray800,
+                fontWeight: FontWeight.bold,
+                height: 1.15,
+              ),
             ),
           ),
         ),

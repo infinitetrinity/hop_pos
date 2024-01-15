@@ -14,10 +14,10 @@ class ScreeningTimeslot with _$ScreeningTimeslot {
     @JsonKey(name: 'specimen_collection_venue') String? specimenCollectionVenue,
     @JsonKey(name: 'screening_id') required int screeningId,
     @JsonKey(name: 'venue_id') required int venueId,
+    int? customersCount,
   }) = _ScreeningTimeslot;
 
-  factory ScreeningTimeslot.fromJson(Map<String, dynamic> json) =>
-      _$ScreeningTimeslotFromJson(json);
+  factory ScreeningTimeslot.fromJson(Map<String, dynamic> json) => _$ScreeningTimeslotFromJson(json);
 
   static List<ScreeningTimeslot> fromJsonList(dynamic data) {
     return List<ScreeningTimeslot>.from(

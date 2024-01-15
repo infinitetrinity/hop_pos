@@ -1,23 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'screening_with_timeslots.dart';
+part of 'screening_venue_with_timeslots.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ScreeningWithTimeslotsImpl _$$ScreeningWithTimeslotsImplFromJson(
+_$ScreeningVenueWithTimeslotsImpl _$$ScreeningVenueWithTimeslotsImplFromJson(
         Map<String, dynamic> json) =>
-    _$ScreeningWithTimeslotsImpl(
-      screening: Screening.fromJson(json['screening'] as Map<String, dynamic>),
+    _$ScreeningVenueWithTimeslotsImpl(
+      venue: ScreeningVenue.fromJson(json['venue'] as Map<String, dynamic>),
       timeslots: (json['timeslots'] as List<dynamic>)
           .map((e) => ScreeningTimeslot.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$ScreeningWithTimeslotsImplToJson(
-        _$ScreeningWithTimeslotsImpl instance) =>
+Map<String, dynamic> _$$ScreeningVenueWithTimeslotsImplToJson(
+        _$ScreeningVenueWithTimeslotsImpl instance) =>
     <String, dynamic>{
-      'screening': instance.screening,
+      'venue': instance.venue,
       'timeslots': instance.timeslots,
     };

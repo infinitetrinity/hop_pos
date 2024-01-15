@@ -1,14 +1,20 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
+import 'package:hop_pos/src/screening_registrations/models/screening_registrations_table.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslots_table.dart';
+import 'package:hop_pos/src/screening_venues/models/screening_venue_with_timeslots.dart';
+import 'package:hop_pos/src/screening_venues/models/screening_venues_table.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
+import 'package:hop_pos/src/screenings/models/screening_with_venues_and_timeslots.dart';
 import 'package:hop_pos/src/screenings/models/screenings_table.dart';
 
 part 'screening_dao.g.dart';
 
 @DriftAccessor(tables: [
   ScreeningsTable,
+  ScreeningVenuesTable,
   ScreeningTimeslotsTable,
+  ScreeningRegistrationsTable,
 ])
 class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
   ScreeningDao(AppDb db) : super(db);
@@ -24,7 +30,7 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
     return query.watch();
   }
 
-  Stream<List<Screening>> getUpcoming() {
+  Future<List<Screening>> getUpcoming() async {
     final query = select(screeningsTable).join(
       [
         innerJoin(
@@ -37,14 +43,64 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
       ],
     );
 
-    query.where(screeningTimeslotsTable.dateAndTime.isBetweenValues(DateTime.now(), DateTime.now().add(const Duration(days: 7))));
+    query.where(screeningTimeslotsTable.dateAndTime.isBetweenValues(
+      DateTime.now(),
+      DateTime.now().add(const Duration(days: 7)),
+    ));
     query.orderBy([OrderingTerm.asc(screeningTimeslotsTable.dateAndTime)]);
     query.groupBy([screeningsTable.id]);
     query.limit(60);
 
-    return query.watch().map((rows) {
-      return rows.map((row) => row.readTable(screeningsTable)).toList();
-    });
+    return (await query.get()).map((row) => row.readTable(screeningsTable)).toList();
+  }
+
+  Future<ScreeningWithVenuesAndTimeslots> getWithVenuesAndTimeslots(Screening screening) async {
+    final query = select(screeningsTable).join(
+      [
+        innerJoin(
+          screeningVenuesTable,
+          screeningVenuesTable.screeningFormId.equalsExp(
+            screeningsTable.id,
+          ),
+        ),
+        innerJoin(
+          screeningTimeslotsTable,
+          screeningTimeslotsTable.venueId.equalsExp(
+            screeningVenuesTable.id,
+          ),
+        ),
+        leftOuterJoin(
+          screeningRegistrationsTable,
+          screeningRegistrationsTable.timeslotId.equalsExp(
+            screeningTimeslotsTable.id,
+          ),
+          useColumns: false,
+        )
+      ],
+    );
+
+    query.where(screeningsTable.id.equals(screening.id));
+    query.groupBy([screeningsTable.id, screeningVenuesTable.id, screeningTimeslotsTable.id]);
+
+    final takenSlots = screeningRegistrationsTable.timeslotId.count();
+    query.addColumns([takenSlots]);
+
+    final result = await query.get();
+    final venueMap = <int, ScreeningVenueWithTimeslots>{};
+
+    for (final row in result) {
+      final venue = row.readTable(screeningVenuesTable);
+      final timeslot = row.readTable(screeningTimeslotsTable).copyWith(customersCount: row.read(takenSlots));
+
+      venueMap[venue.id] = venueMap.containsKey(venue.id)
+          ? venueMap[venue.id]!.copyWith(timeslots: [...venueMap[venue.id]!.timeslots, timeslot])
+          : ScreeningVenueWithTimeslots(venue: venue, timeslots: [timeslot]);
+    }
+
+    return ScreeningWithVenuesAndTimeslots(
+      screening: screening,
+      venuesWithTimeslots: venueMap.values.toList(),
+    );
   }
 
   Future<List<Screening>> search(String search) {
