@@ -41,7 +41,7 @@ class ScreeningTimeslot with _$ScreeningTimeslot {
     return "$customersCount out of $slots slots";
   }
 
-  bool get hasSpecimentCollection {
+  bool get hasSpecimenCollection {
     return specimenCollectionDate != null || !specimenCollectionTime.isNullOrEmpty || !specimenCollectionVenue.isNullOrEmpty;
   }
 

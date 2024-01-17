@@ -13,6 +13,7 @@ class ScreeningScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return const Layout(
       Row(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Flexible(
@@ -27,11 +28,12 @@ class ScreeningScreen extends ConsumerWidget {
           ),
           SizedBox(width: 30),
           Flexible(
+            fit: FlexFit.loose,
             flex: 2,
             child: Column(
               children: [
                 SelectedScreening(),
-                SizedBox(height: 50),
+                SizedBox(height: 20),
                 ServerConnectionStatus(),
               ],
             ),

@@ -2,7 +2,6 @@ import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/screenings/daos/screening_dao.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
-import 'package:hop_pos/src/screenings/models/screening_with_venues_and_timeslots.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'screening_repository.g.dart';
@@ -27,10 +26,6 @@ class ScreeningRepository {
 
   Future<List<Screening>> getUpcoming() {
     return screeningDao.getUpcoming();
-  }
-
-  Future<ScreeningWithVenuesAndTimeslots> getWithVenuesAndTimeslots(Screening screening) {
-    return screeningDao.getWithVenuesAndTimeslots(screening);
   }
 
   Future<List<Screening>> search(String search) {

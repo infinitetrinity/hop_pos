@@ -21,12 +21,12 @@ class ScreeningGrid extends HookConsumerWidget {
       onEnter: (_) => isHover.value = true,
       onExit: (_) => isHover.value = false,
       child: GestureDetector(
-        onTap: () async {
-          await ref.read(screeningControllerProvider.notifier).selectScreening(screening);
+        onTap: () {
+          ref.read(screeningControllerProvider.notifier).selectScreening(screening);
         },
         child: Container(
           padding: const EdgeInsets.all(10),
-          color: selectedScreening?.screening.id == screening.id || isHover.value ? AppColors.brand600 : AppColors.white,
+          color: selectedScreening?.id == screening.id || isHover.value ? AppColors.brand600 : AppColors.white,
           child: Center(
             child: Text(
               screening.name,
@@ -34,7 +34,7 @@ class ScreeningGrid extends HookConsumerWidget {
               overflow: TextOverflow.ellipsis,
               maxLines: 5,
               style: AppStyles.body.copyWith(
-                color: selectedScreening?.screening.id == screening.id || isHover.value ? AppColors.white : AppColors.gray800,
+                color: selectedScreening?.id == screening.id || isHover.value ? AppColors.white : AppColors.gray800,
                 fontWeight: FontWeight.bold,
                 height: 1.15,
               ),

@@ -14,6 +14,7 @@ class SelectedScreening extends ConsumerWidget {
     final screening = ref.watch(selectedScreeningStateProvider);
 
     return Container(
+      height: screening == null ? 340 : 782,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       color: AppColors.white,
       width: double.infinity,
@@ -24,30 +25,27 @@ class SelectedScreening extends ConsumerWidget {
             fit: BoxFit.cover,
             width: 120,
           ),
-          const SizedBox(height: 5),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (screening == null) ...[
-                Text(
-                  'Select a screening to begin POS',
-                  style: AppStyles.body,
-                ),
-                const SizedBox(height: 10),
-              ],
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(
-                  border: screening == null
-                      ? const Border(
-                          top: BorderSide(width: 1, color: AppColors.gray300),
-                          bottom: BorderSide(width: 1, color: AppColors.gray300),
-                        )
-                      : null,
-                ),
-                child: const SelectedScreeningDetail(),
+          const SizedBox(height: 15),
+          if (screening == null) ...[
+            Text(
+              'Select a screening to begin POS',
+              style: AppStyles.body,
+            ),
+            const SizedBox(height: 10),
+          ],
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              decoration: BoxDecoration(
+                border: screening == null
+                    ? const Border(
+                        top: BorderSide(width: 1, color: AppColors.gray300),
+                        bottom: BorderSide(width: 1, color: AppColors.gray300),
+                      )
+                    : null,
               ),
-            ],
+              child: const SelectedScreeningDetail(),
+            ),
           ),
           const SizedBox(height: 20),
           ElevatedButton(

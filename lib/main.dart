@@ -5,6 +5,7 @@ import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_routes.dart';
 import 'package:hop_pos/src/common/services/custom_scroll_behavior.dart';
 import 'package:hop_pos/src/common/widgets/main_app.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main() async {
@@ -37,21 +38,23 @@ class MyApp extends ConsumerWidget {
     //final db = ref.watch(appDbProvider);
     //db.deleteDb();
 
-    return MaterialApp.router(
-      scrollBehavior: CustomScrollBehavior(),
-      builder: (context, child) {
-        return MainApp(content: child!);
-      },
-      title: 'HOP POS',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.brand700),
-        useMaterial3: true,
-        scrollbarTheme: ScrollbarThemeData(
-          thumbVisibility: MaterialStateProperty.all<bool>(true),
+    return GlobalLoaderOverlay(
+      child: MaterialApp.router(
+        scrollBehavior: CustomScrollBehavior(),
+        builder: (context, child) {
+          return MainApp(content: child!);
+        },
+        title: 'HOP POS',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.brand700),
+          useMaterial3: true,
+          scrollbarTheme: ScrollbarThemeData(
+            thumbVisibility: MaterialStateProperty.all<bool>(true),
+          ),
         ),
+        routerConfig: goRouter,
+        debugShowCheckedModeBanner: false,
       ),
-      routerConfig: goRouter,
-      debugShowCheckedModeBanner: false,
     );
   }
 }

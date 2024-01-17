@@ -14,7 +14,7 @@ class NavItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentPath = ref.watch(goRouterProvider).routeInformationProvider.value.uri.path;
-    final isSelected = currentPath == path || currentPath == '/login' && path == '/home';
+    final isSelected = currentPath == path || currentPath == '/login' && path == '/screening';
 
     return GestureDetector(
       onTap: () {

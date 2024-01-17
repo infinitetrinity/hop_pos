@@ -9,7 +9,4 @@ mixin _$ScreeningDaoMixin on DatabaseAccessor<AppDb> {
       attachedDatabase.screeningVenuesTable;
   $ScreeningTimeslotsTableTable get screeningTimeslotsTable =>
       attachedDatabase.screeningTimeslotsTable;
-  $CustomersTableTable get customersTable => attachedDatabase.customersTable;
-  $ScreeningRegistrationsTableTable get screeningRegistrationsTable =>
-      attachedDatabase.screeningRegistrationsTable;
 }

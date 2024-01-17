@@ -1,22 +1,75 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
+import 'package:hop_pos/src/screening_registrations/models/screening_registrations_table.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot.dart';
+import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot_with_venue.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslots_table.dart';
+import 'package:hop_pos/src/screening_venues/models/screening_venues_table.dart';
+import 'package:hop_pos/src/screenings/models/screening.dart';
+import 'package:hop_pos/src/screenings/models/screenings_table.dart';
 
 part 'screening_timeslot_dao.g.dart';
 
-@DriftAccessor(tables: [ScreeningTimeslotsTable])
-class ScreeningTimeslotDao extends DatabaseAccessor<AppDb>
-    with _$ScreeningTimeslotDaoMixin {
+@DriftAccessor(tables: [
+  ScreeningsTable,
+  ScreeningTimeslotsTable,
+  ScreeningVenuesTable,
+  ScreeningRegistrationsTable,
+])
+class ScreeningTimeslotDao extends DatabaseAccessor<AppDb> with _$ScreeningTimeslotDaoMixin {
   ScreeningTimeslotDao(AppDb db) : super(db);
 
-  Future<ScreeningTimeslot> insertScreeningTimeslot(
-      ScreeningTimeslotsTableCompanion timeslot) async {
+  Future<int> getScreeningTimeslotsCount(Screening screening) async {
+    final query = select(screeningTimeslotsTable)..where((table) => table.screeningId.equals(screening.id));
+    return (await query.get()).length;
+  }
+
+  Future<List<ScreeningTimeslotWithVenue>> getScreeningTimeslotsWithVenue(Screening screening, {int page = 1, int size = 20}) async {
+    final query = select(screeningsTable).join(
+      [
+        innerJoin(
+          screeningVenuesTable,
+          screeningVenuesTable.screeningFormId.equalsExp(
+            screeningsTable.id,
+          ),
+        ),
+        innerJoin(
+          screeningTimeslotsTable,
+          screeningTimeslotsTable.venueId.equalsExp(
+            screeningVenuesTable.id,
+          ),
+        ),
+        leftOuterJoin(
+          screeningRegistrationsTable,
+          screeningRegistrationsTable.timeslotId.equalsExp(
+            screeningTimeslotsTable.id,
+          ),
+          useColumns: false,
+        )
+      ],
+    );
+
+    query.where(screeningsTable.id.equals(screening.id));
+    query.orderBy([OrderingTerm.asc(screeningTimeslotsTable.dateAndTime)]);
+    query.groupBy([screeningsTable.id, screeningVenuesTable.id, screeningTimeslotsTable.id]);
+    query.limit(size, offset: ((page - 1) * size));
+
+    final takenSlots = screeningRegistrationsTable.timeslotId.count();
+    query.addColumns([takenSlots]);
+
+    return (await query.get())
+        .map((row) => ScreeningTimeslotWithVenue(
+              timeslot: row.readTable(screeningTimeslotsTable).copyWith(customersCount: row.read(takenSlots)),
+              venue: row.readTable(screeningVenuesTable),
+            ))
+        .toList();
+  }
+
+  Future<ScreeningTimeslot> insertScreeningTimeslot(ScreeningTimeslotsTableCompanion timeslot) async {
     return await into(screeningTimeslotsTable).insertReturning(timeslot);
   }
 
-  Future<List<ScreeningTimeslot>> insertScreeningTimeslots(
-      List<ScreeningTimeslotsTableCompanion> timeslots) async {
+  Future<List<ScreeningTimeslot>> insertScreeningTimeslots(List<ScreeningTimeslotsTableCompanion> timeslots) async {
     return await transaction(() async {
       List<Future<ScreeningTimeslot>> insertFutures = [];
 
@@ -29,10 +82,8 @@ class ScreeningTimeslotDao extends DatabaseAccessor<AppDb>
     });
   }
 
-  Future<bool> updateScreeningTimeslot(
-      ScreeningTimeslotsTableCompanion timeslot, Expression<bool> where) async {
-    final count = await (update(screeningTimeslotsTable)..where((_) => where))
-        .write(timeslot);
+  Future<bool> updateScreeningTimeslot(ScreeningTimeslotsTableCompanion timeslot, Expression<bool> where) async {
+    final count = await (update(screeningTimeslotsTable)..where((_) => where)).write(timeslot);
     return count > 0;
   }
 }

@@ -26,8 +26,8 @@ class ScreeningSearchInput extends HookConsumerWidget {
           style: AppStyles.body.copyWith(fontWeight: FontWeight.bold),
         ),
       ),
-      onSelected: (screening) async {
-        await ref.read(screeningControllerProvider.notifier).selectScreening(screening);
+      onSelected: (screening) {
+        ref.read(screeningControllerProvider.notifier).selectScreening(screening);
       },
     );
   }

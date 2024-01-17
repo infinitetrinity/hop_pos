@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
-import 'package:hop_pos/src/screenings/models/screening_with_venues_and_timeslots.dart';
 import 'package:hop_pos/src/screenings/states/selected_screening_state.dart';
 import 'package:hop_pos/src/screenings/widgets/screening_grid.dart';
 
@@ -23,12 +22,12 @@ class _ScreeningCarouselState extends ConsumerState<ScreeningCarousel> {
   Widget build(BuildContext context) {
     final currentPage = useState(0);
 
-    ref.listen<ScreeningWithVenuesAndTimeslots?>(selectedScreeningStateProvider, (_, ScreeningWithVenuesAndTimeslots? current) {
+    ref.listen<Screening?>(selectedScreeningStateProvider, (_, Screening? current) {
       if (current == null) {
         return;
       }
 
-      int index = widget.screenings.indexWhere((screeningList) => screeningList.indexWhere((screening) => screening == current.screening) != -1);
+      int index = widget.screenings.indexWhere((screeningList) => screeningList.indexWhere((screening) => screening == current) != -1);
       index = index == -1 ? 0 : index;
 
       if (currentPage.value != index) {
