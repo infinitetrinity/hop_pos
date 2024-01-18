@@ -4,6 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_routes.dart';
 import 'package:hop_pos/app/app_styles.dart';
+import 'package:hop_pos/routes/login_routes.dart';
+import 'package:hop_pos/routes/screening_routes.dart';
 
 class NavItem extends ConsumerWidget {
   const NavItem({super.key, required this.icon, required this.title, required this.path});
@@ -14,7 +16,7 @@ class NavItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentPath = ref.watch(goRouterProvider).routeInformationProvider.value.uri.path;
-    final isSelected = currentPath == path || currentPath == '/login' && path == '/screening';
+    final isSelected = currentPath == path || currentPath == LoginRoute().location && path == ScreeningRoute().location;
 
     return GestureDetector(
       onTap: () {
