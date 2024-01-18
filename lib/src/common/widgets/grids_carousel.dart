@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/src/common/widgets/arrows_nav.dart';
+import 'package:hop_pos/src/common/widgets/paginator_nav.dart';
 
 class GridsCarousel extends HookConsumerWidget {
   const GridsCarousel({
@@ -12,12 +13,14 @@ class GridsCarousel extends HookConsumerWidget {
     required this.itemBuilder,
     this.height = 725,
     this.aspectRatio = 1.45,
+    this.arrows = true,
   });
   final CarouselController controller;
   final List<List<dynamic>> items;
   final Widget? Function(dynamic) itemBuilder;
   final double height;
   final double aspectRatio;
+  final bool arrows;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -55,10 +58,16 @@ class GridsCarousel extends HookConsumerWidget {
                 }).toList(),
               ),
               if (items.length > 1)
-                ArrowsNav(
-                  onPrevPressed: currentPage.value == 0 ? null : () => controller.previousPage(),
-                  onNextPressed: currentPage.value == items.length - 1 ? null : () => controller.nextPage(),
-                ),
+                arrows
+                    ? ArrowsNav(
+                        onPrevPressed: currentPage.value == 0 ? null : () => controller.previousPage(),
+                        onNextPressed: currentPage.value == items.length - 1 ? null : () => controller.nextPage(),
+                      )
+                    : PaginatorNav(
+                        currentPage: currentPage.value + 1,
+                        totalPages: items.length,
+                        onPageChanged: (page) => controller.animateToPage(page - 1),
+                      ),
             ],
           )
         : const SizedBox();
