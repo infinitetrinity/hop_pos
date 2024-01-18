@@ -4,34 +4,34 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/widgets/form_search_input.dart';
 import 'package:hop_pos/src/common/widgets/search_list.dart';
-import 'package:hop_pos/src/screenings/controllers/screening_controller.dart';
-import 'package:hop_pos/src/screenings/models/screening.dart';
-import 'package:hop_pos/src/screenings/states/screenings_search_state.dart';
-import 'package:hop_pos/src/screenings/widgets/screening_tile.dart';
+import 'package:hop_pos/src/products/controllers/products_controller.dart';
+import 'package:hop_pos/src/products/models/product_with_category.dart';
+import 'package:hop_pos/src/products/states/products_search_state.dart';
+import 'package:hop_pos/src/products/widgets/product_tile.dart';
 
-class ScreeningSearchInput extends HookConsumerWidget {
-  const ScreeningSearchInput({super.key});
+class ProductSearchInput extends HookConsumerWidget {
+  const ProductSearchInput({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return TypeAheadField<Screening>(
-      suggestionsCallback: (search) => ref.read(screeningsSearchStateProvider(search).future),
+    return TypeAheadField<ProductWithCategory>(
+      suggestionsCallback: (search) => ref.read(productsSearchStateProvider(search).future),
       builder: (context, controller, focusNode) => FormSearchTextInput(
         controller: controller,
         focusNode: focusNode,
-        label: 'Search Screening',
+        label: 'Search Product',
       ),
       listBuilder: (context, children) => SearchList(children),
-      itemBuilder: (context, screening) => ScreeningTile(screening),
+      itemBuilder: (context, product) => ProductTile(product),
       emptyBuilder: (context) => Container(
         padding: const EdgeInsets.all(12),
         child: Text(
-          'No screening found',
+          'No Product found',
           style: AppStyles.body.copyWith(fontWeight: FontWeight.bold),
         ),
       ),
-      onSelected: (screening) {
-        ref.read(screeningControllerProvider.notifier).selectScreening(screening);
+      onSelected: (item) {
+        ref.read(productsControllerProvider.notifier).selectProduct(item.product);
       },
     );
   }

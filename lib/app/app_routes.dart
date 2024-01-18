@@ -3,6 +3,7 @@ import 'package:hop_pos/app/app_global.dart';
 import 'package:hop_pos/routes/db_routes.dart';
 import 'package:hop_pos/routes/login_routes.dart';
 import 'package:hop_pos/routes/order_routes.dart';
+import 'package:hop_pos/routes/pos_routes.dart';
 import 'package:hop_pos/routes/screening_routes.dart';
 import 'package:hop_pos/routes/setup_routes.dart';
 import 'package:hop_pos/src/users/states/auth_state.dart';
@@ -20,6 +21,7 @@ GoRouter goRouter(GoRouterRef ref) {
       $loginRoute,
       $screeningRoute,
       $orderRoute,
+      $posRoute,
     ],
     redirect: (context, state) async {
       bool isAuthenticated = await ref.watch(authStateProvider.notifier).isLogin();

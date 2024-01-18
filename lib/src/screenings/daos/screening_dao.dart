@@ -13,17 +13,6 @@ part 'screening_dao.g.dart';
 class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
   ScreeningDao(AppDb db) : super(db);
 
-  Stream<List<Screening>> getAll(String? search) {
-    final query = select(screeningsTable);
-
-    if (search?.isNotEmpty == true) {
-      query.where((table) => table.name.like("%$search%"));
-    }
-
-    query.orderBy([(table) => OrderingTerm.desc(table.name)]);
-    return query.watch();
-  }
-
   Future<List<Screening>> getUpcoming() async {
     final query = select(screeningsTable).join(
       [
@@ -70,10 +59,5 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
       List<Screening> result = await Future.wait(insertFutures);
       return result;
     });
-  }
-
-  Future<bool> updateScreening(ScreeningsTableCompanion screening, Expression<bool> where) async {
-    final count = await (update(screeningsTable)..where((_) => where)).write(screening);
-    return count > 0;
   }
 }

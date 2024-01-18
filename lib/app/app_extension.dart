@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -19,5 +20,11 @@ extension WindowManagerExtension on WindowManager {
 extension NullableStringValidation on String? {
   bool get isNullOrEmpty {
     return this == null || this!.trim().isEmpty;
+  }
+}
+
+extension DoubleExtensions on double {
+  String get formatMoney {
+    return NumberFormat.simpleCurrency().format(this);
   }
 }

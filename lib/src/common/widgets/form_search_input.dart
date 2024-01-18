@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 
-class ScreeningSearchTextInput extends StatelessWidget {
-  const ScreeningSearchTextInput({super.key, required this.controller, required this.focusNode});
+class FormSearchTextInput extends StatelessWidget {
+  const FormSearchTextInput({super.key, required this.controller, required this.focusNode, required this.label});
   final TextEditingController controller;
   final FocusNode focusNode;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class ScreeningSearchTextInput extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(3)),
           borderSide: BorderSide(color: AppColors.gray300),
         ),
-        labelText: 'Search Screening',
+        labelText: label,
         labelStyle: AppStyles.body.copyWith(height: 1),
         prefixIcon: const Icon(Icons.search, color: AppColors.gray500),
         contentPadding: const EdgeInsets.all(10),

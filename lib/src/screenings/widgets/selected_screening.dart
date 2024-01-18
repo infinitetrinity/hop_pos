@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_assets.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
+import 'package:hop_pos/routes/pos_routes.dart';
 import 'package:hop_pos/src/screenings/states/selected_screening_state.dart';
 import 'package:hop_pos/src/screenings/widgets/selected_screening_detail.dart';
 
@@ -49,7 +50,7 @@ class SelectedScreening extends ConsumerWidget {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: screening == null ? null : () {},
+            onPressed: screening == null ? null : () => PosRoute().push(context),
             style: ElevatedButton.styleFrom(
               shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
               padding: const EdgeInsets.all(20),
