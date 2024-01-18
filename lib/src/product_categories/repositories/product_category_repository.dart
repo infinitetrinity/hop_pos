@@ -9,8 +9,7 @@ part 'product_category_repository.g.dart';
 @riverpod
 ProductCategoryRepository productCategoryRepo(ProductCategoryRepoRef ref) {
   return ProductCategoryRepository(
-    productCategoryDao:
-        ref.watch(appDbProvider.select((prov) => prov.productCategoryDao)),
+    productCategoryDao: ref.watch(appDbProvider.select((prov) => prov.productCategoryDao)),
   );
 }
 
@@ -21,18 +20,19 @@ class ProductCategoryRepository {
     required this.productCategoryDao,
   });
 
-  Future<ProductCategory> insert(
-      ProductCategoriesTableCompanion category) async {
+  Future<List<ProductCategory>> getAll() {
+    return productCategoryDao.getAll();
+  }
+
+  Future<ProductCategory> insert(ProductCategoriesTableCompanion category) async {
     return await productCategoryDao.insertCategory(category);
   }
 
-  Future<List<ProductCategory>> insertMany(
-      List<ProductCategoriesTableCompanion> categories) async {
+  Future<List<ProductCategory>> insertMany(List<ProductCategoriesTableCompanion> categories) async {
     return await productCategoryDao.insertCategories(categories);
   }
 
-  Future<bool> update(
-      ProductCategoriesTableCompanion category, Expression<bool> where) async {
+  Future<bool> update(ProductCategoriesTableCompanion category, Expression<bool> where) async {
     return await productCategoryDao.updateCategory(category, where);
   }
 }

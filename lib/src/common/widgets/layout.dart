@@ -9,20 +9,23 @@ class Layout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        color: AppColors.gray200,
-        child: Column(
-          children: [
-            const Header(),
-            Container(
-              height: MediaQuery.of(context).size.height - 100,
-              width: double.infinity,
-              constraints: const BoxConstraints(maxWidth: 1280),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 25),
-              child: content,
-            ),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
+          ),
+          color: AppColors.gray200,
+          child: Column(
+            children: [
+              const Header(),
+              Container(
+                constraints: const BoxConstraints(maxWidth: 1280),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 25),
+                child: content,
+              ),
+            ],
+          ),
         ),
       ),
     );

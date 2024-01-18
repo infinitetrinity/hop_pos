@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hop_pos/src/common/widgets/layout.dart';
 import 'package:hop_pos/src/products/widgets/product_search_input.dart';
+import 'package:hop_pos/src/products/widgets/products_list.dart';
 
 class PosScreen extends StatelessWidget {
   const PosScreen({super.key});
@@ -9,7 +10,6 @@ class PosScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Layout(
       Row(
-        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Flexible(
@@ -17,6 +17,8 @@ class PosScreen extends StatelessWidget {
             child: Column(
               children: [
                 ProductSearchInput(),
+                SizedBox(height: 10),
+                ProductsList(),
               ],
             ),
           ),

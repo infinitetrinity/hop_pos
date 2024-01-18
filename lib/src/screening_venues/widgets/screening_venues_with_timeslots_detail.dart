@@ -38,55 +38,53 @@ class ScreeningVenusWithTimelotsDetail extends HookConsumerWidget {
       };
     }, [screening]);
 
-    return Container(
-      child: Expanded(
-        child: PagedListView(
-          pagingController: controller,
-          builderDelegate: PagedChildBuilderDelegate(
-            itemBuilder: (context, item, index) {
-              item as ScreeningTimeslotWithVenue;
+    return Expanded(
+      child: PagedListView(
+        pagingController: controller,
+        builderDelegate: PagedChildBuilderDelegate(
+          itemBuilder: (context, item, index) {
+            item as ScreeningTimeslotWithVenue;
 
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    color: AppColors.gray200,
-                    padding: const EdgeInsets.all(8),
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SelectableText(item.venue.fullAddress ?? item.venue.name),
-                        SelectableText(
-                          item.timeslot.displayDateTime,
-                          style: context.textTheme.bodyMedium?.copyWith(
-                            color: AppColors.green600,
-                            fontWeight: FontWeight.normal,
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  color: AppColors.gray200,
+                  padding: const EdgeInsets.all(8),
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SelectableText(item.venue.fullAddress ?? item.venue.name),
+                      SelectableText(
+                        item.timeslot.displayDateTime,
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          color: AppColors.green600,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      SelectableText(item.timeslot.displaySlots),
+                      if (item.timeslot.hasSpecimenCollection) ...[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: Container(
+                            width: double.infinity,
+                            height: 1,
+                            color: AppColors.gray400,
                           ),
                         ),
-                        SelectableText(item.timeslot.displaySlots),
-                        if (item.timeslot.hasSpecimenCollection) ...[
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Container(
-                              width: double.infinity,
-                              height: 1,
-                              color: AppColors.gray400,
-                            ),
-                          ),
-                          const SelectableText('Specimen Collection'),
-                          if (!item.timeslot.specimenCollectionVenue.isNullOrEmpty) SelectableText('Venue: ${item.timeslot.specimenCollectionVenue}'),
-                          if (item.timeslot.displaySpecimenCollectionDate != null) SelectableText('Date: ${item.timeslot.displaySpecimenCollectionDate}'),
-                          if (!item.timeslot.specimenCollectionTime.isNullOrEmpty) SelectableText('Time: ${item.timeslot.specimenCollectionTime}'),
-                        ],
+                        const SelectableText('Specimen Collection'),
+                        if (!item.timeslot.specimenCollectionVenue.isNullOrEmpty) SelectableText('Venue: ${item.timeslot.specimenCollectionVenue}'),
+                        if (item.timeslot.displaySpecimenCollectionDate != null) SelectableText('Date: ${item.timeslot.displaySpecimenCollectionDate}'),
+                        if (!item.timeslot.specimenCollectionTime.isNullOrEmpty) SelectableText('Time: ${item.timeslot.specimenCollectionTime}'),
                       ],
-                    ),
+                    ],
                   ),
-                  const SizedBox(height: 10),
-                ],
-              );
-            },
-          ),
+                ),
+                const SizedBox(height: 10),
+              ],
+            );
+          },
         ),
       ),
     );

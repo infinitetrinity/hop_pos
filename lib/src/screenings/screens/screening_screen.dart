@@ -13,7 +13,6 @@ class ScreeningScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return const Layout(
       Row(
-        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Flexible(

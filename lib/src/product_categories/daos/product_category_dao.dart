@@ -6,17 +6,21 @@ import 'package:hop_pos/src/product_categories/models/product_category.dart';
 part 'product_category_dao.g.dart';
 
 @DriftAccessor(tables: [ProductCategoriesTable])
-class ProductCategoryDao extends DatabaseAccessor<AppDb>
-    with _$ProductCategoryDaoMixin {
+class ProductCategoryDao extends DatabaseAccessor<AppDb> with _$ProductCategoryDaoMixin {
   ProductCategoryDao(AppDb db) : super(db);
 
-  Future<ProductCategory> insertCategory(
-      ProductCategoriesTableCompanion category) async {
+  Future<List<ProductCategory>> getAll() {
+    final query = select(productCategoriesTable);
+    query.orderBy([(table) => OrderingTerm.asc(table.id)]);
+
+    return query.get();
+  }
+
+  Future<ProductCategory> insertCategory(ProductCategoriesTableCompanion category) async {
     return await into(productCategoriesTable).insertReturning(category);
   }
 
-  Future<List<ProductCategory>> insertCategories(
-      List<ProductCategoriesTableCompanion> categories) async {
+  Future<List<ProductCategory>> insertCategories(List<ProductCategoriesTableCompanion> categories) async {
     return await transaction(() async {
       List<Future<ProductCategory>> insertFutures = [];
 
@@ -29,10 +33,8 @@ class ProductCategoryDao extends DatabaseAccessor<AppDb>
     });
   }
 
-  Future<bool> updateCategory(
-      ProductCategoriesTableCompanion category, Expression<bool> where) async {
-    final count = await (update(productCategoriesTable)..where((_) => where))
-        .write(category);
+  Future<bool> updateCategory(ProductCategoriesTableCompanion category, Expression<bool> where) async {
+    final count = await (update(productCategoriesTable)..where((_) => where)).write(category);
     return count > 0;
   }
 }
