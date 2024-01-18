@@ -1,6 +1,7 @@
 import 'package:hop_pos/src/product_categories/models/product_category.dart';
 import 'package:hop_pos/src/product_categories/repositories/product_category_repository.dart';
 import 'package:hop_pos/src/product_categories/services/product_categories_order.dart';
+import 'package:hop_pos/src/product_categories/states/selected_product_category_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'product_category_controller.g.dart';
@@ -20,7 +21,6 @@ class ProductCategoryController extends _$ProductCategoryController {
 
     final List<int>? sortedIds = await ProductCategoriesOrder.getCategoriesOrder();
     if (sortedIds != null) {
-      print('sorting');
       categories.sort((a, b) {
         int indexA = sortedIds.indexOf(a.id);
         int indexB = sortedIds.indexOf(b.id);
@@ -32,6 +32,7 @@ class ProductCategoryController extends _$ProductCategoryController {
       });
     }
 
+    selectProductCategory(categories[0]);
     return categories;
   }
 
@@ -46,6 +47,12 @@ class ProductCategoryController extends _$ProductCategoryController {
     reOrderedCategories.insert(newIndex, itemToMove);
     state = AsyncData(reOrderedCategories);
 
+    selectProductCategory(reOrderedCategories[0]);
+
     await ProductCategoriesOrder.setCategoriesOrder(reOrderedCategories);
+  }
+
+  void selectProductCategory(ProductCategory category) {
+    ref.read(selectedProductCategoryStateProvider.notifier).set(category.id == 0 ? null : category);
   }
 }

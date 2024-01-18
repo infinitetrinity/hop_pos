@@ -3,6 +3,7 @@ import 'package:hop_pos/src/screening_timeslots/repositories/screening_timeslot_
 import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:hop_pos/src/screenings/repositories/screening_repository.dart';
 import 'package:hop_pos/src/screenings/states/selected_screening_state.dart';
+import 'package:quiver/iterables.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'screening_controller.g.dart';
@@ -10,18 +11,24 @@ part 'screening_controller.g.dart';
 @riverpod
 class ScreeningController extends _$ScreeningController {
   @override
-  Future<List<Screening>> build() {
+  Future<List<List<Screening>>> build() {
     return _getUpcomingScreenings();
   }
 
-  Future<List<Screening>> _getUpcomingScreenings() {
+  Future<List<List<Screening>>> _getUpcomingScreenings() async {
     ScreeningRepository repo = ref.watch(screeningRepoProvider);
-    return repo.getUpcoming();
+    final screenings = await repo.getUpcoming();
+
+    return partition<Screening>(screenings, 20).toList();
   }
 
   void selectScreening(Screening screening) {
-    if (state.asData?.value.contains(screening) == false) {
-      state = AsyncValue.data([screening, ...(state.asData?.value ?? [])]);
+    final screenings = state.asData?.value ?? [];
+    bool screeningExists = screenings.any((child) => child.contains(screening));
+
+    if (!screeningExists) {
+      screenings.insert(0, [screening]);
+      state = AsyncValue.data(partition<Screening>(screenings.expand((child) => child), 20).toList());
     }
 
     ref.read(selectedScreeningStateProvider.notifier).set(screening);

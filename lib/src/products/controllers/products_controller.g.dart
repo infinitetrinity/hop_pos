@@ -7,12 +7,12 @@ part of 'products_controller.dart';
 // **************************************************************************
 
 String _$productsControllerHash() =>
-    r'dcc241d8334a89eaf60907c631c721b0faf04220';
+    r'671f65170d141f314a000e0c30634f41feb9e458';
 
 /// See also [ProductsController].
 @ProviderFor(ProductsController)
 final productsControllerProvider = AutoDisposeAsyncNotifierProvider<
-    ProductsController, List<ProductWithCategory>>.internal(
+    ProductsController, List<List<Product>>>.internal(
   ProductsController.new,
   name: r'productsControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,7 +22,6 @@ final productsControllerProvider = AutoDisposeAsyncNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$ProductsController
-    = AutoDisposeAsyncNotifier<List<ProductWithCategory>>;
+typedef _$ProductsController = AutoDisposeAsyncNotifier<List<List<Product>>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

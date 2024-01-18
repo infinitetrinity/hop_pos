@@ -23,6 +23,7 @@ class ProductCategoriesTabNav extends HookConsumerWidget {
             ),
           ),
           child: TabBar(
+            onTap: (index) => ref.read(productCategoryControllerProvider.notifier).selectProductCategory(categories[index]),
             isScrollable: true,
             tabAlignment: TabAlignment.start,
             controller: controller,

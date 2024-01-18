@@ -20,8 +20,8 @@ class ProductRepository {
     required this.productDao,
   });
 
-  Future<List<ProductWithCategory>> getAllWithCategory() {
-    return productDao.getAllWithCategory();
+  Future<List<Product>> getAll({int? categoryId}) {
+    return productDao.getAll(categoryId: categoryId);
   }
 
   Future<List<ProductWithCategory>> search(String search) {

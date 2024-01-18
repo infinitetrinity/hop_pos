@@ -14,26 +14,16 @@ part 'product_dao.g.dart';
 class ProductDao extends DatabaseAccessor<AppDb> with _$ProductDaoMixin {
   ProductDao(AppDb db) : super(db);
 
-  Future<List<ProductWithCategory>> getAllWithCategory() async {
-    final query = select(productsTable).join(
-      [
-        leftOuterJoin(
-          productCategoriesTable,
-          productsTable.categoryId.equalsExp(
-            productCategoriesTable.id,
-          ),
-        ),
-      ],
-    );
+  Future<List<Product>> getAll({int? categoryId}) {
+    final query = select(productsTable);
 
-    query.orderBy([OrderingTerm.asc(productsTable.name)]);
+    if (categoryId != null) {
+      query.where((table) => table.categoryId.equals(categoryId));
+    }
 
-    return (await query.get())
-        .map((row) => ProductWithCategory(
-              product: row.readTable(productsTable),
-              category: row.readTable(productCategoriesTable),
-            ))
-        .toList();
+    query.orderBy([(table) => OrderingTerm.asc(table.name)]);
+
+    return query.get();
   }
 
   Future<List<ProductWithCategory>> search(String search) async {
