@@ -10,10 +10,14 @@ class GridsCarousel extends HookConsumerWidget {
     required this.controller,
     required this.items,
     required this.itemBuilder,
+    this.height = 725,
+    this.aspectRatio = 1.45,
   });
   final CarouselController controller;
   final List<List<dynamic>> items;
   final Widget? Function(dynamic) itemBuilder;
+  final double height;
+  final double aspectRatio;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,7 +32,7 @@ class GridsCarousel extends HookConsumerWidget {
                     currentPage.value = index;
                   },
                   viewportFraction: 1,
-                  height: 725,
+                  height: height,
                   enableInfiniteScroll: false,
                 ),
                 carouselController: controller,
@@ -38,11 +42,11 @@ class GridsCarousel extends HookConsumerWidget {
                     child: GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 4,
                         mainAxisSpacing: 10,
                         crossAxisSpacing: 10,
-                        childAspectRatio: 1.45,
+                        childAspectRatio: aspectRatio,
                       ),
                       itemCount: items.length,
                       itemBuilder: (context, index) => itemBuilder(items[index]),

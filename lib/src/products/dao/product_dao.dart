@@ -21,7 +21,7 @@ class ProductDao extends DatabaseAccessor<AppDb> with _$ProductDaoMixin {
       query.where((table) => table.categoryId.equals(categoryId));
     }
 
-    query.orderBy([(table) => OrderingTerm.asc(table.name)]);
+    query.orderBy([(table) => OrderingTerm.asc(table.id)]);
 
     return query.get();
   }

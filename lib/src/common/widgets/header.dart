@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hop_pos/app/app_colors.dart';
+import 'package:hop_pos/routes/login_routes.dart';
 import 'package:hop_pos/routes/order_routes.dart';
+import 'package:hop_pos/routes/pos_routes.dart';
 import 'package:hop_pos/routes/screening_routes.dart';
 import 'package:hop_pos/src/common/widgets/header_logo.dart';
 import 'package:hop_pos/src/common/widgets/nav_item.dart';
@@ -30,6 +32,10 @@ class Header extends StatelessWidget {
                     icon: Icons.store,
                     title: 'POS',
                     path: ScreeningRoute().location,
+                    samePaths: [
+                      LoginRoute().location,
+                      PosRoute().location,
+                    ],
                   ),
                   const SizedBox(width: 25),
                   NavItem(

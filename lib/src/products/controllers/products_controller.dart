@@ -19,7 +19,7 @@ class ProductsController extends _$ProductsController {
     final selectedCategory = ref.watch(selectedProductCategoryStateProvider);
     final products = await repo.getAll(categoryId: selectedCategory?.id);
 
-    return partition<Product>(products, 20).toList();
+    return partition<Product>(products, 16).toList();
   }
 
   void selectProduct(Product product) {
