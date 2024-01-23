@@ -9,22 +9,24 @@ class ProductCategoriesSortList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final categories = ref.watch(productCategoryControllerProvider);
+    final categories = ref.watch(productCategoryControllerProvider(showHidden: true));
 
     return categories.when(
       data: (categories) {
         return Material(
           child: SizedBox(
-            height: 500,
+            height: 650,
             child: ReorderableListView(
               onReorder: (int oldIndex, int newIndex) async {
-                await ref.read(productCategoryControllerProvider.notifier).reorderProductCategories(oldIndex, newIndex);
+                await ref.read(productCategoryControllerProvider().notifier).reorderProductCategories(oldIndex, newIndex);
+                ref.invalidate(productCategoryControllerProvider);
               },
               children: List.generate(
                 categories.length,
                 (index) => ListTile(
                   key: Key('categories-sort-$index'),
                   tileColor: index % 2 == 0 ? AppColors.gray50 : AppColors.gray100,
+                  contentPadding: const EdgeInsets.only(right: 35, left: 15),
                   selected: false,
                   shape: const Border(
                     bottom: BorderSide(color: AppColors.gray300, width: 1),
@@ -33,6 +35,18 @@ class ProductCategoriesSortList extends HookConsumerWidget {
                     categories[index].name,
                     style: AppStyles.bodySmall,
                   ),
+                  trailing: categories[index].id == 0
+                      ? null
+                      : TextButton(
+                          onPressed: () async {
+                            await ref.read(productCategoryControllerProvider().notifier).toggleProductCategory(categories[index]);
+                            ref.invalidate(productCategoryControllerProvider);
+                          },
+                          child: Text(
+                            categories[index].isHidden ? 'Unhide' : 'Hide',
+                            style: AppStyles.bodySmall.copyWith(color: categories[index].isHidden ? AppColors.green600 : AppColors.blue600),
+                          ),
+                        ),
                 ),
               ),
             ),
@@ -40,6 +54,7 @@ class ProductCategoriesSortList extends HookConsumerWidget {
         );
       },
       error: (err, stack) {
+        print('err $stack');
         return Container(child: const Text('error'));
       },
       loading: () => Container(

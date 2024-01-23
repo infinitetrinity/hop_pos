@@ -10,10 +10,10 @@ class ProductCategory with _$ProductCategory {
     required String name,
     String? description,
     @JsonKey(name: 'color_code') String? colorCode,
+    @Default(false) bool isHidden,
   }) = _ProductCategory;
 
-  factory ProductCategory.fromJson(Map<String, dynamic> json) =>
-      _$ProductCategoryFromJson(json);
+  factory ProductCategory.fromJson(Map<String, dynamic> json) => _$ProductCategoryFromJson(json);
 
   static List<ProductCategory> fromJsonList(dynamic data) {
     return List<ProductCategory>.from(

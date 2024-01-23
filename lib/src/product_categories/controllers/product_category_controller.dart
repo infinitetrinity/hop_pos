@@ -1,5 +1,6 @@
 import 'package:hop_pos/src/product_categories/models/product_category.dart';
 import 'package:hop_pos/src/product_categories/repositories/product_category_repository.dart';
+import 'package:hop_pos/src/product_categories/services/product_categories_hidden.dart';
 import 'package:hop_pos/src/product_categories/services/product_categories_order.dart';
 import 'package:hop_pos/src/product_categories/states/selected_product_category_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -9,15 +10,24 @@ part 'product_category_controller.g.dart';
 @riverpod
 class ProductCategoryController extends _$ProductCategoryController {
   @override
-  Future<List<ProductCategory>> build() {
-    return _getAllProductCategories();
+  Future<List<ProductCategory>> build({bool showHidden = false}) {
+    return _getAllProductCategories(showHidden: showHidden);
   }
 
-  Future<List<ProductCategory>> _getAllProductCategories() async {
+  Future<List<ProductCategory>> _getAllProductCategories({bool showHidden = false}) async {
     ProductCategoryRepository repo = ref.watch(productCategoryRepoProvider);
     const all = ProductCategory(id: 0, name: 'All');
-    final categories = await repo.getAll();
+    List<ProductCategory> categories = await repo.getAll();
     categories.insert(0, all);
+
+    final List<int>? hiddenIds = await ProductCategoriesHidden.getHiddenCategories();
+    categories = categories.map((category) {
+      return category.copyWith(isHidden: hiddenIds?.contains(category.id) == true);
+    }).toList();
+
+    if (hiddenIds != null && !showHidden) {
+      categories.removeWhere((category) => hiddenIds.contains(category.id));
+    }
 
     final List<int>? sortedIds = await ProductCategoriesOrder.getCategoriesOrder();
     if (sortedIds != null) {
@@ -37,19 +47,13 @@ class ProductCategoryController extends _$ProductCategoryController {
   }
 
   Future<void> reorderProductCategories(int oldIndex, int newIndex) async {
-    List<ProductCategory>? categories = state.asData?.value;
-    if (categories == null) {
-      return;
-    }
+    await ProductCategoriesOrder.reorderCategories(oldIndex, newIndex);
+    ref.invalidateSelf();
+  }
 
-    List<ProductCategory> reOrderedCategories = List.from(categories);
-    ProductCategory itemToMove = reOrderedCategories.removeAt(oldIndex);
-    reOrderedCategories.insert(newIndex, itemToMove);
-    state = AsyncData(reOrderedCategories);
-
-    selectProductCategory(reOrderedCategories[0]);
-
-    await ProductCategoriesOrder.setCategoriesOrder(reOrderedCategories);
+  Future<void> toggleProductCategory(ProductCategory category) async {
+    await ProductCategoriesHidden.toggleCategory(category);
+    ref.invalidateSelf();
   }
 
   void selectProductCategory(ProductCategory category) {

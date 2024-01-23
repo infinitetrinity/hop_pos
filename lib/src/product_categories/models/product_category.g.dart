@@ -13,6 +13,7 @@ _$ProductCategoryImpl _$$ProductCategoryImplFromJson(
       name: json['name'] as String,
       description: json['description'] as String?,
       colorCode: json['color_code'] as String?,
+      isHidden: json['isHidden'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$ProductCategoryImplToJson(
@@ -22,4 +23,5 @@ Map<String, dynamic> _$$ProductCategoryImplToJson(
       'name': instance.name,
       'description': instance.description,
       'color_code': instance.colorCode,
+      'isHidden': instance.isHidden,
     };

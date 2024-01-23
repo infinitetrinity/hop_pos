@@ -12,7 +12,7 @@ class ProductCategoriesTabNav extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     late TabController controller;
-    final categories = ref.watch(productCategoryControllerProvider);
+    final categories = ref.watch(productCategoryControllerProvider());
     final selectedCategory = ref.watch(selectedProductCategoryStateProvider);
 
     return categories.when(
@@ -30,7 +30,7 @@ class ProductCategoriesTabNav extends HookConsumerWidget {
             ),
           ),
           child: TabBar(
-            onTap: (index) => ref.read(productCategoryControllerProvider.notifier).selectProductCategory(categories[index]),
+            onTap: (index) => ref.read(productCategoryControllerProvider().notifier).selectProductCategory(categories[index]),
             isScrollable: true,
             tabAlignment: TabAlignment.start,
             controller: controller,

@@ -25,6 +25,7 @@ mixin _$ProductCategory {
   String? get description => throw _privateConstructorUsedError;
   @JsonKey(name: 'color_code')
   String? get colorCode => throw _privateConstructorUsedError;
+  bool get isHidden => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,7 +43,8 @@ abstract class $ProductCategoryCopyWith<$Res> {
       {int id,
       String name,
       String? description,
-      @JsonKey(name: 'color_code') String? colorCode});
+      @JsonKey(name: 'color_code') String? colorCode,
+      bool isHidden});
 }
 
 /// @nodoc
@@ -62,6 +64,7 @@ class _$ProductCategoryCopyWithImpl<$Res, $Val extends ProductCategory>
     Object? name = null,
     Object? description = freezed,
     Object? colorCode = freezed,
+    Object? isHidden = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -80,6 +83,10 @@ class _$ProductCategoryCopyWithImpl<$Res, $Val extends ProductCategory>
           ? _value.colorCode
           : colorCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      isHidden: null == isHidden
+          ? _value.isHidden
+          : isHidden // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -96,7 +103,8 @@ abstract class _$$ProductCategoryImplCopyWith<$Res>
       {int id,
       String name,
       String? description,
-      @JsonKey(name: 'color_code') String? colorCode});
+      @JsonKey(name: 'color_code') String? colorCode,
+      bool isHidden});
 }
 
 /// @nodoc
@@ -114,6 +122,7 @@ class __$$ProductCategoryImplCopyWithImpl<$Res>
     Object? name = null,
     Object? description = freezed,
     Object? colorCode = freezed,
+    Object? isHidden = null,
   }) {
     return _then(_$ProductCategoryImpl(
       id: null == id
@@ -132,6 +141,10 @@ class __$$ProductCategoryImplCopyWithImpl<$Res>
           ? _value.colorCode
           : colorCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      isHidden: null == isHidden
+          ? _value.isHidden
+          : isHidden // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -143,7 +156,8 @@ class _$ProductCategoryImpl implements _ProductCategory {
       {required this.id,
       required this.name,
       this.description,
-      @JsonKey(name: 'color_code') this.colorCode});
+      @JsonKey(name: 'color_code') this.colorCode,
+      this.isHidden = false});
 
   factory _$ProductCategoryImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductCategoryImplFromJson(json);
@@ -157,10 +171,13 @@ class _$ProductCategoryImpl implements _ProductCategory {
   @override
   @JsonKey(name: 'color_code')
   final String? colorCode;
+  @override
+  @JsonKey()
+  final bool isHidden;
 
   @override
   String toString() {
-    return 'ProductCategory(id: $id, name: $name, description: $description, colorCode: $colorCode)';
+    return 'ProductCategory(id: $id, name: $name, description: $description, colorCode: $colorCode, isHidden: $isHidden)';
   }
 
   @override
@@ -173,13 +190,15 @@ class _$ProductCategoryImpl implements _ProductCategory {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.colorCode, colorCode) ||
-                other.colorCode == colorCode));
+                other.colorCode == colorCode) &&
+            (identical(other.isHidden, isHidden) ||
+                other.isHidden == isHidden));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, name, description, colorCode);
+      Object.hash(runtimeType, id, name, description, colorCode, isHidden);
 
   @JsonKey(ignore: true)
   @override
@@ -198,11 +217,11 @@ class _$ProductCategoryImpl implements _ProductCategory {
 
 abstract class _ProductCategory implements ProductCategory {
   const factory _ProductCategory(
-          {required final int id,
-          required final String name,
-          final String? description,
-          @JsonKey(name: 'color_code') final String? colorCode}) =
-      _$ProductCategoryImpl;
+      {required final int id,
+      required final String name,
+      final String? description,
+      @JsonKey(name: 'color_code') final String? colorCode,
+      final bool isHidden}) = _$ProductCategoryImpl;
 
   factory _ProductCategory.fromJson(Map<String, dynamic> json) =
       _$ProductCategoryImpl.fromJson;
@@ -216,6 +235,8 @@ abstract class _ProductCategory implements ProductCategory {
   @override
   @JsonKey(name: 'color_code')
   String? get colorCode;
+  @override
+  bool get isHidden;
   @override
   @JsonKey(ignore: true)
   _$$ProductCategoryImplCopyWith<_$ProductCategoryImpl> get copyWith =>
