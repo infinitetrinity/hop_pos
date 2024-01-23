@@ -3,15 +3,16 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
-import 'package:hop_pos/src/screenings/states/selected_screening_state.dart';
+import 'package:hop_pos/routes/screening_routes.dart';
+import 'package:hop_pos/src/pos/states/pos_cart_state.dart';
 
-class SelectedScreeningTile extends HookConsumerWidget {
-  const SelectedScreeningTile({super.key});
+class PosScreening extends HookConsumerWidget {
+  const PosScreening({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isHover = useState(false);
-    final screening = ref.watch(selectedScreeningStateProvider);
+    final screening = ref.watch(posCartStateProvider.select((prov) => prov.screening));
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -19,10 +20,10 @@ class SelectedScreeningTile extends HookConsumerWidget {
       onExit: (_) => isHover.value = false,
       child: GestureDetector(
         onTap: () {
-          print('selected screening');
+          ScreeningRoute().push(context);
         },
         child: Container(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
           color: isHover.value ? AppColors.brand600 : AppColors.white,
           child: Row(
             children: [
@@ -34,6 +35,7 @@ class SelectedScreeningTile extends HookConsumerWidget {
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: screening == null
                       ? [
                           Text(
@@ -77,14 +79,14 @@ class SelectedScreeningTile extends HookConsumerWidget {
                             ),
                           ],
                           if (isHover.value) ...[
-                            const SizedBox(height: 5),
+                            const SizedBox(height: 10),
                             Align(
                               alignment: Alignment.bottomRight,
                               child: Text(
                                 'Click to change screening',
                                 textAlign: TextAlign.right,
                                 style: AppStyles.body.copyWith(
-                                  fontSize: 12,
+                                  fontSize: 11,
                                   color: isHover.value ? AppColors.white : AppColors.gray500,
                                 ),
                               ),

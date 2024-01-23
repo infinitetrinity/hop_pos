@@ -1,8 +1,8 @@
+import 'package:hop_pos/src/pos/states/pos_cart_state.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot_with_venue.dart';
 import 'package:hop_pos/src/screening_timeslots/repositories/screening_timeslot_repository.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:hop_pos/src/screenings/repositories/screening_repository.dart';
-import 'package:hop_pos/src/screenings/states/selected_screening_state.dart';
 import 'package:quiver/iterables.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -31,7 +31,7 @@ class ScreeningController extends _$ScreeningController {
       state = AsyncValue.data(partition<Screening>(screenings.expand((child) => child), 20).toList());
     }
 
-    ref.read(selectedScreeningStateProvider.notifier).set(screening);
+    ref.read(posCartStateProvider.notifier).setScreening(screening);
   }
 
   Future<List<ScreeningTimeslotWithVenue>> getTimeslotsWithVenue(Screening screening, {int page = 1, int size = 20}) async {

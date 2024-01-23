@@ -5,4 +5,12 @@ part of 'customer_dao.dart';
 // ignore_for_file: type=lint
 mixin _$CustomerDaoMixin on DatabaseAccessor<AppDb> {
   $CustomersTableTable get customersTable => attachedDatabase.customersTable;
+  $ScreeningsTableTable get screeningsTable => attachedDatabase.screeningsTable;
+  $ScreeningVenuesTableTable get screeningVenuesTable =>
+      attachedDatabase.screeningVenuesTable;
+  $ScreeningTimeslotsTableTable get screeningTimeslotsTable =>
+      attachedDatabase.screeningTimeslotsTable;
+  $ScreeningRegistrationsTableTable get screeningRegistrationsTable =>
+      attachedDatabase.screeningRegistrationsTable;
+  $OrdersTableTable get ordersTable => attachedDatabase.ordersTable;
 }

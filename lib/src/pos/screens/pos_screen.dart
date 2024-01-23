@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hop_pos/src/common/widgets/layout.dart';
+import 'package:hop_pos/src/pos/widgets/pos_customer.dart';
+import 'package:hop_pos/src/pos/widgets/pos_screening.dart';
 import 'package:hop_pos/src/products/widgets/product_search_input.dart';
 import 'package:hop_pos/src/products/widgets/products_list.dart';
-import 'package:hop_pos/src/screenings/widgets/selected_screening_tile.dart';
 
 class PosScreen extends StatelessWidget {
   const PosScreen({super.key});
@@ -29,7 +30,8 @@ class PosScreen extends StatelessWidget {
             flex: 2,
             child: Column(
               children: [
-                SelectedScreeningTile(),
+                PosScreening(),
+                PosCustomer(),
               ],
             ),
           ),

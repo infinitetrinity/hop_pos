@@ -1,4 +1,3 @@
-import 'package:hop_pos/src/products/models/product.dart';
 import 'package:hop_pos/src/products/models/product_with_category.dart';
 import 'package:hop_pos/src/products/repositories/product_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
