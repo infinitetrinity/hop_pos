@@ -42,7 +42,7 @@ class ProductCategoryController extends _$ProductCategoryController {
       });
     }
 
-    selectProductCategory(categories[0]);
+    selectProductCategory(categories.firstWhere((el) => !el.isHidden));
     return categories;
   }
 
