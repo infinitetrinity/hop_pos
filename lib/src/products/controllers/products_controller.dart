@@ -19,6 +19,15 @@ class ProductsController extends _$ProductsController {
     final selectedCategory = ref.watch(selectedProductCategoryStateProvider);
     final products = await repo.getAll(categoryId: selectedCategory?.id);
 
+    if (selectedCategory == null) {
+      const utf = Product(id: 0, name: 'Urine to follow', sku: 'UTF', price: 0);
+      const stf = Product(id: 0, name: 'Stool to follow', sku: 'STF', price: 0);
+      const customProduct = Product(id: 0, name: 'Custom Product', sku: 'Custom', price: 0);
+      products.insert(0, stf);
+      products.insert(0, utf);
+      products.insert(0, customProduct);
+    }
+
     return partition<Product>(products, 16).toList();
   }
 

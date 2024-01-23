@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hop_pos/app/app_colors.dart';
 
 class PaginatorNav extends StatelessWidget {
   const PaginatorNav({super.key, required this.currentPage, required this.totalPages, required this.onPageChanged});
@@ -25,12 +26,19 @@ class PaginatorNav extends StatelessWidget {
           icon: const Icon(Icons.navigate_before),
         ),
         for (int i = startPage; i <= endPage; i++)
-          IconButton(
-            onPressed: () => onPageChanged(i),
-            icon: Text(
-              i.toString(),
-              style: TextStyle(
-                fontWeight: i == currentPage ? FontWeight.bold : FontWeight.normal,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: IconButton(
+              onPressed: () => onPageChanged(i),
+              icon: Text(
+                i.toString(),
+                style: TextStyle(
+                  fontWeight: i == currentPage ? FontWeight.bold : FontWeight.normal,
+                  color: i == currentPage ? AppColors.brand600 : AppColors.gray600,
+                ),
+              ),
+              style: IconButton.styleFrom(
+                backgroundColor: i == currentPage ? AppColors.white : AppColors.gray200,
               ),
             ),
           ),
