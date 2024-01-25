@@ -26,15 +26,15 @@ class ProductTile extends HookWidget {
             Text(
               "${item.product.name} (${item.product.sku})",
               overflow: TextOverflow.ellipsis,
-              style: AppStyles.body.copyWith(
+              style: AppStyles.bodyLarge.copyWith(
                 fontWeight: FontWeight.w600,
                 color: isHover.value ? AppColors.white : AppColors.gray800,
               ),
             ),
+            const SizedBox(height: 5),
             Text(
               "${item.product.price.formatMoney} ${item.category == null ? '' : ' | ${item.category!.name}'}",
               style: AppStyles.bodySmall.copyWith(
-                fontWeight: FontWeight.w600,
                 color: isHover.value ? AppColors.white : AppColors.gray800,
               ),
             ),

@@ -35,7 +35,6 @@ class PosCustomer extends HookConsumerWidget {
           child: GestureDetector(
             onTap: () {
               width.value = context.size?.width;
-              print('pos customer clicked');
               controller.toggle();
             },
             child: Container(
@@ -51,6 +50,7 @@ class PosCustomer extends HookConsumerWidget {
                   Icon(
                     Icons.account_circle_rounded,
                     color: isHover.value ? AppColors.white : AppColors.gray800,
+                    size: 28,
                   ),
                   const SizedBox(width: 12),
                   Expanded(
@@ -60,15 +60,15 @@ class PosCustomer extends HookConsumerWidget {
                           ? [
                               Text(
                                 'Select Customer',
-                                style: AppStyles.body.copyWith(
-                                  fontSize: 16,
+                                style: AppStyles.bodyLarge.copyWith(
+                                  fontWeight: FontWeight.w600,
                                   color: isHover.value ? AppColors.white : AppColors.gray800,
                                 ),
                               ),
+                              const SizedBox(height: 5),
                               Text(
                                 'Click here to select customer',
-                                style: AppStyles.body.copyWith(
-                                  fontSize: 12,
+                                style: AppStyles.bodySmall.copyWith(
                                   color: isHover.value ? AppColors.white : AppColors.gray600,
                                 ),
                               ),
@@ -79,6 +79,7 @@ class PosCustomer extends HookConsumerWidget {
                   Icon(
                     Icons.warning_rounded,
                     color: isHover.value ? AppColors.white : AppColors.yellow500,
+                    size: 30,
                   ),
                 ],
               ),

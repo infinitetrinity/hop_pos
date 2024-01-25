@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_extension.dart';
+import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/services/paging_hook.dart';
 import 'package:hop_pos/src/pos/states/pos_cart_state.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot_with_venue.dart';
@@ -56,11 +57,11 @@ class ScreeningVenusWithTimelotsDetail extends HookConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SelectableText(item.venue.fullAddress ?? item.venue.name),
+                      const SizedBox(height: 2),
                       SelectableText(
                         item.timeslot.displayDateTime,
-                        style: context.textTheme.bodyMedium?.copyWith(
+                        style: AppStyles.body.copyWith(
                           color: AppColors.green600,
-                          fontWeight: FontWeight.normal,
                         ),
                       ),
                       SelectableText(item.timeslot.displaySlots),

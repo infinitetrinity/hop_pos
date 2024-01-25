@@ -30,6 +30,7 @@ class PosScreening extends HookConsumerWidget {
               Icon(
                 Icons.medical_information_rounded,
                 color: isHover.value ? AppColors.white : AppColors.gray800,
+                size: 28,
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -40,15 +41,15 @@ class PosScreening extends HookConsumerWidget {
                       ? [
                           Text(
                             'No Screening Selected',
-                            style: AppStyles.body.copyWith(
-                              fontSize: 18,
+                            style: AppStyles.bodyLarge.copyWith(
+                              fontWeight: FontWeight.w600,
                               color: isHover.value ? AppColors.white : AppColors.gray800,
                             ),
                           ),
+                          const SizedBox(height: 5),
                           Text(
                             'Click to change screening',
-                            style: AppStyles.body.copyWith(
-                              fontSize: 12,
+                            style: AppStyles.bodySmall.copyWith(
                               color: isHover.value ? AppColors.white : AppColors.gray600,
                             ),
                           ),
@@ -56,11 +57,9 @@ class PosScreening extends HookConsumerWidget {
                       : [
                           Text(
                             screening.name,
-                            style: AppStyles.body.copyWith(
-                              fontSize: 16,
+                            style: AppStyles.bodyLarge.copyWith(
                               color: isHover.value ? AppColors.white : AppColors.gray800,
-                              height: 1.1,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w600,
                             ),
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
@@ -69,10 +68,8 @@ class PosScreening extends HookConsumerWidget {
                             const SizedBox(height: 5),
                             Text(
                               screening.corporate!,
-                              style: AppStyles.body.copyWith(
-                                fontSize: 13,
+                              style: AppStyles.bodySmall.copyWith(
                                 color: isHover.value ? AppColors.white : AppColors.gray600,
-                                height: 1.1,
                               ),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -85,8 +82,7 @@ class PosScreening extends HookConsumerWidget {
                               child: Text(
                                 'Click to change screening',
                                 textAlign: TextAlign.right,
-                                style: AppStyles.body.copyWith(
-                                  fontSize: 11,
+                                style: AppStyles.bodySmall.copyWith(
                                   color: isHover.value ? AppColors.white : AppColors.gray500,
                                 ),
                               ),

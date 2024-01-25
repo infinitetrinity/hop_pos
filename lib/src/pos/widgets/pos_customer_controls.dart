@@ -13,7 +13,7 @@ class PosCustomerControls extends StatelessWidget {
       alignment: AlignmentDirectional.topStart,
       child: Container(
         width: width ?? 400,
-        height: 136,
+        height: 140,
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         decoration: const BoxDecoration(
           color: AppColors.white,
@@ -28,14 +28,15 @@ class PosCustomerControls extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 18),
+                  padding: const EdgeInsets.all(20),
                   backgroundColor: AppColors.green700,
                   shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(3))),
                 ),
                 child: Text(
                   'Walk-in Customer',
-                  style: AppStyles.body.copyWith(
+                  style: AppStyles.bodyLarge.copyWith(
                     color: AppColors.white,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),

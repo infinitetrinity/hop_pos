@@ -25,11 +25,12 @@ class ScreeningTile extends HookWidget {
             Text(
               screening.name,
               overflow: TextOverflow.ellipsis,
-              style: AppStyles.body.copyWith(
+              style: AppStyles.bodyLarge.copyWith(
                 fontWeight: FontWeight.w600,
                 color: isHover.value ? AppColors.white : AppColors.gray800,
               ),
             ),
+            const SizedBox(height: 3),
             Text(
               screening.corporate ?? '',
               style: AppStyles.bodySmall.copyWith(

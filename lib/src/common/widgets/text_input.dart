@@ -15,7 +15,7 @@ class TextInput extends StatelessWidget {
         Text(
           label,
           style: AppStyles.body.copyWith(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
           ),
         ),
         const SizedBox(height: 5),

@@ -20,14 +20,11 @@ class FormLabel extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(label!, style: AppStyles.bodyMedium),
+            Text(label!, style: AppStyles.bodyLarge),
             if (isRequired)
               Text(
                 '*',
-                style: Theme.of(context)
-                    .textTheme
-                    .labelSmall!
-                    .copyWith(color: AppColors.red600),
+                style: Theme.of(context).textTheme.labelSmall!.copyWith(color: AppColors.red600),
               ),
             if (hint != null && hint!.isNotEmpty) FormHint(hint: hint!),
           ],

@@ -55,7 +55,7 @@ class SelectedScreeningDetail extends HookConsumerWidget {
                 Text(
                   "${timeslotsCount.value} timeslots",
                   style: AppStyles.body.copyWith(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 5),

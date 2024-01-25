@@ -12,7 +12,7 @@ class GridsCarousel extends HookConsumerWidget {
     required this.items,
     required this.itemBuilder,
     this.height = 725,
-    this.aspectRatio = 1.45,
+    this.aspectRatio = 1.4,
     this.arrows = true,
   });
   final CarouselController controller;

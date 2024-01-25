@@ -25,16 +25,16 @@ class CustomerTile extends HookWidget {
             Text(
               item.customer.fullName,
               overflow: TextOverflow.ellipsis,
-              style: AppStyles.body.copyWith(
+              style: AppStyles.bodyLarge.copyWith(
                 fontWeight: FontWeight.w600,
                 color: isHover.value ? AppColors.white : AppColors.gray800,
               ),
             ),
+            const SizedBox(height: 3),
             Text(
               "Ref: ${item.registration.index} | ${item.customer.nric}",
               overflow: TextOverflow.ellipsis,
               style: AppStyles.body.copyWith(
-                fontWeight: FontWeight.w600,
                 color: isHover.value ? AppColors.white : AppColors.gray500,
               ),
             ),
@@ -44,7 +44,7 @@ class CustomerTile extends HookWidget {
                 children: [
                   if (item.hasSales) ...[
                     Container(
-                      padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 8),
+                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                       decoration: const BoxDecoration(
                         color: AppColors.green600,
                         borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -53,6 +53,8 @@ class CustomerTile extends HookWidget {
                         'Sales',
                         style: AppStyles.bodySmall.copyWith(
                           color: AppColors.white,
+                          fontWeight: FontWeight.w600,
+                          height: 1,
                         ),
                       ),
                     ),
@@ -60,7 +62,7 @@ class CustomerTile extends HookWidget {
                   ],
                   if (item.customer.isPending)
                     Container(
-                      padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 8),
+                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                       decoration: const BoxDecoration(
                         color: AppColors.yellow500,
                         borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -69,6 +71,8 @@ class CustomerTile extends HookWidget {
                         'Pending Acc',
                         style: AppStyles.bodySmall.copyWith(
                           color: AppColors.white,
+                          fontWeight: FontWeight.w600,
+                          height: 1,
                         ),
                       ),
                     ),

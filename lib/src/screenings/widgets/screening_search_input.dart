@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/widgets/form_search_input.dart';
 import 'package:hop_pos/src/common/widgets/search_list.dart';
@@ -25,9 +26,11 @@ class ScreeningSearchInput extends HookConsumerWidget {
       itemBuilder: (context, screening) => ScreeningTile(screening),
       emptyBuilder: (context) => Container(
         padding: const EdgeInsets.all(12),
+        color: AppColors.white,
+        width: double.infinity,
         child: Text(
           'No screening found',
-          style: AppStyles.body.copyWith(fontWeight: FontWeight.bold),
+          style: AppStyles.body,
         ),
       ),
       onSelected: (screening) {

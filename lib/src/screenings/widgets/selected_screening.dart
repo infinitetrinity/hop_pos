@@ -15,7 +15,7 @@ class SelectedScreening extends ConsumerWidget {
     final screening = ref.watch(posCartStateProvider.select((prov) => prov.screening));
 
     return Container(
-      height: screening == null ? 340 : 782,
+      height: screening == null ? 330 : 782,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       color: AppColors.white,
       width: double.infinity,
@@ -48,12 +48,12 @@ class SelectedScreening extends ConsumerWidget {
               child: const SelectedScreeningDetail(),
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 15),
           ElevatedButton(
             onPressed: screening == null ? null : () => PosRoute().push(context),
             style: ElevatedButton.styleFrom(
               shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(25),
               backgroundColor: AppColors.brand600,
               disabledBackgroundColor: AppColors.gray600,
               minimumSize: const Size(double.infinity, 40),

@@ -30,11 +30,12 @@ class ProductCategoriesTabNav extends HookConsumerWidget {
               isScrollable: true,
               tabAlignment: TabAlignment.start,
               indicatorColor: AppColors.brand600,
-              labelColor: AppColors.gray900,
-              unselectedLabelColor: AppColors.gray600,
-              labelStyle: AppStyles.body.copyWith(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+              labelStyle: AppStyles.bodyLarge.copyWith(
+                color: AppColors.gray800,
+                fontWeight: FontWeight.w600,
+              ),
+              unselectedLabelStyle: AppStyles.bodyLarge.copyWith(
+                color: AppColors.gray600,
               ),
               tabs: categories
                   .map(

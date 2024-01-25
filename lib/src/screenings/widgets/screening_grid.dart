@@ -35,8 +35,8 @@ class ScreeningGrid extends HookConsumerWidget {
               maxLines: 5,
               style: AppStyles.body.copyWith(
                 color: selectedScreening?.id == screening.id || isHover.value ? AppColors.white : AppColors.gray800,
-                fontWeight: FontWeight.bold,
-                height: 1.15,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),

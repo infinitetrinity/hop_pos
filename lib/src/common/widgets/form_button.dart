@@ -24,11 +24,8 @@ class FormButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color textColor = isDelete
-        ? AppColors.red600
-        : (isOutline ? (background ?? AppColors.brand600) : AppColors.white);
-    Color buttonColor =
-        isDelete ? AppColors.red600 : background ?? AppColors.brand600;
+    Color textColor = isDelete ? AppColors.red600 : (isOutline ? (background ?? AppColors.brand600) : AppColors.white);
+    Color buttonColor = isDelete ? AppColors.red600 : background ?? AppColors.brand600;
 
     Widget buttonContent = isSubmitting
         ? Container(
@@ -42,13 +39,11 @@ class FormButton extends StatelessWidget {
           )
         : Text(
             text ?? (isDelete ? 'Delete' : 'Submit'),
-            style: AppStyles.bodyMedium
-                .copyWith(color: textColor, fontWeight: FontWeight.bold),
+            style: AppStyles.bodyLarge.copyWith(color: textColor, fontWeight: FontWeight.bold),
           );
 
     return Container(
-      constraints:
-          maxWidth == null ? null : BoxConstraints(maxWidth: maxWidth!),
+      constraints: maxWidth == null ? null : BoxConstraints(maxWidth: maxWidth!),
       child: SizedBox(
         height: 45,
         width: double.infinity,

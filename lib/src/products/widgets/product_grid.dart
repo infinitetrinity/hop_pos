@@ -42,11 +42,9 @@ class ProductGrid extends HookWidget {
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 3,
-                style: AppStyles.body.copyWith(
-                  fontSize: 18,
+                style: AppStyles.bodyLarge.copyWith(
                   color: isHover.value ? AppColors.white : AppColors.gray800,
-                  fontWeight: FontWeight.bold,
-                  height: 1.15,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               const SizedBox(height: 5),
@@ -56,10 +54,8 @@ class ProductGrid extends HookWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 style: AppStyles.body.copyWith(
-                  fontSize: 13,
                   color: isHover.value ? AppColors.white : AppColors.gray800,
-                  fontWeight: FontWeight.bold,
-                  height: 1.15,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],

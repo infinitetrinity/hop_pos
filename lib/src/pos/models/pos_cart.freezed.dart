@@ -21,6 +21,7 @@ PosCart _$PosCartFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$PosCart {
   Screening? get screening => throw _privateConstructorUsedError;
+  CustomerWithRegistration? get customer => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -32,9 +33,10 @@ abstract class $PosCartCopyWith<$Res> {
   factory $PosCartCopyWith(PosCart value, $Res Function(PosCart) then) =
       _$PosCartCopyWithImpl<$Res, PosCart>;
   @useResult
-  $Res call({Screening? screening});
+  $Res call({Screening? screening, CustomerWithRegistration? customer});
 
   $ScreeningCopyWith<$Res>? get screening;
+  $CustomerWithRegistrationCopyWith<$Res>? get customer;
 }
 
 /// @nodoc
@@ -51,12 +53,17 @@ class _$PosCartCopyWithImpl<$Res, $Val extends PosCart>
   @override
   $Res call({
     Object? screening = freezed,
+    Object? customer = freezed,
   }) {
     return _then(_value.copyWith(
       screening: freezed == screening
           ? _value.screening
           : screening // ignore: cast_nullable_to_non_nullable
               as Screening?,
+      customer: freezed == customer
+          ? _value.customer
+          : customer // ignore: cast_nullable_to_non_nullable
+              as CustomerWithRegistration?,
     ) as $Val);
   }
 
@@ -71,6 +78,18 @@ class _$PosCartCopyWithImpl<$Res, $Val extends PosCart>
       return _then(_value.copyWith(screening: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CustomerWithRegistrationCopyWith<$Res>? get customer {
+    if (_value.customer == null) {
+      return null;
+    }
+
+    return $CustomerWithRegistrationCopyWith<$Res>(_value.customer!, (value) {
+      return _then(_value.copyWith(customer: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -80,10 +99,12 @@ abstract class _$$PosCartImplCopyWith<$Res> implements $PosCartCopyWith<$Res> {
       __$$PosCartImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Screening? screening});
+  $Res call({Screening? screening, CustomerWithRegistration? customer});
 
   @override
   $ScreeningCopyWith<$Res>? get screening;
+  @override
+  $CustomerWithRegistrationCopyWith<$Res>? get customer;
 }
 
 /// @nodoc
@@ -98,12 +119,17 @@ class __$$PosCartImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? screening = freezed,
+    Object? customer = freezed,
   }) {
     return _then(_$PosCartImpl(
       screening: freezed == screening
           ? _value.screening
           : screening // ignore: cast_nullable_to_non_nullable
               as Screening?,
+      customer: freezed == customer
+          ? _value.customer
+          : customer // ignore: cast_nullable_to_non_nullable
+              as CustomerWithRegistration?,
     ));
   }
 }
@@ -111,17 +137,19 @@ class __$$PosCartImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$PosCartImpl implements _PosCart {
-  const _$PosCartImpl({this.screening});
+  const _$PosCartImpl({this.screening, this.customer});
 
   factory _$PosCartImpl.fromJson(Map<String, dynamic> json) =>
       _$$PosCartImplFromJson(json);
 
   @override
   final Screening? screening;
+  @override
+  final CustomerWithRegistration? customer;
 
   @override
   String toString() {
-    return 'PosCart(screening: $screening)';
+    return 'PosCart(screening: $screening, customer: $customer)';
   }
 
   @override
@@ -130,12 +158,14 @@ class _$PosCartImpl implements _PosCart {
         (other.runtimeType == runtimeType &&
             other is _$PosCartImpl &&
             (identical(other.screening, screening) ||
-                other.screening == screening));
+                other.screening == screening) &&
+            (identical(other.customer, customer) ||
+                other.customer == customer));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, screening);
+  int get hashCode => Object.hash(runtimeType, screening, customer);
 
   @JsonKey(ignore: true)
   @override
@@ -152,12 +182,16 @@ class _$PosCartImpl implements _PosCart {
 }
 
 abstract class _PosCart implements PosCart {
-  const factory _PosCart({final Screening? screening}) = _$PosCartImpl;
+  const factory _PosCart(
+      {final Screening? screening,
+      final CustomerWithRegistration? customer}) = _$PosCartImpl;
 
   factory _PosCart.fromJson(Map<String, dynamic> json) = _$PosCartImpl.fromJson;
 
   @override
   Screening? get screening;
+  @override
+  CustomerWithRegistration? get customer;
   @override
   @JsonKey(ignore: true)
   _$$PosCartImplCopyWith<_$PosCartImpl> get copyWith =>

@@ -14,8 +14,8 @@ class PosScreen extends StatelessWidget {
       Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Flexible(
-            flex: 4,
+          SizedBox(
+            width: 780,
             child: Column(
               children: [
                 ProductSearchInput(),
@@ -26,8 +26,6 @@ class PosScreen extends StatelessWidget {
           ),
           SizedBox(width: 30),
           Flexible(
-            fit: FlexFit.loose,
-            flex: 2,
             child: Column(
               children: [
                 PosScreening(),

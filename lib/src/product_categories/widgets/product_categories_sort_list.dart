@@ -33,7 +33,7 @@ class ProductCategoriesSortList extends HookConsumerWidget {
                   ),
                   title: Text(
                     categories[index].name,
-                    style: AppStyles.bodySmall,
+                    style: AppStyles.body,
                   ),
                   trailing: categories[index].id == 0
                       ? null
