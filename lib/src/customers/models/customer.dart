@@ -16,8 +16,7 @@ class Customer with _$Customer {
     @JsonKey(name: 'is_pending') required bool isPending,
   }) = _Customer;
 
-  factory Customer.fromJson(Map<String, dynamic> json) =>
-      _$CustomerFromJson(json);
+  factory Customer.fromJson(Map<String, dynamic> json) => _$CustomerFromJson(json);
 
   static List<Customer> fromJsonList(dynamic data) {
     return List<Customer>.from(
@@ -27,5 +26,9 @@ class Customer with _$Customer {
 
   static String get table {
     return 'customers';
+  }
+
+  static Map<String?, String> get genders {
+    return {null: "Gender", "F": "Female", "M": "Male"};
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
-import 'package:hop_pos/src/pos/states/pos_cart_state.dart';
+import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/screenings/controllers/screening_controller.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 
@@ -14,7 +14,7 @@ class ScreeningGrid extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isHover = useState(false);
-    final selectedScreening = ref.watch(posCartStateProvider.select((prov) => prov.screening));
+    final selectedScreening = ref.watch(posControllerProvider.select((prov) => prov.screening));
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,

@@ -4,7 +4,7 @@ import 'package:hop_pos/app/app_assets.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/routes/pos_routes.dart';
-import 'package:hop_pos/src/pos/states/pos_cart_state.dart';
+import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/screenings/widgets/selected_screening_detail.dart';
 
 class SelectedScreening extends ConsumerWidget {
@@ -12,7 +12,7 @@ class SelectedScreening extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final screening = ref.watch(posCartStateProvider.select((prov) => prov.screening));
+    final screening = ref.watch(posControllerProvider.select((prov) => prov.screening));
 
     return Container(
       height: screening == null ? 330 : 782,

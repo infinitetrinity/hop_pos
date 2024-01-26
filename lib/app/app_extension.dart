@@ -24,6 +24,23 @@ extension NullableStringValidation on String? {
   }
 }
 
+extension StringValidation on String {
+  bool get isAlphaNumeric {
+    final validCharacters = RegExp(r'^[a-zA-Z0-9]+$');
+    return validCharacters.hasMatch(this);
+  }
+
+  bool get isNumeric {
+    final validCharacters = RegExp(r'^[0-9]+$');
+    return validCharacters.hasMatch(this);
+  }
+
+  bool get isEmail {
+    final validCharacters = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    return validCharacters.hasMatch(this);
+  }
+}
+
 extension DoubleExtensions on double {
   String get formatMoney {
     return NumberFormat.simpleCurrency().format(this);

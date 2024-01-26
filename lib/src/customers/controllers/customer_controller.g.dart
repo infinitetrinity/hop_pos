@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'screening_controller.dart';
+part of 'customer_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$screeningControllerHash() =>
-    r'b78bb51c42d1fb8ad717827b4b8de1209df0c9a1';
+String _$customerControllerHash() =>
+    r'0774e0a4d294620f45bca2d02a8c7189ad64e1a8';
 
-/// See also [ScreeningController].
-@ProviderFor(ScreeningController)
-final screeningControllerProvider = AutoDisposeAsyncNotifierProvider<
-    ScreeningController, List<List<Screening>>>.internal(
-  ScreeningController.new,
-  name: r'screeningControllerProvider',
+/// See also [CustomerController].
+@ProviderFor(CustomerController)
+final customerControllerProvider =
+    AutoDisposeNotifierProvider<CustomerController, void>.internal(
+  CustomerController.new,
+  name: r'customerControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$screeningControllerHash,
+      : _$customerControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$ScreeningController = AutoDisposeAsyncNotifier<List<List<Screening>>>;
+typedef _$CustomerController = AutoDisposeNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

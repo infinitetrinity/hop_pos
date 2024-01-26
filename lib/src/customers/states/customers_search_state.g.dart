@@ -7,7 +7,7 @@ part of 'customers_search_state.dart';
 // **************************************************************************
 
 String _$customersSearchStateHash() =>
-    r'a7a412e6a9adbd54f795648c2f853d6f04faec55';
+    r'ba166108e6d18d06576673449701afe88d9e4f1e';
 
 /// Copied from Dart SDK
 class _SystemHash {

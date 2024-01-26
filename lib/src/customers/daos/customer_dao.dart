@@ -75,6 +75,33 @@ class CustomerDao extends DatabaseAccessor<AppDb> with _$CustomerDaoMixin {
     }).toList();
   }
 
+  Future<Customer?> findByNric({required String nric, int? notId}) async {
+    final query = select(customersTable)..where((table) => table.nric.isValue(nric.toUpperCase()));
+    if (notId != null) {
+      query.where((table) => table.id.isNotValue(notId));
+    }
+
+    return query.getSingleOrNull();
+  }
+
+  Future<Customer?> findByMobileNo({required String mobileNo, int? notId}) async {
+    final query = select(customersTable)..where((table) => table.mobileNo.isValue(mobileNo));
+    if (notId != null) {
+      query.where((table) => table.id.isNotValue(notId));
+    }
+
+    return query.getSingleOrNull();
+  }
+
+  Future<Customer?> findByEmail({required String email, int? notId}) async {
+    final query = select(customersTable)..where((table) => table.email.isValue(email));
+    if (notId != null) {
+      query.where((table) => table.id.isNotValue(notId));
+    }
+
+    return query.getSingleOrNull();
+  }
+
   Future<Customer> insertCustomer(CustomersTableCompanion customer) async {
     return await into(customersTable).insertReturning(customer);
   }

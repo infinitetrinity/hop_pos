@@ -5,7 +5,7 @@ import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/services/paging_hook.dart';
-import 'package:hop_pos/src/pos/states/pos_cart_state.dart';
+import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot_with_venue.dart';
 import 'package:hop_pos/src/screenings/controllers/screening_controller.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -15,7 +15,7 @@ class ScreeningVenusWithTimelotsDetail extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final screening = ref.watch(posCartStateProvider.select((prov) => prov.screening));
+    final screening = ref.watch(posControllerProvider.select((prov) => prov.screening));
     const pageSize = 20;
     final PagingController controller = usePagingController(firstPageKey: 0);
     final timeslotsCount = useState(0);

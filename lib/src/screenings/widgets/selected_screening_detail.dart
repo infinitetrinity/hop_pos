@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/widgets/text_input.dart';
-import 'package:hop_pos/src/pos/states/pos_cart_state.dart';
+import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/screening_venues/widgets/screening_venues_with_timeslots_detail.dart';
 import 'package:hop_pos/src/screenings/controllers/screening_controller.dart';
 
@@ -13,7 +13,7 @@ class SelectedScreeningDetail extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final screening = ref.watch(posCartStateProvider.select((prov) => prov.screening));
+    final screening = ref.watch(posControllerProvider.select((prov) => prov.screening));
     final timeslotsCount = useState<int?>(null);
 
     getTimeslotsCount() async {

@@ -22,5 +22,6 @@ class AppStyles {
       );
   static TextStyle get bodyLarge => body.copyWith(
         fontSize: 16,
+        height: 1.4,
       );
 }

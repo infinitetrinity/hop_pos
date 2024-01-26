@@ -6,6 +6,7 @@ import 'package:hop_pos/routes/order_routes.dart';
 import 'package:hop_pos/routes/pos_routes.dart';
 import 'package:hop_pos/routes/screening_routes.dart';
 import 'package:hop_pos/routes/setup_routes.dart';
+import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/users/states/auth_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -32,6 +33,10 @@ GoRouter goRouter(GoRouterRef ref) {
       }
       if (state.fullPath == LoginRoute().location) {
         return isAuthenticated ? ScreeningRoute().location : null;
+      }
+
+      if (state.fullPath == ScreeningRoute().location) {
+        ref.invalidate(posControllerProvider);
       }
 
       return isAuthenticated ? null : LoginRoute().location;

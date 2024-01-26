@@ -8,6 +8,7 @@ import 'package:hop_pos/src/common/widgets/search_list.dart';
 import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
 import 'package:hop_pos/src/customers/states/customers_search_state.dart';
 import 'package:hop_pos/src/customers/widgets/customer_tile.dart';
+import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 
 class CustomerSearchInput extends HookConsumerWidget {
   const CustomerSearchInput({super.key});
@@ -35,8 +36,8 @@ class CustomerSearchInput extends HookConsumerWidget {
           style: AppStyles.body,
         ),
       ),
-      onSelected: (item) {
-        print('selected customer');
+      onSelected: (customer) {
+        ref.read(posControllerProvider.notifier).setCustomer(customer);
       },
     );
   }

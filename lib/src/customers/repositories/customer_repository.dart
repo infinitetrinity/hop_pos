@@ -29,6 +29,18 @@ class CustomerRepository {
     return await customerDao.insertCustomer(customer);
   }
 
+  Future<Customer?> findByNric({required String nric, int? notId}) async {
+    return await customerDao.findByNric(nric: nric, notId: notId);
+  }
+
+  Future<Customer?> findByMobileNo({required String mobileNo, int? notId}) async {
+    return await customerDao.findByMobileNo(mobileNo: mobileNo, notId: notId);
+  }
+
+  Future<Customer?> findByEmail({required String email, int? notId}) async {
+    return await customerDao.findByEmail(email: email, notId: notId);
+  }
+
   Future<List<Customer>> insertMany(List<CustomersTableCompanion> customers) async {
     return await customerDao.insertCustomers(customers);
   }

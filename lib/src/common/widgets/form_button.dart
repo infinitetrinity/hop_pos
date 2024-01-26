@@ -5,7 +5,7 @@ import 'package:hop_pos/app/app_styles.dart';
 class FormButton extends StatelessWidget {
   const FormButton({
     super.key,
-    required this.isSubmitting,
+    this.isSubmitting = false,
     required this.onSubmit,
     this.text,
     this.background,
@@ -39,7 +39,10 @@ class FormButton extends StatelessWidget {
           )
         : Text(
             text ?? (isDelete ? 'Delete' : 'Submit'),
-            style: AppStyles.bodyLarge.copyWith(color: textColor, fontWeight: FontWeight.bold),
+            style: AppStyles.body.copyWith(
+              color: textColor,
+              fontWeight: FontWeight.w600,
+            ),
           );
 
     return Container(

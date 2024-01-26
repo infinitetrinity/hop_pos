@@ -11,6 +11,8 @@ class ScreeningScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final genders = {"F": "Female", "M": "Male"};
+
     return const Layout(
       Row(
         crossAxisAlignment: CrossAxisAlignment.start,
