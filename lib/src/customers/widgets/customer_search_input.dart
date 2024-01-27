@@ -36,8 +36,8 @@ class CustomerSearchInput extends HookConsumerWidget {
           style: AppStyles.body,
         ),
       ),
-      onSelected: (customer) {
-        ref.read(posControllerProvider.notifier).setCustomer(customer);
+      onSelected: (item) {
+        ref.read(posControllerProvider.notifier).selectCustomer(customer: item.customer, registration: item.registration);
       },
     );
   }

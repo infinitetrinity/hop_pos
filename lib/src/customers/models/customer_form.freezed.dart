@@ -29,6 +29,8 @@ mixin _$CustomerForm {
   String? get gender => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   DateTime? get dob => throw _privateConstructorUsedError;
+  bool get isNew => throw _privateConstructorUsedError;
+  bool get sendAccountInvitation => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +51,9 @@ abstract class $CustomerFormCopyWith<$Res> {
       @JsonKey(name: 'mobile_no') String? mobileNo,
       String? gender,
       String? email,
-      DateTime? dob});
+      DateTime? dob,
+      bool isNew,
+      bool sendAccountInvitation});
 }
 
 /// @nodoc
@@ -72,6 +76,8 @@ class _$CustomerFormCopyWithImpl<$Res, $Val extends CustomerForm>
     Object? gender = freezed,
     Object? email = freezed,
     Object? dob = freezed,
+    Object? isNew = null,
+    Object? sendAccountInvitation = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -102,6 +108,14 @@ class _$CustomerFormCopyWithImpl<$Res, $Val extends CustomerForm>
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      isNew: null == isNew
+          ? _value.isNew
+          : isNew // ignore: cast_nullable_to_non_nullable
+              as bool,
+      sendAccountInvitation: null == sendAccountInvitation
+          ? _value.sendAccountInvitation
+          : sendAccountInvitation // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -121,7 +135,9 @@ abstract class _$$CustomerFormImplCopyWith<$Res>
       @JsonKey(name: 'mobile_no') String? mobileNo,
       String? gender,
       String? email,
-      DateTime? dob});
+      DateTime? dob,
+      bool isNew,
+      bool sendAccountInvitation});
 }
 
 /// @nodoc
@@ -142,6 +158,8 @@ class __$$CustomerFormImplCopyWithImpl<$Res>
     Object? gender = freezed,
     Object? email = freezed,
     Object? dob = freezed,
+    Object? isNew = null,
+    Object? sendAccountInvitation = null,
   }) {
     return _then(_$CustomerFormImpl(
       id: freezed == id
@@ -172,6 +190,14 @@ class __$$CustomerFormImplCopyWithImpl<$Res>
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      isNew: null == isNew
+          ? _value.isNew
+          : isNew // ignore: cast_nullable_to_non_nullable
+              as bool,
+      sendAccountInvitation: null == sendAccountInvitation
+          ? _value.sendAccountInvitation
+          : sendAccountInvitation // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -186,7 +212,9 @@ class _$CustomerFormImpl extends _CustomerForm {
       @JsonKey(name: 'mobile_no') this.mobileNo,
       this.gender,
       this.email,
-      this.dob})
+      this.dob,
+      this.isNew = false,
+      this.sendAccountInvitation = true})
       : super._();
 
   factory _$CustomerFormImpl.fromJson(Map<String, dynamic> json) =>
@@ -208,10 +236,16 @@ class _$CustomerFormImpl extends _CustomerForm {
   final String? email;
   @override
   final DateTime? dob;
+  @override
+  @JsonKey()
+  final bool isNew;
+  @override
+  @JsonKey()
+  final bool sendAccountInvitation;
 
   @override
   String toString() {
-    return 'CustomerForm(id: $id, nric: $nric, fullName: $fullName, mobileNo: $mobileNo, gender: $gender, email: $email, dob: $dob)';
+    return 'CustomerForm(id: $id, nric: $nric, fullName: $fullName, mobileNo: $mobileNo, gender: $gender, email: $email, dob: $dob, isNew: $isNew, sendAccountInvitation: $sendAccountInvitation)';
   }
 
   @override
@@ -227,13 +261,16 @@ class _$CustomerFormImpl extends _CustomerForm {
                 other.mobileNo == mobileNo) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.dob, dob) || other.dob == dob));
+            (identical(other.dob, dob) || other.dob == dob) &&
+            (identical(other.isNew, isNew) || other.isNew == isNew) &&
+            (identical(other.sendAccountInvitation, sendAccountInvitation) ||
+                other.sendAccountInvitation == sendAccountInvitation));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, nric, fullName, mobileNo, gender, email, dob);
+  int get hashCode => Object.hash(runtimeType, id, nric, fullName, mobileNo,
+      gender, email, dob, isNew, sendAccountInvitation);
 
   @JsonKey(ignore: true)
   @override
@@ -257,7 +294,9 @@ abstract class _CustomerForm extends CustomerForm {
       @JsonKey(name: 'mobile_no') final String? mobileNo,
       final String? gender,
       final String? email,
-      final DateTime? dob}) = _$CustomerFormImpl;
+      final DateTime? dob,
+      final bool isNew,
+      final bool sendAccountInvitation}) = _$CustomerFormImpl;
   const _CustomerForm._() : super._();
 
   factory _CustomerForm.fromJson(Map<String, dynamic> json) =
@@ -279,6 +318,10 @@ abstract class _CustomerForm extends CustomerForm {
   String? get email;
   @override
   DateTime? get dob;
+  @override
+  bool get isNew;
+  @override
+  bool get sendAccountInvitation;
   @override
   @JsonKey(ignore: true)
   _$$CustomerFormImplCopyWith<_$CustomerFormImpl> get copyWith =>

@@ -75,31 +75,31 @@ class CustomerDao extends DatabaseAccessor<AppDb> with _$CustomerDaoMixin {
     }).toList();
   }
 
-  Future<Customer?> findByNric({required String nric, int? notId}) async {
+  Future<Customer?> findByNric({required String nric, int? excludeId}) async {
     final query = select(customersTable)..where((table) => table.nric.isValue(nric.toUpperCase()));
-    if (notId != null) {
-      query.where((table) => table.id.isNotValue(notId));
+    if (excludeId != null) {
+      query.where((table) => table.id.isNotValue(excludeId));
     }
 
-    return query.getSingleOrNull();
+    return (await query.get()).firstOrNull;
   }
 
-  Future<Customer?> findByMobileNo({required String mobileNo, int? notId}) async {
+  Future<Customer?> findByMobileNo({required String mobileNo, int? excludeId}) async {
     final query = select(customersTable)..where((table) => table.mobileNo.isValue(mobileNo));
-    if (notId != null) {
-      query.where((table) => table.id.isNotValue(notId));
+    if (excludeId != null) {
+      query.where((table) => table.id.isNotValue(excludeId));
     }
 
-    return query.getSingleOrNull();
+    return (await query.get()).firstOrNull;
   }
 
-  Future<Customer?> findByEmail({required String email, int? notId}) async {
+  Future<Customer?> findByEmail({required String email, int? excludeId}) async {
     final query = select(customersTable)..where((table) => table.email.isValue(email));
-    if (notId != null) {
-      query.where((table) => table.id.isNotValue(notId));
+    if (excludeId != null) {
+      query.where((table) => table.id.isNotValue(excludeId));
     }
 
-    return query.getSingleOrNull();
+    return (await query.get()).firstOrNull;
   }
 
   Future<Customer> insertCustomer(CustomersTableCompanion customer) async {

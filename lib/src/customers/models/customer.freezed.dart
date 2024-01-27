@@ -191,7 +191,7 @@ class __$$CustomerImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CustomerImpl implements _Customer {
+class _$CustomerImpl extends _Customer {
   const _$CustomerImpl(
       {required this.id,
       @JsonKey(name: 'full_name') required this.fullName,
@@ -200,7 +200,8 @@ class _$CustomerImpl implements _Customer {
       this.gender,
       this.email,
       @JsonKey(name: 'mobile_no') this.mobileNo,
-      @JsonKey(name: 'is_pending') required this.isPending});
+      @JsonKey(name: 'is_pending') required this.isPending})
+      : super._();
 
   factory _$CustomerImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomerImplFromJson(json);
@@ -267,7 +268,7 @@ class _$CustomerImpl implements _Customer {
   }
 }
 
-abstract class _Customer implements Customer {
+abstract class _Customer extends Customer {
   const factory _Customer(
           {required final int id,
           @JsonKey(name: 'full_name') required final String fullName,
@@ -278,6 +279,7 @@ abstract class _Customer implements Customer {
           @JsonKey(name: 'mobile_no') final String? mobileNo,
           @JsonKey(name: 'is_pending') required final bool isPending}) =
       _$CustomerImpl;
+  const _Customer._() : super._();
 
   factory _Customer.fromJson(Map<String, dynamic> json) =
       _$CustomerImpl.fromJson;

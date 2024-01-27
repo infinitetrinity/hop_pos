@@ -56,7 +56,7 @@ class FormButton extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6.0),
                   ),
-                  padding: const EdgeInsets.all(0),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                   foregroundColor: buttonColor,
                   disabledBackgroundColor: AppColors.gray600,
                   side: isSubmitting
@@ -74,7 +74,7 @@ class FormButton extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6.0),
                   ),
-                  padding: const EdgeInsets.all(0),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                   backgroundColor: buttonColor,
                   disabledBackgroundColor: AppColors.gray300,
                 ),

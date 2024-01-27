@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
+import 'package:hop_pos/src/common/widgets/form_label.dart';
 
 class TextInput extends StatelessWidget {
   const TextInput({super.key, required this.label, required this.content});
@@ -12,20 +13,14 @@ class TextInput extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: AppStyles.body.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const SizedBox(height: 5),
+        FormLabel(label: label),
         Container(
           color: AppColors.gray200,
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
           width: double.infinity,
           child: SelectableText(
             content,
-            style: const TextStyle(
+            style: AppStyles.body.copyWith(
               overflow: TextOverflow.ellipsis,
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'order.freezed.dart';
+part 'order.g.dart';
 
 @freezed
 class Order with _$Order {
@@ -23,28 +24,7 @@ class Order with _$Order {
     @JsonKey(name: 'created_at') required DateTime createdAt,
   }) = _Order;
 
-  factory Order.fromJson(Map<String, dynamic> json) {
-    return Order(
-      id: json['id'],
-      isStf: json['is_stf'],
-      isUtf: json['is_utf'],
-      salesNote: json['sales_note'],
-      invoiceNo: json['invoice_no'],
-      invoicePrefix: json['invoice_prefix'],
-      discount:
-          json['discount'] != null ? double.tryParse(json['discount']) : null,
-      discountType: json['discount_type'],
-      subtotal: double.tryParse(json['subtotal']) ?? 0,
-      extrasTotal: double.tryParse(json['extras_total']) ?? 0,
-      netTotal: double.tryParse(json['net_total']) ?? 0,
-      rounding:
-          json['rounding'] != null ? double.tryParse(json['rounding']) : null,
-      licenseId: json['license_id'],
-      screeningId: json['screening_id'],
-      customerId: json['customer_id'],
-      createdAt: DateTime.parse(json['created_at']),
-    );
-  }
+  factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
 
   static List<Order> fromJsonList(dynamic data) {
     return List<Order>.from(

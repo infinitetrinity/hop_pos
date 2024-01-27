@@ -12,7 +12,7 @@ class PosLicenseDao extends DatabaseAccessor<AppDb> with _$PosLicenseDaoMixin {
   Future<PosLicense?> getFirst() async {
     final query = select(posLicensesTable);
 
-    return query.getSingleOrNull();
+    return (await query.get()).firstOrNull;
   }
 
   Future<PosLicense> insertLicense(PosLicensesTableCompanion license) async {

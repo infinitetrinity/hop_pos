@@ -1,3 +1,4 @@
+import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/customers/repositories/customer_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -10,24 +11,22 @@ class CustomerController extends _$CustomerController {
     return;
   }
 
-  Future<bool> isNricUnique({required String nric, int? customerId}) async {
+  Future<Customer?> isNricTaken({required String nric, int? excludeId}) async {
     final repo = ref.read(customerRepoProvider);
-    final customer = await repo.findByNric(nric: nric, notId: customerId);
-
-    return customer == null;
+    return await repo.findByNric(nric: nric, excludeId: excludeId);
   }
 
-  Future<bool> isMobileNoUnique({required String mobileNo, int? customerId}) async {
+  Future<bool> isMobileNoTaken({required String mobileNo, int? excludeId}) async {
     final repo = ref.read(customerRepoProvider);
-    final customer = await repo.findByMobileNo(mobileNo: mobileNo, notId: customerId);
+    final customer = await repo.findByMobileNo(mobileNo: mobileNo, excludeId: excludeId);
 
-    return customer == null;
+    return customer != null;
   }
 
-  Future<bool> isEmailUnique({required String email, int? customerId}) async {
+  Future<bool> isEmailTaken({required String email, int? excludeId}) async {
     final repo = ref.read(customerRepoProvider);
-    final customer = await repo.findByEmail(email: email, notId: customerId);
+    final customer = await repo.findByEmail(email: email, excludeId: excludeId);
 
-    return customer == null;
+    return customer != null;
   }
 }

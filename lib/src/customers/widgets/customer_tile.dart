@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
+import 'package:hop_pos/src/common/widgets/custom_badge.dart';
 import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
 
 class CustomerTile extends HookWidget {
@@ -43,39 +44,10 @@ class CustomerTile extends HookWidget {
               Row(
                 children: [
                   if (item.hasSales) ...[
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-                      decoration: const BoxDecoration(
-                        color: AppColors.green600,
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: Text(
-                        'Sales',
-                        style: AppStyles.bodySmall.copyWith(
-                          color: AppColors.white,
-                          fontWeight: FontWeight.w600,
-                          height: 1,
-                        ),
-                      ),
-                    ),
+                    const CustomBadge(text: 'Sales', bgColor: AppColors.green600),
                     const SizedBox(width: 6),
                   ],
-                  if (item.customer.isPending)
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-                      decoration: const BoxDecoration(
-                        color: AppColors.yellow500,
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: Text(
-                        'Pending Acc',
-                        style: AppStyles.bodySmall.copyWith(
-                          color: AppColors.white,
-                          fontWeight: FontWeight.w600,
-                          height: 1,
-                        ),
-                      ),
-                    ),
+                  if (item.customer.isPending) const CustomBadge(text: 'Pending Acc', bgColor: AppColors.yellow500),
                 ],
               ),
             ],

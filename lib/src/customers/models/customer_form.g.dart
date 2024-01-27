@@ -15,6 +15,8 @@ _$CustomerFormImpl _$$CustomerFormImplFromJson(Map<String, dynamic> json) =>
       gender: json['gender'] as String?,
       email: json['email'] as String?,
       dob: json['dob'] == null ? null : DateTime.parse(json['dob'] as String),
+      isNew: json['isNew'] as bool? ?? false,
+      sendAccountInvitation: json['sendAccountInvitation'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$$CustomerFormImplToJson(_$CustomerFormImpl instance) =>
@@ -26,4 +28,6 @@ Map<String, dynamic> _$$CustomerFormImplToJson(_$CustomerFormImpl instance) =>
       'gender': instance.gender,
       'email': instance.email,
       'dob': instance.dob?.toIso8601String(),
+      'isNew': instance.isNew,
+      'sendAccountInvitation': instance.sendAccountInvitation,
     };

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/customers/widgets/customer_search_input.dart';
+import 'package:hop_pos/src/customers/widgets/walk_in_customer_dialog.dart';
 
 class PosCustomerControls extends StatelessWidget {
-  const PosCustomerControls({super.key, this.width});
+  const PosCustomerControls({super.key, this.width, this.onClicked});
   final double? width;
+  final void Function()? onClicked;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,16 @@ class PosCustomerControls extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (onClicked != null) {
+                    onClicked!();
+                  }
+
+                  showDialog(
+                    context: context,
+                    builder: (_) => const WalkInCustomerDialog(),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.all(20),
                   backgroundColor: AppColors.green700,

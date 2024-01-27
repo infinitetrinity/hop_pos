@@ -14,6 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+Order _$OrderFromJson(Map<String, dynamic> json) {
+  return _Order.fromJson(json);
+}
+
 /// @nodoc
 mixin _$Order {
   int get id => throw _privateConstructorUsedError;
@@ -45,6 +49,7 @@ mixin _$Order {
   @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $OrderCopyWith<Order> get copyWith => throw _privateConstructorUsedError;
 }
@@ -296,7 +301,7 @@ class __$$OrderImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$OrderImpl implements _Order {
   const _$OrderImpl(
       {required this.id,
@@ -315,6 +320,9 @@ class _$OrderImpl implements _Order {
       @JsonKey(name: 'screening_id') this.screeningId,
       @JsonKey(name: 'customer_id') required this.customerId,
       @JsonKey(name: 'created_at') required this.createdAt});
+
+  factory _$OrderImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OrderImplFromJson(json);
 
   @override
   final int id;
@@ -402,6 +410,7 @@ class _$OrderImpl implements _Order {
                 other.createdAt == createdAt));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -427,6 +436,13 @@ class _$OrderImpl implements _Order {
   @pragma('vm:prefer-inline')
   _$$OrderImplCopyWith<_$OrderImpl> get copyWith =>
       __$$OrderImplCopyWithImpl<_$OrderImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$OrderImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Order implements Order {
@@ -448,6 +464,8 @@ abstract class _Order implements Order {
           @JsonKey(name: 'customer_id') required final int customerId,
           @JsonKey(name: 'created_at') required final DateTime createdAt}) =
       _$OrderImpl;
+
+  factory _Order.fromJson(Map<String, dynamic> json) = _$OrderImpl.fromJson;
 
   @override
   int get id;

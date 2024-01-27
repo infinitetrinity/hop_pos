@@ -12,7 +12,7 @@ class UserDao extends DatabaseAccessor<AppDb> with _$UserDaoMixin {
   Future<User?> getFirst() async {
     final query = select(usersTable);
 
-    return query.getSingleOrNull();
+    return (await query.get()).firstOrNull;
   }
 
   Future<User> insertUser(UsersTableCompanion user) async {

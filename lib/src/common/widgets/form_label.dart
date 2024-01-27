@@ -19,13 +19,20 @@ class FormLabel extends StatelessWidget {
     return Column(
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(label!, style: AppStyles.bodyLarge),
-            if (isRequired)
+            Text(label!, style: AppStyles.body),
+            if (isRequired) ...[
+              const SizedBox(width: 2),
               Text(
                 '*',
-                style: Theme.of(context).textTheme.labelSmall!.copyWith(color: AppColors.red600),
+                style: AppStyles.bodySmall.copyWith(
+                  fontSize: 10,
+                  color: AppColors.red600,
+                  height: 1,
+                ),
               ),
+            ],
             if (hint != null && hint!.isNotEmpty) FormHint(hint: hint!),
           ],
         ),

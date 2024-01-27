@@ -13,12 +13,20 @@ _$PosCartImpl _$$PosCartImplFromJson(Map<String, dynamic> json) =>
           : Screening.fromJson(json['screening'] as Map<String, dynamic>),
       customer: json['customer'] == null
           ? null
-          : CustomerWithRegistration.fromJson(
-              json['customer'] as Map<String, dynamic>),
+          : Customer.fromJson(json['customer'] as Map<String, dynamic>),
+      registration: json['registration'] == null
+          ? null
+          : ScreeningRegistration.fromJson(
+              json['registration'] as Map<String, dynamic>),
+      orders: (json['orders'] as List<dynamic>?)
+          ?.map((e) => Order.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$PosCartImplToJson(_$PosCartImpl instance) =>
     <String, dynamic>{
       'screening': instance.screening,
       'customer': instance.customer,
+      'registration': instance.registration,
+      'orders': instance.orders,
     };

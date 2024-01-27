@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/src/common/services/overlay_portal_hook.dart';
-import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
 import 'package:hop_pos/src/customers/widgets/customer_detail.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/pos/widgets/pos_customer_controls.dart';
@@ -16,7 +15,7 @@ class PosCustomer extends HookConsumerWidget {
     final link = LayerLink();
     final width = useState<double?>(null);
 
-    ref.listen<CustomerWithRegistration?>(posControllerProvider.select((prov) => prov.customer), (_, CustomerWithRegistration? current) {
+    ref.listen(posControllerProvider.select((prov) => prov.customer), (_, current) {
       if (current != null) {
         controller.hide();
       }
@@ -31,6 +30,7 @@ class PosCustomer extends HookConsumerWidget {
           targetAnchor: Alignment.bottomLeft,
           child: PosCustomerControls(
             width: width.value,
+            onClicked: () => controller.hide(),
           ),
         ),
         child: GestureDetector(

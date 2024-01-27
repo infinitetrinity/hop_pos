@@ -17,6 +17,8 @@ class CustomerForm with _$CustomerForm {
     String? gender,
     String? email,
     DateTime? dob,
+    @Default(false) bool isNew,
+    @Default(true) bool sendAccountInvitation,
   }) = _CustomerForm;
 
   factory CustomerForm.fromJson(Map<String, dynamic> json) => _$CustomerFormFromJson(json);
@@ -33,13 +35,20 @@ class CustomerForm with _$CustomerForm {
     return fullName!.length < 3 ? "Full name must be at least 3 characters long." : null;
   }
 
-  String? validateNric() {
+  String? validateNric({
+    int? minLength,
+    String label = "NRIC/FIN/Passport No.",
+  }) {
     if (nric.isNullOrEmpty) {
-      return "NRIC/FIN/Passport No. is required";
+      return "$label is required";
     }
 
     if (!nric!.isAlphaNumeric) {
-      return "NRIC/FIN/Passport No. must only contain alphanumeric characters";
+      return "$label must only contain alphanumeric characters";
+    }
+
+    if (minLength != null && nric!.length < minLength) {
+      return "$label must be at least $minLength characters long";
     }
 
     return null;
