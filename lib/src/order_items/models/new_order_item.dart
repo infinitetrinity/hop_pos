@@ -1,12 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hop_pos/src/common/converters/double_from_string_converter.dart';
 
-part 'order_item.freezed.dart';
-part 'order_item.g.dart';
+part 'new_order_item.freezed.dart';
+part 'new_order_item.g.dart';
 
 @freezed
-class OrderItem with _$OrderItem {
-  const factory OrderItem({
+class NewOrderItem with _$NewOrderItem {
+  const factory NewOrderItem({
     required int id,
     required String name,
     required String sku,
@@ -16,16 +16,12 @@ class OrderItem with _$OrderItem {
     @JsonKey(name: 'discount_type') String? discountType,
     @DoubleFromStringConverter() @JsonKey(name: 'net_price') double? netPrice,
     @JsonKey(name: 'is_custom') required bool isCustom,
+    @JsonKey(name: 'order_is_new') required bool orderIsNew,
     @JsonKey(name: 'cart_id') int? cartId,
     @JsonKey(name: 'product_id') int? productId,
     @JsonKey(name: 'order_id') required int orderId,
-  }) = _OrderItem;
+    @JsonKey(name: 'created_at') required DateTime createdAt,
+  }) = _NewOrderItem;
 
-  factory OrderItem.fromJson(Map<String, dynamic> json) => _$OrderItemFromJson(json);
-
-  static List<OrderItem> fromJsonList(dynamic data) {
-    return List<OrderItem>.from(
-      data.map((el) => OrderItem.fromJson(el)),
-    );
-  }
+  factory NewOrderItem.fromJson(Map<String, dynamic> json) => _$NewOrderItemFromJson(json);
 }

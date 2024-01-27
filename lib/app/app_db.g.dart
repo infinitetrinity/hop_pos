@@ -4328,6 +4328,2091 @@ class OrderPaymentsTableCompanion extends UpdateCompanion<OrderPayment> {
   }
 }
 
+class $NewCustomersTableTable extends NewCustomersTable
+    with TableInfo<$NewCustomersTableTable, NewCustomer> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NewCustomersTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _fullNameMeta =
+      const VerificationMeta('fullName');
+  @override
+  late final GeneratedColumn<String> fullName = GeneratedColumn<String>(
+      'full_name', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _nricMeta = const VerificationMeta('nric');
+  @override
+  late final GeneratedColumn<String> nric = GeneratedColumn<String>(
+      'nric', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _dobMeta = const VerificationMeta('dob');
+  @override
+  late final GeneratedColumn<DateTime> dob = GeneratedColumn<DateTime>(
+      'dob', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _genderMeta = const VerificationMeta('gender');
+  @override
+  late final GeneratedColumn<String> gender = GeneratedColumn<String>(
+      'gender', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+      'email', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _mobileNoMeta =
+      const VerificationMeta('mobileNo');
+  @override
+  late final GeneratedColumn<String> mobileNo = GeneratedColumn<String>(
+      'mobile_no', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _sendAccountInvitationMeta =
+      const VerificationMeta('sendAccountInvitation');
+  @override
+  late final GeneratedColumn<bool> sendAccountInvitation =
+      GeneratedColumn<bool>('send_account_invitation', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintIsAlways(
+              'CHECK ("send_account_invitation" IN (0, 1))'));
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        fullName,
+        nric,
+        dob,
+        gender,
+        email,
+        mobileNo,
+        sendAccountInvitation,
+        createdAt
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'new_customers';
+  @override
+  VerificationContext validateIntegrity(Insertable<NewCustomer> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('full_name')) {
+      context.handle(_fullNameMeta,
+          fullName.isAcceptableOrUnknown(data['full_name']!, _fullNameMeta));
+    } else if (isInserting) {
+      context.missing(_fullNameMeta);
+    }
+    if (data.containsKey('nric')) {
+      context.handle(
+          _nricMeta, nric.isAcceptableOrUnknown(data['nric']!, _nricMeta));
+    } else if (isInserting) {
+      context.missing(_nricMeta);
+    }
+    if (data.containsKey('dob')) {
+      context.handle(
+          _dobMeta, dob.isAcceptableOrUnknown(data['dob']!, _dobMeta));
+    }
+    if (data.containsKey('gender')) {
+      context.handle(_genderMeta,
+          gender.isAcceptableOrUnknown(data['gender']!, _genderMeta));
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+          _emailMeta, email.isAcceptableOrUnknown(data['email']!, _emailMeta));
+    }
+    if (data.containsKey('mobile_no')) {
+      context.handle(_mobileNoMeta,
+          mobileNo.isAcceptableOrUnknown(data['mobile_no']!, _mobileNoMeta));
+    }
+    if (data.containsKey('send_account_invitation')) {
+      context.handle(
+          _sendAccountInvitationMeta,
+          sendAccountInvitation.isAcceptableOrUnknown(
+              data['send_account_invitation']!, _sendAccountInvitationMeta));
+    } else if (isInserting) {
+      context.missing(_sendAccountInvitationMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  NewCustomer map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NewCustomer(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      fullName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}full_name'])!,
+      nric: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}nric'])!,
+      dob: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}dob']),
+      gender: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}gender']),
+      email: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}email']),
+      mobileNo: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}mobile_no']),
+      sendAccountInvitation: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool,
+          data['${effectivePrefix}send_account_invitation'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+    );
+  }
+
+  @override
+  $NewCustomersTableTable createAlias(String alias) {
+    return $NewCustomersTableTable(attachedDatabase, alias);
+  }
+}
+
+class NewCustomersTableCompanion extends UpdateCompanion<NewCustomer> {
+  final Value<int> id;
+  final Value<String> fullName;
+  final Value<String> nric;
+  final Value<DateTime?> dob;
+  final Value<String?> gender;
+  final Value<String?> email;
+  final Value<String?> mobileNo;
+  final Value<bool> sendAccountInvitation;
+  final Value<DateTime> createdAt;
+  const NewCustomersTableCompanion({
+    this.id = const Value.absent(),
+    this.fullName = const Value.absent(),
+    this.nric = const Value.absent(),
+    this.dob = const Value.absent(),
+    this.gender = const Value.absent(),
+    this.email = const Value.absent(),
+    this.mobileNo = const Value.absent(),
+    this.sendAccountInvitation = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  NewCustomersTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String fullName,
+    required String nric,
+    this.dob = const Value.absent(),
+    this.gender = const Value.absent(),
+    this.email = const Value.absent(),
+    this.mobileNo = const Value.absent(),
+    required bool sendAccountInvitation,
+    required DateTime createdAt,
+  })  : fullName = Value(fullName),
+        nric = Value(nric),
+        sendAccountInvitation = Value(sendAccountInvitation),
+        createdAt = Value(createdAt);
+  static Insertable<NewCustomer> custom({
+    Expression<int>? id,
+    Expression<String>? fullName,
+    Expression<String>? nric,
+    Expression<DateTime>? dob,
+    Expression<String>? gender,
+    Expression<String>? email,
+    Expression<String>? mobileNo,
+    Expression<bool>? sendAccountInvitation,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (fullName != null) 'full_name': fullName,
+      if (nric != null) 'nric': nric,
+      if (dob != null) 'dob': dob,
+      if (gender != null) 'gender': gender,
+      if (email != null) 'email': email,
+      if (mobileNo != null) 'mobile_no': mobileNo,
+      if (sendAccountInvitation != null)
+        'send_account_invitation': sendAccountInvitation,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  NewCustomersTableCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? fullName,
+      Value<String>? nric,
+      Value<DateTime?>? dob,
+      Value<String?>? gender,
+      Value<String?>? email,
+      Value<String?>? mobileNo,
+      Value<bool>? sendAccountInvitation,
+      Value<DateTime>? createdAt}) {
+    return NewCustomersTableCompanion(
+      id: id ?? this.id,
+      fullName: fullName ?? this.fullName,
+      nric: nric ?? this.nric,
+      dob: dob ?? this.dob,
+      gender: gender ?? this.gender,
+      email: email ?? this.email,
+      mobileNo: mobileNo ?? this.mobileNo,
+      sendAccountInvitation:
+          sendAccountInvitation ?? this.sendAccountInvitation,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (fullName.present) {
+      map['full_name'] = Variable<String>(fullName.value);
+    }
+    if (nric.present) {
+      map['nric'] = Variable<String>(nric.value);
+    }
+    if (dob.present) {
+      map['dob'] = Variable<DateTime>(dob.value);
+    }
+    if (gender.present) {
+      map['gender'] = Variable<String>(gender.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (mobileNo.present) {
+      map['mobile_no'] = Variable<String>(mobileNo.value);
+    }
+    if (sendAccountInvitation.present) {
+      map['send_account_invitation'] =
+          Variable<bool>(sendAccountInvitation.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NewCustomersTableCompanion(')
+          ..write('id: $id, ')
+          ..write('fullName: $fullName, ')
+          ..write('nric: $nric, ')
+          ..write('dob: $dob, ')
+          ..write('gender: $gender, ')
+          ..write('email: $email, ')
+          ..write('mobileNo: $mobileNo, ')
+          ..write('sendAccountInvitation: $sendAccountInvitation, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $NewOrderExtrasTableTable extends NewOrderExtrasTable
+    with TableInfo<$NewOrderExtrasTableTable, NewOrderExtra> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NewOrderExtrasTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+      'type', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _amountMeta = const VerificationMeta('amount');
+  @override
+  late final GeneratedColumn<double> amount = GeneratedColumn<double>(
+      'amount', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _amountTypeMeta =
+      const VerificationMeta('amountType');
+  @override
+  late final GeneratedColumn<String> amountType = GeneratedColumn<String>(
+      'amount_type', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _calculatedAmountMeta =
+      const VerificationMeta('calculatedAmount');
+  @override
+  late final GeneratedColumn<double> calculatedAmount = GeneratedColumn<double>(
+      'calculated_amount', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _extraIdMeta =
+      const VerificationMeta('extraId');
+  @override
+  late final GeneratedColumn<int> extraId = GeneratedColumn<int>(
+      'extra_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES pos_extras (id) ON DELETE SET NULL'));
+  static const VerificationMeta _orderIdMeta =
+      const VerificationMeta('orderId');
+  @override
+  late final GeneratedColumn<int> orderId = GeneratedColumn<int>(
+      'order_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES orders (id) ON DELETE CASCADE'));
+  static const VerificationMeta _orderIsNewMeta =
+      const VerificationMeta('orderIsNew');
+  @override
+  late final GeneratedColumn<bool> orderIsNew = GeneratedColumn<bool>(
+      'order_is_new', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("order_is_new" IN (0, 1))'));
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        name,
+        type,
+        description,
+        amount,
+        amountType,
+        calculatedAmount,
+        extraId,
+        orderId,
+        orderIsNew,
+        createdAt
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'new_order_extras';
+  @override
+  VerificationContext validateIntegrity(Insertable<NewOrderExtra> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+          _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    }
+    if (data.containsKey('amount')) {
+      context.handle(_amountMeta,
+          amount.isAcceptableOrUnknown(data['amount']!, _amountMeta));
+    } else if (isInserting) {
+      context.missing(_amountMeta);
+    }
+    if (data.containsKey('amount_type')) {
+      context.handle(
+          _amountTypeMeta,
+          amountType.isAcceptableOrUnknown(
+              data['amount_type']!, _amountTypeMeta));
+    } else if (isInserting) {
+      context.missing(_amountTypeMeta);
+    }
+    if (data.containsKey('calculated_amount')) {
+      context.handle(
+          _calculatedAmountMeta,
+          calculatedAmount.isAcceptableOrUnknown(
+              data['calculated_amount']!, _calculatedAmountMeta));
+    } else if (isInserting) {
+      context.missing(_calculatedAmountMeta);
+    }
+    if (data.containsKey('extra_id')) {
+      context.handle(_extraIdMeta,
+          extraId.isAcceptableOrUnknown(data['extra_id']!, _extraIdMeta));
+    }
+    if (data.containsKey('order_id')) {
+      context.handle(_orderIdMeta,
+          orderId.isAcceptableOrUnknown(data['order_id']!, _orderIdMeta));
+    } else if (isInserting) {
+      context.missing(_orderIdMeta);
+    }
+    if (data.containsKey('order_is_new')) {
+      context.handle(
+          _orderIsNewMeta,
+          orderIsNew.isAcceptableOrUnknown(
+              data['order_is_new']!, _orderIsNewMeta));
+    } else if (isInserting) {
+      context.missing(_orderIsNewMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  NewOrderExtra map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NewOrderExtra(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      type: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}type'])!,
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description']),
+      amount: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}amount'])!,
+      amountType: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}amount_type'])!,
+      calculatedAmount: attachedDatabase.typeMapping.read(
+          DriftSqlType.double, data['${effectivePrefix}calculated_amount'])!,
+      extraId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}extra_id']),
+      orderId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}order_id'])!,
+      orderIsNew: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}order_is_new'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+    );
+  }
+
+  @override
+  $NewOrderExtrasTableTable createAlias(String alias) {
+    return $NewOrderExtrasTableTable(attachedDatabase, alias);
+  }
+}
+
+class NewOrderExtrasTableCompanion extends UpdateCompanion<NewOrderExtra> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String> type;
+  final Value<String?> description;
+  final Value<double> amount;
+  final Value<String> amountType;
+  final Value<double> calculatedAmount;
+  final Value<int?> extraId;
+  final Value<int> orderId;
+  final Value<bool> orderIsNew;
+  final Value<DateTime> createdAt;
+  const NewOrderExtrasTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.type = const Value.absent(),
+    this.description = const Value.absent(),
+    this.amount = const Value.absent(),
+    this.amountType = const Value.absent(),
+    this.calculatedAmount = const Value.absent(),
+    this.extraId = const Value.absent(),
+    this.orderId = const Value.absent(),
+    this.orderIsNew = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  NewOrderExtrasTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required String type,
+    this.description = const Value.absent(),
+    required double amount,
+    required String amountType,
+    required double calculatedAmount,
+    this.extraId = const Value.absent(),
+    required int orderId,
+    required bool orderIsNew,
+    required DateTime createdAt,
+  })  : name = Value(name),
+        type = Value(type),
+        amount = Value(amount),
+        amountType = Value(amountType),
+        calculatedAmount = Value(calculatedAmount),
+        orderId = Value(orderId),
+        orderIsNew = Value(orderIsNew),
+        createdAt = Value(createdAt);
+  static Insertable<NewOrderExtra> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? type,
+    Expression<String>? description,
+    Expression<double>? amount,
+    Expression<String>? amountType,
+    Expression<double>? calculatedAmount,
+    Expression<int>? extraId,
+    Expression<int>? orderId,
+    Expression<bool>? orderIsNew,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (type != null) 'type': type,
+      if (description != null) 'description': description,
+      if (amount != null) 'amount': amount,
+      if (amountType != null) 'amount_type': amountType,
+      if (calculatedAmount != null) 'calculated_amount': calculatedAmount,
+      if (extraId != null) 'extra_id': extraId,
+      if (orderId != null) 'order_id': orderId,
+      if (orderIsNew != null) 'order_is_new': orderIsNew,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  NewOrderExtrasTableCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? name,
+      Value<String>? type,
+      Value<String?>? description,
+      Value<double>? amount,
+      Value<String>? amountType,
+      Value<double>? calculatedAmount,
+      Value<int?>? extraId,
+      Value<int>? orderId,
+      Value<bool>? orderIsNew,
+      Value<DateTime>? createdAt}) {
+    return NewOrderExtrasTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      type: type ?? this.type,
+      description: description ?? this.description,
+      amount: amount ?? this.amount,
+      amountType: amountType ?? this.amountType,
+      calculatedAmount: calculatedAmount ?? this.calculatedAmount,
+      extraId: extraId ?? this.extraId,
+      orderId: orderId ?? this.orderId,
+      orderIsNew: orderIsNew ?? this.orderIsNew,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (amount.present) {
+      map['amount'] = Variable<double>(amount.value);
+    }
+    if (amountType.present) {
+      map['amount_type'] = Variable<String>(amountType.value);
+    }
+    if (calculatedAmount.present) {
+      map['calculated_amount'] = Variable<double>(calculatedAmount.value);
+    }
+    if (extraId.present) {
+      map['extra_id'] = Variable<int>(extraId.value);
+    }
+    if (orderId.present) {
+      map['order_id'] = Variable<int>(orderId.value);
+    }
+    if (orderIsNew.present) {
+      map['order_is_new'] = Variable<bool>(orderIsNew.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NewOrderExtrasTableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('type: $type, ')
+          ..write('description: $description, ')
+          ..write('amount: $amount, ')
+          ..write('amountType: $amountType, ')
+          ..write('calculatedAmount: $calculatedAmount, ')
+          ..write('extraId: $extraId, ')
+          ..write('orderId: $orderId, ')
+          ..write('orderIsNew: $orderIsNew, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $NewOrderItemsTableTable extends NewOrderItemsTable
+    with TableInfo<$NewOrderItemsTableTable, NewOrderItem> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NewOrderItemsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _skuMeta = const VerificationMeta('sku');
+  @override
+  late final GeneratedColumn<String> sku = GeneratedColumn<String>(
+      'sku', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _priceMeta = const VerificationMeta('price');
+  @override
+  late final GeneratedColumn<double> price = GeneratedColumn<double>(
+      'price', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _discountMeta =
+      const VerificationMeta('discount');
+  @override
+  late final GeneratedColumn<double> discount = GeneratedColumn<double>(
+      'discount', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
+  static const VerificationMeta _discountTypeMeta =
+      const VerificationMeta('discountType');
+  @override
+  late final GeneratedColumn<String> discountType = GeneratedColumn<String>(
+      'discount_type', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _netPriceMeta =
+      const VerificationMeta('netPrice');
+  @override
+  late final GeneratedColumn<double> netPrice = GeneratedColumn<double>(
+      'net_price', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _isCustomMeta =
+      const VerificationMeta('isCustom');
+  @override
+  late final GeneratedColumn<bool> isCustom = GeneratedColumn<bool>(
+      'is_custom', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_custom" IN (0, 1))'));
+  static const VerificationMeta _orderIsNewMeta =
+      const VerificationMeta('orderIsNew');
+  @override
+  late final GeneratedColumn<bool> orderIsNew = GeneratedColumn<bool>(
+      'order_is_new', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("order_is_new" IN (0, 1))'));
+  static const VerificationMeta _cartIdMeta = const VerificationMeta('cartId');
+  @override
+  late final GeneratedColumn<int> cartId = GeneratedColumn<int>(
+      'cart_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _productIdMeta =
+      const VerificationMeta('productId');
+  @override
+  late final GeneratedColumn<int> productId = GeneratedColumn<int>(
+      'product_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES products (id) ON DELETE SET NULL'));
+  static const VerificationMeta _orderIdMeta =
+      const VerificationMeta('orderId');
+  @override
+  late final GeneratedColumn<int> orderId = GeneratedColumn<int>(
+      'order_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES orders (id) ON DELETE CASCADE'));
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        name,
+        sku,
+        description,
+        price,
+        discount,
+        discountType,
+        netPrice,
+        isCustom,
+        orderIsNew,
+        cartId,
+        productId,
+        orderId,
+        createdAt
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'new_order_items';
+  @override
+  VerificationContext validateIntegrity(Insertable<NewOrderItem> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('sku')) {
+      context.handle(
+          _skuMeta, sku.isAcceptableOrUnknown(data['sku']!, _skuMeta));
+    } else if (isInserting) {
+      context.missing(_skuMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    }
+    if (data.containsKey('price')) {
+      context.handle(
+          _priceMeta, price.isAcceptableOrUnknown(data['price']!, _priceMeta));
+    } else if (isInserting) {
+      context.missing(_priceMeta);
+    }
+    if (data.containsKey('discount')) {
+      context.handle(_discountMeta,
+          discount.isAcceptableOrUnknown(data['discount']!, _discountMeta));
+    }
+    if (data.containsKey('discount_type')) {
+      context.handle(
+          _discountTypeMeta,
+          discountType.isAcceptableOrUnknown(
+              data['discount_type']!, _discountTypeMeta));
+    }
+    if (data.containsKey('net_price')) {
+      context.handle(_netPriceMeta,
+          netPrice.isAcceptableOrUnknown(data['net_price']!, _netPriceMeta));
+    } else if (isInserting) {
+      context.missing(_netPriceMeta);
+    }
+    if (data.containsKey('is_custom')) {
+      context.handle(_isCustomMeta,
+          isCustom.isAcceptableOrUnknown(data['is_custom']!, _isCustomMeta));
+    } else if (isInserting) {
+      context.missing(_isCustomMeta);
+    }
+    if (data.containsKey('order_is_new')) {
+      context.handle(
+          _orderIsNewMeta,
+          orderIsNew.isAcceptableOrUnknown(
+              data['order_is_new']!, _orderIsNewMeta));
+    } else if (isInserting) {
+      context.missing(_orderIsNewMeta);
+    }
+    if (data.containsKey('cart_id')) {
+      context.handle(_cartIdMeta,
+          cartId.isAcceptableOrUnknown(data['cart_id']!, _cartIdMeta));
+    }
+    if (data.containsKey('product_id')) {
+      context.handle(_productIdMeta,
+          productId.isAcceptableOrUnknown(data['product_id']!, _productIdMeta));
+    }
+    if (data.containsKey('order_id')) {
+      context.handle(_orderIdMeta,
+          orderId.isAcceptableOrUnknown(data['order_id']!, _orderIdMeta));
+    } else if (isInserting) {
+      context.missing(_orderIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  NewOrderItem map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NewOrderItem(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      sku: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}sku'])!,
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description']),
+      price: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}price'])!,
+      discount: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}discount']),
+      discountType: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}discount_type']),
+      netPrice: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}net_price'])!,
+      isCustom: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_custom'])!,
+      orderIsNew: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}order_is_new'])!,
+      cartId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}cart_id']),
+      productId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}product_id']),
+      orderId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}order_id'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+    );
+  }
+
+  @override
+  $NewOrderItemsTableTable createAlias(String alias) {
+    return $NewOrderItemsTableTable(attachedDatabase, alias);
+  }
+}
+
+class NewOrderItemsTableCompanion extends UpdateCompanion<NewOrderItem> {
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String> sku;
+  final Value<String?> description;
+  final Value<double> price;
+  final Value<double?> discount;
+  final Value<String?> discountType;
+  final Value<double> netPrice;
+  final Value<bool> isCustom;
+  final Value<bool> orderIsNew;
+  final Value<int?> cartId;
+  final Value<int?> productId;
+  final Value<int> orderId;
+  final Value<DateTime> createdAt;
+  const NewOrderItemsTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.sku = const Value.absent(),
+    this.description = const Value.absent(),
+    this.price = const Value.absent(),
+    this.discount = const Value.absent(),
+    this.discountType = const Value.absent(),
+    this.netPrice = const Value.absent(),
+    this.isCustom = const Value.absent(),
+    this.orderIsNew = const Value.absent(),
+    this.cartId = const Value.absent(),
+    this.productId = const Value.absent(),
+    this.orderId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  NewOrderItemsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required String sku,
+    this.description = const Value.absent(),
+    required double price,
+    this.discount = const Value.absent(),
+    this.discountType = const Value.absent(),
+    required double netPrice,
+    required bool isCustom,
+    required bool orderIsNew,
+    this.cartId = const Value.absent(),
+    this.productId = const Value.absent(),
+    required int orderId,
+    required DateTime createdAt,
+  })  : name = Value(name),
+        sku = Value(sku),
+        price = Value(price),
+        netPrice = Value(netPrice),
+        isCustom = Value(isCustom),
+        orderIsNew = Value(orderIsNew),
+        orderId = Value(orderId),
+        createdAt = Value(createdAt);
+  static Insertable<NewOrderItem> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? sku,
+    Expression<String>? description,
+    Expression<double>? price,
+    Expression<double>? discount,
+    Expression<String>? discountType,
+    Expression<double>? netPrice,
+    Expression<bool>? isCustom,
+    Expression<bool>? orderIsNew,
+    Expression<int>? cartId,
+    Expression<int>? productId,
+    Expression<int>? orderId,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (sku != null) 'sku': sku,
+      if (description != null) 'description': description,
+      if (price != null) 'price': price,
+      if (discount != null) 'discount': discount,
+      if (discountType != null) 'discount_type': discountType,
+      if (netPrice != null) 'net_price': netPrice,
+      if (isCustom != null) 'is_custom': isCustom,
+      if (orderIsNew != null) 'order_is_new': orderIsNew,
+      if (cartId != null) 'cart_id': cartId,
+      if (productId != null) 'product_id': productId,
+      if (orderId != null) 'order_id': orderId,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  NewOrderItemsTableCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? name,
+      Value<String>? sku,
+      Value<String?>? description,
+      Value<double>? price,
+      Value<double?>? discount,
+      Value<String?>? discountType,
+      Value<double>? netPrice,
+      Value<bool>? isCustom,
+      Value<bool>? orderIsNew,
+      Value<int?>? cartId,
+      Value<int?>? productId,
+      Value<int>? orderId,
+      Value<DateTime>? createdAt}) {
+    return NewOrderItemsTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      sku: sku ?? this.sku,
+      description: description ?? this.description,
+      price: price ?? this.price,
+      discount: discount ?? this.discount,
+      discountType: discountType ?? this.discountType,
+      netPrice: netPrice ?? this.netPrice,
+      isCustom: isCustom ?? this.isCustom,
+      orderIsNew: orderIsNew ?? this.orderIsNew,
+      cartId: cartId ?? this.cartId,
+      productId: productId ?? this.productId,
+      orderId: orderId ?? this.orderId,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (sku.present) {
+      map['sku'] = Variable<String>(sku.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (price.present) {
+      map['price'] = Variable<double>(price.value);
+    }
+    if (discount.present) {
+      map['discount'] = Variable<double>(discount.value);
+    }
+    if (discountType.present) {
+      map['discount_type'] = Variable<String>(discountType.value);
+    }
+    if (netPrice.present) {
+      map['net_price'] = Variable<double>(netPrice.value);
+    }
+    if (isCustom.present) {
+      map['is_custom'] = Variable<bool>(isCustom.value);
+    }
+    if (orderIsNew.present) {
+      map['order_is_new'] = Variable<bool>(orderIsNew.value);
+    }
+    if (cartId.present) {
+      map['cart_id'] = Variable<int>(cartId.value);
+    }
+    if (productId.present) {
+      map['product_id'] = Variable<int>(productId.value);
+    }
+    if (orderId.present) {
+      map['order_id'] = Variable<int>(orderId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NewOrderItemsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('sku: $sku, ')
+          ..write('description: $description, ')
+          ..write('price: $price, ')
+          ..write('discount: $discount, ')
+          ..write('discountType: $discountType, ')
+          ..write('netPrice: $netPrice, ')
+          ..write('isCustom: $isCustom, ')
+          ..write('orderIsNew: $orderIsNew, ')
+          ..write('cartId: $cartId, ')
+          ..write('productId: $productId, ')
+          ..write('orderId: $orderId, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $NewOrderPaymentsTableTable extends NewOrderPaymentsTable
+    with TableInfo<$NewOrderPaymentsTableTable, NewOrderPayment> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NewOrderPaymentsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _amountMeta = const VerificationMeta('amount');
+  @override
+  late final GeneratedColumn<double> amount = GeneratedColumn<double>(
+      'amount', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _orderIdMeta =
+      const VerificationMeta('orderId');
+  @override
+  late final GeneratedColumn<int> orderId = GeneratedColumn<int>(
+      'order_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES orders (id) ON DELETE CASCADE'));
+  static const VerificationMeta _paymentMethodIdMeta =
+      const VerificationMeta('paymentMethodId');
+  @override
+  late final GeneratedColumn<int> paymentMethodId = GeneratedColumn<int>(
+      'payment_method_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES payment_methods (id) ON DELETE SET NULL'));
+  static const VerificationMeta _orderIsNewMeta =
+      const VerificationMeta('orderIsNew');
+  @override
+  late final GeneratedColumn<bool> orderIsNew = GeneratedColumn<bool>(
+      'order_is_new', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("order_is_new" IN (0, 1))'));
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, amount, orderId, paymentMethodId, orderIsNew, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'new_order_payments';
+  @override
+  VerificationContext validateIntegrity(Insertable<NewOrderPayment> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('amount')) {
+      context.handle(_amountMeta,
+          amount.isAcceptableOrUnknown(data['amount']!, _amountMeta));
+    } else if (isInserting) {
+      context.missing(_amountMeta);
+    }
+    if (data.containsKey('order_id')) {
+      context.handle(_orderIdMeta,
+          orderId.isAcceptableOrUnknown(data['order_id']!, _orderIdMeta));
+    } else if (isInserting) {
+      context.missing(_orderIdMeta);
+    }
+    if (data.containsKey('payment_method_id')) {
+      context.handle(
+          _paymentMethodIdMeta,
+          paymentMethodId.isAcceptableOrUnknown(
+              data['payment_method_id']!, _paymentMethodIdMeta));
+    }
+    if (data.containsKey('order_is_new')) {
+      context.handle(
+          _orderIsNewMeta,
+          orderIsNew.isAcceptableOrUnknown(
+              data['order_is_new']!, _orderIsNewMeta));
+    } else if (isInserting) {
+      context.missing(_orderIsNewMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  NewOrderPayment map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NewOrderPayment(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      amount: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}amount'])!,
+      orderId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}order_id'])!,
+      paymentMethodId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}payment_method_id']),
+      orderIsNew: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}order_is_new'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+    );
+  }
+
+  @override
+  $NewOrderPaymentsTableTable createAlias(String alias) {
+    return $NewOrderPaymentsTableTable(attachedDatabase, alias);
+  }
+}
+
+class NewOrderPaymentsTableCompanion extends UpdateCompanion<NewOrderPayment> {
+  final Value<int> id;
+  final Value<double> amount;
+  final Value<int> orderId;
+  final Value<int?> paymentMethodId;
+  final Value<bool> orderIsNew;
+  final Value<DateTime> createdAt;
+  const NewOrderPaymentsTableCompanion({
+    this.id = const Value.absent(),
+    this.amount = const Value.absent(),
+    this.orderId = const Value.absent(),
+    this.paymentMethodId = const Value.absent(),
+    this.orderIsNew = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  NewOrderPaymentsTableCompanion.insert({
+    this.id = const Value.absent(),
+    required double amount,
+    required int orderId,
+    this.paymentMethodId = const Value.absent(),
+    required bool orderIsNew,
+    required DateTime createdAt,
+  })  : amount = Value(amount),
+        orderId = Value(orderId),
+        orderIsNew = Value(orderIsNew),
+        createdAt = Value(createdAt);
+  static Insertable<NewOrderPayment> custom({
+    Expression<int>? id,
+    Expression<double>? amount,
+    Expression<int>? orderId,
+    Expression<int>? paymentMethodId,
+    Expression<bool>? orderIsNew,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (amount != null) 'amount': amount,
+      if (orderId != null) 'order_id': orderId,
+      if (paymentMethodId != null) 'payment_method_id': paymentMethodId,
+      if (orderIsNew != null) 'order_is_new': orderIsNew,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  NewOrderPaymentsTableCompanion copyWith(
+      {Value<int>? id,
+      Value<double>? amount,
+      Value<int>? orderId,
+      Value<int?>? paymentMethodId,
+      Value<bool>? orderIsNew,
+      Value<DateTime>? createdAt}) {
+    return NewOrderPaymentsTableCompanion(
+      id: id ?? this.id,
+      amount: amount ?? this.amount,
+      orderId: orderId ?? this.orderId,
+      paymentMethodId: paymentMethodId ?? this.paymentMethodId,
+      orderIsNew: orderIsNew ?? this.orderIsNew,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (amount.present) {
+      map['amount'] = Variable<double>(amount.value);
+    }
+    if (orderId.present) {
+      map['order_id'] = Variable<int>(orderId.value);
+    }
+    if (paymentMethodId.present) {
+      map['payment_method_id'] = Variable<int>(paymentMethodId.value);
+    }
+    if (orderIsNew.present) {
+      map['order_is_new'] = Variable<bool>(orderIsNew.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NewOrderPaymentsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('amount: $amount, ')
+          ..write('orderId: $orderId, ')
+          ..write('paymentMethodId: $paymentMethodId, ')
+          ..write('orderIsNew: $orderIsNew, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $NewOrdersTableTable extends NewOrdersTable
+    with TableInfo<$NewOrdersTableTable, NewOrder> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NewOrdersTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _isStfMeta = const VerificationMeta('isStf');
+  @override
+  late final GeneratedColumn<bool> isStf = GeneratedColumn<bool>(
+      'is_stf', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_stf" IN (0, 1))'));
+  static const VerificationMeta _isUtfMeta = const VerificationMeta('isUtf');
+  @override
+  late final GeneratedColumn<bool> isUtf = GeneratedColumn<bool>(
+      'is_utf', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_utf" IN (0, 1))'));
+  static const VerificationMeta _eReceiptMeta =
+      const VerificationMeta('eReceipt');
+  @override
+  late final GeneratedColumn<bool> eReceipt = GeneratedColumn<bool>(
+      'e_receipt', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("e_receipt" IN (0, 1))'));
+  static const VerificationMeta _salesNoteMeta =
+      const VerificationMeta('salesNote');
+  @override
+  late final GeneratedColumn<String> salesNote = GeneratedColumn<String>(
+      'sales_note', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _invoiceNoMeta =
+      const VerificationMeta('invoiceNo');
+  @override
+  late final GeneratedColumn<String> invoiceNo = GeneratedColumn<String>(
+      'invoice_no', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _invoicePrefixMeta =
+      const VerificationMeta('invoicePrefix');
+  @override
+  late final GeneratedColumn<String> invoicePrefix = GeneratedColumn<String>(
+      'invoice_prefix', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _discountMeta =
+      const VerificationMeta('discount');
+  @override
+  late final GeneratedColumn<double> discount = GeneratedColumn<double>(
+      'discount', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
+  static const VerificationMeta _discountTypeMeta =
+      const VerificationMeta('discountType');
+  @override
+  late final GeneratedColumn<String> discountType = GeneratedColumn<String>(
+      'discount_type', aliasedName, true,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _subtotalMeta =
+      const VerificationMeta('subtotal');
+  @override
+  late final GeneratedColumn<double> subtotal = GeneratedColumn<double>(
+      'subtotal', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _extrasTotalMeta =
+      const VerificationMeta('extrasTotal');
+  @override
+  late final GeneratedColumn<double> extrasTotal = GeneratedColumn<double>(
+      'extras_total', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _netTotalMeta =
+      const VerificationMeta('netTotal');
+  @override
+  late final GeneratedColumn<double> netTotal = GeneratedColumn<double>(
+      'net_total', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _roundingMeta =
+      const VerificationMeta('rounding');
+  @override
+  late final GeneratedColumn<double> rounding = GeneratedColumn<double>(
+      'rounding', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
+  static const VerificationMeta _screeningIdMeta =
+      const VerificationMeta('screeningId');
+  @override
+  late final GeneratedColumn<int> screeningId = GeneratedColumn<int>(
+      'screening_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES screenings (id) ON DELETE CASCADE'));
+  static const VerificationMeta _customerNricMeta =
+      const VerificationMeta('customerNric');
+  @override
+  late final GeneratedColumn<String> customerNric = GeneratedColumn<String>(
+      'customer_nric', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        isStf,
+        isUtf,
+        eReceipt,
+        salesNote,
+        invoiceNo,
+        invoicePrefix,
+        discount,
+        discountType,
+        subtotal,
+        extrasTotal,
+        netTotal,
+        rounding,
+        screeningId,
+        customerNric,
+        createdAt
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'new_orders';
+  @override
+  VerificationContext validateIntegrity(Insertable<NewOrder> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('is_stf')) {
+      context.handle(
+          _isStfMeta, isStf.isAcceptableOrUnknown(data['is_stf']!, _isStfMeta));
+    } else if (isInserting) {
+      context.missing(_isStfMeta);
+    }
+    if (data.containsKey('is_utf')) {
+      context.handle(
+          _isUtfMeta, isUtf.isAcceptableOrUnknown(data['is_utf']!, _isUtfMeta));
+    } else if (isInserting) {
+      context.missing(_isUtfMeta);
+    }
+    if (data.containsKey('e_receipt')) {
+      context.handle(_eReceiptMeta,
+          eReceipt.isAcceptableOrUnknown(data['e_receipt']!, _eReceiptMeta));
+    } else if (isInserting) {
+      context.missing(_eReceiptMeta);
+    }
+    if (data.containsKey('sales_note')) {
+      context.handle(_salesNoteMeta,
+          salesNote.isAcceptableOrUnknown(data['sales_note']!, _salesNoteMeta));
+    }
+    if (data.containsKey('invoice_no')) {
+      context.handle(_invoiceNoMeta,
+          invoiceNo.isAcceptableOrUnknown(data['invoice_no']!, _invoiceNoMeta));
+    } else if (isInserting) {
+      context.missing(_invoiceNoMeta);
+    }
+    if (data.containsKey('invoice_prefix')) {
+      context.handle(
+          _invoicePrefixMeta,
+          invoicePrefix.isAcceptableOrUnknown(
+              data['invoice_prefix']!, _invoicePrefixMeta));
+    } else if (isInserting) {
+      context.missing(_invoicePrefixMeta);
+    }
+    if (data.containsKey('discount')) {
+      context.handle(_discountMeta,
+          discount.isAcceptableOrUnknown(data['discount']!, _discountMeta));
+    }
+    if (data.containsKey('discount_type')) {
+      context.handle(
+          _discountTypeMeta,
+          discountType.isAcceptableOrUnknown(
+              data['discount_type']!, _discountTypeMeta));
+    }
+    if (data.containsKey('subtotal')) {
+      context.handle(_subtotalMeta,
+          subtotal.isAcceptableOrUnknown(data['subtotal']!, _subtotalMeta));
+    } else if (isInserting) {
+      context.missing(_subtotalMeta);
+    }
+    if (data.containsKey('extras_total')) {
+      context.handle(
+          _extrasTotalMeta,
+          extrasTotal.isAcceptableOrUnknown(
+              data['extras_total']!, _extrasTotalMeta));
+    } else if (isInserting) {
+      context.missing(_extrasTotalMeta);
+    }
+    if (data.containsKey('net_total')) {
+      context.handle(_netTotalMeta,
+          netTotal.isAcceptableOrUnknown(data['net_total']!, _netTotalMeta));
+    } else if (isInserting) {
+      context.missing(_netTotalMeta);
+    }
+    if (data.containsKey('rounding')) {
+      context.handle(_roundingMeta,
+          rounding.isAcceptableOrUnknown(data['rounding']!, _roundingMeta));
+    }
+    if (data.containsKey('screening_id')) {
+      context.handle(
+          _screeningIdMeta,
+          screeningId.isAcceptableOrUnknown(
+              data['screening_id']!, _screeningIdMeta));
+    } else if (isInserting) {
+      context.missing(_screeningIdMeta);
+    }
+    if (data.containsKey('customer_nric')) {
+      context.handle(
+          _customerNricMeta,
+          customerNric.isAcceptableOrUnknown(
+              data['customer_nric']!, _customerNricMeta));
+    } else if (isInserting) {
+      context.missing(_customerNricMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  NewOrder map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NewOrder(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      isStf: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_stf'])!,
+      isUtf: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_utf'])!,
+      eReceipt: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}e_receipt'])!,
+      salesNote: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}sales_note']),
+      invoiceNo: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}invoice_no'])!,
+      invoicePrefix: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}invoice_prefix'])!,
+      discount: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}discount']),
+      discountType: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}discount_type']),
+      subtotal: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}subtotal'])!,
+      extrasTotal: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}extras_total'])!,
+      netTotal: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}net_total'])!,
+      rounding: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}rounding']),
+      screeningId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}screening_id'])!,
+      customerNric: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}customer_nric'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+    );
+  }
+
+  @override
+  $NewOrdersTableTable createAlias(String alias) {
+    return $NewOrdersTableTable(attachedDatabase, alias);
+  }
+}
+
+class NewOrdersTableCompanion extends UpdateCompanion<NewOrder> {
+  final Value<int> id;
+  final Value<bool> isStf;
+  final Value<bool> isUtf;
+  final Value<bool> eReceipt;
+  final Value<String?> salesNote;
+  final Value<String> invoiceNo;
+  final Value<String> invoicePrefix;
+  final Value<double?> discount;
+  final Value<String?> discountType;
+  final Value<double> subtotal;
+  final Value<double> extrasTotal;
+  final Value<double> netTotal;
+  final Value<double?> rounding;
+  final Value<int> screeningId;
+  final Value<String> customerNric;
+  final Value<DateTime> createdAt;
+  const NewOrdersTableCompanion({
+    this.id = const Value.absent(),
+    this.isStf = const Value.absent(),
+    this.isUtf = const Value.absent(),
+    this.eReceipt = const Value.absent(),
+    this.salesNote = const Value.absent(),
+    this.invoiceNo = const Value.absent(),
+    this.invoicePrefix = const Value.absent(),
+    this.discount = const Value.absent(),
+    this.discountType = const Value.absent(),
+    this.subtotal = const Value.absent(),
+    this.extrasTotal = const Value.absent(),
+    this.netTotal = const Value.absent(),
+    this.rounding = const Value.absent(),
+    this.screeningId = const Value.absent(),
+    this.customerNric = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  NewOrdersTableCompanion.insert({
+    this.id = const Value.absent(),
+    required bool isStf,
+    required bool isUtf,
+    required bool eReceipt,
+    this.salesNote = const Value.absent(),
+    required String invoiceNo,
+    required String invoicePrefix,
+    this.discount = const Value.absent(),
+    this.discountType = const Value.absent(),
+    required double subtotal,
+    required double extrasTotal,
+    required double netTotal,
+    this.rounding = const Value.absent(),
+    required int screeningId,
+    required String customerNric,
+    required DateTime createdAt,
+  })  : isStf = Value(isStf),
+        isUtf = Value(isUtf),
+        eReceipt = Value(eReceipt),
+        invoiceNo = Value(invoiceNo),
+        invoicePrefix = Value(invoicePrefix),
+        subtotal = Value(subtotal),
+        extrasTotal = Value(extrasTotal),
+        netTotal = Value(netTotal),
+        screeningId = Value(screeningId),
+        customerNric = Value(customerNric),
+        createdAt = Value(createdAt);
+  static Insertable<NewOrder> custom({
+    Expression<int>? id,
+    Expression<bool>? isStf,
+    Expression<bool>? isUtf,
+    Expression<bool>? eReceipt,
+    Expression<String>? salesNote,
+    Expression<String>? invoiceNo,
+    Expression<String>? invoicePrefix,
+    Expression<double>? discount,
+    Expression<String>? discountType,
+    Expression<double>? subtotal,
+    Expression<double>? extrasTotal,
+    Expression<double>? netTotal,
+    Expression<double>? rounding,
+    Expression<int>? screeningId,
+    Expression<String>? customerNric,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (isStf != null) 'is_stf': isStf,
+      if (isUtf != null) 'is_utf': isUtf,
+      if (eReceipt != null) 'e_receipt': eReceipt,
+      if (salesNote != null) 'sales_note': salesNote,
+      if (invoiceNo != null) 'invoice_no': invoiceNo,
+      if (invoicePrefix != null) 'invoice_prefix': invoicePrefix,
+      if (discount != null) 'discount': discount,
+      if (discountType != null) 'discount_type': discountType,
+      if (subtotal != null) 'subtotal': subtotal,
+      if (extrasTotal != null) 'extras_total': extrasTotal,
+      if (netTotal != null) 'net_total': netTotal,
+      if (rounding != null) 'rounding': rounding,
+      if (screeningId != null) 'screening_id': screeningId,
+      if (customerNric != null) 'customer_nric': customerNric,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  NewOrdersTableCompanion copyWith(
+      {Value<int>? id,
+      Value<bool>? isStf,
+      Value<bool>? isUtf,
+      Value<bool>? eReceipt,
+      Value<String?>? salesNote,
+      Value<String>? invoiceNo,
+      Value<String>? invoicePrefix,
+      Value<double?>? discount,
+      Value<String?>? discountType,
+      Value<double>? subtotal,
+      Value<double>? extrasTotal,
+      Value<double>? netTotal,
+      Value<double?>? rounding,
+      Value<int>? screeningId,
+      Value<String>? customerNric,
+      Value<DateTime>? createdAt}) {
+    return NewOrdersTableCompanion(
+      id: id ?? this.id,
+      isStf: isStf ?? this.isStf,
+      isUtf: isUtf ?? this.isUtf,
+      eReceipt: eReceipt ?? this.eReceipt,
+      salesNote: salesNote ?? this.salesNote,
+      invoiceNo: invoiceNo ?? this.invoiceNo,
+      invoicePrefix: invoicePrefix ?? this.invoicePrefix,
+      discount: discount ?? this.discount,
+      discountType: discountType ?? this.discountType,
+      subtotal: subtotal ?? this.subtotal,
+      extrasTotal: extrasTotal ?? this.extrasTotal,
+      netTotal: netTotal ?? this.netTotal,
+      rounding: rounding ?? this.rounding,
+      screeningId: screeningId ?? this.screeningId,
+      customerNric: customerNric ?? this.customerNric,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (isStf.present) {
+      map['is_stf'] = Variable<bool>(isStf.value);
+    }
+    if (isUtf.present) {
+      map['is_utf'] = Variable<bool>(isUtf.value);
+    }
+    if (eReceipt.present) {
+      map['e_receipt'] = Variable<bool>(eReceipt.value);
+    }
+    if (salesNote.present) {
+      map['sales_note'] = Variable<String>(salesNote.value);
+    }
+    if (invoiceNo.present) {
+      map['invoice_no'] = Variable<String>(invoiceNo.value);
+    }
+    if (invoicePrefix.present) {
+      map['invoice_prefix'] = Variable<String>(invoicePrefix.value);
+    }
+    if (discount.present) {
+      map['discount'] = Variable<double>(discount.value);
+    }
+    if (discountType.present) {
+      map['discount_type'] = Variable<String>(discountType.value);
+    }
+    if (subtotal.present) {
+      map['subtotal'] = Variable<double>(subtotal.value);
+    }
+    if (extrasTotal.present) {
+      map['extras_total'] = Variable<double>(extrasTotal.value);
+    }
+    if (netTotal.present) {
+      map['net_total'] = Variable<double>(netTotal.value);
+    }
+    if (rounding.present) {
+      map['rounding'] = Variable<double>(rounding.value);
+    }
+    if (screeningId.present) {
+      map['screening_id'] = Variable<int>(screeningId.value);
+    }
+    if (customerNric.present) {
+      map['customer_nric'] = Variable<String>(customerNric.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NewOrdersTableCompanion(')
+          ..write('id: $id, ')
+          ..write('isStf: $isStf, ')
+          ..write('isUtf: $isUtf, ')
+          ..write('eReceipt: $eReceipt, ')
+          ..write('salesNote: $salesNote, ')
+          ..write('invoiceNo: $invoiceNo, ')
+          ..write('invoicePrefix: $invoicePrefix, ')
+          ..write('discount: $discount, ')
+          ..write('discountType: $discountType, ')
+          ..write('subtotal: $subtotal, ')
+          ..write('extrasTotal: $extrasTotal, ')
+          ..write('netTotal: $netTotal, ')
+          ..write('rounding: $rounding, ')
+          ..write('screeningId: $screeningId, ')
+          ..write('customerNric: $customerNric, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $NewScreeningRegistrationsTableTable
+    extends NewScreeningRegistrationsTable
+    with
+        TableInfo<$NewScreeningRegistrationsTableTable,
+            NewScreeningRegistration> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NewScreeningRegistrationsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _indexMeta = const VerificationMeta('index');
+  @override
+  late final GeneratedColumn<String> index = GeneratedColumn<String>(
+      'index', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _customerNricMeta =
+      const VerificationMeta('customerNric');
+  @override
+  late final GeneratedColumn<String> customerNric = GeneratedColumn<String>(
+      'customer_nric', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _timeslotIdMeta =
+      const VerificationMeta('timeslotId');
+  @override
+  late final GeneratedColumn<int> timeslotId = GeneratedColumn<int>(
+      'timeslot_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES screening_timeslots (id) ON DELETE CASCADE'));
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, index, customerNric, timeslotId, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'new_screening_registrations';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<NewScreeningRegistration> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('index')) {
+      context.handle(
+          _indexMeta, index.isAcceptableOrUnknown(data['index']!, _indexMeta));
+    }
+    if (data.containsKey('customer_nric')) {
+      context.handle(
+          _customerNricMeta,
+          customerNric.isAcceptableOrUnknown(
+              data['customer_nric']!, _customerNricMeta));
+    }
+    if (data.containsKey('timeslot_id')) {
+      context.handle(
+          _timeslotIdMeta,
+          timeslotId.isAcceptableOrUnknown(
+              data['timeslot_id']!, _timeslotIdMeta));
+    } else if (isInserting) {
+      context.missing(_timeslotIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  NewScreeningRegistration map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NewScreeningRegistration(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      index: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}index']),
+      customerNric: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}customer_nric']),
+      timeslotId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}timeslot_id'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+    );
+  }
+
+  @override
+  $NewScreeningRegistrationsTableTable createAlias(String alias) {
+    return $NewScreeningRegistrationsTableTable(attachedDatabase, alias);
+  }
+}
+
+class NewScreeningRegistrationsTableCompanion
+    extends UpdateCompanion<NewScreeningRegistration> {
+  final Value<int> id;
+  final Value<String?> index;
+  final Value<String?> customerNric;
+  final Value<int> timeslotId;
+  final Value<DateTime> createdAt;
+  const NewScreeningRegistrationsTableCompanion({
+    this.id = const Value.absent(),
+    this.index = const Value.absent(),
+    this.customerNric = const Value.absent(),
+    this.timeslotId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  NewScreeningRegistrationsTableCompanion.insert({
+    this.id = const Value.absent(),
+    this.index = const Value.absent(),
+    this.customerNric = const Value.absent(),
+    required int timeslotId,
+    required DateTime createdAt,
+  })  : timeslotId = Value(timeslotId),
+        createdAt = Value(createdAt);
+  static Insertable<NewScreeningRegistration> custom({
+    Expression<int>? id,
+    Expression<String>? index,
+    Expression<String>? customerNric,
+    Expression<int>? timeslotId,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (index != null) 'index': index,
+      if (customerNric != null) 'customer_nric': customerNric,
+      if (timeslotId != null) 'timeslot_id': timeslotId,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  NewScreeningRegistrationsTableCompanion copyWith(
+      {Value<int>? id,
+      Value<String?>? index,
+      Value<String?>? customerNric,
+      Value<int>? timeslotId,
+      Value<DateTime>? createdAt}) {
+    return NewScreeningRegistrationsTableCompanion(
+      id: id ?? this.id,
+      index: index ?? this.index,
+      customerNric: customerNric ?? this.customerNric,
+      timeslotId: timeslotId ?? this.timeslotId,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (index.present) {
+      map['index'] = Variable<String>(index.value);
+    }
+    if (customerNric.present) {
+      map['customer_nric'] = Variable<String>(customerNric.value);
+    }
+    if (timeslotId.present) {
+      map['timeslot_id'] = Variable<int>(timeslotId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NewScreeningRegistrationsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('index: $index, ')
+          ..write('customerNric: $customerNric, ')
+          ..write('timeslotId: $timeslotId, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   late final $UsersTableTable usersTable = $UsersTableTable(this);
@@ -4358,6 +6443,18 @@ abstract class _$AppDb extends GeneratedDatabase {
       $OrderExtrasTableTable(this);
   late final $OrderPaymentsTableTable orderPaymentsTable =
       $OrderPaymentsTableTable(this);
+  late final $NewCustomersTableTable newCustomersTable =
+      $NewCustomersTableTable(this);
+  late final $NewOrderExtrasTableTable newOrderExtrasTable =
+      $NewOrderExtrasTableTable(this);
+  late final $NewOrderItemsTableTable newOrderItemsTable =
+      $NewOrderItemsTableTable(this);
+  late final $NewOrderPaymentsTableTable newOrderPaymentsTable =
+      $NewOrderPaymentsTableTable(this);
+  late final $NewOrdersTableTable newOrdersTable = $NewOrdersTableTable(this);
+  late final $NewScreeningRegistrationsTableTable
+      newScreeningRegistrationsTable =
+      $NewScreeningRegistrationsTableTable(this);
   late final UserDao userDao = UserDao(this as AppDb);
   late final PosLicenseDao posLicenseDao = PosLicenseDao(this as AppDb);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
@@ -4402,7 +6499,13 @@ abstract class _$AppDb extends GeneratedDatabase {
         ordersTable,
         orderItemsTable,
         orderExtrasTable,
-        orderPaymentsTable
+        orderPaymentsTable,
+        newCustomersTable,
+        newOrderExtrasTable,
+        newOrderItemsTable,
+        newOrderPaymentsTable,
+        newOrdersTable,
+        newScreeningRegistrationsTable
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
@@ -4503,6 +6606,63 @@ abstract class _$AppDb extends GeneratedDatabase {
                 limitUpdateKind: UpdateKind.delete),
             result: [
               TableUpdate('order_payments', kind: UpdateKind.update),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('pos_extras',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('new_order_extras', kind: UpdateKind.update),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('orders',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('new_order_extras', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('products',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('new_order_items', kind: UpdateKind.update),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('orders',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('new_order_items', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('orders',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('new_order_payments', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('payment_methods',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('new_order_payments', kind: UpdateKind.update),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('screenings',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('new_orders', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('screening_timeslots',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('new_screening_registrations',
+                  kind: UpdateKind.delete),
             ],
           ),
         ],

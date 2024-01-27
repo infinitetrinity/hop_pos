@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'order_item.dart';
+part of 'new_order_item.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-OrderItem _$OrderItemFromJson(Map<String, dynamic> json) {
-  return _OrderItem.fromJson(json);
+NewOrderItem _$NewOrderItemFromJson(Map<String, dynamic> json) {
+  return _NewOrderItem.fromJson(json);
 }
 
 /// @nodoc
-mixin _$OrderItem {
+mixin _$NewOrderItem {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get sku => throw _privateConstructorUsedError;
@@ -35,23 +35,28 @@ mixin _$OrderItem {
   double? get netPrice => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_custom')
   bool get isCustom => throw _privateConstructorUsedError;
+  @JsonKey(name: 'order_is_new')
+  bool get orderIsNew => throw _privateConstructorUsedError;
   @JsonKey(name: 'cart_id')
   int? get cartId => throw _privateConstructorUsedError;
   @JsonKey(name: 'product_id')
   int? get productId => throw _privateConstructorUsedError;
   @JsonKey(name: 'order_id')
   int get orderId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $OrderItemCopyWith<OrderItem> get copyWith =>
+  $NewOrderItemCopyWith<NewOrderItem> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $OrderItemCopyWith<$Res> {
-  factory $OrderItemCopyWith(OrderItem value, $Res Function(OrderItem) then) =
-      _$OrderItemCopyWithImpl<$Res, OrderItem>;
+abstract class $NewOrderItemCopyWith<$Res> {
+  factory $NewOrderItemCopyWith(
+          NewOrderItem value, $Res Function(NewOrderItem) then) =
+      _$NewOrderItemCopyWithImpl<$Res, NewOrderItem>;
   @useResult
   $Res call(
       {int id,
@@ -63,15 +68,17 @@ abstract class $OrderItemCopyWith<$Res> {
       @JsonKey(name: 'discount_type') String? discountType,
       @DoubleFromStringConverter() @JsonKey(name: 'net_price') double? netPrice,
       @JsonKey(name: 'is_custom') bool isCustom,
+      @JsonKey(name: 'order_is_new') bool orderIsNew,
       @JsonKey(name: 'cart_id') int? cartId,
       @JsonKey(name: 'product_id') int? productId,
-      @JsonKey(name: 'order_id') int orderId});
+      @JsonKey(name: 'order_id') int orderId,
+      @JsonKey(name: 'created_at') DateTime createdAt});
 }
 
 /// @nodoc
-class _$OrderItemCopyWithImpl<$Res, $Val extends OrderItem>
-    implements $OrderItemCopyWith<$Res> {
-  _$OrderItemCopyWithImpl(this._value, this._then);
+class _$NewOrderItemCopyWithImpl<$Res, $Val extends NewOrderItem>
+    implements $NewOrderItemCopyWith<$Res> {
+  _$NewOrderItemCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -90,9 +97,11 @@ class _$OrderItemCopyWithImpl<$Res, $Val extends OrderItem>
     Object? discountType = freezed,
     Object? netPrice = freezed,
     Object? isCustom = null,
+    Object? orderIsNew = null,
     Object? cartId = freezed,
     Object? productId = freezed,
     Object? orderId = null,
+    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -131,6 +140,10 @@ class _$OrderItemCopyWithImpl<$Res, $Val extends OrderItem>
           ? _value.isCustom
           : isCustom // ignore: cast_nullable_to_non_nullable
               as bool,
+      orderIsNew: null == orderIsNew
+          ? _value.orderIsNew
+          : orderIsNew // ignore: cast_nullable_to_non_nullable
+              as bool,
       cartId: freezed == cartId
           ? _value.cartId
           : cartId // ignore: cast_nullable_to_non_nullable
@@ -143,16 +156,20 @@ class _$OrderItemCopyWithImpl<$Res, $Val extends OrderItem>
           ? _value.orderId
           : orderId // ignore: cast_nullable_to_non_nullable
               as int,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$OrderItemImplCopyWith<$Res>
-    implements $OrderItemCopyWith<$Res> {
-  factory _$$OrderItemImplCopyWith(
-          _$OrderItemImpl value, $Res Function(_$OrderItemImpl) then) =
-      __$$OrderItemImplCopyWithImpl<$Res>;
+abstract class _$$NewOrderItemImplCopyWith<$Res>
+    implements $NewOrderItemCopyWith<$Res> {
+  factory _$$NewOrderItemImplCopyWith(
+          _$NewOrderItemImpl value, $Res Function(_$NewOrderItemImpl) then) =
+      __$$NewOrderItemImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -165,17 +182,19 @@ abstract class _$$OrderItemImplCopyWith<$Res>
       @JsonKey(name: 'discount_type') String? discountType,
       @DoubleFromStringConverter() @JsonKey(name: 'net_price') double? netPrice,
       @JsonKey(name: 'is_custom') bool isCustom,
+      @JsonKey(name: 'order_is_new') bool orderIsNew,
       @JsonKey(name: 'cart_id') int? cartId,
       @JsonKey(name: 'product_id') int? productId,
-      @JsonKey(name: 'order_id') int orderId});
+      @JsonKey(name: 'order_id') int orderId,
+      @JsonKey(name: 'created_at') DateTime createdAt});
 }
 
 /// @nodoc
-class __$$OrderItemImplCopyWithImpl<$Res>
-    extends _$OrderItemCopyWithImpl<$Res, _$OrderItemImpl>
-    implements _$$OrderItemImplCopyWith<$Res> {
-  __$$OrderItemImplCopyWithImpl(
-      _$OrderItemImpl _value, $Res Function(_$OrderItemImpl) _then)
+class __$$NewOrderItemImplCopyWithImpl<$Res>
+    extends _$NewOrderItemCopyWithImpl<$Res, _$NewOrderItemImpl>
+    implements _$$NewOrderItemImplCopyWith<$Res> {
+  __$$NewOrderItemImplCopyWithImpl(
+      _$NewOrderItemImpl _value, $Res Function(_$NewOrderItemImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -190,11 +209,13 @@ class __$$OrderItemImplCopyWithImpl<$Res>
     Object? discountType = freezed,
     Object? netPrice = freezed,
     Object? isCustom = null,
+    Object? orderIsNew = null,
     Object? cartId = freezed,
     Object? productId = freezed,
     Object? orderId = null,
+    Object? createdAt = null,
   }) {
-    return _then(_$OrderItemImpl(
+    return _then(_$NewOrderItemImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -231,6 +252,10 @@ class __$$OrderItemImplCopyWithImpl<$Res>
           ? _value.isCustom
           : isCustom // ignore: cast_nullable_to_non_nullable
               as bool,
+      orderIsNew: null == orderIsNew
+          ? _value.orderIsNew
+          : orderIsNew // ignore: cast_nullable_to_non_nullable
+              as bool,
       cartId: freezed == cartId
           ? _value.cartId
           : cartId // ignore: cast_nullable_to_non_nullable
@@ -243,14 +268,18 @@ class __$$OrderItemImplCopyWithImpl<$Res>
           ? _value.orderId
           : orderId // ignore: cast_nullable_to_non_nullable
               as int,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$OrderItemImpl implements _OrderItem {
-  const _$OrderItemImpl(
+class _$NewOrderItemImpl implements _NewOrderItem {
+  const _$NewOrderItemImpl(
       {required this.id,
       required this.name,
       required this.sku,
@@ -260,12 +289,14 @@ class _$OrderItemImpl implements _OrderItem {
       @JsonKey(name: 'discount_type') this.discountType,
       @DoubleFromStringConverter() @JsonKey(name: 'net_price') this.netPrice,
       @JsonKey(name: 'is_custom') required this.isCustom,
+      @JsonKey(name: 'order_is_new') required this.orderIsNew,
       @JsonKey(name: 'cart_id') this.cartId,
       @JsonKey(name: 'product_id') this.productId,
-      @JsonKey(name: 'order_id') required this.orderId});
+      @JsonKey(name: 'order_id') required this.orderId,
+      @JsonKey(name: 'created_at') required this.createdAt});
 
-  factory _$OrderItemImpl.fromJson(Map<String, dynamic> json) =>
-      _$$OrderItemImplFromJson(json);
+  factory _$NewOrderItemImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NewOrderItemImplFromJson(json);
 
   @override
   final int id;
@@ -292,6 +323,9 @@ class _$OrderItemImpl implements _OrderItem {
   @JsonKey(name: 'is_custom')
   final bool isCustom;
   @override
+  @JsonKey(name: 'order_is_new')
+  final bool orderIsNew;
+  @override
   @JsonKey(name: 'cart_id')
   final int? cartId;
   @override
@@ -300,17 +334,20 @@ class _$OrderItemImpl implements _OrderItem {
   @override
   @JsonKey(name: 'order_id')
   final int orderId;
+  @override
+  @JsonKey(name: 'created_at')
+  final DateTime createdAt;
 
   @override
   String toString() {
-    return 'OrderItem(id: $id, name: $name, sku: $sku, description: $description, price: $price, discount: $discount, discountType: $discountType, netPrice: $netPrice, isCustom: $isCustom, cartId: $cartId, productId: $productId, orderId: $orderId)';
+    return 'NewOrderItem(id: $id, name: $name, sku: $sku, description: $description, price: $price, discount: $discount, discountType: $discountType, netPrice: $netPrice, isCustom: $isCustom, orderIsNew: $orderIsNew, cartId: $cartId, productId: $productId, orderId: $orderId, createdAt: $createdAt)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OrderItemImpl &&
+            other is _$NewOrderItemImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.sku, sku) || other.sku == sku) &&
@@ -325,10 +362,14 @@ class _$OrderItemImpl implements _OrderItem {
                 other.netPrice == netPrice) &&
             (identical(other.isCustom, isCustom) ||
                 other.isCustom == isCustom) &&
+            (identical(other.orderIsNew, orderIsNew) ||
+                other.orderIsNew == orderIsNew) &&
             (identical(other.cartId, cartId) || other.cartId == cartId) &&
             (identical(other.productId, productId) ||
                 other.productId == productId) &&
-            (identical(other.orderId, orderId) || other.orderId == orderId));
+            (identical(other.orderId, orderId) || other.orderId == orderId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
@@ -344,43 +385,48 @@ class _$OrderItemImpl implements _OrderItem {
       discountType,
       netPrice,
       isCustom,
+      orderIsNew,
       cartId,
       productId,
-      orderId);
+      orderId,
+      createdAt);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$OrderItemImplCopyWith<_$OrderItemImpl> get copyWith =>
-      __$$OrderItemImplCopyWithImpl<_$OrderItemImpl>(this, _$identity);
+  _$$NewOrderItemImplCopyWith<_$NewOrderItemImpl> get copyWith =>
+      __$$NewOrderItemImplCopyWithImpl<_$NewOrderItemImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$OrderItemImplToJson(
+    return _$$NewOrderItemImplToJson(
       this,
     );
   }
 }
 
-abstract class _OrderItem implements OrderItem {
-  const factory _OrderItem(
-      {required final int id,
-      required final String name,
-      required final String sku,
-      final String? description,
-      @DoubleFromStringConverter() final double? price,
-      @DoubleFromStringConverter() final double? discount,
-      @JsonKey(name: 'discount_type') final String? discountType,
-      @DoubleFromStringConverter()
-      @JsonKey(name: 'net_price')
-      final double? netPrice,
-      @JsonKey(name: 'is_custom') required final bool isCustom,
-      @JsonKey(name: 'cart_id') final int? cartId,
-      @JsonKey(name: 'product_id') final int? productId,
-      @JsonKey(name: 'order_id') required final int orderId}) = _$OrderItemImpl;
+abstract class _NewOrderItem implements NewOrderItem {
+  const factory _NewOrderItem(
+          {required final int id,
+          required final String name,
+          required final String sku,
+          final String? description,
+          @DoubleFromStringConverter() final double? price,
+          @DoubleFromStringConverter() final double? discount,
+          @JsonKey(name: 'discount_type') final String? discountType,
+          @DoubleFromStringConverter()
+          @JsonKey(name: 'net_price')
+          final double? netPrice,
+          @JsonKey(name: 'is_custom') required final bool isCustom,
+          @JsonKey(name: 'order_is_new') required final bool orderIsNew,
+          @JsonKey(name: 'cart_id') final int? cartId,
+          @JsonKey(name: 'product_id') final int? productId,
+          @JsonKey(name: 'order_id') required final int orderId,
+          @JsonKey(name: 'created_at') required final DateTime createdAt}) =
+      _$NewOrderItemImpl;
 
-  factory _OrderItem.fromJson(Map<String, dynamic> json) =
-      _$OrderItemImpl.fromJson;
+  factory _NewOrderItem.fromJson(Map<String, dynamic> json) =
+      _$NewOrderItemImpl.fromJson;
 
   @override
   int get id;
@@ -407,6 +453,9 @@ abstract class _OrderItem implements OrderItem {
   @JsonKey(name: 'is_custom')
   bool get isCustom;
   @override
+  @JsonKey(name: 'order_is_new')
+  bool get orderIsNew;
+  @override
   @JsonKey(name: 'cart_id')
   int? get cartId;
   @override
@@ -416,7 +465,10 @@ abstract class _OrderItem implements OrderItem {
   @JsonKey(name: 'order_id')
   int get orderId;
   @override
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt;
+  @override
   @JsonKey(ignore: true)
-  _$$OrderItemImplCopyWith<_$OrderItemImpl> get copyWith =>
+  _$$NewOrderItemImplCopyWith<_$NewOrderItemImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

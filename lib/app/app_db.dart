@@ -8,16 +8,26 @@ import 'package:hop_pos/src/company/models/company_table.dart';
 import 'package:hop_pos/src/customers/daos/customer_dao.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/customers/models/customers_table.dart';
+import 'package:hop_pos/src/customers/models/new_customer.dart';
+import 'package:hop_pos/src/customers/models/new_customers_table.dart';
 import 'package:hop_pos/src/order_extras/daos/order_extra_dao.dart';
+import 'package:hop_pos/src/order_extras/models/new_order_extra.dart';
+import 'package:hop_pos/src/order_extras/models/new_order_extras_table.dart';
 import 'package:hop_pos/src/order_extras/models/order_extra.dart';
 import 'package:hop_pos/src/order_extras/models/order_extras_table.dart';
 import 'package:hop_pos/src/order_items/daos/order_item_dao.dart';
+import 'package:hop_pos/src/order_items/models/new_order_item.dart';
+import 'package:hop_pos/src/order_items/models/new_order_items_table.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/order_items/models/order_items_table.dart';
 import 'package:hop_pos/src/order_payments/daos/order_payment_dao.dart';
+import 'package:hop_pos/src/order_payments/models/new_order_payment.dart';
+import 'package:hop_pos/src/order_payments/models/new_order_payments_table.dart';
 import 'package:hop_pos/src/order_payments/models/order_payment.dart';
 import 'package:hop_pos/src/order_payments/models/order_payments_table.dart';
 import 'package:hop_pos/src/orders/daos/order_dao.dart';
+import 'package:hop_pos/src/orders/models/new_order.dart';
+import 'package:hop_pos/src/orders/models/new_orders_table.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/orders_table.dart';
 import 'package:hop_pos/src/payment_methods/daos/payment_method_dao.dart';
@@ -39,6 +49,8 @@ import 'package:hop_pos/src/receipt_settings/daos/receipt_setting_dao.dart';
 import 'package:hop_pos/src/receipt_settings/models/receipt_setting.dart';
 import 'package:hop_pos/src/receipt_settings/models/receipt_settings_table.dart';
 import 'package:hop_pos/src/screening_registrations/daos/screening_registration_dao.dart';
+import 'package:hop_pos/src/screening_registrations/models/new_screening_registration.dart';
+import 'package:hop_pos/src/screening_registrations/models/new_screening_registrations_table.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registrations_table.dart';
 import 'package:hop_pos/src/screening_timeslots/daos/screening_timeslot_dao.dart';
@@ -86,6 +98,12 @@ AppDb appDb(AppDbRef ref) {
   OrderItemsTable,
   OrderExtrasTable,
   OrderPaymentsTable,
+  NewCustomersTable,
+  NewOrderExtrasTable,
+  NewOrderItemsTable,
+  NewOrderPaymentsTable,
+  NewOrdersTable,
+  NewScreeningRegistrationsTable,
 ], daos: [
   UserDao,
   PosLicenseDao,

@@ -11,16 +11,11 @@ class ScreeningRegistration with _$ScreeningRegistration {
     @JsonKey(name: 'timeslot_id') required int timeslotId,
   }) = _ScreeningRegistration;
 
-  factory ScreeningRegistration.fromJson(Map<String, dynamic> json) =>
-      _$ScreeningRegistrationFromJson(json);
+  factory ScreeningRegistration.fromJson(Map<String, dynamic> json) => _$ScreeningRegistrationFromJson(json);
 
   static List<ScreeningRegistration> fromJsonList(dynamic data) {
     return List<ScreeningRegistration>.from(
       data.map((el) => ScreeningRegistration.fromJson(el)),
     );
-  }
-
-  static String get table {
-    return 'screening_registrations';
   }
 }

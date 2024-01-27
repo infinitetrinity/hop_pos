@@ -1,15 +1,16 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hop_pos/src/common/converters/double_from_string_converter.dart';
 
-part 'order.freezed.dart';
-part 'order.g.dart';
+part 'new_order.freezed.dart';
+part 'new_order.g.dart';
 
 @freezed
-class Order with _$Order {
-  const factory Order({
+class NewOrder with _$NewOrder {
+  const factory NewOrder({
     required int id,
     @JsonKey(name: 'is_stf') required bool isStf,
     @JsonKey(name: 'is_utf') required bool isUtf,
+    @JsonKey(name: 'e_receipt') required bool eReceipt,
     @JsonKey(name: 'sales_note') String? salesNote,
     @JsonKey(name: 'invoice_no') required String invoiceNo,
     @JsonKey(name: 'invoice_prefix') required String invoicePrefix,
@@ -19,17 +20,10 @@ class Order with _$Order {
     @DoubleFromStringConverter() @JsonKey(name: 'extras_total') double? extrasTotal,
     @DoubleFromStringConverter() @JsonKey(name: 'net_total') double? netTotal,
     @DoubleFromStringConverter() double? rounding,
-    @JsonKey(name: 'license_id') required int licenseId,
-    @JsonKey(name: 'screening_id') int? screeningId,
-    @JsonKey(name: 'customer_id') required int customerId,
+    @JsonKey(name: 'screening_id') required int screeningId,
+    @JsonKey(name: 'customer_nric') required String customerNric,
     @JsonKey(name: 'created_at') required DateTime createdAt,
-  }) = _Order;
+  }) = _NewOrder;
 
-  factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
-
-  static List<Order> fromJsonList(dynamic data) {
-    return List<Order>.from(
-      data.map((el) => Order.fromJson(el)),
-    );
-  }
+  factory NewOrder.fromJson(Map<String, dynamic> json) => _$NewOrderFromJson(json);
 }

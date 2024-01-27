@@ -27,10 +27,6 @@ class Customer with _$Customer {
     );
   }
 
-  static String get table {
-    return 'customers';
-  }
-
   static Map<String?, String> get genders {
     return {null: "Gender", "F": "Female", "M": "Male"};
   }
