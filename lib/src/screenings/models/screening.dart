@@ -18,8 +18,4 @@ class Screening with _$Screening {
       data.map((el) => Screening.fromJson(el)),
     );
   }
-
-  static String get table {
-    return 'screenings';
-  }
 }

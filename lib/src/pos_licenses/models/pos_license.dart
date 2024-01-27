@@ -15,10 +15,5 @@ class PosLicense with _$PosLicense {
     @JsonKey(name: 'is_activated') required bool isActivated,
   }) = _PosLicense;
 
-  factory PosLicense.fromJson(Map<String, dynamic> json) =>
-      _$PosLicenseFromJson(json);
-
-  static String get table {
-    return 'pos_licenses';
-  }
+  factory PosLicense.fromJson(Map<String, dynamic> json) => _$PosLicenseFromJson(json);
 }

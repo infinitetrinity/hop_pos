@@ -19,8 +19,4 @@ class ScreeningVenue with _$ScreeningVenue {
       data.map((el) => ScreeningVenue.fromJson(el)),
     );
   }
-
-  static String get table {
-    return 'screening_venues';
-  }
 }

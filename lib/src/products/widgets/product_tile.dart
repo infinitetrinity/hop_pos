@@ -33,7 +33,7 @@ class ProductTile extends HookWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              "${item.product.price.formatMoney} ${item.category == null ? '' : ' | ${item.category!.name}'}",
+              "${item.product.price?.formatMoney} ${item.category == null ? '' : ' | ${item.category!.name}'}",
               style: AppStyles.bodySmall.copyWith(
                 color: isHover.value ? AppColors.white : AppColors.gray800,
               ),

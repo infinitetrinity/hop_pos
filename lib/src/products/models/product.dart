@@ -1,6 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hop_pos/src/common/converters/double_from_string_converter.dart';
 
 part 'product.freezed.dart';
+part 'product.g.dart';
 
 @freezed
 class Product with _$Product {
@@ -8,31 +10,17 @@ class Product with _$Product {
     required int id,
     required String name,
     required String sku,
-    required double price,
+    @DoubleFromStringConverter() double? price,
     String? description,
     @JsonKey(name: 'color_code') String? colorCode,
     @JsonKey(name: 'category_id') int? categoryId,
   }) = _Product;
 
-  factory Product.fromJson(Map<String, dynamic> json) {
-    return Product(
-      id: json['id'],
-      name: json['name'],
-      sku: json['sku'],
-      price: double.tryParse(json['price']) ?? 0,
-      description: json['description'],
-      colorCode: json['color_code'],
-      categoryId: json['category_id'],
-    );
-  }
+  factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
 
   static List<Product> fromJsonList(dynamic data) {
     return List<Product>.from(
       data.map((el) => Product.fromJson(el)),
     );
-  }
-
-  static String get table {
-    return 'products';
   }
 }

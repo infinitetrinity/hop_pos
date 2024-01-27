@@ -20,8 +20,4 @@ class ProductCategory with _$ProductCategory {
       data.map((el) => ProductCategory.fromJson(el)),
     );
   }
-
-  static String get table {
-    return 'product_categories';
-  }
 }

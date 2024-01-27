@@ -17,10 +17,6 @@ class User with _$User {
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
-  static String get table {
-    return 'users';
-  }
-
   UsersTableCompanion toData() {
     return UsersTableCompanion(
       id: drift.Value(id),

@@ -17,10 +17,5 @@ class Company with _$Company {
     @JsonKey(name: 'co_registration_no') String? coRegistrationNo,
   }) = _Company;
 
-  factory Company.fromJson(Map<String, dynamic> json) =>
-      _$CompanyFromJson(json);
-
-  static String get table {
-    return 'company';
-  }
+  factory Company.fromJson(Map<String, dynamic> json) => _$CompanyFromJson(json);
 }

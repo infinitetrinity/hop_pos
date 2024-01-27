@@ -11,16 +11,11 @@ class PaymentMethod with _$PaymentMethod {
     String? description,
   }) = _PaymentMethod;
 
-  factory PaymentMethod.fromJson(Map<String, dynamic> json) =>
-      _$PaymentMethodFromJson(json);
+  factory PaymentMethod.fromJson(Map<String, dynamic> json) => _$PaymentMethodFromJson(json);
 
   static List<PaymentMethod> fromJsonList(dynamic data) {
     return List<PaymentMethod>.from(
       data.map((el) => PaymentMethod.fromJson(el)),
     );
-  }
-
-  static String get table {
-    return 'payment_methods';
   }
 }

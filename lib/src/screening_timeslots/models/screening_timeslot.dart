@@ -29,10 +29,6 @@ class ScreeningTimeslot with _$ScreeningTimeslot {
     );
   }
 
-  static String get table {
-    return 'screening_timeslots';
-  }
-
   String get displayDateTime {
     return DateFormat('hh:mm a, dd MMM yyyy').format(dateAndTime);
   }

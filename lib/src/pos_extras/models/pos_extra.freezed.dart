@@ -14,18 +14,24 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+PosExtra _$PosExtraFromJson(Map<String, dynamic> json) {
+  return _PosExtra.fromJson(json);
+}
+
 /// @nodoc
 mixin _$PosExtra {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
-  double get amount => throw _privateConstructorUsedError;
+  @DoubleFromStringConverter()
+  double? get amount => throw _privateConstructorUsedError;
   @JsonKey(name: 'amount_type')
   String get amountType => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_active')
   bool get isActive => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $PosExtraCopyWith<PosExtra> get copyWith =>
       throw _privateConstructorUsedError;
@@ -41,7 +47,7 @@ abstract class $PosExtraCopyWith<$Res> {
       String name,
       String? description,
       String type,
-      double amount,
+      @DoubleFromStringConverter() double? amount,
       @JsonKey(name: 'amount_type') String amountType,
       @JsonKey(name: 'is_active') bool isActive});
 }
@@ -63,7 +69,7 @@ class _$PosExtraCopyWithImpl<$Res, $Val extends PosExtra>
     Object? name = null,
     Object? description = freezed,
     Object? type = null,
-    Object? amount = null,
+    Object? amount = freezed,
     Object? amountType = null,
     Object? isActive = null,
   }) {
@@ -84,10 +90,10 @@ class _$PosExtraCopyWithImpl<$Res, $Val extends PosExtra>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      amount: null == amount
+      amount: freezed == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       amountType: null == amountType
           ? _value.amountType
           : amountType // ignore: cast_nullable_to_non_nullable
@@ -113,7 +119,7 @@ abstract class _$$PosExtraImplCopyWith<$Res>
       String name,
       String? description,
       String type,
-      double amount,
+      @DoubleFromStringConverter() double? amount,
       @JsonKey(name: 'amount_type') String amountType,
       @JsonKey(name: 'is_active') bool isActive});
 }
@@ -133,7 +139,7 @@ class __$$PosExtraImplCopyWithImpl<$Res>
     Object? name = null,
     Object? description = freezed,
     Object? type = null,
-    Object? amount = null,
+    Object? amount = freezed,
     Object? amountType = null,
     Object? isActive = null,
   }) {
@@ -154,10 +160,10 @@ class __$$PosExtraImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      amount: null == amount
+      amount: freezed == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       amountType: null == amountType
           ? _value.amountType
           : amountType // ignore: cast_nullable_to_non_nullable
@@ -171,16 +177,19 @@ class __$$PosExtraImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$PosExtraImpl implements _PosExtra {
   const _$PosExtraImpl(
       {required this.id,
       required this.name,
       this.description,
       required this.type,
-      required this.amount,
+      @DoubleFromStringConverter() this.amount,
       @JsonKey(name: 'amount_type') required this.amountType,
       @JsonKey(name: 'is_active') required this.isActive});
+
+  factory _$PosExtraImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PosExtraImplFromJson(json);
 
   @override
   final int id;
@@ -191,7 +200,8 @@ class _$PosExtraImpl implements _PosExtra {
   @override
   final String type;
   @override
-  final double amount;
+  @DoubleFromStringConverter()
+  final double? amount;
   @override
   @JsonKey(name: 'amount_type')
   final String amountType;
@@ -221,6 +231,7 @@ class _$PosExtraImpl implements _PosExtra {
                 other.isActive == isActive));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType, id, name, description, type, amount, amountType, isActive);
@@ -230,6 +241,13 @@ class _$PosExtraImpl implements _PosExtra {
   @pragma('vm:prefer-inline')
   _$$PosExtraImplCopyWith<_$PosExtraImpl> get copyWith =>
       __$$PosExtraImplCopyWithImpl<_$PosExtraImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$PosExtraImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _PosExtra implements PosExtra {
@@ -238,10 +256,13 @@ abstract class _PosExtra implements PosExtra {
           required final String name,
           final String? description,
           required final String type,
-          required final double amount,
+          @DoubleFromStringConverter() final double? amount,
           @JsonKey(name: 'amount_type') required final String amountType,
           @JsonKey(name: 'is_active') required final bool isActive}) =
       _$PosExtraImpl;
+
+  factory _PosExtra.fromJson(Map<String, dynamic> json) =
+      _$PosExtraImpl.fromJson;
 
   @override
   int get id;
@@ -252,7 +273,8 @@ abstract class _PosExtra implements PosExtra {
   @override
   String get type;
   @override
-  double get amount;
+  @DoubleFromStringConverter()
+  double? get amount;
   @override
   @JsonKey(name: 'amount_type')
   String get amountType;
