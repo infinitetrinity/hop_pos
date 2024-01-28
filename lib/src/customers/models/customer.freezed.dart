@@ -20,7 +20,7 @@ Customer _$CustomerFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Customer {
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'full_name')
   String get fullName => throw _privateConstructorUsedError;
   String? get nric => throw _privateConstructorUsedError;
@@ -31,6 +31,12 @@ mixin _$Customer {
   String? get mobileNo => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_pending')
   bool get isPending => throw _privateConstructorUsedError;
+  @JsonKey(name: 'send_account_invitation')
+  bool get sendAccountInvitation => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_new')
+  bool get isNew => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,14 +50,17 @@ abstract class $CustomerCopyWith<$Res> {
       _$CustomerCopyWithImpl<$Res, Customer>;
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       @JsonKey(name: 'full_name') String fullName,
       String? nric,
       DateTime? dob,
       String? gender,
       String? email,
       @JsonKey(name: 'mobile_no') String? mobileNo,
-      @JsonKey(name: 'is_pending') bool isPending});
+      @JsonKey(name: 'is_pending') bool isPending,
+      @JsonKey(name: 'send_account_invitation') bool sendAccountInvitation,
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'is_new') bool isNew});
 }
 
 /// @nodoc
@@ -67,7 +76,7 @@ class _$CustomerCopyWithImpl<$Res, $Val extends Customer>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? fullName = null,
     Object? nric = freezed,
     Object? dob = freezed,
@@ -75,12 +84,15 @@ class _$CustomerCopyWithImpl<$Res, $Val extends Customer>
     Object? email = freezed,
     Object? mobileNo = freezed,
     Object? isPending = null,
+    Object? sendAccountInvitation = null,
+    Object? createdAt = freezed,
+    Object? isNew = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       fullName: null == fullName
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
@@ -108,6 +120,18 @@ class _$CustomerCopyWithImpl<$Res, $Val extends Customer>
       isPending: null == isPending
           ? _value.isPending
           : isPending // ignore: cast_nullable_to_non_nullable
+              as bool,
+      sendAccountInvitation: null == sendAccountInvitation
+          ? _value.sendAccountInvitation
+          : sendAccountInvitation // ignore: cast_nullable_to_non_nullable
+              as bool,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      isNew: null == isNew
+          ? _value.isNew
+          : isNew // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -122,14 +146,17 @@ abstract class _$$CustomerImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       @JsonKey(name: 'full_name') String fullName,
       String? nric,
       DateTime? dob,
       String? gender,
       String? email,
       @JsonKey(name: 'mobile_no') String? mobileNo,
-      @JsonKey(name: 'is_pending') bool isPending});
+      @JsonKey(name: 'is_pending') bool isPending,
+      @JsonKey(name: 'send_account_invitation') bool sendAccountInvitation,
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'is_new') bool isNew});
 }
 
 /// @nodoc
@@ -143,7 +170,7 @@ class __$$CustomerImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? fullName = null,
     Object? nric = freezed,
     Object? dob = freezed,
@@ -151,12 +178,15 @@ class __$$CustomerImplCopyWithImpl<$Res>
     Object? email = freezed,
     Object? mobileNo = freezed,
     Object? isPending = null,
+    Object? sendAccountInvitation = null,
+    Object? createdAt = freezed,
+    Object? isNew = null,
   }) {
     return _then(_$CustomerImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       fullName: null == fullName
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
@@ -185,6 +215,18 @@ class __$$CustomerImplCopyWithImpl<$Res>
           ? _value.isPending
           : isPending // ignore: cast_nullable_to_non_nullable
               as bool,
+      sendAccountInvitation: null == sendAccountInvitation
+          ? _value.sendAccountInvitation
+          : sendAccountInvitation // ignore: cast_nullable_to_non_nullable
+              as bool,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      isNew: null == isNew
+          ? _value.isNew
+          : isNew // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -193,21 +235,25 @@ class __$$CustomerImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CustomerImpl extends _Customer {
   const _$CustomerImpl(
-      {required this.id,
+      {this.id,
       @JsonKey(name: 'full_name') required this.fullName,
       this.nric,
       this.dob,
       this.gender,
       this.email,
       @JsonKey(name: 'mobile_no') this.mobileNo,
-      @JsonKey(name: 'is_pending') required this.isPending})
+      @JsonKey(name: 'is_pending') this.isPending = false,
+      @JsonKey(name: 'send_account_invitation')
+      this.sendAccountInvitation = false,
+      @JsonKey(name: 'created_at') this.createdAt,
+      @JsonKey(name: 'is_new') this.isNew = false})
       : super._();
 
   factory _$CustomerImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomerImplFromJson(json);
 
   @override
-  final int id;
+  final int? id;
   @override
   @JsonKey(name: 'full_name')
   final String fullName;
@@ -225,10 +271,19 @@ class _$CustomerImpl extends _Customer {
   @override
   @JsonKey(name: 'is_pending')
   final bool isPending;
+  @override
+  @JsonKey(name: 'send_account_invitation')
+  final bool sendAccountInvitation;
+  @override
+  @JsonKey(name: 'created_at')
+  final DateTime? createdAt;
+  @override
+  @JsonKey(name: 'is_new')
+  final bool isNew;
 
   @override
   String toString() {
-    return 'Customer(id: $id, fullName: $fullName, nric: $nric, dob: $dob, gender: $gender, email: $email, mobileNo: $mobileNo, isPending: $isPending)';
+    return 'Customer(id: $id, fullName: $fullName, nric: $nric, dob: $dob, gender: $gender, email: $email, mobileNo: $mobileNo, isPending: $isPending, sendAccountInvitation: $sendAccountInvitation, createdAt: $createdAt, isNew: $isNew)';
   }
 
   @override
@@ -246,13 +301,18 @@ class _$CustomerImpl extends _Customer {
             (identical(other.mobileNo, mobileNo) ||
                 other.mobileNo == mobileNo) &&
             (identical(other.isPending, isPending) ||
-                other.isPending == isPending));
+                other.isPending == isPending) &&
+            (identical(other.sendAccountInvitation, sendAccountInvitation) ||
+                other.sendAccountInvitation == sendAccountInvitation) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.isNew, isNew) || other.isNew == isNew));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, fullName, nric, dob, gender, email, mobileNo, isPending);
+  int get hashCode => Object.hash(runtimeType, id, fullName, nric, dob, gender,
+      email, mobileNo, isPending, sendAccountInvitation, createdAt, isNew);
 
   @JsonKey(ignore: true)
   @override
@@ -270,22 +330,25 @@ class _$CustomerImpl extends _Customer {
 
 abstract class _Customer extends Customer {
   const factory _Customer(
-          {required final int id,
-          @JsonKey(name: 'full_name') required final String fullName,
-          final String? nric,
-          final DateTime? dob,
-          final String? gender,
-          final String? email,
-          @JsonKey(name: 'mobile_no') final String? mobileNo,
-          @JsonKey(name: 'is_pending') required final bool isPending}) =
-      _$CustomerImpl;
+      {final int? id,
+      @JsonKey(name: 'full_name') required final String fullName,
+      final String? nric,
+      final DateTime? dob,
+      final String? gender,
+      final String? email,
+      @JsonKey(name: 'mobile_no') final String? mobileNo,
+      @JsonKey(name: 'is_pending') final bool isPending,
+      @JsonKey(name: 'send_account_invitation')
+      final bool sendAccountInvitation,
+      @JsonKey(name: 'created_at') final DateTime? createdAt,
+      @JsonKey(name: 'is_new') final bool isNew}) = _$CustomerImpl;
   const _Customer._() : super._();
 
   factory _Customer.fromJson(Map<String, dynamic> json) =
       _$CustomerImpl.fromJson;
 
   @override
-  int get id;
+  int? get id;
   @override
   @JsonKey(name: 'full_name')
   String get fullName;
@@ -303,6 +366,15 @@ abstract class _Customer extends Customer {
   @override
   @JsonKey(name: 'is_pending')
   bool get isPending;
+  @override
+  @JsonKey(name: 'send_account_invitation')
+  bool get sendAccountInvitation;
+  @override
+  @JsonKey(name: 'created_at')
+  DateTime? get createdAt;
+  @override
+  @JsonKey(name: 'is_new')
+  bool get isNew;
   @override
   @JsonKey(ignore: true)
   _$$CustomerImplCopyWith<_$CustomerImpl> get copyWith =>

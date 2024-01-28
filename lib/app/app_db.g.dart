@@ -4329,7 +4329,7 @@ class OrderPaymentsTableCompanion extends UpdateCompanion<OrderPayment> {
 }
 
 class $NewCustomersTableTable extends NewCustomersTable
-    with TableInfo<$NewCustomersTableTable, NewCustomer> {
+    with TableInfo<$NewCustomersTableTable, Customer> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -4418,7 +4418,7 @@ class $NewCustomersTableTable extends NewCustomersTable
   String get actualTableName => $name;
   static const String $name = 'new_customers';
   @override
-  VerificationContext validateIntegrity(Insertable<NewCustomer> instance,
+  VerificationContext validateIntegrity(Insertable<Customer> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -4473,9 +4473,9 @@ class $NewCustomersTableTable extends NewCustomersTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  NewCustomer map(Map<String, dynamic> data, {String? tablePrefix}) {
+  Customer map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return NewCustomer(
+    return Customer(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       fullName: attachedDatabase.typeMapping
@@ -4504,7 +4504,7 @@ class $NewCustomersTableTable extends NewCustomersTable
   }
 }
 
-class NewCustomersTableCompanion extends UpdateCompanion<NewCustomer> {
+class NewCustomersTableCompanion extends UpdateCompanion<Customer> {
   final Value<int> id;
   final Value<String> fullName;
   final Value<String> nric;
@@ -4539,7 +4539,7 @@ class NewCustomersTableCompanion extends UpdateCompanion<NewCustomer> {
         nric = Value(nric),
         sendAccountInvitation = Value(sendAccountInvitation),
         createdAt = Value(createdAt);
-  static Insertable<NewCustomer> custom({
+  static Insertable<Customer> custom({
     Expression<int>? id,
     Expression<String>? fullName,
     Expression<String>? nric,

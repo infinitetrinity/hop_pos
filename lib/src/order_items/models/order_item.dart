@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hop_pos/src/common/converters/bool_from_int_converter.dart';
 import 'package:hop_pos/src/common/converters/double_from_string_converter.dart';
 
 part 'order_item.freezed.dart';
@@ -15,7 +16,7 @@ class OrderItem with _$OrderItem {
     @DoubleFromStringConverter() double? discount,
     @JsonKey(name: 'discount_type') String? discountType,
     @DoubleFromStringConverter() @JsonKey(name: 'net_price') double? netPrice,
-    @JsonKey(name: 'is_custom') required bool isCustom,
+    @BoolFromIntConverter() @JsonKey(name: 'is_custom') required bool isCustom,
     @JsonKey(name: 'cart_id') int? cartId,
     @JsonKey(name: 'product_id') int? productId,
     @JsonKey(name: 'order_id') required int orderId,

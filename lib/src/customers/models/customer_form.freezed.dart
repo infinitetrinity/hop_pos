@@ -21,16 +21,18 @@ CustomerForm _$CustomerFormFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CustomerForm {
   int? get id => throw _privateConstructorUsedError;
-  String? get nric => throw _privateConstructorUsedError;
   @JsonKey(name: 'full_name')
   String? get fullName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'mobile_no')
-  String? get mobileNo => throw _privateConstructorUsedError;
+  String? get nric => throw _privateConstructorUsedError;
+  DateTime? get dob => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
-  DateTime? get dob => throw _privateConstructorUsedError;
-  bool get isNew => throw _privateConstructorUsedError;
+  @JsonKey(name: 'mobile_no')
+  String? get mobileNo => throw _privateConstructorUsedError;
+  @JsonKey(name: 'send_account_invitation')
   bool get sendAccountInvitation => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_new')
+  bool get isNew => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,14 +48,14 @@ abstract class $CustomerFormCopyWith<$Res> {
   @useResult
   $Res call(
       {int? id,
-      String? nric,
       @JsonKey(name: 'full_name') String? fullName,
-      @JsonKey(name: 'mobile_no') String? mobileNo,
+      String? nric,
+      DateTime? dob,
       String? gender,
       String? email,
-      DateTime? dob,
-      bool isNew,
-      bool sendAccountInvitation});
+      @JsonKey(name: 'mobile_no') String? mobileNo,
+      @JsonKey(name: 'send_account_invitation') bool sendAccountInvitation,
+      @JsonKey(name: 'is_new') bool isNew});
 }
 
 /// @nodoc
@@ -70,32 +72,32 @@ class _$CustomerFormCopyWithImpl<$Res, $Val extends CustomerForm>
   @override
   $Res call({
     Object? id = freezed,
-    Object? nric = freezed,
     Object? fullName = freezed,
-    Object? mobileNo = freezed,
+    Object? nric = freezed,
+    Object? dob = freezed,
     Object? gender = freezed,
     Object? email = freezed,
-    Object? dob = freezed,
-    Object? isNew = null,
+    Object? mobileNo = freezed,
     Object? sendAccountInvitation = null,
+    Object? isNew = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      nric: freezed == nric
-          ? _value.nric
-          : nric // ignore: cast_nullable_to_non_nullable
-              as String?,
       fullName: freezed == fullName
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String?,
-      mobileNo: freezed == mobileNo
-          ? _value.mobileNo
-          : mobileNo // ignore: cast_nullable_to_non_nullable
+      nric: freezed == nric
+          ? _value.nric
+          : nric // ignore: cast_nullable_to_non_nullable
               as String?,
+      dob: freezed == dob
+          ? _value.dob
+          : dob // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
@@ -104,17 +106,17 @@ class _$CustomerFormCopyWithImpl<$Res, $Val extends CustomerForm>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      dob: freezed == dob
-          ? _value.dob
-          : dob // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      isNew: null == isNew
-          ? _value.isNew
-          : isNew // ignore: cast_nullable_to_non_nullable
-              as bool,
+      mobileNo: freezed == mobileNo
+          ? _value.mobileNo
+          : mobileNo // ignore: cast_nullable_to_non_nullable
+              as String?,
       sendAccountInvitation: null == sendAccountInvitation
           ? _value.sendAccountInvitation
           : sendAccountInvitation // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isNew: null == isNew
+          ? _value.isNew
+          : isNew // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -130,14 +132,14 @@ abstract class _$$CustomerFormImplCopyWith<$Res>
   @useResult
   $Res call(
       {int? id,
-      String? nric,
       @JsonKey(name: 'full_name') String? fullName,
-      @JsonKey(name: 'mobile_no') String? mobileNo,
+      String? nric,
+      DateTime? dob,
       String? gender,
       String? email,
-      DateTime? dob,
-      bool isNew,
-      bool sendAccountInvitation});
+      @JsonKey(name: 'mobile_no') String? mobileNo,
+      @JsonKey(name: 'send_account_invitation') bool sendAccountInvitation,
+      @JsonKey(name: 'is_new') bool isNew});
 }
 
 /// @nodoc
@@ -152,32 +154,32 @@ class __$$CustomerFormImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? nric = freezed,
     Object? fullName = freezed,
-    Object? mobileNo = freezed,
+    Object? nric = freezed,
+    Object? dob = freezed,
     Object? gender = freezed,
     Object? email = freezed,
-    Object? dob = freezed,
-    Object? isNew = null,
+    Object? mobileNo = freezed,
     Object? sendAccountInvitation = null,
+    Object? isNew = null,
   }) {
     return _then(_$CustomerFormImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      nric: freezed == nric
-          ? _value.nric
-          : nric // ignore: cast_nullable_to_non_nullable
-              as String?,
       fullName: freezed == fullName
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String?,
-      mobileNo: freezed == mobileNo
-          ? _value.mobileNo
-          : mobileNo // ignore: cast_nullable_to_non_nullable
+      nric: freezed == nric
+          ? _value.nric
+          : nric // ignore: cast_nullable_to_non_nullable
               as String?,
+      dob: freezed == dob
+          ? _value.dob
+          : dob // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
@@ -186,17 +188,17 @@ class __$$CustomerFormImplCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      dob: freezed == dob
-          ? _value.dob
-          : dob // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      isNew: null == isNew
-          ? _value.isNew
-          : isNew // ignore: cast_nullable_to_non_nullable
-              as bool,
+      mobileNo: freezed == mobileNo
+          ? _value.mobileNo
+          : mobileNo // ignore: cast_nullable_to_non_nullable
+              as String?,
       sendAccountInvitation: null == sendAccountInvitation
           ? _value.sendAccountInvitation
           : sendAccountInvitation // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isNew: null == isNew
+          ? _value.isNew
+          : isNew // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -207,14 +209,15 @@ class __$$CustomerFormImplCopyWithImpl<$Res>
 class _$CustomerFormImpl extends _CustomerForm {
   const _$CustomerFormImpl(
       {this.id,
-      this.nric,
       @JsonKey(name: 'full_name') this.fullName,
-      @JsonKey(name: 'mobile_no') this.mobileNo,
+      this.nric,
+      this.dob,
       this.gender,
       this.email,
-      this.dob,
-      this.isNew = false,
-      this.sendAccountInvitation = true})
+      @JsonKey(name: 'mobile_no') this.mobileNo,
+      @JsonKey(name: 'send_account_invitation')
+      this.sendAccountInvitation = true,
+      @JsonKey(name: 'is_new') this.isNew = false})
       : super._();
 
   factory _$CustomerFormImpl.fromJson(Map<String, dynamic> json) =>
@@ -223,29 +226,29 @@ class _$CustomerFormImpl extends _CustomerForm {
   @override
   final int? id;
   @override
-  final String? nric;
-  @override
   @JsonKey(name: 'full_name')
   final String? fullName;
   @override
-  @JsonKey(name: 'mobile_no')
-  final String? mobileNo;
+  final String? nric;
+  @override
+  final DateTime? dob;
   @override
   final String? gender;
   @override
   final String? email;
   @override
-  final DateTime? dob;
+  @JsonKey(name: 'mobile_no')
+  final String? mobileNo;
   @override
-  @JsonKey()
-  final bool isNew;
-  @override
-  @JsonKey()
+  @JsonKey(name: 'send_account_invitation')
   final bool sendAccountInvitation;
+  @override
+  @JsonKey(name: 'is_new')
+  final bool isNew;
 
   @override
   String toString() {
-    return 'CustomerForm(id: $id, nric: $nric, fullName: $fullName, mobileNo: $mobileNo, gender: $gender, email: $email, dob: $dob, isNew: $isNew, sendAccountInvitation: $sendAccountInvitation)';
+    return 'CustomerForm(id: $id, fullName: $fullName, nric: $nric, dob: $dob, gender: $gender, email: $email, mobileNo: $mobileNo, sendAccountInvitation: $sendAccountInvitation, isNew: $isNew)';
   }
 
   @override
@@ -254,23 +257,23 @@ class _$CustomerFormImpl extends _CustomerForm {
         (other.runtimeType == runtimeType &&
             other is _$CustomerFormImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.nric, nric) || other.nric == nric) &&
             (identical(other.fullName, fullName) ||
                 other.fullName == fullName) &&
-            (identical(other.mobileNo, mobileNo) ||
-                other.mobileNo == mobileNo) &&
+            (identical(other.nric, nric) || other.nric == nric) &&
+            (identical(other.dob, dob) || other.dob == dob) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.dob, dob) || other.dob == dob) &&
-            (identical(other.isNew, isNew) || other.isNew == isNew) &&
+            (identical(other.mobileNo, mobileNo) ||
+                other.mobileNo == mobileNo) &&
             (identical(other.sendAccountInvitation, sendAccountInvitation) ||
-                other.sendAccountInvitation == sendAccountInvitation));
+                other.sendAccountInvitation == sendAccountInvitation) &&
+            (identical(other.isNew, isNew) || other.isNew == isNew));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, nric, fullName, mobileNo,
-      gender, email, dob, isNew, sendAccountInvitation);
+  int get hashCode => Object.hash(runtimeType, id, fullName, nric, dob, gender,
+      email, mobileNo, sendAccountInvitation, isNew);
 
   @JsonKey(ignore: true)
   @override
@@ -289,14 +292,15 @@ class _$CustomerFormImpl extends _CustomerForm {
 abstract class _CustomerForm extends CustomerForm {
   const factory _CustomerForm(
       {final int? id,
-      final String? nric,
       @JsonKey(name: 'full_name') final String? fullName,
-      @JsonKey(name: 'mobile_no') final String? mobileNo,
+      final String? nric,
+      final DateTime? dob,
       final String? gender,
       final String? email,
-      final DateTime? dob,
-      final bool isNew,
-      final bool sendAccountInvitation}) = _$CustomerFormImpl;
+      @JsonKey(name: 'mobile_no') final String? mobileNo,
+      @JsonKey(name: 'send_account_invitation')
+      final bool sendAccountInvitation,
+      @JsonKey(name: 'is_new') final bool isNew}) = _$CustomerFormImpl;
   const _CustomerForm._() : super._();
 
   factory _CustomerForm.fromJson(Map<String, dynamic> json) =
@@ -305,23 +309,25 @@ abstract class _CustomerForm extends CustomerForm {
   @override
   int? get id;
   @override
-  String? get nric;
-  @override
   @JsonKey(name: 'full_name')
   String? get fullName;
   @override
-  @JsonKey(name: 'mobile_no')
-  String? get mobileNo;
+  String? get nric;
+  @override
+  DateTime? get dob;
   @override
   String? get gender;
   @override
   String? get email;
   @override
-  DateTime? get dob;
+  @JsonKey(name: 'mobile_no')
+  String? get mobileNo;
   @override
-  bool get isNew;
-  @override
+  @JsonKey(name: 'send_account_invitation')
   bool get sendAccountInvitation;
+  @override
+  @JsonKey(name: 'is_new')
+  bool get isNew;
   @override
   @JsonKey(ignore: true)
   _$$CustomerFormImplCopyWith<_$CustomerFormImpl> get copyWith =>

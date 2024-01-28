@@ -181,13 +181,14 @@ class __$$PosCartImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PosCartImpl implements _PosCart {
+class _$PosCartImpl extends _PosCart {
   const _$PosCartImpl(
       {this.screening,
       this.customer,
       this.registration,
       final List<Order>? orders})
-      : _orders = orders;
+      : _orders = orders,
+        super._();
 
   factory _$PosCartImpl.fromJson(Map<String, dynamic> json) =>
       _$$PosCartImplFromJson(json);
@@ -246,12 +247,13 @@ class _$PosCartImpl implements _PosCart {
   }
 }
 
-abstract class _PosCart implements PosCart {
+abstract class _PosCart extends PosCart {
   const factory _PosCart(
       {final Screening? screening,
       final Customer? customer,
       final ScreeningRegistration? registration,
       final List<Order>? orders}) = _$PosCartImpl;
+  const _PosCart._() : super._();
 
   factory _PosCart.fromJson(Map<String, dynamic> json) = _$PosCartImpl.fromJson;
 

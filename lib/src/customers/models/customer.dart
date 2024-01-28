@@ -7,14 +7,17 @@ part 'customer.g.dart';
 @freezed
 class Customer with _$Customer {
   const factory Customer({
-    required int id,
+    int? id,
     @JsonKey(name: 'full_name') required String fullName,
     String? nric,
     DateTime? dob,
     String? gender,
     String? email,
     @JsonKey(name: 'mobile_no') String? mobileNo,
-    @JsonKey(name: 'is_pending') required bool isPending,
+    @JsonKey(name: 'is_pending') @Default(false) bool isPending,
+    @JsonKey(name: 'send_account_invitation') @Default(false) bool sendAccountInvitation,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
+    @JsonKey(name: 'is_new') @Default(false) bool isNew,
   }) = _Customer;
 
   const Customer._();

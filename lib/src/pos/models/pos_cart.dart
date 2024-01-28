@@ -16,5 +16,7 @@ class PosCart with _$PosCart {
     List<Order>? orders,
   }) = _PosCart;
 
+  const PosCart._();
+
   factory PosCart.fromJson(Map<String, dynamic> json) => _$PosCartFromJson(json);
 }

@@ -41,7 +41,7 @@ class ScreeningRegistrationDao extends DatabaseAccessor<AppDb> with _$ScreeningR
       ],
     );
 
-    query.where(screeningRegistrationsTable.customerId.isValue(customer.id));
+    query.where(screeningRegistrationsTable.customerId.isValue(customer.id!));
     query.where(screeningsTable.id.isValue(screening.id));
 
     final index = coalesce([

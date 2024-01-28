@@ -11,14 +11,14 @@ class CustomerForm with _$CustomerForm {
 
   const factory CustomerForm({
     int? id,
-    String? nric,
     @JsonKey(name: 'full_name') String? fullName,
-    @JsonKey(name: 'mobile_no') String? mobileNo,
+    String? nric,
+    DateTime? dob,
     String? gender,
     String? email,
-    DateTime? dob,
-    @Default(false) bool isNew,
-    @Default(true) bool sendAccountInvitation,
+    @JsonKey(name: 'mobile_no') String? mobileNo,
+    @JsonKey(name: 'send_account_invitation') @Default(true) bool sendAccountInvitation,
+    @JsonKey(name: 'is_new') @Default(false) bool isNew,
   }) = _CustomerForm;
 
   factory CustomerForm.fromJson(Map<String, dynamic> json) => _$CustomerFormFromJson(json);

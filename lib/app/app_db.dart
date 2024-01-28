@@ -8,7 +8,6 @@ import 'package:hop_pos/src/company/models/company_table.dart';
 import 'package:hop_pos/src/customers/daos/customer_dao.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/customers/models/customers_table.dart';
-import 'package:hop_pos/src/customers/models/new_customer.dart';
 import 'package:hop_pos/src/customers/models/new_customers_table.dart';
 import 'package:hop_pos/src/order_extras/daos/order_extra_dao.dart';
 import 'package:hop_pos/src/order_extras/models/new_order_extra.dart';

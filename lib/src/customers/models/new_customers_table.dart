@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
-import 'package:hop_pos/src/customers/models/new_customer.dart';
+import 'package:hop_pos/src/customers/models/customer.dart';
 
-@UseRowClass(NewCustomer)
+@UseRowClass(Customer)
 class NewCustomersTable extends Table {
   @override
   String get tableName => 'new_customers';

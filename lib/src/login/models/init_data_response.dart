@@ -64,7 +64,7 @@ class InitDataResponse with _$InitDataResponse {
     return customers
         .map(
           (customer) => CustomersTableCompanion(
-            id: drift.Value(customer.id),
+            id: drift.Value(customer.id!),
             fullName: drift.Value(customer.fullName),
             nric: drift.Value(customer.nric),
             dob: drift.Value(customer.dob),

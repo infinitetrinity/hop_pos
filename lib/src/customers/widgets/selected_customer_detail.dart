@@ -50,13 +50,28 @@ class SelectedCustomerDetail extends ConsumerWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ],
-            if (registration == null) ...[
-              const SizedBox(height: 5),
-              const CustomBadge(
-                text: 'Walk-in',
-                bgColor: AppColors.purple600,
-              )
-            ],
+            Column(
+              children: [
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    if (customer.isNew) ...[
+                      const CustomBadge(
+                        text: 'New',
+                        bgColor: AppColors.blue400,
+                      ),
+                      const SizedBox(width: 5),
+                    ],
+                    if (registration == null) ...[
+                      const CustomBadge(
+                        text: 'Walk-in',
+                        bgColor: AppColors.purple600,
+                      )
+                    ],
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
       ),

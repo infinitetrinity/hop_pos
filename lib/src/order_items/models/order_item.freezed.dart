@@ -33,6 +33,7 @@ mixin _$OrderItem {
   @DoubleFromStringConverter()
   @JsonKey(name: 'net_price')
   double? get netPrice => throw _privateConstructorUsedError;
+  @BoolFromIntConverter()
   @JsonKey(name: 'is_custom')
   bool get isCustom => throw _privateConstructorUsedError;
   @JsonKey(name: 'cart_id')
@@ -62,7 +63,7 @@ abstract class $OrderItemCopyWith<$Res> {
       @DoubleFromStringConverter() double? discount,
       @JsonKey(name: 'discount_type') String? discountType,
       @DoubleFromStringConverter() @JsonKey(name: 'net_price') double? netPrice,
-      @JsonKey(name: 'is_custom') bool isCustom,
+      @BoolFromIntConverter() @JsonKey(name: 'is_custom') bool isCustom,
       @JsonKey(name: 'cart_id') int? cartId,
       @JsonKey(name: 'product_id') int? productId,
       @JsonKey(name: 'order_id') int orderId});
@@ -164,7 +165,7 @@ abstract class _$$OrderItemImplCopyWith<$Res>
       @DoubleFromStringConverter() double? discount,
       @JsonKey(name: 'discount_type') String? discountType,
       @DoubleFromStringConverter() @JsonKey(name: 'net_price') double? netPrice,
-      @JsonKey(name: 'is_custom') bool isCustom,
+      @BoolFromIntConverter() @JsonKey(name: 'is_custom') bool isCustom,
       @JsonKey(name: 'cart_id') int? cartId,
       @JsonKey(name: 'product_id') int? productId,
       @JsonKey(name: 'order_id') int orderId});
@@ -259,7 +260,9 @@ class _$OrderItemImpl implements _OrderItem {
       @DoubleFromStringConverter() this.discount,
       @JsonKey(name: 'discount_type') this.discountType,
       @DoubleFromStringConverter() @JsonKey(name: 'net_price') this.netPrice,
-      @JsonKey(name: 'is_custom') required this.isCustom,
+      @BoolFromIntConverter()
+      @JsonKey(name: 'is_custom')
+      required this.isCustom,
       @JsonKey(name: 'cart_id') this.cartId,
       @JsonKey(name: 'product_id') this.productId,
       @JsonKey(name: 'order_id') required this.orderId});
@@ -289,6 +292,7 @@ class _$OrderItemImpl implements _OrderItem {
   @JsonKey(name: 'net_price')
   final double? netPrice;
   @override
+  @BoolFromIntConverter()
   @JsonKey(name: 'is_custom')
   final bool isCustom;
   @override
@@ -374,7 +378,9 @@ abstract class _OrderItem implements OrderItem {
       @DoubleFromStringConverter()
       @JsonKey(name: 'net_price')
       final double? netPrice,
-      @JsonKey(name: 'is_custom') required final bool isCustom,
+      @BoolFromIntConverter()
+      @JsonKey(name: 'is_custom')
+      required final bool isCustom,
       @JsonKey(name: 'cart_id') final int? cartId,
       @JsonKey(name: 'product_id') final int? productId,
       @JsonKey(name: 'order_id') required final int orderId}) = _$OrderItemImpl;
@@ -404,6 +410,7 @@ abstract class _OrderItem implements OrderItem {
   @JsonKey(name: 'net_price')
   double? get netPrice;
   @override
+  @BoolFromIntConverter()
   @JsonKey(name: 'is_custom')
   bool get isCustom;
   @override

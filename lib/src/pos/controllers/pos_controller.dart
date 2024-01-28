@@ -1,4 +1,5 @@
 import 'package:hop_pos/src/customers/models/customer.dart';
+import 'package:hop_pos/src/customers/models/customer_form.dart';
 import 'package:hop_pos/src/pos/models/pos_cart.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
 import 'package:hop_pos/src/screening_registrations/repositories/screening_registration_repository.dart';
@@ -22,14 +23,21 @@ class PosController extends _$PosController {
     required Customer customer,
     ScreeningRegistration? registration,
   }) async {
-    if (registration == null) {
+    if (registration == null && state.screening != null) {
       final repo = ref.read(screeningRegistrationRepoProvider);
-      registration = state.screening == null ? null : await repo.findByCustomerAndScreening(customer, state.screening!);
+      registration = await repo.findByCustomerAndScreening(customer, state.screening!);
     }
 
     state = state.copyWith(
       customer: customer,
       registration: registration,
+    );
+  }
+
+  void addNewCustomer(CustomerForm data) {
+    state = state.copyWith(
+      customer: Customer.fromJson(data.toJson()),
+      registration: null,
     );
   }
 }

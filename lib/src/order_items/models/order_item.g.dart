@@ -19,7 +19,7 @@ _$OrderItemImpl _$$OrderItemImplFromJson(Map<String, dynamic> json) =>
       discountType: json['discount_type'] as String?,
       netPrice: const DoubleFromStringConverter()
           .fromJson(json['net_price'] as String?),
-      isCustom: json['is_custom'] as bool,
+      isCustom: const BoolFromIntConverter().fromJson(json['is_custom'] as int),
       cartId: json['cart_id'] as int?,
       productId: json['product_id'] as int?,
       orderId: json['order_id'] as int,
@@ -35,7 +35,7 @@ Map<String, dynamic> _$$OrderItemImplToJson(_$OrderItemImpl instance) =>
       'discount': const DoubleFromStringConverter().toJson(instance.discount),
       'discount_type': instance.discountType,
       'net_price': const DoubleFromStringConverter().toJson(instance.netPrice),
-      'is_custom': instance.isCustom,
+      'is_custom': const BoolFromIntConverter().toJson(instance.isCustom),
       'cart_id': instance.cartId,
       'product_id': instance.productId,
       'order_id': instance.orderId,
