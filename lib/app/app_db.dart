@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:hop_pos/src/common/converters/json_converter.dart';
 import 'package:hop_pos/src/company/daos/company_dao.dart';
 import 'package:hop_pos/src/company/models/company.dart';
 import 'package:hop_pos/src/company/models/company_table.dart';
@@ -61,6 +62,9 @@ import 'package:hop_pos/src/screening_venues/models/screening_venues_table.dart'
 import 'package:hop_pos/src/screenings/daos/screening_dao.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:hop_pos/src/screenings/models/screenings_table.dart';
+import 'package:hop_pos/src/to_sync_data/daos/to_sync_data_dao.dart';
+import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
+import 'package:hop_pos/src/to_sync_data/models/to_sync_data_table.dart';
 import 'package:hop_pos/src/users/daos/user_dao.dart';
 import 'package:hop_pos/src/users/models/user.dart';
 import 'package:hop_pos/src/users/models/users_table.dart';
@@ -103,6 +107,7 @@ AppDb appDb(AppDbRef ref) {
   NewOrderPaymentsTable,
   NewOrdersTable,
   NewScreeningRegistrationsTable,
+  ToSyncDataTable,
 ], daos: [
   UserDao,
   PosLicenseDao,
@@ -121,6 +126,7 @@ AppDb appDb(AppDbRef ref) {
   OrderItemDao,
   OrderExtraDao,
   OrderPaymentDao,
+  ToSycnDataDao,
 ])
 class AppDb extends _$AppDb {
   AppDb._init() : super(_initDb());

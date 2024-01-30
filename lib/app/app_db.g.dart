@@ -6413,6 +6413,230 @@ class NewScreeningRegistrationsTableCompanion
   }
 }
 
+class $ToSyncDataTableTable extends ToSyncDataTable
+    with TableInfo<$ToSyncDataTableTable, ToSyncData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ToSyncDataTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _modelMeta = const VerificationMeta('model');
+  @override
+  late final GeneratedColumn<String> model = GeneratedColumn<String>(
+      'model', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _modelIdMeta =
+      const VerificationMeta('modelId');
+  @override
+  late final GeneratedColumn<int> modelId = GeneratedColumn<int>(
+      'model_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _actionMeta = const VerificationMeta('action');
+  @override
+  late final GeneratedColumn<String> action = GeneratedColumn<String>(
+      'action', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _valueMeta = const VerificationMeta('value');
+  @override
+  late final GeneratedColumnWithTypeConverter<Map<String, dynamic>, String>
+      value = GeneratedColumn<String>('value', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<Map<String, dynamic>>(
+              $ToSyncDataTableTable.$convertervalue);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, model, modelId, action, value, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'to_sync_data';
+  @override
+  VerificationContext validateIntegrity(Insertable<ToSyncData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('model')) {
+      context.handle(
+          _modelMeta, model.isAcceptableOrUnknown(data['model']!, _modelMeta));
+    } else if (isInserting) {
+      context.missing(_modelMeta);
+    }
+    if (data.containsKey('model_id')) {
+      context.handle(_modelIdMeta,
+          modelId.isAcceptableOrUnknown(data['model_id']!, _modelIdMeta));
+    } else if (isInserting) {
+      context.missing(_modelIdMeta);
+    }
+    if (data.containsKey('action')) {
+      context.handle(_actionMeta,
+          action.isAcceptableOrUnknown(data['action']!, _actionMeta));
+    } else if (isInserting) {
+      context.missing(_actionMeta);
+    }
+    context.handle(_valueMeta, const VerificationResult.success());
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ToSyncData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ToSyncData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      model: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}model'])!,
+      modelId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}model_id'])!,
+      action: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}action'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      value: $ToSyncDataTableTable.$convertervalue.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}value'])!),
+    );
+  }
+
+  @override
+  $ToSyncDataTableTable createAlias(String alias) {
+    return $ToSyncDataTableTable(attachedDatabase, alias);
+  }
+
+  static TypeConverter<Map<String, dynamic>, String> $convertervalue =
+      const JsonConverter();
+}
+
+class ToSyncDataTableCompanion extends UpdateCompanion<ToSyncData> {
+  final Value<int> id;
+  final Value<String> model;
+  final Value<int> modelId;
+  final Value<String> action;
+  final Value<Map<String, dynamic>> value;
+  final Value<DateTime> createdAt;
+  const ToSyncDataTableCompanion({
+    this.id = const Value.absent(),
+    this.model = const Value.absent(),
+    this.modelId = const Value.absent(),
+    this.action = const Value.absent(),
+    this.value = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  ToSyncDataTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String model,
+    required int modelId,
+    required String action,
+    required Map<String, dynamic> value,
+    required DateTime createdAt,
+  })  : model = Value(model),
+        modelId = Value(modelId),
+        action = Value(action),
+        value = Value(value),
+        createdAt = Value(createdAt);
+  static Insertable<ToSyncData> custom({
+    Expression<int>? id,
+    Expression<String>? model,
+    Expression<int>? modelId,
+    Expression<String>? action,
+    Expression<String>? value,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (model != null) 'model': model,
+      if (modelId != null) 'model_id': modelId,
+      if (action != null) 'action': action,
+      if (value != null) 'value': value,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  ToSyncDataTableCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? model,
+      Value<int>? modelId,
+      Value<String>? action,
+      Value<Map<String, dynamic>>? value,
+      Value<DateTime>? createdAt}) {
+    return ToSyncDataTableCompanion(
+      id: id ?? this.id,
+      model: model ?? this.model,
+      modelId: modelId ?? this.modelId,
+      action: action ?? this.action,
+      value: value ?? this.value,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (model.present) {
+      map['model'] = Variable<String>(model.value);
+    }
+    if (modelId.present) {
+      map['model_id'] = Variable<int>(modelId.value);
+    }
+    if (action.present) {
+      map['action'] = Variable<String>(action.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<String>(
+          $ToSyncDataTableTable.$convertervalue.toSql(value.value));
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ToSyncDataTableCompanion(')
+          ..write('id: $id, ')
+          ..write('model: $model, ')
+          ..write('modelId: $modelId, ')
+          ..write('action: $action, ')
+          ..write('value: $value, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   late final $UsersTableTable usersTable = $UsersTableTable(this);
@@ -6455,6 +6679,10 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final $NewScreeningRegistrationsTableTable
       newScreeningRegistrationsTable =
       $NewScreeningRegistrationsTableTable(this);
+  late final $ToSyncDataTableTable toSyncDataTable =
+      $ToSyncDataTableTable(this);
+  late final Index toSyncDataModelId = Index('to_sync_data_model_id',
+      'CREATE INDEX to_sync_data_model_id ON to_sync_data (model_id)');
   late final UserDao userDao = UserDao(this as AppDb);
   late final PosLicenseDao posLicenseDao = PosLicenseDao(this as AppDb);
   late final CompanyDao companyDao = CompanyDao(this as AppDb);
@@ -6478,6 +6706,7 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final OrderItemDao orderItemDao = OrderItemDao(this as AppDb);
   late final OrderExtraDao orderExtraDao = OrderExtraDao(this as AppDb);
   late final OrderPaymentDao orderPaymentDao = OrderPaymentDao(this as AppDb);
+  late final ToSycnDataDao toSycnDataDao = ToSycnDataDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -6505,7 +6734,9 @@ abstract class _$AppDb extends GeneratedDatabase {
         newOrderItemsTable,
         newOrderPaymentsTable,
         newOrdersTable,
-        newScreeningRegistrationsTable
+        newScreeningRegistrationsTable,
+        toSyncDataTable,
+        toSyncDataModelId
       ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules(
