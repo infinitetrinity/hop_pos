@@ -6430,11 +6430,10 @@ class $ToSyncDataTableTable extends ToSyncDataTable
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
   static const VerificationMeta _modelMeta = const VerificationMeta('model');
   @override
-  late final GeneratedColumn<String> model = GeneratedColumn<String>(
-      'model', aliasedName, false,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
-      type: DriftSqlType.string,
-      requiredDuringInsert: true);
+  late final GeneratedColumnWithTypeConverter<ToSyncModels, String> model =
+      GeneratedColumn<String>('model', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<ToSyncModels>($ToSyncDataTableTable.$convertermodel);
   static const VerificationMeta _modelIdMeta =
       const VerificationMeta('modelId');
   @override
@@ -6443,11 +6442,10 @@ class $ToSyncDataTableTable extends ToSyncDataTable
       type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _actionMeta = const VerificationMeta('action');
   @override
-  late final GeneratedColumn<String> action = GeneratedColumn<String>(
-      'action', aliasedName, false,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
-      type: DriftSqlType.string,
-      requiredDuringInsert: true);
+  late final GeneratedColumnWithTypeConverter<ToSyncActions, String> action =
+      GeneratedColumn<String>('action', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<ToSyncActions>($ToSyncDataTableTable.$converteraction);
   static const VerificationMeta _valueMeta = const VerificationMeta('value');
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, dynamic>, String>
@@ -6477,24 +6475,14 @@ class $ToSyncDataTableTable extends ToSyncDataTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('model')) {
-      context.handle(
-          _modelMeta, model.isAcceptableOrUnknown(data['model']!, _modelMeta));
-    } else if (isInserting) {
-      context.missing(_modelMeta);
-    }
+    context.handle(_modelMeta, const VerificationResult.success());
     if (data.containsKey('model_id')) {
       context.handle(_modelIdMeta,
           modelId.isAcceptableOrUnknown(data['model_id']!, _modelIdMeta));
     } else if (isInserting) {
       context.missing(_modelIdMeta);
     }
-    if (data.containsKey('action')) {
-      context.handle(_actionMeta,
-          action.isAcceptableOrUnknown(data['action']!, _actionMeta));
-    } else if (isInserting) {
-      context.missing(_actionMeta);
-    }
+    context.handle(_actionMeta, const VerificationResult.success());
     context.handle(_valueMeta, const VerificationResult.success());
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
@@ -6513,12 +6501,14 @@ class $ToSyncDataTableTable extends ToSyncDataTable
     return ToSyncData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      model: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}model'])!,
+      model: $ToSyncDataTableTable.$convertermodel.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}model'])!),
       modelId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}model_id'])!,
-      action: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}action'])!,
+      action: $ToSyncDataTableTable.$converteraction.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}action'])!),
       createdAt: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
       value: $ToSyncDataTableTable.$convertervalue.fromSql(attachedDatabase
@@ -6532,15 +6522,19 @@ class $ToSyncDataTableTable extends ToSyncDataTable
     return $ToSyncDataTableTable(attachedDatabase, alias);
   }
 
+  static JsonTypeConverter2<ToSyncModels, String, String> $convertermodel =
+      const EnumNameConverter<ToSyncModels>(ToSyncModels.values);
+  static JsonTypeConverter2<ToSyncActions, String, String> $converteraction =
+      const EnumNameConverter<ToSyncActions>(ToSyncActions.values);
   static TypeConverter<Map<String, dynamic>, String> $convertervalue =
       const JsonConverter();
 }
 
 class ToSyncDataTableCompanion extends UpdateCompanion<ToSyncData> {
   final Value<int> id;
-  final Value<String> model;
+  final Value<ToSyncModels> model;
   final Value<int> modelId;
-  final Value<String> action;
+  final Value<ToSyncActions> action;
   final Value<Map<String, dynamic>> value;
   final Value<DateTime> createdAt;
   const ToSyncDataTableCompanion({
@@ -6553,9 +6547,9 @@ class ToSyncDataTableCompanion extends UpdateCompanion<ToSyncData> {
   });
   ToSyncDataTableCompanion.insert({
     this.id = const Value.absent(),
-    required String model,
+    required ToSyncModels model,
     required int modelId,
-    required String action,
+    required ToSyncActions action,
     required Map<String, dynamic> value,
     required DateTime createdAt,
   })  : model = Value(model),
@@ -6583,9 +6577,9 @@ class ToSyncDataTableCompanion extends UpdateCompanion<ToSyncData> {
 
   ToSyncDataTableCompanion copyWith(
       {Value<int>? id,
-      Value<String>? model,
+      Value<ToSyncModels>? model,
       Value<int>? modelId,
-      Value<String>? action,
+      Value<ToSyncActions>? action,
       Value<Map<String, dynamic>>? value,
       Value<DateTime>? createdAt}) {
     return ToSyncDataTableCompanion(
@@ -6605,13 +6599,15 @@ class ToSyncDataTableCompanion extends UpdateCompanion<ToSyncData> {
       map['id'] = Variable<int>(id.value);
     }
     if (model.present) {
-      map['model'] = Variable<String>(model.value);
+      map['model'] = Variable<String>(
+          $ToSyncDataTableTable.$convertermodel.toSql(model.value));
     }
     if (modelId.present) {
       map['model_id'] = Variable<int>(modelId.value);
     }
     if (action.present) {
-      map['action'] = Variable<String>(action.value);
+      map['action'] = Variable<String>(
+          $ToSyncDataTableTable.$converteraction.toSql(action.value));
     }
     if (value.present) {
       map['value'] = Variable<String>(
@@ -6707,6 +6703,7 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final OrderExtraDao orderExtraDao = OrderExtraDao(this as AppDb);
   late final OrderPaymentDao orderPaymentDao = OrderPaymentDao(this as AppDb);
   late final ToSycnDataDao toSycnDataDao = ToSycnDataDao(this as AppDb);
+  late final NewCustomerDao newCustomerDao = NewCustomerDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();

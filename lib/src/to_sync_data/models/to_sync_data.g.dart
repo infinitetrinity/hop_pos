@@ -9,9 +9,9 @@ part of 'to_sync_data.dart';
 _$ToSyncDataImpl _$$ToSyncDataImplFromJson(Map<String, dynamic> json) =>
     _$ToSyncDataImpl(
       id: json['id'] as int,
-      model: json['model'] as String,
+      model: $enumDecode(_$ToSyncModelsEnumMap, json['model']),
       modelId: json['model_id'] as int,
-      action: json['action'] as String,
+      action: $enumDecode(_$ToSyncActionsEnumMap, json['action']),
       createdAt: DateTime.parse(json['created_at'] as String),
       value: json['value'] as Map<String, dynamic>,
     );
@@ -19,9 +19,17 @@ _$ToSyncDataImpl _$$ToSyncDataImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$ToSyncDataImplToJson(_$ToSyncDataImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'model': instance.model,
+      'model': _$ToSyncModelsEnumMap[instance.model]!,
       'model_id': instance.modelId,
-      'action': instance.action,
+      'action': _$ToSyncActionsEnumMap[instance.action]!,
       'created_at': instance.createdAt.toIso8601String(),
       'value': instance.value,
     };
+
+const _$ToSyncModelsEnumMap = {
+  ToSyncModels.customers: 'customers',
+};
+
+const _$ToSyncActionsEnumMap = {
+  ToSyncActions.update: 'update',
+};

@@ -8,9 +8,9 @@ class ToSyncDataTable extends Table {
   @override
   String get tableName => 'to_sync_data';
   IntColumn get id => integer().autoIncrement()();
-  TextColumn get model => text().withLength(max: 255)();
+  TextColumn get model => textEnum<ToSyncModels>()();
   IntColumn get modelId => integer()();
-  TextColumn get action => text().withLength(max: 255)();
+  TextColumn get action => textEnum<ToSyncActions>()();
   TextColumn get value => text().map(const JsonConverter())();
   DateTimeColumn get createdAt => dateTime()();
 }

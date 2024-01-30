@@ -1,26 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'pos_controller.dart';
+part of 'new_customer_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$posControllerHash() => r'b6e18bb6edce70939dab67b182ef5f6612ab6a59';
+String _$newCustomerRepoHash() => r'e2a3cf6a0ccbb0747a1b11640a2b0a4751cb3a2b';
 
-/// See also [PosController].
-@ProviderFor(PosController)
-final posControllerProvider =
-    AutoDisposeNotifierProvider<PosController, PosCart>.internal(
-  PosController.new,
-  name: r'posControllerProvider',
+/// See also [newCustomerRepo].
+@ProviderFor(newCustomerRepo)
+final newCustomerRepoProvider =
+    AutoDisposeProvider<NewCustomerRepository>.internal(
+  newCustomerRepo,
+  name: r'newCustomerRepoProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$posControllerHash,
+      : _$newCustomerRepoHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$PosController = AutoDisposeNotifier<PosCart>;
+typedef NewCustomerRepoRef = AutoDisposeProviderRef<NewCustomerRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

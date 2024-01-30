@@ -1,4 +1,7 @@
+import 'package:drift/drift.dart' as drift;
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hop_pos/app/app_db.dart';
+import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
 import 'package:intl/intl.dart';
 
 part 'customer.freezed.dart';
@@ -15,14 +18,52 @@ class Customer with _$Customer {
     String? email,
     @JsonKey(name: 'mobile_no') String? mobileNo,
     @JsonKey(name: 'is_pending') @Default(false) bool isPending,
-    @JsonKey(name: 'send_account_invitation') @Default(false) bool sendAccountInvitation,
+    @JsonKey(name: 'send_account_invitation')
+    @Default(false)
+    bool sendAccountInvitation,
     @JsonKey(name: 'created_at') DateTime? createdAt,
     @JsonKey(name: 'is_new') @Default(false) bool isNew,
   }) = _Customer;
 
   const Customer._();
 
-  factory Customer.fromJson(Map<String, dynamic> json) => _$CustomerFromJson(json);
+  dynamic toData() {
+    return isNew
+        ? NewCustomersTableCompanion(
+            id: drift.Value.ofNullable(id),
+            fullName: drift.Value(fullName),
+            nric: drift.Value.ofNullable(nric),
+            dob: drift.Value(dob),
+            gender: drift.Value(gender),
+            email: drift.Value(email),
+            mobileNo: drift.Value(mobileNo),
+            sendAccountInvitation: drift.Value(sendAccountInvitation),
+            createdAt: drift.Value(createdAt ?? DateTime.now()),
+          )
+        : CustomersTableCompanion(
+            id: drift.Value.ofNullable(id),
+            fullName: drift.Value(fullName),
+            nric: drift.Value(nric),
+            dob: drift.Value(dob),
+            gender: drift.Value(gender),
+            email: drift.Value(email),
+            mobileNo: drift.Value(mobileNo),
+            isPending: drift.Value(isPending),
+          );
+  }
+
+  ToSyncDataTableCompanion toSyncData() {
+    return ToSyncDataTableCompanion(
+      model: const drift.Value(ToSyncModels.customers),
+      modelId: drift.Value(id!),
+      action: const drift.Value(ToSyncActions.update),
+      createdAt: drift.Value(DateTime.now()),
+      value: drift.Value(toJson()),
+    );
+  }
+
+  factory Customer.fromJson(Map<String, dynamic> json) =>
+      _$CustomerFromJson(json);
 
   static List<Customer> fromJsonList(dynamic data) {
     return List<Customer>.from(

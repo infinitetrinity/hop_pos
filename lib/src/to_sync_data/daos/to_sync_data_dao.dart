@@ -20,9 +20,9 @@ class ToSycnDataDao extends DatabaseAccessor<AppDb> with _$ToSycnDataDaoMixin {
 
   Future<bool> deleteDuplicate(ToSyncDataTableCompanion data) async {
     final count = await (db.delete(toSyncDataTable)
-          ..where((tbl) => tbl.model.equals(data.model.value))
+          ..where((tbl) => tbl.model.equals(data.model.value.name))
           ..where((tbl) => tbl.modelId.equals(data.modelId.value))
-          ..where((tbl) => tbl.action.equals(data.action.value)))
+          ..where((tbl) => tbl.action.equals(data.action.value.name)))
         .go();
     return count > 0;
   }

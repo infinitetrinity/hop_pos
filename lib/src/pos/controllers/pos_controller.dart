@@ -25,7 +25,8 @@ class PosController extends _$PosController {
   }) async {
     if (registration == null && state.screening != null) {
       final repo = ref.read(screeningRegistrationRepoProvider);
-      registration = await repo.findByCustomerAndScreening(customer, state.screening!);
+      registration =
+          await repo.findByCustomerAndScreening(customer, state.screening!);
     }
 
     state = state.copyWith(
@@ -38,6 +39,12 @@ class PosController extends _$PosController {
     state = state.copyWith(
       customer: Customer.fromJson(data.toJson()),
       registration: null,
+    );
+  }
+
+  void updateCustomer(CustomerForm data) {
+    state = state.copyWith(
+      customer: Customer.fromJson(data.toJson()),
     );
   }
 }

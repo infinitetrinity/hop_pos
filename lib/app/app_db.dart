@@ -7,6 +7,7 @@ import 'package:hop_pos/src/company/daos/company_dao.dart';
 import 'package:hop_pos/src/company/models/company.dart';
 import 'package:hop_pos/src/company/models/company_table.dart';
 import 'package:hop_pos/src/customers/daos/customer_dao.dart';
+import 'package:hop_pos/src/customers/daos/new_customer_dao.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/customers/models/customers_table.dart';
 import 'package:hop_pos/src/customers/models/new_customers_table.dart';
@@ -127,6 +128,7 @@ AppDb appDb(AppDbRef ref) {
   OrderExtraDao,
   OrderPaymentDao,
   ToSycnDataDao,
+  NewCustomerDao,
 ])
 class AppDb extends _$AppDb {
   AppDb._init() : super(_initDb());

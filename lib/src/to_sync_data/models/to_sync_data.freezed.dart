@@ -21,10 +21,10 @@ ToSyncData _$ToSyncDataFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ToSyncData {
   int get id => throw _privateConstructorUsedError;
-  String get model => throw _privateConstructorUsedError;
+  ToSyncModels get model => throw _privateConstructorUsedError;
   @JsonKey(name: 'model_id')
   int get modelId => throw _privateConstructorUsedError;
-  String get action => throw _privateConstructorUsedError;
+  ToSyncActions get action => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
   Map<String, dynamic> get value => throw _privateConstructorUsedError;
@@ -43,9 +43,9 @@ abstract class $ToSyncDataCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      String model,
+      ToSyncModels model,
       @JsonKey(name: 'model_id') int modelId,
-      String action,
+      ToSyncActions action,
       @JsonKey(name: 'created_at') DateTime createdAt,
       Map<String, dynamic> value});
 }
@@ -78,7 +78,7 @@ class _$ToSyncDataCopyWithImpl<$Res, $Val extends ToSyncData>
       model: null == model
           ? _value.model
           : model // ignore: cast_nullable_to_non_nullable
-              as String,
+              as ToSyncModels,
       modelId: null == modelId
           ? _value.modelId
           : modelId // ignore: cast_nullable_to_non_nullable
@@ -86,7 +86,7 @@ class _$ToSyncDataCopyWithImpl<$Res, $Val extends ToSyncData>
       action: null == action
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
-              as String,
+              as ToSyncActions,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -109,9 +109,9 @@ abstract class _$$ToSyncDataImplCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      String model,
+      ToSyncModels model,
       @JsonKey(name: 'model_id') int modelId,
-      String action,
+      ToSyncActions action,
       @JsonKey(name: 'created_at') DateTime createdAt,
       Map<String, dynamic> value});
 }
@@ -142,7 +142,7 @@ class __$$ToSyncDataImplCopyWithImpl<$Res>
       model: null == model
           ? _value.model
           : model // ignore: cast_nullable_to_non_nullable
-              as String,
+              as ToSyncModels,
       modelId: null == modelId
           ? _value.modelId
           : modelId // ignore: cast_nullable_to_non_nullable
@@ -150,7 +150,7 @@ class __$$ToSyncDataImplCopyWithImpl<$Res>
       action: null == action
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
-              as String,
+              as ToSyncActions,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -181,12 +181,12 @@ class _$ToSyncDataImpl implements _ToSyncData {
   @override
   final int id;
   @override
-  final String model;
+  final ToSyncModels model;
   @override
   @JsonKey(name: 'model_id')
   final int modelId;
   @override
-  final String action;
+  final ToSyncActions action;
   @override
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
@@ -239,9 +239,9 @@ class _$ToSyncDataImpl implements _ToSyncData {
 abstract class _ToSyncData implements ToSyncData {
   const factory _ToSyncData(
       {required final int id,
-      required final String model,
+      required final ToSyncModels model,
       @JsonKey(name: 'model_id') required final int modelId,
-      required final String action,
+      required final ToSyncActions action,
       @JsonKey(name: 'created_at') required final DateTime createdAt,
       required final Map<String, dynamic> value}) = _$ToSyncDataImpl;
 
@@ -251,12 +251,12 @@ abstract class _ToSyncData implements ToSyncData {
   @override
   int get id;
   @override
-  String get model;
+  ToSyncModels get model;
   @override
   @JsonKey(name: 'model_id')
   int get modelId;
   @override
-  String get action;
+  ToSyncActions get action;
   @override
   @JsonKey(name: 'created_at')
   DateTime get createdAt;
