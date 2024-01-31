@@ -23,12 +23,15 @@ class ProductCategoriesHidden {
 
   static Future<void> hideCategory(ProductCategory category) async {
     final ids = await getHiddenCategories();
-    await _storage.write(key: _key, value: [...ids ?? [], category.id].join(','));
+    await _storage.write(
+        key: _key, value: [...ids ?? [], category.id].join(','));
   }
 
   static Future<void> unhideCategory(ProductCategory category) async {
     final ids = await getHiddenCategories();
     ids?.remove(category.id);
-    await _storage.write(key: _key, value: ids?.join(',').isNullOrEmpty == true ? null : ids?.join(','));
+    await _storage.write(
+        key: _key,
+        value: ids?.join(',').isNullOrEmpty == true ? null : ids?.join(','));
   }
 }

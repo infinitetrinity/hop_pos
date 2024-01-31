@@ -13,7 +13,7 @@ part 'screening_dao.g.dart';
 class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
   ScreeningDao(AppDb db) : super(db);
 
-  Future<List<Screening>> getUpcoming() async {
+  Future<List<Screening>> getUpcoming({int days = 7}) async {
     final query = select(screeningsTable).join(
       [
         innerJoin(
@@ -28,17 +28,20 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
 
     query.where(screeningTimeslotsTable.dateAndTime.isBetweenValues(
       DateTime.now(),
-      DateTime.now().add(const Duration(days: 7)),
+      DateTime.now().add(Duration(days: days)),
     ));
     query.orderBy([OrderingTerm.asc(screeningTimeslotsTable.dateAndTime)]);
     query.groupBy([screeningsTable.id]);
     query.limit(60);
 
-    return (await query.get()).map((row) => row.readTable(screeningsTable)).toList();
+    return (await query.get())
+        .map((row) => row.readTable(screeningsTable))
+        .toList();
   }
 
   Future<List<Screening>> search(String search) {
-    final query = select(screeningsTable)..where((table) => table.name.like("%$search%"));
+    final query = select(screeningsTable)
+      ..where((table) => table.name.like("%$search%"));
     query.orderBy([(table) => OrderingTerm.desc(table.id)]);
     query.limit(20);
     return query.get();
@@ -48,7 +51,8 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
     return await into(screeningsTable).insertReturning(screening);
   }
 
-  Future<List<Screening>> insertScreenings(List<ScreeningsTableCompanion> screenings) async {
+  Future<List<Screening>> insertScreenings(
+      List<ScreeningsTableCompanion> screenings) async {
     return await transaction(() async {
       List<Future<Screening>> insertFutures = [];
 

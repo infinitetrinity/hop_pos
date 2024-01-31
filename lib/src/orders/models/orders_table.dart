@@ -3,6 +3,10 @@ import 'package:hop_pos/src/customers/models/customers_table.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/screenings/models/screenings_table.dart';
 
+@TableIndex(name: 'orders_id', columns: {#id}, unique: true)
+@TableIndex(name: 'orders_license_id', columns: {#licenseId})
+@TableIndex(name: 'orders_screening_id', columns: {#screeningId})
+@TableIndex(name: 'orders_customer_id', columns: {#customerId})
 @UseRowClass(Order)
 class OrdersTable extends Table {
   @override
@@ -20,10 +24,7 @@ class OrdersTable extends Table {
   RealColumn get netTotal => real()();
   RealColumn get rounding => real().nullable()();
   IntColumn get licenseId => integer()();
-  IntColumn get screeningId => integer()
-      .nullable()
-      .references(ScreeningsTable, #id, onDelete: KeyAction.cascade)();
-  IntColumn get customerId =>
-      integer().references(CustomersTable, #id, onDelete: KeyAction.cascade)();
+  IntColumn get screeningId => integer().nullable().references(ScreeningsTable, #id, onDelete: KeyAction.cascade)();
+  IntColumn get customerId => integer().references(CustomersTable, #id, onDelete: KeyAction.cascade)();
   DateTimeColumn get createdAt => dateTime()();
 }

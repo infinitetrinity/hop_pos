@@ -10,6 +10,7 @@ _$OrderImpl _$$OrderImplFromJson(Map<String, dynamic> json) => _$OrderImpl(
       id: json['id'] as int,
       isStf: json['is_stf'] as bool,
       isUtf: json['is_utf'] as bool,
+      eReceipt: json['e_receipt'] as bool?,
       salesNote: json['sales_note'] as String?,
       invoiceNo: json['invoice_no'] as String,
       invoicePrefix: json['invoice_prefix'] as String,
@@ -24,10 +25,12 @@ _$OrderImpl _$$OrderImplFromJson(Map<String, dynamic> json) => _$OrderImpl(
           .fromJson(json['net_total'] as String?),
       rounding: const DoubleFromStringConverter()
           .fromJson(json['rounding'] as String?),
-      licenseId: json['license_id'] as int,
+      licenseId: json['license_id'] as int?,
       screeningId: json['screening_id'] as int?,
-      customerId: json['customer_id'] as int,
+      customerId: json['customer_id'] as int?,
+      customerNric: json['customer_nric'] as String?,
       createdAt: DateTime.parse(json['created_at'] as String),
+      isNew: json['is_new'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$OrderImplToJson(_$OrderImpl instance) =>
@@ -35,6 +38,7 @@ Map<String, dynamic> _$$OrderImplToJson(_$OrderImpl instance) =>
       'id': instance.id,
       'is_stf': instance.isStf,
       'is_utf': instance.isUtf,
+      'e_receipt': instance.eReceipt,
       'sales_note': instance.salesNote,
       'invoice_no': instance.invoiceNo,
       'invoice_prefix': instance.invoicePrefix,
@@ -48,5 +52,7 @@ Map<String, dynamic> _$$OrderImplToJson(_$OrderImpl instance) =>
       'license_id': instance.licenseId,
       'screening_id': instance.screeningId,
       'customer_id': instance.customerId,
+      'customer_nric': instance.customerNric,
       'created_at': instance.createdAt.toIso8601String(),
+      'is_new': instance.isNew,
     };

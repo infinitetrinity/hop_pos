@@ -21,11 +21,16 @@ ScreeningRegistration _$ScreeningRegistrationFromJson(
 
 /// @nodoc
 mixin _$ScreeningRegistration {
+  int? get id => throw _privateConstructorUsedError;
   String? get index => throw _privateConstructorUsedError;
+  @JsonKey(name: 'customer_nric')
+  String? get customerNric => throw _privateConstructorUsedError;
   @JsonKey(name: 'customer_id')
-  int get customerId => throw _privateConstructorUsedError;
+  int? get customerId => throw _privateConstructorUsedError;
   @JsonKey(name: 'timeslot_id')
   int get timeslotId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
+  DateTime? get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,9 +45,12 @@ abstract class $ScreeningRegistrationCopyWith<$Res> {
       _$ScreeningRegistrationCopyWithImpl<$Res, ScreeningRegistration>;
   @useResult
   $Res call(
-      {String? index,
-      @JsonKey(name: 'customer_id') int customerId,
-      @JsonKey(name: 'timeslot_id') int timeslotId});
+      {int? id,
+      String? index,
+      @JsonKey(name: 'customer_nric') String? customerNric,
+      @JsonKey(name: 'customer_id') int? customerId,
+      @JsonKey(name: 'timeslot_id') int timeslotId,
+      @JsonKey(name: 'created_at') DateTime? createdAt});
 }
 
 /// @nodoc
@@ -59,23 +67,38 @@ class _$ScreeningRegistrationCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? index = freezed,
-    Object? customerId = null,
+    Object? customerNric = freezed,
+    Object? customerId = freezed,
     Object? timeslotId = null,
+    Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       index: freezed == index
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
               as String?,
-      customerId: null == customerId
+      customerNric: freezed == customerNric
+          ? _value.customerNric
+          : customerNric // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerId: freezed == customerId
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       timeslotId: null == timeslotId
           ? _value.timeslotId
           : timeslotId // ignore: cast_nullable_to_non_nullable
               as int,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -90,9 +113,12 @@ abstract class _$$ScreeningRegistrationImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? index,
-      @JsonKey(name: 'customer_id') int customerId,
-      @JsonKey(name: 'timeslot_id') int timeslotId});
+      {int? id,
+      String? index,
+      @JsonKey(name: 'customer_nric') String? customerNric,
+      @JsonKey(name: 'customer_id') int? customerId,
+      @JsonKey(name: 'timeslot_id') int timeslotId,
+      @JsonKey(name: 'created_at') DateTime? createdAt});
 }
 
 /// @nodoc
@@ -107,23 +133,38 @@ class __$$ScreeningRegistrationImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? index = freezed,
-    Object? customerId = null,
+    Object? customerNric = freezed,
+    Object? customerId = freezed,
     Object? timeslotId = null,
+    Object? createdAt = freezed,
   }) {
     return _then(_$ScreeningRegistrationImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       index: freezed == index
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
               as String?,
-      customerId: null == customerId
+      customerNric: freezed == customerNric
+          ? _value.customerNric
+          : customerNric // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customerId: freezed == customerId
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       timeslotId: null == timeslotId
           ? _value.timeslotId
           : timeslotId // ignore: cast_nullable_to_non_nullable
               as int,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -132,25 +173,36 @@ class __$$ScreeningRegistrationImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ScreeningRegistrationImpl implements _ScreeningRegistration {
   const _$ScreeningRegistrationImpl(
-      {this.index,
-      @JsonKey(name: 'customer_id') required this.customerId,
-      @JsonKey(name: 'timeslot_id') required this.timeslotId});
+      {this.id,
+      this.index,
+      @JsonKey(name: 'customer_nric') this.customerNric,
+      @JsonKey(name: 'customer_id') this.customerId,
+      @JsonKey(name: 'timeslot_id') required this.timeslotId,
+      @JsonKey(name: 'created_at') this.createdAt});
 
   factory _$ScreeningRegistrationImpl.fromJson(Map<String, dynamic> json) =>
       _$$ScreeningRegistrationImplFromJson(json);
 
   @override
+  final int? id;
+  @override
   final String? index;
   @override
+  @JsonKey(name: 'customer_nric')
+  final String? customerNric;
+  @override
   @JsonKey(name: 'customer_id')
-  final int customerId;
+  final int? customerId;
   @override
   @JsonKey(name: 'timeslot_id')
   final int timeslotId;
+  @override
+  @JsonKey(name: 'created_at')
+  final DateTime? createdAt;
 
   @override
   String toString() {
-    return 'ScreeningRegistration(index: $index, customerId: $customerId, timeslotId: $timeslotId)';
+    return 'ScreeningRegistration(id: $id, index: $index, customerNric: $customerNric, customerId: $customerId, timeslotId: $timeslotId, createdAt: $createdAt)';
   }
 
   @override
@@ -158,16 +210,22 @@ class _$ScreeningRegistrationImpl implements _ScreeningRegistration {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ScreeningRegistrationImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.index, index) || other.index == index) &&
+            (identical(other.customerNric, customerNric) ||
+                other.customerNric == customerNric) &&
             (identical(other.customerId, customerId) ||
                 other.customerId == customerId) &&
             (identical(other.timeslotId, timeslotId) ||
-                other.timeslotId == timeslotId));
+                other.timeslotId == timeslotId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, index, customerId, timeslotId);
+  int get hashCode => Object.hash(
+      runtimeType, id, index, customerNric, customerId, timeslotId, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -186,22 +244,33 @@ class _$ScreeningRegistrationImpl implements _ScreeningRegistration {
 
 abstract class _ScreeningRegistration implements ScreeningRegistration {
   const factory _ScreeningRegistration(
-          {final String? index,
-          @JsonKey(name: 'customer_id') required final int customerId,
-          @JsonKey(name: 'timeslot_id') required final int timeslotId}) =
+          {final int? id,
+          final String? index,
+          @JsonKey(name: 'customer_nric') final String? customerNric,
+          @JsonKey(name: 'customer_id') final int? customerId,
+          @JsonKey(name: 'timeslot_id') required final int timeslotId,
+          @JsonKey(name: 'created_at') final DateTime? createdAt}) =
       _$ScreeningRegistrationImpl;
 
   factory _ScreeningRegistration.fromJson(Map<String, dynamic> json) =
       _$ScreeningRegistrationImpl.fromJson;
 
   @override
+  int? get id;
+  @override
   String? get index;
   @override
+  @JsonKey(name: 'customer_nric')
+  String? get customerNric;
+  @override
   @JsonKey(name: 'customer_id')
-  int get customerId;
+  int? get customerId;
   @override
   @JsonKey(name: 'timeslot_id')
   int get timeslotId;
+  @override
+  @JsonKey(name: 'created_at')
+  DateTime? get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$ScreeningRegistrationImplCopyWith<_$ScreeningRegistrationImpl>

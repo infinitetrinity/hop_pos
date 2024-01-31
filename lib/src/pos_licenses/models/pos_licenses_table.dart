@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/src/pos_licenses/models/pos_license.dart';
 
+@TableIndex(name: 'pos_licenses_id', columns: {#id}, unique: true)
 @UseRowClass(PosLicense)
 class PosLicensesTable extends Table {
   @override

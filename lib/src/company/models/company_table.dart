@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/src/company/models/company.dart';
 
+@TableIndex(name: 'company_id', columns: {#id}, unique: true)
 @UseRowClass(Company)
 class CompanyTable extends Table {
   @override

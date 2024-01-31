@@ -12,10 +12,12 @@ part 'screening_registration_dao.g.dart';
   ScreeningRegistrationsTable,
   CustomersTable,
 ])
-class ScreeningRegistrationDao extends DatabaseAccessor<AppDb> with _$ScreeningRegistrationDaoMixin {
+class ScreeningRegistrationDao extends DatabaseAccessor<AppDb>
+    with _$ScreeningRegistrationDaoMixin {
   ScreeningRegistrationDao(AppDb db) : super(db);
 
-  Future<ScreeningRegistration?> findByCustomerAndScreening(Customer customer, Screening screening) async {
+  Future<ScreeningRegistration?> findByCustomerAndScreening(
+      Customer customer, Screening screening) async {
     final query = select(screeningRegistrationsTable).join(
       [
         innerJoin(
@@ -51,15 +53,20 @@ class ScreeningRegistrationDao extends DatabaseAccessor<AppDb> with _$ScreeningR
     query.addColumns([index]);
 
     return (await query.get()).map((row) {
-      return row.readTable(screeningRegistrationsTable).copyWith(index: row.read(index));
+      return row
+          .readTable(screeningRegistrationsTable)
+          .copyWith(index: row.read(index));
     }).firstOrNull;
   }
 
-  Future<ScreeningRegistration> insertScreeningRegistration(ScreeningRegistrationsTableCompanion registration) async {
-    return await into(screeningRegistrationsTable).insertReturning(registration);
+  Future<ScreeningRegistration> insertScreeningRegistration(
+      ScreeningRegistrationsTableCompanion registration) async {
+    return await into(screeningRegistrationsTable)
+        .insertReturning(registration);
   }
 
-  Future<List<ScreeningRegistration>> insertScreeningRegistrations(List<ScreeningRegistrationsTableCompanion> registrations) async {
+  Future<List<ScreeningRegistration>> insertScreeningRegistrations(
+      List<ScreeningRegistrationsTableCompanion> registrations) async {
     return await transaction(() async {
       List<Future<ScreeningRegistration>> insertFutures = [];
 
@@ -70,5 +77,37 @@ class ScreeningRegistrationDao extends DatabaseAccessor<AppDb> with _$ScreeningR
       List<ScreeningRegistration> result = await Future.wait(insertFutures);
       return result;
     });
+  }
+
+  Future<int> getScreeningRegistrationsCount(Screening screening) async {
+    final query = select(screeningRegistrationsTable).join(
+      [
+        innerJoin(
+          customersTable,
+          customersTable.id.equalsExp(
+            screeningRegistrationsTable.customerId,
+          ),
+          useColumns: false,
+        ),
+        innerJoin(
+          screeningTimeslotsTable,
+          screeningTimeslotsTable.id.equalsExp(
+            screeningRegistrationsTable.timeslotId,
+          ),
+          useColumns: false,
+        ),
+        innerJoin(
+          screeningsTable,
+          screeningsTable.id.equalsExp(
+            screeningTimeslotsTable.screeningId,
+          ),
+          useColumns: false,
+        )
+      ],
+    );
+
+    query.where(screeningsTable.id.isValue(screening.id));
+
+    return (await query.get()).length;
   }
 }

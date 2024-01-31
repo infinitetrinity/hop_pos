@@ -3,6 +3,9 @@ import 'package:hop_pos/src/order_extras/models/order_extra.dart';
 import 'package:hop_pos/src/orders/models/orders_table.dart';
 import 'package:hop_pos/src/pos_extras/models/pos_extras_table.dart';
 
+@TableIndex(name: 'order_extras_id', columns: {#id}, unique: true)
+@TableIndex(name: 'order_extras_extra_id', columns: {#extraId})
+@TableIndex(name: 'order_extras_order_id', columns: {#orderId})
 @UseRowClass(OrderExtra)
 class OrderExtrasTable extends Table {
   @override

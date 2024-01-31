@@ -16,6 +16,9 @@ class OrderExtra with _$OrderExtra {
     @DoubleFromStringConverter() @JsonKey(name: 'calculated_amount') double? calculatedAmount,
     @JsonKey(name: 'extra_id') int? extraId,
     @JsonKey(name: 'order_id') required int orderId,
+    @Default(false) @JsonKey(name: 'order_is_new') bool? orderIsNew,
+    @Default(false) @JsonKey(name: 'is_new') bool? isNew,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
   }) = _OrderExtra;
 
   factory OrderExtra.fromJson(Map<String, dynamic> json) => _$OrderExtraFromJson(json);

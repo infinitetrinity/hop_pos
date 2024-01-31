@@ -14,7 +14,8 @@ class ScreeningGrid extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isHover = useState(false);
-    final selectedScreening = ref.watch(posControllerProvider.select((prov) => prov.screening));
+    final selectedScreening =
+        ref.watch(posControllerProvider.select((prov) => prov.screening));
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -22,11 +23,16 @@ class ScreeningGrid extends HookConsumerWidget {
       onExit: (_) => isHover.value = false,
       child: GestureDetector(
         onTap: () {
-          ref.read(screeningControllerProvider.notifier).selectScreening(screening);
+          ref
+              .read(screeningControllerProvider.notifier)
+              .selectScreening(screening);
+          ref.read(posControllerProvider.notifier).setScreening(screening);
         },
         child: Container(
           padding: const EdgeInsets.all(10),
-          color: selectedScreening?.id == screening.id || isHover.value ? AppColors.brand600 : AppColors.white,
+          color: selectedScreening?.id == screening.id || isHover.value
+              ? AppColors.brand600
+              : AppColors.white,
           child: Center(
             child: Text(
               screening.name,
@@ -34,7 +40,9 @@ class ScreeningGrid extends HookConsumerWidget {
               overflow: TextOverflow.ellipsis,
               maxLines: 5,
               style: AppStyles.body.copyWith(
-                color: selectedScreening?.id == screening.id || isHover.value ? AppColors.white : AppColors.gray800,
+                color: selectedScreening?.id == screening.id || isHover.value
+                    ? AppColors.white
+                    : AppColors.gray800,
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
               ),

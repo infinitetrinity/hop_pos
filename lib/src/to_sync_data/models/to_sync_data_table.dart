@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:hop_pos/src/common/converters/json_converter.dart';
 import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
 
+@TableIndex(name: 'to_sync_data_id', columns: {#id}, unique: true)
 @TableIndex(name: 'to_sync_data_model_id', columns: {#modelId})
 @UseRowClass(ToSyncData)
 class ToSyncDataTable extends Table {

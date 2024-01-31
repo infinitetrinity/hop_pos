@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/src/payment_methods/models/payment_method.dart';
 
+@TableIndex(name: 'payment_methods_id', columns: {#id}, unique: true)
 @UseRowClass(PaymentMethod)
 class PaymentMethodsTable extends Table {
   @override

@@ -54,15 +54,20 @@ class FormTextField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController controller = useTextEditingController(text: "${prefix ?? ''}$value${suffix ?? ''}");
+    final TextEditingController controller =
+        useTextEditingController(text: "${prefix ?? ''}$value${suffix ?? ''}");
 
     if ((suffix?.length ?? 0) > 0) {
       final offset = controller.text.length - (suffix?.length ?? 0);
-      controller.selection = TextSelection.collapsed(offset: offset > 0 ? offset : 0);
+      controller.selection =
+          TextSelection.collapsed(offset: offset > 0 ? offset : 0);
     }
 
     useEffect(() {
-      if (controller.text.isEmpty && value != null && value!.isNotEmpty && value != '0.0') {
+      if (controller.text.isEmpty &&
+          value != null &&
+          value!.isNotEmpty &&
+          value != '0.0') {
         controller.text = "${prefix ?? ''}$value${suffix ?? ''}";
         final offset = controller.text.length - (suffix?.length ?? 0);
         controller.selection = TextSelection.collapsed(offset: offset);

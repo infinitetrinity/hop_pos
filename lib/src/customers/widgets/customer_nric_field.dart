@@ -33,7 +33,9 @@ class CustomerNricField extends HookConsumerWidget {
     void isUnique(String value) {
       EasyDebounce.debounce('customer-check-nric', const Duration(milliseconds: 500), () async {
         isValidating.value = true;
-        final isTaken = value.isEmpty ? null : await ref.read(customerControllerProvider.notifier).isNricTaken(nric: value, excludeId: customer?.id);
+        final isTaken = value.isEmpty
+            ? null
+            : await ref.read(customerControllerProvider.notifier).findByNric(nric: value, excludeId: customer?.id);
         isValidating.value = false;
         if (validateUnique) {
           error.value = isTaken != null ? "NRIC/FIN is already taken, please try another." : null;

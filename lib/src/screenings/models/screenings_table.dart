@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 
+@TableIndex(name: 'screenings_id', columns: {#id}, unique: true)
 @UseRowClass(Screening)
 class ScreeningsTable extends Table {
   @override

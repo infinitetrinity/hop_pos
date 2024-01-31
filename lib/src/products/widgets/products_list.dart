@@ -50,7 +50,7 @@ class ProductsList extends HookConsumerWidget {
                       items: products,
                       itemBuilder: (item) => ProductGrid(product: item),
                       height: 635,
-                      aspectRatio: 1.28,
+                      aspectRatio: 1.2,
                       arrows: false,
                     ),
                     error: (err, stack) {

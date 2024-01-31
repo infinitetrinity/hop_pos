@@ -1,9 +1,6 @@
-import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot_with_venue.dart';
-import 'package:hop_pos/src/screening_timeslots/repositories/screening_timeslot_repository.dart';
+import 'package:hop_pos/src/screenings/actions/screening_actions.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
-import 'package:hop_pos/src/screenings/repositories/screening_repository.dart';
-import 'package:quiver/iterables.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'screening_controller.g.dart';
@@ -12,35 +9,42 @@ part 'screening_controller.g.dart';
 class ScreeningController extends _$ScreeningController {
   @override
   Future<List<List<Screening>>> build() {
-    return _getUpcomingScreenings();
-  }
-
-  Future<List<List<Screening>>> _getUpcomingScreenings() async {
-    ScreeningRepository repo = ref.watch(screeningRepoProvider);
-    final screenings = await repo.getUpcoming();
-
-    return partition<Screening>(screenings, 20).toList();
+    return ref
+        .watch(screeningActionsProvider.notifier)
+        .getUpcomingScreenings(
+          partitionSize: 20,
+        )
+        .then((dynamic result) {
+      return result as List<List<Screening>>;
+    });
   }
 
   void selectScreening(Screening screening) {
-    final screenings = state.asData?.value ?? [];
-    bool screeningExists = screenings.any((child) => child.contains(screening));
+    final screenings =
+        ref.read(screeningActionsProvider.notifier).addToScreenings(state.asData?.value ?? [], screening);
 
-    if (!screeningExists) {
-      screenings.insert(0, [screening]);
-      state = AsyncValue.data(partition<Screening>(screenings.expand((child) => child), 20).toList());
+    if (screenings != null) {
+      state = AsyncValue.data(screenings);
     }
-
-    ref.read(posControllerProvider.notifier).setScreening(screening);
   }
 
-  Future<List<ScreeningTimeslotWithVenue>> getTimeslotsWithVenue(Screening screening, {int page = 1, int size = 20}) async {
-    ScreeningTimeslotRepository repo = ref.watch(screeningTimeslotRepoProvider);
-    return await repo.getScreeningTimeslotsWithVenue(screening, page: page, size: size);
+  Future<List<ScreeningTimeslotWithVenue>> getTimeslotsWithVenue(
+    Screening screening, {
+    int page = 1,
+    int size = 20,
+  }) async {
+    return await ref.read(screeningActionsProvider.notifier).getTimeslotsWithVenue(
+          screening,
+          page: page,
+          size: size,
+        );
   }
 
   Future<int> getTimeslotsCount(Screening screening) async {
-    ScreeningTimeslotRepository repo = ref.watch(screeningTimeslotRepoProvider);
-    return await repo.getScreeningTimeslotsCount(screening);
+    return await ref.read(screeningActionsProvider.notifier).getTimeslotsCount(screening);
+  }
+
+  Future<List<Screening>> search(String search) async {
+    return await ref.read(screeningActionsProvider.notifier).search(search);
   }
 }

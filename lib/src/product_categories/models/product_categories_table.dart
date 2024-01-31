@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/src/product_categories/models/product_category.dart';
 
+@TableIndex(name: 'product_categories_id', columns: {#id}, unique: true)
 @UseRowClass(ProductCategory)
 class ProductCategoriesTable extends Table {
   @override

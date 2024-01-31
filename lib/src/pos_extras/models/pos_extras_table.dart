@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/src/pos_extras/models/pos_extra.dart';
 
+@TableIndex(name: 'pos_extras_id', columns: {#id}, unique: true)
 @UseRowClass(PosExtra)
 class PosExtrasTable extends Table {
   @override

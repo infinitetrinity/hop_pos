@@ -1,9 +1,15 @@
 import 'package:drift/drift.dart';
-import 'package:hop_pos/src/order_items/models/new_order_item.dart';
+import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/orders/models/orders_table.dart';
 import 'package:hop_pos/src/products/models/products_table.dart';
 
-@UseRowClass(NewOrderItem)
+@TableIndex(name: 'new_order_items_id', columns: {#id}, unique: true)
+@TableIndex(name: 'new_order_items_name', columns: {#name})
+@TableIndex(name: 'new_order_items_sku', columns: {#sku})
+@TableIndex(name: 'new_order_items_cart_id', columns: {#cartId})
+@TableIndex(name: 'new_order_items_product_id', columns: {#productId})
+@TableIndex(name: 'new_order_items_order_id', columns: {#orderId})
+@UseRowClass(OrderItem)
 class NewOrderItemsTable extends Table {
   @override
   String get tableName => 'new_order_items';

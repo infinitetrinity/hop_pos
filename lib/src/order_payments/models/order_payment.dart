@@ -11,6 +11,8 @@ class OrderPayment with _$OrderPayment {
     @DoubleFromStringConverter() double? amount,
     @JsonKey(name: 'order_id') required int orderId,
     @JsonKey(name: 'payment_method_id') int? paymentMethodId,
+    @Default(false) @JsonKey(name: 'order_is_new') bool? orderIsNew,
+    @Default(false) @JsonKey(name: 'is_new') bool? isNew,
     @JsonKey(name: 'created_at') required DateTime createdAt,
   }) = _OrderPayment;
 

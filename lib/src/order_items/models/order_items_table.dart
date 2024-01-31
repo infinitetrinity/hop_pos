@@ -3,6 +3,12 @@ import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/orders/models/orders_table.dart';
 import 'package:hop_pos/src/products/models/products_table.dart';
 
+@TableIndex(name: 'order_items_id', columns: {#id}, unique: true)
+@TableIndex(name: 'order_items_name', columns: {#name})
+@TableIndex(name: 'order_items_sku', columns: {#sku})
+@TableIndex(name: 'order_items_cart_id', columns: {#cartId})
+@TableIndex(name: 'order_items_product_id', columns: {#productId})
+@TableIndex(name: 'order_items_order_id', columns: {#orderId})
 @UseRowClass(OrderItem)
 class OrderItemsTable extends Table {
   @override

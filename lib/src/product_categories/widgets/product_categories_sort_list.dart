@@ -18,7 +18,9 @@ class ProductCategoriesSortList extends HookConsumerWidget {
             height: 650,
             child: ReorderableListView(
               onReorder: (int oldIndex, int newIndex) async {
-                await ref.read(productCategoryControllerProvider().notifier).reorderProductCategories(oldIndex, newIndex);
+                await ref
+                    .read(productCategoryControllerProvider().notifier)
+                    .reorderProductCategories(oldIndex, newIndex);
                 ref.invalidate(productCategoryControllerProvider);
               },
               children: List.generate(
@@ -39,12 +41,15 @@ class ProductCategoriesSortList extends HookConsumerWidget {
                       ? null
                       : TextButton(
                           onPressed: () async {
-                            await ref.read(productCategoryControllerProvider().notifier).toggleProductCategory(categories[index]);
+                            await ref
+                                .read(productCategoryControllerProvider().notifier)
+                                .toggleProductCategory(categories[index]);
                             ref.invalidate(productCategoryControllerProvider);
                           },
                           child: Text(
                             categories[index].isHidden ? 'Unhide' : 'Hide',
-                            style: AppStyles.bodySmall.copyWith(color: categories[index].isHidden ? AppColors.green600 : AppColors.blue600),
+                            style: AppStyles.bodySmall
+                                .copyWith(color: categories[index].isHidden ? AppColors.green600 : AppColors.blue600),
                           ),
                         ),
                 ),
@@ -55,7 +60,7 @@ class ProductCategoriesSortList extends HookConsumerWidget {
       },
       error: (err, stack) {
         print('err $stack');
-        return Container(child: const Text('error'));
+        return Container(child: Text('error $stack'));
       },
       loading: () => Container(
         child: const Text('loading'),

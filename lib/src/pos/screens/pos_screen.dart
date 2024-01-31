@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hop_pos/src/common/widgets/layout.dart';
 import 'package:hop_pos/src/pos/widgets/pos_customer.dart';
+import 'package:hop_pos/src/pos/widgets/pos_sales_note.dart';
 import 'package:hop_pos/src/pos/widgets/pos_screening.dart';
 import 'package:hop_pos/src/products/widgets/product_search_input.dart';
 import 'package:hop_pos/src/products/widgets/products_list.dart';
@@ -15,7 +16,7 @@ class PosScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 780,
+            width: 750,
             child: Column(
               children: [
                 ProductSearchInput(),
@@ -30,6 +31,7 @@ class PosScreen extends StatelessWidget {
               children: [
                 PosScreening(),
                 PosCustomer(),
+                PosSalesNote(),
               ],
             ),
           ),

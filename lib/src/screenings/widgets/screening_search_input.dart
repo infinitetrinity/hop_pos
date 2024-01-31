@@ -5,9 +5,9 @@ import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/widgets/form_search_input.dart';
 import 'package:hop_pos/src/common/widgets/search_list.dart';
+import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/screenings/controllers/screening_controller.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
-import 'package:hop_pos/src/screenings/states/screenings_search_state.dart';
 import 'package:hop_pos/src/screenings/widgets/screening_tile.dart';
 
 class ScreeningSearchInput extends HookConsumerWidget {
@@ -16,7 +16,7 @@ class ScreeningSearchInput extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return TypeAheadField<Screening>(
-      suggestionsCallback: (search) => ref.read(screeningsSearchStateProvider(search).future),
+      suggestionsCallback: (search) => ref.read(screeningControllerProvider.notifier).search(search),
       builder: (context, controller, focusNode) => FormSearchTextInput(
         controller: controller,
         focusNode: focusNode,
@@ -35,6 +35,7 @@ class ScreeningSearchInput extends HookConsumerWidget {
       ),
       onSelected: (screening) {
         ref.read(screeningControllerProvider.notifier).selectScreening(screening);
+        ref.read(posControllerProvider.notifier).setScreening(screening);
       },
     );
   }

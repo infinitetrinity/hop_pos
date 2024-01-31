@@ -17,9 +17,12 @@ class OrderItem with _$OrderItem {
     @JsonKey(name: 'discount_type') String? discountType,
     @DoubleFromStringConverter() @JsonKey(name: 'net_price') double? netPrice,
     @BoolFromIntConverter() @JsonKey(name: 'is_custom') required bool isCustom,
+    @Default(false) @JsonKey(name: 'order_is_new') bool? orderIsNew,
     @JsonKey(name: 'cart_id') int? cartId,
     @JsonKey(name: 'product_id') int? productId,
     @JsonKey(name: 'order_id') required int orderId,
+    @Default(false) @JsonKey(name: 'is_new') bool? isNew,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
   }) = _OrderItem;
 
   factory OrderItem.fromJson(Map<String, dynamic> json) => _$OrderItemFromJson(json);

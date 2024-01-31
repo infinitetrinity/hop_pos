@@ -7,7 +7,7 @@ part of 'screening_controller.dart';
 // **************************************************************************
 
 String _$screeningControllerHash() =>
-    r'b78bb51c42d1fb8ad717827b4b8de1209df0c9a1';
+    r'9ac75f9f524056ce8677bc90ff1b8663eb8c93c4';
 
 /// See also [ScreeningController].
 @ProviderFor(ScreeningController)

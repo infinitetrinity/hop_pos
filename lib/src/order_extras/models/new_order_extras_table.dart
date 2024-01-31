@@ -1,9 +1,12 @@
 import 'package:drift/drift.dart';
-import 'package:hop_pos/src/order_extras/models/new_order_extra.dart';
+import 'package:hop_pos/src/order_extras/models/order_extra.dart';
 import 'package:hop_pos/src/orders/models/orders_table.dart';
 import 'package:hop_pos/src/pos_extras/models/pos_extras_table.dart';
 
-@UseRowClass(NewOrderExtra)
+@TableIndex(name: 'new_order_extras_id', columns: {#id}, unique: true)
+@TableIndex(name: 'new_order_extras_extra_id', columns: {#extraId})
+@TableIndex(name: 'new_order_extras_order_id', columns: {#orderId})
+@UseRowClass(OrderExtra)
 class NewOrderExtrasTable extends Table {
   @override
   String get tableName => 'new_order_extras';

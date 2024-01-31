@@ -20,9 +20,14 @@ _$OrderItemImpl _$$OrderItemImplFromJson(Map<String, dynamic> json) =>
       netPrice: const DoubleFromStringConverter()
           .fromJson(json['net_price'] as String?),
       isCustom: const BoolFromIntConverter().fromJson(json['is_custom'] as int),
+      orderIsNew: json['order_is_new'] as bool? ?? false,
       cartId: json['cart_id'] as int?,
       productId: json['product_id'] as int?,
       orderId: json['order_id'] as int,
+      isNew: json['is_new'] as bool? ?? false,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
     );
 
 Map<String, dynamic> _$$OrderItemImplToJson(_$OrderItemImpl instance) =>
@@ -36,7 +41,10 @@ Map<String, dynamic> _$$OrderItemImplToJson(_$OrderItemImpl instance) =>
       'discount_type': instance.discountType,
       'net_price': const DoubleFromStringConverter().toJson(instance.netPrice),
       'is_custom': const BoolFromIntConverter().toJson(instance.isCustom),
+      'order_is_new': instance.orderIsNew,
       'cart_id': instance.cartId,
       'product_id': instance.productId,
       'order_id': instance.orderId,
+      'is_new': instance.isNew,
+      'created_at': instance.createdAt?.toIso8601String(),
     };

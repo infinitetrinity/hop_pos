@@ -1,6 +1,10 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 
+@TableIndex(name: 'customers_id', columns: {#id}, unique: true)
+@TableIndex(name: 'customers_full_name', columns: {#fullName})
+@TableIndex(name: 'customers_nric', columns: {#nric})
+@TableIndex(name: 'customers_mobile_no', columns: {#mobileNo})
 @UseRowClass(Customer)
 class CustomersTable extends Table {
   @override

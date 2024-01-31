@@ -12,7 +12,10 @@ class PosScreening extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isHover = useState(false);
-    final screening = ref.watch(posControllerProvider.select((prov) => prov.screening));
+    final screening =
+        ref.watch(posControllerProvider.select((prov) => prov.screening));
+    final customersCount =
+        ref.watch(posControllerProvider.notifier).getCustomersCount();
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -43,14 +46,18 @@ class PosScreening extends HookConsumerWidget {
                             'No Screening Selected',
                             style: AppStyles.bodyLarge.copyWith(
                               fontWeight: FontWeight.w600,
-                              color: isHover.value ? AppColors.white : AppColors.gray800,
+                              color: isHover.value
+                                  ? AppColors.white
+                                  : AppColors.gray800,
                             ),
                           ),
                           const SizedBox(height: 5),
                           Text(
                             'Click to change screening',
                             style: AppStyles.bodySmall.copyWith(
-                              color: isHover.value ? AppColors.white : AppColors.gray600,
+                              color: isHover.value
+                                  ? AppColors.white
+                                  : AppColors.gray600,
                             ),
                           ),
                         ]
@@ -58,7 +65,9 @@ class PosScreening extends HookConsumerWidget {
                           Text(
                             screening.name,
                             style: AppStyles.bodyLarge.copyWith(
-                              color: isHover.value ? AppColors.white : AppColors.gray800,
+                              color: isHover.value
+                                  ? AppColors.white
+                                  : AppColors.gray800,
                               fontWeight: FontWeight.w600,
                             ),
                             maxLines: 3,
@@ -68,13 +77,33 @@ class PosScreening extends HookConsumerWidget {
                             const SizedBox(height: 5),
                             Text(
                               screening.corporate!,
-                              style: AppStyles.bodySmall.copyWith(
-                                color: isHover.value ? AppColors.white : AppColors.gray600,
+                              style: AppStyles.body.copyWith(
+                                color: isHover.value
+                                    ? AppColors.white
+                                    : AppColors.gray600,
                               ),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ],
+                          FutureBuilder<int?>(
+                            future: customersCount,
+                            builder: (_, snapshot) {
+                              return Column(
+                                children: [
+                                  const SizedBox(height: 3),
+                                  Text(
+                                    "${snapshot.data} customers",
+                                    style: AppStyles.body.copyWith(
+                                      color: isHover.value
+                                          ? AppColors.white
+                                          : AppColors.gray500,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
                           if (isHover.value) ...[
                             const SizedBox(height: 10),
                             Align(
@@ -83,7 +112,9 @@ class PosScreening extends HookConsumerWidget {
                                 'Click to change screening',
                                 textAlign: TextAlign.right,
                                 style: AppStyles.bodySmall.copyWith(
-                                  color: isHover.value ? AppColors.white : AppColors.gray500,
+                                  color: isHover.value
+                                      ? AppColors.white
+                                      : AppColors.gray500,
                                 ),
                               ),
                             ),

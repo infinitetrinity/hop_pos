@@ -4,6 +4,7 @@ import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
 import 'package:hop_pos/src/customers/models/customers_table.dart';
 import 'package:hop_pos/src/orders/models/orders_table.dart';
+import 'package:hop_pos/src/screening_registrations/models/new_screening_registrations_table.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registrations_table.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 
@@ -12,47 +13,54 @@ part 'customer_dao.g.dart';
 @DriftAccessor(tables: [
   CustomersTable,
   ScreeningRegistrationsTable,
+  NewScreeningRegistrationsTable,
   OrdersTable,
 ])
 class CustomerDao extends DatabaseAccessor<AppDb> with _$CustomerDaoMixin {
   CustomerDao(AppDb db) : super(db);
 
-  Future<List<CustomerWithRegistration>> searchScreening(
-      Screening screening, String search) async {
+  Future<List<CustomerWithRegistration>> searchScreening(Screening screening, String search) async {
+    print('screeningg $screening');
+
     final query = select(customersTable).join(
       [
-        innerJoin(
+        leftOuterJoin(
           screeningRegistrationsTable,
           screeningRegistrationsTable.customerId.equalsExp(
             customersTable.id,
           ),
         ),
-        innerJoin(
+        leftOuterJoin(
+          newScreeningRegistrationsTable,
+          newScreeningRegistrationsTable.customerNric.equalsExp(
+            customersTable.nric,
+          ),
+        ),
+        leftOuterJoin(
           screeningTimeslotsTable,
           screeningTimeslotsTable.id.equalsExp(
-            screeningRegistrationsTable.timeslotId,
-          ),
-          useColumns: false,
-        ),
-        innerJoin(
-          screeningsTable,
-          screeningsTable.id.equalsExp(
-            screeningTimeslotsTable.screeningId,
-          ),
+                screeningRegistrationsTable.timeslotId,
+              ) |
+              screeningTimeslotsTable.id.equalsExp(
+                newScreeningRegistrationsTable.timeslotId,
+              ),
           useColumns: false,
         ),
         leftOuterJoin(
           ordersTable,
           ordersTable.customerId.equalsExp(
-            customersTable.id,
-          ),
+                customersTable.id,
+              ) &
+              ordersTable.screeningId.equalsExp(
+                screeningTimeslotsTable.screeningId,
+              ),
           useColumns: false,
         ),
       ],
     );
 
     String refSearch = search.startsWith('r') ? search.substring(1) : search;
-    query.where(screeningsTable.id.equals(screening.id));
+    query.where(screeningTimeslotsTable.screeningId.equals(screening.id));
     query.where(customersTable.fullName.like("%$search%") |
         customersTable.nric.like("%$search%") |
         screeningRegistrationsTable.index.like("$refSearch%"));
@@ -66,31 +74,23 @@ class CustomerDao extends DatabaseAccessor<AppDb> with _$CustomerDaoMixin {
     ]);
     query.addColumns([index]);
     query.orderBy([
-      OrderingTerm.asc(screeningRegistrationsTable.index.cast<int>(),
-          nulls: NullsOrder.last),
+      OrderingTerm.asc(screeningRegistrationsTable.index.cast<int>(), nulls: NullsOrder.last),
       OrderingTerm.asc(index)
     ]);
-    query.groupBy([
-      customersTable.id,
-      screeningRegistrationsTable.customerId,
-      screeningTimeslotsTable.id
-    ]);
+    query.groupBy([customersTable.id]);
     query.limit(20);
 
     return (await query.get()).map((row) {
       return CustomerWithRegistration(
         customer: row.readTable(customersTable),
-        registration: row
-            .readTable(screeningRegistrationsTable)
-            .copyWith(index: row.read(index)),
+        registration: row.readTable(screeningRegistrationsTable).copyWith(index: row.read(index)),
         hasSales: (row.read(salesCount) ?? 0) > 0,
       );
     }).toList();
   }
 
   Future<Customer?> findByNric({required String nric, int? excludeId}) async {
-    final query = select(customersTable)
-      ..where((table) => table.nric.isValue(nric.toUpperCase()));
+    final query = select(customersTable)..where((table) => table.nric.isValue(nric.toUpperCase()));
     if (excludeId != null) {
       query.where((table) => table.id.isNotValue(excludeId));
     }
@@ -98,10 +98,8 @@ class CustomerDao extends DatabaseAccessor<AppDb> with _$CustomerDaoMixin {
     return (await query.get()).firstOrNull;
   }
 
-  Future<Customer?> findByMobileNo(
-      {required String mobileNo, int? excludeId}) async {
-    final query = select(customersTable)
-      ..where((table) => table.mobileNo.isValue(mobileNo));
+  Future<Customer?> findByMobileNo({required String mobileNo, int? excludeId}) async {
+    final query = select(customersTable)..where((table) => table.mobileNo.isValue(mobileNo));
     if (excludeId != null) {
       query.where((table) => table.id.isNotValue(excludeId));
     }
@@ -110,8 +108,7 @@ class CustomerDao extends DatabaseAccessor<AppDb> with _$CustomerDaoMixin {
   }
 
   Future<Customer?> findByEmail({required String email, int? excludeId}) async {
-    final query = select(customersTable)
-      ..where((table) => table.email.isValue(email));
+    final query = select(customersTable)..where((table) => table.email.isValue(email));
     if (excludeId != null) {
       query.where((table) => table.id.isNotValue(excludeId));
     }
@@ -123,8 +120,7 @@ class CustomerDao extends DatabaseAccessor<AppDb> with _$CustomerDaoMixin {
     return await into(customersTable).insertReturning(customer);
   }
 
-  Future<List<Customer>> insertCustomers(
-      List<CustomersTableCompanion> customers) async {
+  Future<List<Customer>> insertCustomers(List<CustomersTableCompanion> customers) async {
     return await transaction(() async {
       List<Future<Customer>> insertFutures = [];
 
@@ -137,10 +133,8 @@ class CustomerDao extends DatabaseAccessor<AppDb> with _$CustomerDaoMixin {
     });
   }
 
-  Future<bool> updateCustomer(
-      CustomersTableCompanion customer, Expression<bool> where) async {
-    final count = await (db.update(customersTable)..where((tbl) => where))
-        .write(customer);
+  Future<bool> updateCustomer(CustomersTableCompanion customer, Expression<bool> where) async {
+    final count = await (db.update(customersTable)..where((tbl) => where)).write(customer);
 
     return count > 0;
   }

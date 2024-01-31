@@ -19,6 +19,11 @@ _$OrderExtraImpl _$$OrderExtraImplFromJson(Map<String, dynamic> json) =>
           .fromJson(json['calculated_amount'] as String?),
       extraId: json['extra_id'] as int?,
       orderId: json['order_id'] as int,
+      orderIsNew: json['order_is_new'] as bool? ?? false,
+      isNew: json['is_new'] as bool? ?? false,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
     );
 
 Map<String, dynamic> _$$OrderExtraImplToJson(_$OrderExtraImpl instance) =>
@@ -33,4 +38,7 @@ Map<String, dynamic> _$$OrderExtraImplToJson(_$OrderExtraImpl instance) =>
           const DoubleFromStringConverter().toJson(instance.calculatedAmount),
       'extra_id': instance.extraId,
       'order_id': instance.orderId,
+      'order_is_new': instance.orderIsNew,
+      'is_new': instance.isNew,
+      'created_at': instance.createdAt?.toIso8601String(),
     };

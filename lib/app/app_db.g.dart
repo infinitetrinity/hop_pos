@@ -4640,7 +4640,7 @@ class NewCustomersTableCompanion extends UpdateCompanion<Customer> {
 }
 
 class $NewOrderExtrasTableTable extends NewOrderExtrasTable
-    with TableInfo<$NewOrderExtrasTableTable, NewOrderExtra> {
+    with TableInfo<$NewOrderExtrasTableTable, OrderExtra> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -4748,7 +4748,7 @@ class $NewOrderExtrasTableTable extends NewOrderExtrasTable
   String get actualTableName => $name;
   static const String $name = 'new_order_extras';
   @override
-  VerificationContext validateIntegrity(Insertable<NewOrderExtra> instance,
+  VerificationContext validateIntegrity(Insertable<OrderExtra> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -4825,9 +4825,9 @@ class $NewOrderExtrasTableTable extends NewOrderExtrasTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  NewOrderExtra map(Map<String, dynamic> data, {String? tablePrefix}) {
+  OrderExtra map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return NewOrderExtra(
+    return OrderExtra(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       name: attachedDatabase.typeMapping
@@ -4859,7 +4859,7 @@ class $NewOrderExtrasTableTable extends NewOrderExtrasTable
   }
 }
 
-class NewOrderExtrasTableCompanion extends UpdateCompanion<NewOrderExtra> {
+class NewOrderExtrasTableCompanion extends UpdateCompanion<OrderExtra> {
   final Value<int> id;
   final Value<String> name;
   final Value<String> type;
@@ -4904,7 +4904,7 @@ class NewOrderExtrasTableCompanion extends UpdateCompanion<NewOrderExtra> {
         orderId = Value(orderId),
         orderIsNew = Value(orderIsNew),
         createdAt = Value(createdAt);
-  static Insertable<NewOrderExtra> custom({
+  static Insertable<OrderExtra> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<String>? type,
@@ -5018,7 +5018,7 @@ class NewOrderExtrasTableCompanion extends UpdateCompanion<NewOrderExtra> {
 }
 
 class $NewOrderItemsTableTable extends NewOrderItemsTable
-    with TableInfo<$NewOrderItemsTableTable, NewOrderItem> {
+    with TableInfo<$NewOrderItemsTableTable, OrderItem> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -5149,7 +5149,7 @@ class $NewOrderItemsTableTable extends NewOrderItemsTable
   String get actualTableName => $name;
   static const String $name = 'new_order_items';
   @override
-  VerificationContext validateIntegrity(Insertable<NewOrderItem> instance,
+  VerificationContext validateIntegrity(Insertable<OrderItem> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -5236,9 +5236,9 @@ class $NewOrderItemsTableTable extends NewOrderItemsTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  NewOrderItem map(Map<String, dynamic> data, {String? tablePrefix}) {
+  OrderItem map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return NewOrderItem(
+    return OrderItem(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       name: attachedDatabase.typeMapping
@@ -5276,7 +5276,7 @@ class $NewOrderItemsTableTable extends NewOrderItemsTable
   }
 }
 
-class NewOrderItemsTableCompanion extends UpdateCompanion<NewOrderItem> {
+class NewOrderItemsTableCompanion extends UpdateCompanion<OrderItem> {
   final Value<int> id;
   final Value<String> name;
   final Value<String> sku;
@@ -5330,7 +5330,7 @@ class NewOrderItemsTableCompanion extends UpdateCompanion<NewOrderItem> {
         orderIsNew = Value(orderIsNew),
         orderId = Value(orderId),
         createdAt = Value(createdAt);
-  static Insertable<NewOrderItem> custom({
+  static Insertable<OrderItem> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<String>? sku,
@@ -5468,7 +5468,7 @@ class NewOrderItemsTableCompanion extends UpdateCompanion<NewOrderItem> {
 }
 
 class $NewOrderPaymentsTableTable extends NewOrderPaymentsTable
-    with TableInfo<$NewOrderPaymentsTableTable, NewOrderPayment> {
+    with TableInfo<$NewOrderPaymentsTableTable, OrderPayment> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -5529,7 +5529,7 @@ class $NewOrderPaymentsTableTable extends NewOrderPaymentsTable
   String get actualTableName => $name;
   static const String $name = 'new_order_payments';
   @override
-  VerificationContext validateIntegrity(Insertable<NewOrderPayment> instance,
+  VerificationContext validateIntegrity(Insertable<OrderPayment> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -5574,9 +5574,9 @@ class $NewOrderPaymentsTableTable extends NewOrderPaymentsTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  NewOrderPayment map(Map<String, dynamic> data, {String? tablePrefix}) {
+  OrderPayment map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return NewOrderPayment(
+    return OrderPayment(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       amount: attachedDatabase.typeMapping
@@ -5598,7 +5598,7 @@ class $NewOrderPaymentsTableTable extends NewOrderPaymentsTable
   }
 }
 
-class NewOrderPaymentsTableCompanion extends UpdateCompanion<NewOrderPayment> {
+class NewOrderPaymentsTableCompanion extends UpdateCompanion<OrderPayment> {
   final Value<int> id;
   final Value<double> amount;
   final Value<int> orderId;
@@ -5624,7 +5624,7 @@ class NewOrderPaymentsTableCompanion extends UpdateCompanion<NewOrderPayment> {
         orderId = Value(orderId),
         orderIsNew = Value(orderIsNew),
         createdAt = Value(createdAt);
-  static Insertable<NewOrderPayment> custom({
+  static Insertable<OrderPayment> custom({
     Expression<int>? id,
     Expression<double>? amount,
     Expression<int>? orderId,
@@ -5698,7 +5698,7 @@ class NewOrderPaymentsTableCompanion extends UpdateCompanion<NewOrderPayment> {
 }
 
 class $NewOrdersTableTable extends NewOrdersTable
-    with TableInfo<$NewOrdersTableTable, NewOrder> {
+    with TableInfo<$NewOrdersTableTable, Order> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -5847,7 +5847,7 @@ class $NewOrdersTableTable extends NewOrdersTable
   String get actualTableName => $name;
   static const String $name = 'new_orders';
   @override
-  VerificationContext validateIntegrity(Insertable<NewOrder> instance,
+  VerificationContext validateIntegrity(Insertable<Order> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -5952,9 +5952,9 @@ class $NewOrdersTableTable extends NewOrdersTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  NewOrder map(Map<String, dynamic> data, {String? tablePrefix}) {
+  Order map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return NewOrder(
+    return Order(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       isStf: attachedDatabase.typeMapping
@@ -5996,7 +5996,7 @@ class $NewOrdersTableTable extends NewOrdersTable
   }
 }
 
-class NewOrdersTableCompanion extends UpdateCompanion<NewOrder> {
+class NewOrdersTableCompanion extends UpdateCompanion<Order> {
   final Value<int> id;
   final Value<bool> isStf;
   final Value<bool> isUtf;
@@ -6059,7 +6059,7 @@ class NewOrdersTableCompanion extends UpdateCompanion<NewOrder> {
         screeningId = Value(screeningId),
         customerNric = Value(customerNric),
         createdAt = Value(createdAt);
-  static Insertable<NewOrder> custom({
+  static Insertable<Order> custom({
     Expression<int>? id,
     Expression<bool>? isStf,
     Expression<bool>? isUtf,
@@ -6215,8 +6215,7 @@ class NewOrdersTableCompanion extends UpdateCompanion<NewOrder> {
 class $NewScreeningRegistrationsTableTable
     extends NewScreeningRegistrationsTable
     with
-        TableInfo<$NewScreeningRegistrationsTableTable,
-            NewScreeningRegistration> {
+        TableInfo<$NewScreeningRegistrationsTableTable, ScreeningRegistration> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -6266,7 +6265,7 @@ class $NewScreeningRegistrationsTableTable
   static const String $name = 'new_screening_registrations';
   @override
   VerificationContext validateIntegrity(
-      Insertable<NewScreeningRegistration> instance,
+      Insertable<ScreeningRegistration> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -6303,10 +6302,9 @@ class $NewScreeningRegistrationsTableTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  NewScreeningRegistration map(Map<String, dynamic> data,
-      {String? tablePrefix}) {
+  ScreeningRegistration map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return NewScreeningRegistration(
+    return ScreeningRegistration(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       index: attachedDatabase.typeMapping
@@ -6327,7 +6325,7 @@ class $NewScreeningRegistrationsTableTable
 }
 
 class NewScreeningRegistrationsTableCompanion
-    extends UpdateCompanion<NewScreeningRegistration> {
+    extends UpdateCompanion<ScreeningRegistration> {
   final Value<int> id;
   final Value<String?> index;
   final Value<String?> customerNric;
@@ -6348,7 +6346,7 @@ class NewScreeningRegistrationsTableCompanion
     required DateTime createdAt,
   })  : timeslotId = Value(timeslotId),
         createdAt = Value(createdAt);
-  static Insertable<NewScreeningRegistration> custom({
+  static Insertable<ScreeningRegistration> custom({
     Expression<int>? id,
     Expression<String>? index,
     Expression<String>? customerNric,
@@ -6677,6 +6675,145 @@ abstract class _$AppDb extends GeneratedDatabase {
       $NewScreeningRegistrationsTableTable(this);
   late final $ToSyncDataTableTable toSyncDataTable =
       $ToSyncDataTableTable(this);
+  late final Index usersId =
+      Index('users_id', 'CREATE UNIQUE INDEX users_id ON users (id)');
+  late final Index posLicensesId = Index('pos_licenses_id',
+      'CREATE UNIQUE INDEX pos_licenses_id ON pos_licenses (id)');
+  late final Index companyId =
+      Index('company_id', 'CREATE UNIQUE INDEX company_id ON company (id)');
+  late final Index receiptSettingsId = Index('receipt_settings_id',
+      'CREATE UNIQUE INDEX receipt_settings_id ON receipt_settings (id)');
+  late final Index posExtrasId = Index(
+      'pos_extras_id', 'CREATE UNIQUE INDEX pos_extras_id ON pos_extras (id)');
+  late final Index paymentMethodsId = Index('payment_methods_id',
+      'CREATE UNIQUE INDEX payment_methods_id ON payment_methods (id)');
+  late final Index productCategoriesId = Index('product_categories_id',
+      'CREATE UNIQUE INDEX product_categories_id ON product_categories (id)');
+  late final Index productsId =
+      Index('products_id', 'CREATE UNIQUE INDEX products_id ON products (id)');
+  late final Index productsSku =
+      Index('products_sku', 'CREATE INDEX products_sku ON products (sku)');
+  late final Index productsCategoryId = Index('products_category_id',
+      'CREATE INDEX products_category_id ON products (category_id)');
+  late final Index customersId = Index(
+      'customers_id', 'CREATE UNIQUE INDEX customers_id ON customers (id)');
+  late final Index customersFullName = Index('customers_full_name',
+      'CREATE INDEX customers_full_name ON customers (full_name)');
+  late final Index customersNric = Index(
+      'customers_nric', 'CREATE INDEX customers_nric ON customers (nric)');
+  late final Index customersMobileNo = Index('customers_mobile_no',
+      'CREATE INDEX customers_mobile_no ON customers (mobile_no)');
+  late final Index screeningsId = Index(
+      'screenings_id', 'CREATE UNIQUE INDEX screenings_id ON screenings (id)');
+  late final Index screeningVenuesId = Index('screening_venues_id',
+      'CREATE UNIQUE INDEX screening_venues_id ON screening_venues (id)');
+  late final Index screeningVenuesScreeningFormId = Index(
+      'screening_venues_screening_form_id',
+      'CREATE INDEX screening_venues_screening_form_id ON screening_venues (screening_form_id)');
+  late final Index screeningTimeslotsId = Index('screening_timeslots_id',
+      'CREATE UNIQUE INDEX screening_timeslots_id ON screening_timeslots (id)');
+  late final Index screeningTimeslotsScreeningId = Index(
+      'screening_timeslots_screening_id',
+      'CREATE INDEX screening_timeslots_screening_id ON screening_timeslots (screening_id)');
+  late final Index screeningTimeslotsVenueId = Index(
+      'screening_timeslots_venue_id',
+      'CREATE INDEX screening_timeslots_venue_id ON screening_timeslots (venue_id)');
+  late final Index screeningRegistrationsIndex = Index(
+      'screening_registrations_index',
+      'CREATE INDEX screening_registrations_index ON screening_registrations ("index")');
+  late final Index screeningRegistrationsCustomerId = Index(
+      'screening_registrations_customer_id',
+      'CREATE INDEX screening_registrations_customer_id ON screening_registrations (customer_id)');
+  late final Index screeningRegistrationsTimeslotId = Index(
+      'screening_registrations_timeslot_id',
+      'CREATE INDEX screening_registrations_timeslot_id ON screening_registrations (timeslot_id)');
+  late final Index ordersId =
+      Index('orders_id', 'CREATE UNIQUE INDEX orders_id ON orders (id)');
+  late final Index ordersLicenseId = Index('orders_license_id',
+      'CREATE INDEX orders_license_id ON orders (license_id)');
+  late final Index ordersScreeningId = Index('orders_screening_id',
+      'CREATE INDEX orders_screening_id ON orders (screening_id)');
+  late final Index ordersCustomerId = Index('orders_customer_id',
+      'CREATE INDEX orders_customer_id ON orders (customer_id)');
+  late final Index orderItemsId = Index('order_items_id',
+      'CREATE UNIQUE INDEX order_items_id ON order_items (id)');
+  late final Index orderItemsName = Index('order_items_name',
+      'CREATE INDEX order_items_name ON order_items (name)');
+  late final Index orderItemsSku = Index(
+      'order_items_sku', 'CREATE INDEX order_items_sku ON order_items (sku)');
+  late final Index orderItemsCartId = Index('order_items_cart_id',
+      'CREATE INDEX order_items_cart_id ON order_items (cart_id)');
+  late final Index orderItemsProductId = Index('order_items_product_id',
+      'CREATE INDEX order_items_product_id ON order_items (product_id)');
+  late final Index orderItemsOrderId = Index('order_items_order_id',
+      'CREATE INDEX order_items_order_id ON order_items (order_id)');
+  late final Index orderExtrasId = Index('order_extras_id',
+      'CREATE UNIQUE INDEX order_extras_id ON order_extras (id)');
+  late final Index orderExtrasExtraId = Index('order_extras_extra_id',
+      'CREATE INDEX order_extras_extra_id ON order_extras (extra_id)');
+  late final Index orderExtrasOrderId = Index('order_extras_order_id',
+      'CREATE INDEX order_extras_order_id ON order_extras (order_id)');
+  late final Index orderPaymentsId = Index('order_payments_id',
+      'CREATE UNIQUE INDEX order_payments_id ON order_payments (id)');
+  late final Index orderPaymentsOrderId = Index('order_payments_order_id',
+      'CREATE INDEX order_payments_order_id ON order_payments (order_id)');
+  late final Index orderPaymentsPaymentMethodId = Index(
+      'order_payments_payment_method_id',
+      'CREATE INDEX order_payments_payment_method_id ON order_payments (payment_method_id)');
+  late final Index newCustomersId = Index('new_customers_id',
+      'CREATE UNIQUE INDEX new_customers_id ON new_customers (id)');
+  late final Index newCustomersFullName = Index('new_customers_full_name',
+      'CREATE INDEX new_customers_full_name ON new_customers (full_name)');
+  late final Index newCustomersNric = Index('new_customers_nric',
+      'CREATE INDEX new_customers_nric ON new_customers (nric)');
+  late final Index newCustomersMobileNo = Index('new_customers_mobile_no',
+      'CREATE INDEX new_customers_mobile_no ON new_customers (mobile_no)');
+  late final Index newOrderExtrasId = Index('new_order_extras_id',
+      'CREATE UNIQUE INDEX new_order_extras_id ON new_order_extras (id)');
+  late final Index newOrderExtrasExtraId = Index('new_order_extras_extra_id',
+      'CREATE INDEX new_order_extras_extra_id ON new_order_extras (extra_id)');
+  late final Index newOrderExtrasOrderId = Index('new_order_extras_order_id',
+      'CREATE INDEX new_order_extras_order_id ON new_order_extras (order_id)');
+  late final Index newOrderItemsId = Index('new_order_items_id',
+      'CREATE UNIQUE INDEX new_order_items_id ON new_order_items (id)');
+  late final Index newOrderItemsName = Index('new_order_items_name',
+      'CREATE INDEX new_order_items_name ON new_order_items (name)');
+  late final Index newOrderItemsSku = Index('new_order_items_sku',
+      'CREATE INDEX new_order_items_sku ON new_order_items (sku)');
+  late final Index newOrderItemsCartId = Index('new_order_items_cart_id',
+      'CREATE INDEX new_order_items_cart_id ON new_order_items (cart_id)');
+  late final Index newOrderItemsProductId = Index('new_order_items_product_id',
+      'CREATE INDEX new_order_items_product_id ON new_order_items (product_id)');
+  late final Index newOrderItemsOrderId = Index('new_order_items_order_id',
+      'CREATE INDEX new_order_items_order_id ON new_order_items (order_id)');
+  late final Index newOrderPaymentsId = Index('new_order_payments_id',
+      'CREATE UNIQUE INDEX new_order_payments_id ON new_order_payments (id)');
+  late final Index newOrderPaymentsOrderId = Index(
+      'new_order_payments_order_id',
+      'CREATE INDEX new_order_payments_order_id ON new_order_payments (order_id)');
+  late final Index newOrderPaymentsPaymentMethodId = Index(
+      'new_order_payments_payment_method_id',
+      'CREATE INDEX new_order_payments_payment_method_id ON new_order_payments (payment_method_id)');
+  late final Index newOrdersId = Index(
+      'new_orders_id', 'CREATE UNIQUE INDEX new_orders_id ON new_orders (id)');
+  late final Index newOrdersScreeningId = Index('new_orders_screening_id',
+      'CREATE INDEX new_orders_screening_id ON new_orders (screening_id)');
+  late final Index newOrdersCustomerNric = Index('new_orders_customer_nric',
+      'CREATE INDEX new_orders_customer_nric ON new_orders (customer_nric)');
+  late final Index newScreeningRegistrationsId = Index(
+      'new_screening_registrations_id',
+      'CREATE UNIQUE INDEX new_screening_registrations_id ON new_screening_registrations (id)');
+  late final Index newScreeningRegistrationsIndex = Index(
+      'new_screening_registrations_index',
+      'CREATE INDEX new_screening_registrations_index ON new_screening_registrations ("index")');
+  late final Index newScreeningRegistrationsCustomerNric = Index(
+      'new_screening_registrations_customer_nric',
+      'CREATE INDEX new_screening_registrations_customer_nric ON new_screening_registrations (customer_nric)');
+  late final Index newScreeningRegistrationsTimeslotId = Index(
+      'new_screening_registrations_timeslot_id',
+      'CREATE INDEX new_screening_registrations_timeslot_id ON new_screening_registrations (timeslot_id)');
+  late final Index toSyncDataId = Index('to_sync_data_id',
+      'CREATE UNIQUE INDEX to_sync_data_id ON to_sync_data (id)');
   late final Index toSyncDataModelId = Index('to_sync_data_model_id',
       'CREATE INDEX to_sync_data_model_id ON to_sync_data (model_id)');
   late final UserDao userDao = UserDao(this as AppDb);
@@ -6733,6 +6870,69 @@ abstract class _$AppDb extends GeneratedDatabase {
         newOrdersTable,
         newScreeningRegistrationsTable,
         toSyncDataTable,
+        usersId,
+        posLicensesId,
+        companyId,
+        receiptSettingsId,
+        posExtrasId,
+        paymentMethodsId,
+        productCategoriesId,
+        productsId,
+        productsSku,
+        productsCategoryId,
+        customersId,
+        customersFullName,
+        customersNric,
+        customersMobileNo,
+        screeningsId,
+        screeningVenuesId,
+        screeningVenuesScreeningFormId,
+        screeningTimeslotsId,
+        screeningTimeslotsScreeningId,
+        screeningTimeslotsVenueId,
+        screeningRegistrationsIndex,
+        screeningRegistrationsCustomerId,
+        screeningRegistrationsTimeslotId,
+        ordersId,
+        ordersLicenseId,
+        ordersScreeningId,
+        ordersCustomerId,
+        orderItemsId,
+        orderItemsName,
+        orderItemsSku,
+        orderItemsCartId,
+        orderItemsProductId,
+        orderItemsOrderId,
+        orderExtrasId,
+        orderExtrasExtraId,
+        orderExtrasOrderId,
+        orderPaymentsId,
+        orderPaymentsOrderId,
+        orderPaymentsPaymentMethodId,
+        newCustomersId,
+        newCustomersFullName,
+        newCustomersNric,
+        newCustomersMobileNo,
+        newOrderExtrasId,
+        newOrderExtrasExtraId,
+        newOrderExtrasOrderId,
+        newOrderItemsId,
+        newOrderItemsName,
+        newOrderItemsSku,
+        newOrderItemsCartId,
+        newOrderItemsProductId,
+        newOrderItemsOrderId,
+        newOrderPaymentsId,
+        newOrderPaymentsOrderId,
+        newOrderPaymentsPaymentMethodId,
+        newOrdersId,
+        newOrdersScreeningId,
+        newOrdersCustomerNric,
+        newScreeningRegistrationsId,
+        newScreeningRegistrationsIndex,
+        newScreeningRegistrationsCustomerNric,
+        newScreeningRegistrationsTimeslotId,
+        toSyncDataId,
         toSyncDataModelId
       ];
   @override

@@ -7,4 +7,15 @@ mixin _$OrderDaoMixin on DatabaseAccessor<AppDb> {
   $ScreeningsTableTable get screeningsTable => attachedDatabase.screeningsTable;
   $CustomersTableTable get customersTable => attachedDatabase.customersTable;
   $OrdersTableTable get ordersTable => attachedDatabase.ordersTable;
+  $ProductCategoriesTableTable get productCategoriesTable =>
+      attachedDatabase.productCategoriesTable;
+  $ProductsTableTable get productsTable => attachedDatabase.productsTable;
+  $OrderItemsTableTable get orderItemsTable => attachedDatabase.orderItemsTable;
+  $PosExtrasTableTable get posExtrasTable => attachedDatabase.posExtrasTable;
+  $OrderExtrasTableTable get orderExtrasTable =>
+      attachedDatabase.orderExtrasTable;
+  $PaymentMethodsTableTable get paymentMethodsTable =>
+      attachedDatabase.paymentMethodsTable;
+  $OrderPaymentsTableTable get orderPaymentsTable =>
+      attachedDatabase.orderPaymentsTable;
 }

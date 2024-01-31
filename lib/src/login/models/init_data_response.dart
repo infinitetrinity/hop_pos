@@ -124,7 +124,7 @@ class InitDataResponse with _$InitDataResponse {
         .map(
           (registration) => ScreeningRegistrationsTableCompanion(
             index: drift.Value(registration.index),
-            customerId: drift.Value(registration.customerId),
+            customerId: drift.Value.ofNullable(registration.customerId),
             timeslotId: drift.Value(registration.timeslotId),
           ),
         )
@@ -147,9 +147,9 @@ class InitDataResponse with _$InitDataResponse {
             extrasTotal: drift.Value(order.extrasTotal ?? 0),
             netTotal: drift.Value(order.netTotal ?? 0),
             rounding: drift.Value(order.rounding),
-            licenseId: drift.Value(order.licenseId),
+            licenseId: drift.Value.ofNullable(order.licenseId),
             screeningId: drift.Value(order.screeningId),
-            customerId: drift.Value(order.customerId),
+            customerId: drift.Value.ofNullable(order.customerId),
             createdAt: drift.Value(order.createdAt),
           ),
         )

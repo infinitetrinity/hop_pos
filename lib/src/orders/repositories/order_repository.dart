@@ -1,7 +1,9 @@
-import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
+import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/orders/daos/order_dao.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
+import 'package:hop_pos/src/orders/models/pos_order.dart';
+import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'order_repository.g.dart';
@@ -28,8 +30,7 @@ class OrderRepository {
     return await orderDao.insertOrders(orders);
   }
 
-  Future<bool> update(
-      OrdersTableCompanion order, Expression<bool> where) async {
-    return await orderDao.updateOrder(order, where);
+  Future<List<PosOrder>?> getScreeningCustomerOrders(Screening screening, Customer customer) async {
+    return await orderDao.getScreeningCustomerOrders(screening, customer);
   }
 }
