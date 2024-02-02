@@ -46,7 +46,18 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
     });
   }
 
-  Future<List<PosOrder>?> getScreeningCustomerOrders(Screening screening, Customer customer) async {
+  Future<PosOrder?> getScreeningCustomerLatestOrder(Screening screening, Customer customer) async {
+    final latestOrder = await (select(ordersTable)
+          ..where((tbl) => tbl.screeningId.equals(screening.id))
+          ..where((tbl) => tbl.customerId.equals(customer.id!))
+          ..orderBy([(tbl) => OrderingTerm.desc(tbl.createdAt)])
+          ..limit(1))
+        .getSingleOrNull();
+
+    if (latestOrder == null) {
+      return null;
+    }
+
     final query = select(ordersTable).join(
       [
         leftOuterJoin(
@@ -88,16 +99,11 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
       ],
     );
 
-    query.where(ordersTable.screeningId.equals(screening.id));
-    query.where(ordersTable.customerId.equals(customer.id!));
-    query.orderBy([OrderingTerm.desc(ordersTable.createdAt)]);
-
-    final ordersMap = <int, PosOrder>{};
+    query.where(ordersTable.id.equals(latestOrder.id));
     final result = await query.get();
+    PosOrder order = PosOrder(order: result.first.readTable(ordersTable));
 
     for (final row in result) {
-      PosOrder order = ordersMap[row.readTable(ordersTable).id] ??= PosOrder(order: row.readTable(ordersTable));
-
       final item = row.readTableOrNull(orderItemsTable);
       if (item != null && order.items?.contains(item) != true) {
         final items = List<OrderItem>.from(order.items ?? []);
@@ -139,10 +145,8 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
         payments.add(newPayment);
         order = order.copyWith(payments: payments);
       }
-
-      ordersMap[order.order.id] = order;
     }
 
-    return ordersMap.values.toList();
+    return order;
   }
 }

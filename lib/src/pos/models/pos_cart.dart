@@ -13,15 +13,10 @@ class PosCart with _$PosCart {
     Screening? screening,
     Customer? customer,
     ScreeningRegistration? registration,
-    List<PosOrder>? orders,
-    String? salesNote,
+    PosOrder? order,
   }) = _PosCart;
 
   const PosCart._();
 
   factory PosCart.fromJson(Map<String, dynamic> json) => _$PosCartFromJson(json);
-
-  PosOrder? get latestOrder {
-    return orders?.firstOrNull;
-  }
 }

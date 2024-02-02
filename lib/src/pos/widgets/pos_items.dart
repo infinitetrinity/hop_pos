@@ -9,7 +9,7 @@ class PosItems extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final order = ref.watch(posControllerProvider.select((prov) => prov.latestOrder));
+    final order = ref.watch(posControllerProvider.select((prov) => prov.order));
 
     return order == null || order.items == null
         ? Container()

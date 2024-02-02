@@ -21,6 +21,14 @@ class PosController extends _$PosController {
     state = state.copyWith(screening: screening);
   }
 
+  void reset() {
+    state = state.copyWith(
+      customer: null,
+      registration: null,
+      order: null,
+    );
+  }
+
   FutureOr<void> selectCustomer({
     required Customer customer,
     ScreeningRegistration? registration,
@@ -31,15 +39,14 @@ class PosController extends _$PosController {
           .findByCustomerAndScreening(state.screening!, customer);
     }
 
-    List<PosOrder>? orders;
-    if (registration != null && state.screening != null) {
-      orders = await ref.read(orderActionsProvider.notifier).getScreeningCustomerOrders(state.screening!, customer);
-    }
+    PosOrder? order = registration == null || state.screening == null
+        ? null
+        : await ref.read(orderActionsProvider.notifier).getScreeningCustomerLatestOrder(state.screening!, customer);
 
     state = state.copyWith(
       customer: customer,
-      registration: registration?.copyWith(hasOrders: (orders?.length ?? 0) > 0),
-      orders: orders,
+      registration: registration?.copyWith(hasOrders: order != null),
+      order: order,
     );
   }
 
@@ -49,7 +56,7 @@ class PosController extends _$PosController {
     state = state.copyWith(
       customer: customer,
       registration: null,
-      orders: null,
+      order: null,
     );
   }
 
@@ -68,8 +75,12 @@ class PosController extends _$PosController {
   }
 
   void setSalesNote(String note) {
-    state = state.copyWith(
-      salesNote: note,
-    );
+    if (state.order != null) {
+      state = state.copyWith(
+        order: state.order!.copyWith(
+          order: state.order!.order.copyWith(salesNote: note),
+        ),
+      );
+    }
   }
 }

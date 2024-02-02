@@ -10,7 +10,7 @@ class PosInvoice extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final order = ref.watch(posControllerProvider.select((prov) => prov.latestOrder));
+    final order = ref.watch(posControllerProvider.select((prov) => prov.order));
     final posLicense = ref.watch(posLicenseStateProvider).asData?.value;
 
     return order == null

@@ -21,7 +21,7 @@ class NewOrderRepository {
     required this.newOrderDao,
   });
 
-  Future<List<PosOrder>?> getScreeningCustomerOrders(Screening screening, Customer customer) async {
-    return await newOrderDao.getScreeningCustomerOrders(screening, customer);
+  Future<PosOrder?> getScreeningCustomerLatestOrder(Screening screening, Customer customer) async {
+    return await newOrderDao.getScreeningCustomerLatestOrder(screening, customer);
   }
 }

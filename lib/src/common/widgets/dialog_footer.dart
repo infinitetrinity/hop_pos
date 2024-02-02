@@ -9,10 +9,12 @@ class DialogFooter extends StatelessWidget {
     required this.isSubmitting,
     required this.onSubmit,
     this.submitLabel = 'Submit',
+    this.color = AppColors.brand600,
   });
   final bool isSubmitting;
   final void Function() onSubmit;
   final String submitLabel;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class DialogFooter extends StatelessWidget {
         const SizedBox(width: 10),
         FormButton(
           text: submitLabel,
+          background: color,
           maxWidth: 140,
           isSubmitting: isSubmitting,
           onSubmit: onSubmit,

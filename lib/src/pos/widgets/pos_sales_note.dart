@@ -10,7 +10,7 @@ class PosSalesNote extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final salesNote = ref.watch(posControllerProvider.select((prov) => prov.salesNote));
+    final salesNote = ref.watch(posControllerProvider.select((prov) => prov.order?.order.salesNote));
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),

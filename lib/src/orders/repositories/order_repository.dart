@@ -30,7 +30,7 @@ class OrderRepository {
     return await orderDao.insertOrders(orders);
   }
 
-  Future<List<PosOrder>?> getScreeningCustomerOrders(Screening screening, Customer customer) async {
-    return await orderDao.getScreeningCustomerOrders(screening, customer);
+  Future<PosOrder?> getScreeningCustomerLatestOrder(Screening screening, Customer customer) async {
+    return await orderDao.getScreeningCustomerLatestOrder(screening, customer);
   }
 }

@@ -18,10 +18,9 @@ _$PosCartImpl _$$PosCartImplFromJson(Map<String, dynamic> json) =>
           ? null
           : ScreeningRegistration.fromJson(
               json['registration'] as Map<String, dynamic>),
-      orders: (json['orders'] as List<dynamic>?)
-          ?.map((e) => PosOrder.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      salesNote: json['salesNote'] as String?,
+      order: json['order'] == null
+          ? null
+          : PosOrder.fromJson(json['order'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$PosCartImplToJson(_$PosCartImpl instance) =>
@@ -29,6 +28,5 @@ Map<String, dynamic> _$$PosCartImplToJson(_$PosCartImpl instance) =>
       'screening': instance.screening,
       'customer': instance.customer,
       'registration': instance.registration,
-      'orders': instance.orders,
-      'salesNote': instance.salesNote,
+      'order': instance.order,
     };

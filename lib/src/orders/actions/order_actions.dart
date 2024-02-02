@@ -14,12 +14,14 @@ class OrderActions extends _$OrderActions {
     return;
   }
 
-  Future<List<PosOrder>?> getScreeningCustomerOrders(Screening screening, Customer customer) async {
-    final orders = await ref.read(orderRepoProvider).getScreeningCustomerOrders(screening, customer);
-    final newOrders = await ref.read(newOrderRepoProvider).getScreeningCustomerOrders(screening, customer);
+  Future<PosOrder?> getScreeningCustomerLatestOrder(Screening screening, Customer customer) async {
+    final order = await ref.read(orderRepoProvider).getScreeningCustomerLatestOrder(screening, customer);
+    final newOrder = await ref.read(newOrderRepoProvider).getScreeningCustomerLatestOrder(screening, customer);
 
-    return [...orders ?? [], ...newOrders ?? []]..sort(
-        (PosOrder a, PosOrder b) => b.order.createdAt.compareTo(a.order.createdAt),
-      );
+    if (order != null && newOrder != null) {
+      return order.order.createdAt.isAfter(newOrder.order.createdAt) ? order : newOrder;
+    }
+
+    return order ?? newOrder;
   }
 }

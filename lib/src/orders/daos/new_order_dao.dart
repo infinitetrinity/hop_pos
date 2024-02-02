@@ -22,7 +22,18 @@ part 'new_order_dao.g.dart';
 class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
   NewOrderDao(AppDb db) : super(db);
 
-  Future<List<PosOrder>?> getScreeningCustomerOrders(Screening screening, Customer customer) async {
+  Future<PosOrder?> getScreeningCustomerLatestOrder(Screening screening, Customer customer) async {
+    final latestOrder = await (select(newOrdersTable)
+          ..where((tbl) => tbl.screeningId.equals(screening.id))
+          ..where((tbl) => tbl.customerNric.equals(customer.nric!))
+          ..orderBy([(tbl) => OrderingTerm.desc(tbl.createdAt)])
+          ..limit(1))
+        .getSingleOrNull();
+
+    if (latestOrder == null) {
+      return null;
+    }
+
     final query = select(newOrdersTable).join(
       [
         leftOuterJoin(
@@ -46,17 +57,11 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
       ],
     );
 
-    query.where(newOrdersTable.screeningId.equals(screening.id));
-    query.where(newOrdersTable.customerNric.equals(customer.nric!));
-    query.orderBy([OrderingTerm.desc(newOrdersTable.createdAt)]);
-
-    final ordersMap = <int, PosOrder>{};
+    query.where(ordersTable.id.equals(latestOrder.id));
     final result = await query.get();
+    PosOrder order = PosOrder(order: result.first.readTable(newOrdersTable).copyWith(isNew: true));
 
     for (final row in result) {
-      PosOrder order = ordersMap[row.readTable(newOrdersTable).id] ??=
-          PosOrder(order: row.readTable(newOrdersTable).copyWith(isNew: true));
-
       final newItem = row.readTableOrNull(newOrderItemsTable)?.copyWith(isNew: true);
       if (newItem != null && order.items?.contains(newItem) != true) {
         final items = List<OrderItem>.from(order.items ?? []);
@@ -77,10 +82,8 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
         payments.add(newPayment);
         order = order.copyWith(payments: payments);
       }
-
-      ordersMap[order.order.id] = order;
     }
 
-    return ordersMap.values.toList();
+    return order;
   }
 }

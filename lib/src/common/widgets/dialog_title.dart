@@ -4,15 +4,16 @@ import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 
 class DialogTitle extends StatelessWidget {
-  const DialogTitle({super.key, required this.title});
+  const DialogTitle({super.key, required this.title, this.color = AppColors.brand600});
   final String title;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-      color: AppColors.brand600,
+      color: color,
       child: Row(
         children: [
           Text(
