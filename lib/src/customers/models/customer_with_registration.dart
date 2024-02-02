@@ -10,7 +10,6 @@ class CustomerWithRegistration with _$CustomerWithRegistration {
   const factory CustomerWithRegistration({
     required Customer customer,
     required ScreeningRegistration registration,
-    @Default(false) bool hasSales,
   }) = _CustomerWithRegistration;
 
   factory CustomerWithRegistration.fromJson(Map<String, dynamic> json) => _$CustomerWithRegistrationFromJson(json);

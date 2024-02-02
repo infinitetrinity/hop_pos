@@ -12,7 +12,6 @@ _$CustomerWithRegistrationImpl _$$CustomerWithRegistrationImplFromJson(
       customer: Customer.fromJson(json['customer'] as Map<String, dynamic>),
       registration: ScreeningRegistration.fromJson(
           json['registration'] as Map<String, dynamic>),
-      hasSales: json['hasSales'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$CustomerWithRegistrationImplToJson(
@@ -20,5 +19,4 @@ Map<String, dynamic> _$$CustomerWithRegistrationImplToJson(
     <String, dynamic>{
       'customer': instance.customer,
       'registration': instance.registration,
-      'hasSales': instance.hasSales,
     };

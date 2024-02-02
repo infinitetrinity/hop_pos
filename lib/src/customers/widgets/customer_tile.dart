@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
-import 'package:hop_pos/src/common/widgets/custom_badge.dart';
 import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
+import 'package:hop_pos/src/customers/widgets/customer_badges.dart';
+import 'package:hop_pos/src/screening_registrations/widgets/screening_registration_badges.dart';
 
 class CustomerTile extends HookWidget {
   const CustomerTile(this.item, {super.key});
@@ -39,18 +40,13 @@ class CustomerTile extends HookWidget {
                 color: isHover.value ? AppColors.white : AppColors.gray500,
               ),
             ),
-            if (item.customer.isPending || item.hasSales) ...[
-              const SizedBox(height: 5),
-              Row(
-                children: [
-                  if (item.hasSales) ...[
-                    const CustomBadge(text: 'Sales', bgColor: AppColors.green600),
-                    const SizedBox(width: 6),
-                  ],
-                  if (item.customer.isPending) const CustomBadge(text: 'Pending Acc', bgColor: AppColors.yellow500),
-                ],
-              ),
-            ],
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                CustomerBadges(customer: item.customer),
+                ScreeningRegistrationBadges(registration: item.registration)
+              ],
+            ),
           ],
         ),
       ),

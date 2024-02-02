@@ -15,4 +15,5 @@ mixin _$CustomerDaoMixin on DatabaseAccessor<AppDb> {
   $NewScreeningRegistrationsTableTable get newScreeningRegistrationsTable =>
       attachedDatabase.newScreeningRegistrationsTable;
   $OrdersTableTable get ordersTable => attachedDatabase.ordersTable;
+  $NewOrdersTableTable get newOrdersTable => attachedDatabase.newOrdersTable;
 }

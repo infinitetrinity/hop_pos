@@ -23,7 +23,6 @@ CustomerWithRegistration _$CustomerWithRegistrationFromJson(
 mixin _$CustomerWithRegistration {
   Customer get customer => throw _privateConstructorUsedError;
   ScreeningRegistration get registration => throw _privateConstructorUsedError;
-  bool get hasSales => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,8 +36,7 @@ abstract class $CustomerWithRegistrationCopyWith<$Res> {
           $Res Function(CustomerWithRegistration) then) =
       _$CustomerWithRegistrationCopyWithImpl<$Res, CustomerWithRegistration>;
   @useResult
-  $Res call(
-      {Customer customer, ScreeningRegistration registration, bool hasSales});
+  $Res call({Customer customer, ScreeningRegistration registration});
 
   $CustomerCopyWith<$Res> get customer;
   $ScreeningRegistrationCopyWith<$Res> get registration;
@@ -60,7 +58,6 @@ class _$CustomerWithRegistrationCopyWithImpl<$Res,
   $Res call({
     Object? customer = null,
     Object? registration = null,
-    Object? hasSales = null,
   }) {
     return _then(_value.copyWith(
       customer: null == customer
@@ -71,10 +68,6 @@ class _$CustomerWithRegistrationCopyWithImpl<$Res,
           ? _value.registration
           : registration // ignore: cast_nullable_to_non_nullable
               as ScreeningRegistration,
-      hasSales: null == hasSales
-          ? _value.hasSales
-          : hasSales // ignore: cast_nullable_to_non_nullable
-              as bool,
     ) as $Val);
   }
 
@@ -104,8 +97,7 @@ abstract class _$$CustomerWithRegistrationImplCopyWith<$Res>
       __$$CustomerWithRegistrationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Customer customer, ScreeningRegistration registration, bool hasSales});
+  $Res call({Customer customer, ScreeningRegistration registration});
 
   @override
   $CustomerCopyWith<$Res> get customer;
@@ -128,7 +120,6 @@ class __$$CustomerWithRegistrationImplCopyWithImpl<$Res>
   $Res call({
     Object? customer = null,
     Object? registration = null,
-    Object? hasSales = null,
   }) {
     return _then(_$CustomerWithRegistrationImpl(
       customer: null == customer
@@ -139,10 +130,6 @@ class __$$CustomerWithRegistrationImplCopyWithImpl<$Res>
           ? _value.registration
           : registration // ignore: cast_nullable_to_non_nullable
               as ScreeningRegistration,
-      hasSales: null == hasSales
-          ? _value.hasSales
-          : hasSales // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -151,9 +138,7 @@ class __$$CustomerWithRegistrationImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CustomerWithRegistrationImpl implements _CustomerWithRegistration {
   const _$CustomerWithRegistrationImpl(
-      {required this.customer,
-      required this.registration,
-      this.hasSales = false});
+      {required this.customer, required this.registration});
 
   factory _$CustomerWithRegistrationImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomerWithRegistrationImplFromJson(json);
@@ -162,13 +147,10 @@ class _$CustomerWithRegistrationImpl implements _CustomerWithRegistration {
   final Customer customer;
   @override
   final ScreeningRegistration registration;
-  @override
-  @JsonKey()
-  final bool hasSales;
 
   @override
   String toString() {
-    return 'CustomerWithRegistration(customer: $customer, registration: $registration, hasSales: $hasSales)';
+    return 'CustomerWithRegistration(customer: $customer, registration: $registration)';
   }
 
   @override
@@ -179,15 +161,12 @@ class _$CustomerWithRegistrationImpl implements _CustomerWithRegistration {
             (identical(other.customer, customer) ||
                 other.customer == customer) &&
             (identical(other.registration, registration) ||
-                other.registration == registration) &&
-            (identical(other.hasSales, hasSales) ||
-                other.hasSales == hasSales));
+                other.registration == registration));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, customer, registration, hasSales);
+  int get hashCode => Object.hash(runtimeType, customer, registration);
 
   @JsonKey(ignore: true)
   @override
@@ -206,9 +185,9 @@ class _$CustomerWithRegistrationImpl implements _CustomerWithRegistration {
 
 abstract class _CustomerWithRegistration implements CustomerWithRegistration {
   const factory _CustomerWithRegistration(
-      {required final Customer customer,
-      required final ScreeningRegistration registration,
-      final bool hasSales}) = _$CustomerWithRegistrationImpl;
+          {required final Customer customer,
+          required final ScreeningRegistration registration}) =
+      _$CustomerWithRegistrationImpl;
 
   factory _CustomerWithRegistration.fromJson(Map<String, dynamic> json) =
       _$CustomerWithRegistrationImpl.fromJson;
@@ -217,8 +196,6 @@ abstract class _CustomerWithRegistration implements CustomerWithRegistration {
   Customer get customer;
   @override
   ScreeningRegistration get registration;
-  @override
-  bool get hasSales;
   @override
   @JsonKey(ignore: true)
   _$$CustomerWithRegistrationImplCopyWith<_$CustomerWithRegistrationImpl>

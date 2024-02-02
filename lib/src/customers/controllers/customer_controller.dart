@@ -3,6 +3,7 @@ import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/customers/models/customer_form.dart';
 import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
+import 'package:hop_pos/src/screening_registrations/actions/screening_registration_actions.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'customer_controller.g.dart';
@@ -36,6 +37,6 @@ class CustomerController extends _$CustomerController {
       return [];
     }
 
-    return await ref.read(customerActionsProvider.notifier).searchScreeningCustomers(screening, search);
+    return await ref.read(screeningRegistrationActionsProvider.notifier).searchScreeningCustomers(screening, search);
   }
 }

@@ -1,25 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'order_actions.dart';
+part of 'new_order_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$orderActionsHash() => r'936e37802352ec7c6eca4f336320f2675d7d0428';
+String _$newOrderRepoHash() => r'5b15533d04722544ed1b2a18f9d441cec7f5da05';
 
-/// See also [OrderActions].
-@ProviderFor(OrderActions)
-final orderActionsProvider =
-    AutoDisposeNotifierProvider<OrderActions, void>.internal(
-  OrderActions.new,
-  name: r'orderActionsProvider',
+/// See also [newOrderRepo].
+@ProviderFor(newOrderRepo)
+final newOrderRepoProvider = AutoDisposeProvider<NewOrderRepository>.internal(
+  newOrderRepo,
+  name: r'newOrderRepoProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$orderActionsHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$newOrderRepoHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$OrderActions = AutoDisposeNotifier<void>;
+typedef NewOrderRepoRef = AutoDisposeProviderRef<NewOrderRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

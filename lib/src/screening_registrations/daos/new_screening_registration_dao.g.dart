@@ -1,17 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'screening_registration_dao.dart';
+part of 'new_screening_registration_dao.dart';
 
 // ignore_for_file: type=lint
-mixin _$ScreeningRegistrationDaoMixin on DatabaseAccessor<AppDb> {
-  $CustomersTableTable get customersTable => attachedDatabase.customersTable;
+mixin _$NewScreeningRegistrationDaoMixin on DatabaseAccessor<AppDb> {
   $ScreeningsTableTable get screeningsTable => attachedDatabase.screeningsTable;
   $ScreeningVenuesTableTable get screeningVenuesTable =>
       attachedDatabase.screeningVenuesTable;
   $ScreeningTimeslotsTableTable get screeningTimeslotsTable =>
       attachedDatabase.screeningTimeslotsTable;
-  $ScreeningRegistrationsTableTable get screeningRegistrationsTable =>
-      attachedDatabase.screeningRegistrationsTable;
+  $NewScreeningRegistrationsTableTable get newScreeningRegistrationsTable =>
+      attachedDatabase.newScreeningRegistrationsTable;
+  $CustomersTableTable get customersTable => attachedDatabase.customersTable;
+  $NewCustomersTableTable get newCustomersTable =>
+      attachedDatabase.newCustomersTable;
   $OrdersTableTable get ordersTable => attachedDatabase.ordersTable;
   $NewOrdersTableTable get newOrdersTable => attachedDatabase.newOrdersTable;
 }

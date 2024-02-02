@@ -45,9 +45,14 @@ class PosController extends _$PosController {
   }
 
   void addNewCustomer(CustomerForm data) {
+    final customer = Customer.fromJson(data.toJson());
+
     state = state.copyWith(
-      customer: Customer.fromJson(data.toJson()),
-      registration: null,
+      customer: customer,
+      registration: ScreeningRegistration(
+        index: customer.nricIndex,
+        isNew: true,
+      ),
     );
   }
 

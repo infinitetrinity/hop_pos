@@ -1,8 +1,14 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
+import 'package:hop_pos/src/order_extras/models/new_order_extras_table.dart';
+import 'package:hop_pos/src/order_extras/models/order_extra.dart';
 import 'package:hop_pos/src/order_extras/models/order_extras_table.dart';
+import 'package:hop_pos/src/order_items/models/new_order_items_table.dart';
+import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/order_items/models/order_items_table.dart';
+import 'package:hop_pos/src/order_payments/models/new_order_payments_table.dart';
+import 'package:hop_pos/src/order_payments/models/order_payment.dart';
 import 'package:hop_pos/src/order_payments/models/order_payments_table.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/orders_table.dart';
@@ -16,6 +22,9 @@ part 'order_dao.g.dart';
   OrderItemsTable,
   OrderExtrasTable,
   OrderPaymentsTable,
+  NewOrderItemsTable,
+  NewOrderExtrasTable,
+  NewOrderPaymentsTable,
 ])
 class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
   OrderDao(AppDb db) : super(db);
@@ -58,11 +67,26 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
             ordersTable.id,
           ),
         ),
+        leftOuterJoin(
+          newOrderItemsTable,
+          newOrderItemsTable.orderId.equalsExp(
+            ordersTable.id,
+          ),
+        ),
+        leftOuterJoin(
+          newOrderExtrasTable,
+          newOrderExtrasTable.orderId.equalsExp(
+            ordersTable.id,
+          ),
+        ),
+        leftOuterJoin(
+          newOrderPaymentsTable,
+          newOrderPaymentsTable.orderId.equalsExp(
+            ordersTable.id,
+          ),
+        ),
       ],
     );
-
-    print('customer ${customer.id}');
-    print('screening ${screening.id}');
 
     query.where(ordersTable.screeningId.equals(screening.id));
     query.where(ordersTable.customerId.equals(customer.id!));
@@ -72,22 +96,51 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
     final result = await query.get();
 
     for (final row in result) {
-      final orderId = row.readTable(ordersTable).id;
-      PosOrder order = ordersMap[orderId] ??= PosOrder(order: row.readTable(ordersTable));
+      PosOrder order = ordersMap[row.readTable(ordersTable).id] ??= PosOrder(order: row.readTable(ordersTable));
 
       final item = row.readTableOrNull(orderItemsTable);
       if (item != null && order.items?.contains(item) != true) {
-        final items = order.items ?? [];
+        final items = List<OrderItem>.from(order.items ?? []);
         items.add(item);
         order = order.copyWith(items: items);
       }
 
+      final extra = row.readTableOrNull(orderExtrasTable);
+      if (extra != null && order.extras?.contains(extra) != true) {
+        final extras = List<OrderExtra>.from(order.extras ?? []);
+        extras.add(extra);
+        order = order.copyWith(extras: extras);
+      }
+
       final payment = row.readTableOrNull(orderPaymentsTable);
       if (payment != null && order.payments?.contains(payment) != true) {
-        final payments = order.payments ?? [];
+        final payments = List<OrderPayment>.from(order.payments ?? []);
         payments.add(payment);
         order = order.copyWith(payments: payments);
       }
+
+      final newItem = row.readTableOrNull(newOrderItemsTable)?.copyWith(isNew: true);
+      if (newItem != null && order.items?.contains(newItem) != true) {
+        final items = List<OrderItem>.from(order.items ?? []);
+        items.add(newItem);
+        order = order.copyWith(items: items);
+      }
+
+      final newExtra = row.readTableOrNull(newOrderExtrasTable)?.copyWith(isNew: true);
+      if (newExtra != null && order.extras?.contains(newExtra) != true) {
+        final extras = List<OrderExtra>.from(order.extras ?? []);
+        extras.add(newExtra);
+        order = order.copyWith(extras: extras);
+      }
+
+      final newPayment = row.readTableOrNull(newOrderPaymentsTable)?.copyWith(isNew: true);
+      if (newPayment != null && order.payments?.contains(newPayment) != true) {
+        final payments = List<OrderPayment>.from(order.payments ?? []);
+        payments.add(newPayment);
+        order = order.copyWith(payments: payments);
+      }
+
+      ordersMap[order.order.id] = order;
     }
 
     return ordersMap.values.toList();

@@ -10,8 +10,10 @@ class ScreeningRegistration with _$ScreeningRegistration {
     String? index,
     @JsonKey(name: 'customer_nric') String? customerNric,
     @JsonKey(name: 'customer_id') int? customerId,
-    @JsonKey(name: 'timeslot_id') required int timeslotId,
+    @JsonKey(name: 'timeslot_id') int? timeslotId,
     @JsonKey(name: 'created_at') DateTime? createdAt,
+    @JsonKey(name: 'is_new') @Default(false) bool isNew,
+    @JsonKey(name: 'has_orders') @Default(false) bool hasOrders,
   }) = _ScreeningRegistration;
 
   factory ScreeningRegistration.fromJson(Map<String, dynamic> json) => _$ScreeningRegistrationFromJson(json);

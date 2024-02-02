@@ -1,9 +1,7 @@
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/customers/models/customer_form.dart';
-import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
 import 'package:hop_pos/src/customers/repositories/customer_repository.dart';
 import 'package:hop_pos/src/customers/repositories/new_customer_repository.dart';
-import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'customer_actions.g.dart';
@@ -43,10 +41,5 @@ class CustomerActions extends _$CustomerActions {
     final dynamic repo = customer.isNew ? ref.read(newCustomerRepoProvider) : ref.read(customerRepoProvider);
 
     return repo.update(customer);
-  }
-
-  FutureOr<List<CustomerWithRegistration>> searchScreeningCustomers(Screening screening, String search) async {
-    final repo = ref.watch(customerRepoProvider);
-    return await repo.searchScreening(screening, search);
   }
 }

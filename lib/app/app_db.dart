@@ -23,6 +23,7 @@ import 'package:hop_pos/src/order_payments/daos/order_payment_dao.dart';
 import 'package:hop_pos/src/order_payments/models/new_order_payments_table.dart';
 import 'package:hop_pos/src/order_payments/models/order_payment.dart';
 import 'package:hop_pos/src/order_payments/models/order_payments_table.dart';
+import 'package:hop_pos/src/orders/daos/new_order_dao.dart';
 import 'package:hop_pos/src/orders/daos/order_dao.dart';
 import 'package:hop_pos/src/orders/models/new_orders_table.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
@@ -45,6 +46,7 @@ import 'package:hop_pos/src/products/models/products_table.dart';
 import 'package:hop_pos/src/receipt_settings/daos/receipt_setting_dao.dart';
 import 'package:hop_pos/src/receipt_settings/models/receipt_setting.dart';
 import 'package:hop_pos/src/receipt_settings/models/receipt_settings_table.dart';
+import 'package:hop_pos/src/screening_registrations/daos/new_screening_registration_dao.dart';
 import 'package:hop_pos/src/screening_registrations/daos/screening_registration_dao.dart';
 import 'package:hop_pos/src/screening_registrations/models/new_screening_registrations_table.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
@@ -124,6 +126,8 @@ AppDb appDb(AppDbRef ref) {
   OrderPaymentDao,
   ToSycnDataDao,
   NewCustomerDao,
+  NewScreeningRegistrationDao,
+  NewOrderDao,
 ])
 class AppDb extends _$AppDb {
   AppDb._init() : super(_initDb());

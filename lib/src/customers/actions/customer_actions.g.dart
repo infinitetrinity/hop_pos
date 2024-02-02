@@ -6,7 +6,7 @@ part of 'customer_actions.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$customerActionsHash() => r'650cf5092e7f425730287701a48a88ce0368df07';
+String _$customerActionsHash() => r'c14bae627ce804ac0dc2ea60f403822dda57ee7e';
 
 /// See also [CustomerActions].
 @ProviderFor(CustomerActions)

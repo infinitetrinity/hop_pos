@@ -3,8 +3,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/app/app_styles.dart';
-import 'package:hop_pos/src/common/widgets/custom_badge.dart';
+import 'package:hop_pos/src/customers/widgets/customer_badges.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
+import 'package:hop_pos/src/screening_registrations/widgets/screening_registration_badges.dart';
 
 class SelectedCustomerDetail extends ConsumerWidget {
   const SelectedCustomerDetail({super.key, required this.isHover});
@@ -32,7 +33,7 @@ class SelectedCustomerDetail extends ConsumerWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              "Ref: ${registration?.index ?? customer.nricIndex} ${customer.mobileNo.isNullOrEmpty ? '' : '| ${customer.mobileNo}'}",
+              "Ref: ${registration?.index} ${customer.mobileNo.isNullOrEmpty ? '' : '| ${customer.mobileNo}'}",
               style: AppStyles.body.copyWith(
                 color: isHover ? AppColors.white : AppColors.gray600,
               ),
@@ -55,19 +56,8 @@ class SelectedCustomerDetail extends ConsumerWidget {
                 const SizedBox(height: 5),
                 Row(
                   children: [
-                    if (customer.isNew) ...[
-                      const CustomBadge(
-                        text: 'New',
-                        bgColor: AppColors.blue400,
-                      ),
-                      const SizedBox(width: 5),
-                    ],
-                    if (registration == null) ...[
-                      const CustomBadge(
-                        text: 'Walk-in',
-                        bgColor: AppColors.purple600,
-                      )
-                    ],
+                    CustomerBadges(customer: customer),
+                    ScreeningRegistrationBadges(registration: registration!)
                   ],
                 ),
               ],

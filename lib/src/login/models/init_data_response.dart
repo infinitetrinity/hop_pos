@@ -125,7 +125,7 @@ class InitDataResponse with _$InitDataResponse {
           (registration) => ScreeningRegistrationsTableCompanion(
             index: drift.Value(registration.index),
             customerId: drift.Value.ofNullable(registration.customerId),
-            timeslotId: drift.Value(registration.timeslotId),
+            timeslotId: drift.Value.ofNullable(registration.timeslotId),
           ),
         )
         .toList();
