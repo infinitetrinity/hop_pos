@@ -10,22 +10,20 @@ class PosSalesNote extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final salesNote =
-        ref.watch(posControllerProvider.select((prov) => prov.salesNote));
+    final salesNote = ref.watch(posControllerProvider.select((prov) => prov.salesNote));
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       color: AppColors.white,
       child: FormTextField(
         placeholder: 'Add sales note...',
         value: salesNote,
-        minLines: 5,
-        maxLines: 5,
+        minLines: 2,
+        maxLines: 2,
         keyboardType: TextInputType.multiline,
         isRequired: true,
         onChanged: (value) {
-          EasyDebounce.debounce(
-              'pos-sales-note', const Duration(milliseconds: 500), () async {
+          EasyDebounce.debounce('pos-sales-note', const Duration(milliseconds: 500), () async {
             ref.read(posControllerProvider.notifier).setSalesNote(value);
           });
         },

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/src/common/converters/bool_from_int_converter.dart';
 import 'package:hop_pos/src/common/converters/double_from_string_converter.dart';
 
@@ -25,11 +26,17 @@ class OrderItem with _$OrderItem {
     @JsonKey(name: 'created_at') DateTime? createdAt,
   }) = _OrderItem;
 
+  const OrderItem._();
+
   factory OrderItem.fromJson(Map<String, dynamic> json) => _$OrderItemFromJson(json);
 
   static List<OrderItem> fromJsonList(dynamic data) {
     return List<OrderItem>.from(
       data.map((el) => OrderItem.fromJson(el)),
     );
+  }
+
+  String get displayPrice {
+    return price == null ? 0.0.formatMoney : price!.formatMoney;
   }
 }

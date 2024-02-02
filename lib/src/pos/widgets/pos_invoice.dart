@@ -16,7 +16,7 @@ class PosInvoice extends ConsumerWidget {
     return order == null
         ? Container()
         : Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: const BoxDecoration(
               color: AppColors.white,
               border: Border(

@@ -16,9 +16,7 @@ class PosCustomer extends HookConsumerWidget {
     final width = useState<double?>(null);
 
     ref.listen(posControllerProvider.select((prov) => prov.customer), (_, current) {
-      if (current != null) {
-        controller.hide();
-      }
+      controller.hide();
     });
 
     return CompositedTransformTarget(

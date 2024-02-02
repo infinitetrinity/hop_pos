@@ -20,7 +20,9 @@ class MainApp extends HookConsumerWidget {
     void onCltrDPressed() {
       if (kDebugMode) {
         final router = ref.read(goRouterProvider);
-        router.routeInformationProvider.value.uri.path == DbScreenRoute().location ? router.go(LoginRoute().location) : router.go(DbScreenRoute().location);
+        router.routeInformationProvider.value.uri.path == DbScreenRoute().location
+            ? router.go(LoginRoute().location)
+            : router.go(DbScreenRoute().location);
       }
     }
 
@@ -28,8 +30,10 @@ class MainApp extends HookConsumerWidget {
       isResetting.value = true;
       await ref.read(setupServiceProvider.notifier).resetApp();
       isResetting.value = false;
-      final router = ref.read(goRouterProvider);
-      router.go(LoginRoute().location);
+
+      if (context.mounted) {
+        LoginRoute().go(context);
+      }
     }
 
     return Overlay(
