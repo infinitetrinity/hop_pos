@@ -28,11 +28,17 @@ class Order with _$Order {
     @JsonKey(name: 'is_new') @Default(false) bool isNew,
   }) = _Order;
 
+  const Order._();
+
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
 
   static List<Order> fromJsonList(dynamic data) {
     return List<Order>.from(
       data.map((el) => Order.fromJson(el)),
     );
+  }
+
+  String get displayInvoiceNo {
+    return "$invoicePrefix$invoiceNo";
   }
 }

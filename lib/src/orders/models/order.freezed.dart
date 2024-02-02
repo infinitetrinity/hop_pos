@@ -353,7 +353,7 @@ class __$$OrderImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$OrderImpl implements _Order {
+class _$OrderImpl extends _Order {
   const _$OrderImpl(
       {required this.id,
       @JsonKey(name: 'is_stf') required this.isStf,
@@ -375,7 +375,8 @@ class _$OrderImpl implements _Order {
       @JsonKey(name: 'customer_id') this.customerId,
       @JsonKey(name: 'customer_nric') this.customerNric,
       @JsonKey(name: 'created_at') required this.createdAt,
-      @JsonKey(name: 'is_new') this.isNew = false});
+      @JsonKey(name: 'is_new') this.isNew = false})
+      : super._();
 
   factory _$OrderImpl.fromJson(Map<String, dynamic> json) =>
       _$$OrderImplFromJson(json);
@@ -524,7 +525,7 @@ class _$OrderImpl implements _Order {
   }
 }
 
-abstract class _Order implements Order {
+abstract class _Order extends Order {
   const factory _Order(
       {required final int id,
       @JsonKey(name: 'is_stf') required final bool isStf,
@@ -549,6 +550,7 @@ abstract class _Order implements Order {
       @JsonKey(name: 'customer_nric') final String? customerNric,
       @JsonKey(name: 'created_at') required final DateTime createdAt,
       @JsonKey(name: 'is_new') final bool isNew}) = _$OrderImpl;
+  const _Order._() : super._();
 
   factory _Order.fromJson(Map<String, dynamic> json) = _$OrderImpl.fromJson;
 

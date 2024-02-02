@@ -33,7 +33,7 @@ class SelectedCustomerDetail extends ConsumerWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              "Ref: ${registration?.index} ${customer.mobileNo.isNullOrEmpty ? '' : '| ${customer.mobileNo}'}",
+              "Ref: ${registration?.index ?? customer.nricIndex} ${customer.mobileNo.isNullOrEmpty ? '' : '| ${customer.mobileNo}'}",
               style: AppStyles.body.copyWith(
                 color: isHover ? AppColors.white : AppColors.gray600,
               ),
@@ -57,7 +57,7 @@ class SelectedCustomerDetail extends ConsumerWidget {
                 Row(
                   children: [
                     CustomerBadges(customer: customer),
-                    ScreeningRegistrationBadges(registration: registration!)
+                    ScreeningRegistrationBadges(registration: registration)
                   ],
                 ),
               ],

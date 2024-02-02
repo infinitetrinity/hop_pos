@@ -34,12 +34,11 @@ class PosController extends _$PosController {
     List<PosOrder>? orders;
     if (registration != null && state.screening != null) {
       orders = await ref.read(orderActionsProvider.notifier).getScreeningCustomerOrders(state.screening!, customer);
-      print('orders $orders');
     }
 
     state = state.copyWith(
       customer: customer,
-      registration: registration,
+      registration: registration?.copyWith(hasOrders: (orders?.length ?? 0) > 0),
       orders: orders,
     );
   }
@@ -49,10 +48,8 @@ class PosController extends _$PosController {
 
     state = state.copyWith(
       customer: customer,
-      registration: ScreeningRegistration(
-        index: customer.nricIndex,
-        isNew: true,
-      ),
+      registration: null,
+      orders: null,
     );
   }
 

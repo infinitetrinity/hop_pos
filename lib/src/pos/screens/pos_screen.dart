@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hop_pos/src/common/widgets/layout.dart';
 import 'package:hop_pos/src/pos/widgets/pos_customer.dart';
+import 'package:hop_pos/src/pos/widgets/pos_invoice.dart';
 import 'package:hop_pos/src/pos/widgets/pos_sales_note.dart';
 import 'package:hop_pos/src/pos/widgets/pos_screening.dart';
 import 'package:hop_pos/src/products/widgets/product_search_input.dart';
@@ -29,6 +30,7 @@ class PosScreen extends StatelessWidget {
           Flexible(
             child: Column(
               children: [
+                PosInvoice(),
                 PosScreening(),
                 PosCustomer(),
                 PosSalesNote(),

@@ -20,4 +20,8 @@ class PosCart with _$PosCart {
   const PosCart._();
 
   factory PosCart.fromJson(Map<String, dynamic> json) => _$PosCartFromJson(json);
+
+  PosOrder? get latestOrder {
+    return orders?.firstOrNull;
+  }
 }

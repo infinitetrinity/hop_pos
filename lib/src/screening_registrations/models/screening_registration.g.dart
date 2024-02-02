@@ -13,7 +13,7 @@ _$ScreeningRegistrationImpl _$$ScreeningRegistrationImplFromJson(
       index: json['index'] as String?,
       customerNric: json['customer_nric'] as String?,
       customerId: json['customer_id'] as int?,
-      timeslotId: json['timeslot_id'] as int?,
+      timeslotId: json['timeslot_id'] as int,
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
