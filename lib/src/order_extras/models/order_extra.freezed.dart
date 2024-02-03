@@ -22,12 +22,12 @@ OrderExtra _$OrderExtraFromJson(Map<String, dynamic> json) {
 mixin _$OrderExtra {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
+  ExtraType get type => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   @DoubleFromStringConverter()
   double? get amount => throw _privateConstructorUsedError;
   @JsonKey(name: 'amount_type')
-  String get amountType => throw _privateConstructorUsedError;
+  ExtraAmountType get amountType => throw _privateConstructorUsedError;
   @DoubleFromStringConverter()
   @JsonKey(name: 'calculated_amount')
   double? get calculatedAmount => throw _privateConstructorUsedError;
@@ -57,10 +57,10 @@ abstract class $OrderExtraCopyWith<$Res> {
   $Res call(
       {int id,
       String name,
-      String type,
+      ExtraType type,
       String? description,
       @DoubleFromStringConverter() double? amount,
-      @JsonKey(name: 'amount_type') String amountType,
+      @JsonKey(name: 'amount_type') ExtraAmountType amountType,
       @DoubleFromStringConverter()
       @JsonKey(name: 'calculated_amount')
       double? calculatedAmount,
@@ -109,7 +109,7 @@ class _$OrderExtraCopyWithImpl<$Res, $Val extends OrderExtra>
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
+              as ExtraType,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -121,7 +121,7 @@ class _$OrderExtraCopyWithImpl<$Res, $Val extends OrderExtra>
       amountType: null == amountType
           ? _value.amountType
           : amountType // ignore: cast_nullable_to_non_nullable
-              as String,
+              as ExtraAmountType,
       calculatedAmount: freezed == calculatedAmount
           ? _value.calculatedAmount
           : calculatedAmount // ignore: cast_nullable_to_non_nullable
@@ -161,10 +161,10 @@ abstract class _$$OrderExtraImplCopyWith<$Res>
   $Res call(
       {int id,
       String name,
-      String type,
+      ExtraType type,
       String? description,
       @DoubleFromStringConverter() double? amount,
-      @JsonKey(name: 'amount_type') String amountType,
+      @JsonKey(name: 'amount_type') ExtraAmountType amountType,
       @DoubleFromStringConverter()
       @JsonKey(name: 'calculated_amount')
       double? calculatedAmount,
@@ -211,7 +211,7 @@ class __$$OrderExtraImplCopyWithImpl<$Res>
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
+              as ExtraType,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -223,7 +223,7 @@ class __$$OrderExtraImplCopyWithImpl<$Res>
       amountType: null == amountType
           ? _value.amountType
           : amountType // ignore: cast_nullable_to_non_nullable
-              as String,
+              as ExtraAmountType,
       calculatedAmount: freezed == calculatedAmount
           ? _value.calculatedAmount
           : calculatedAmount // ignore: cast_nullable_to_non_nullable
@@ -254,7 +254,7 @@ class __$$OrderExtraImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$OrderExtraImpl implements _OrderExtra {
+class _$OrderExtraImpl extends _OrderExtra {
   const _$OrderExtraImpl(
       {required this.id,
       required this.name,
@@ -269,7 +269,8 @@ class _$OrderExtraImpl implements _OrderExtra {
       @JsonKey(name: 'order_id') required this.orderId,
       @JsonKey(name: 'order_is_new') this.orderIsNew = false,
       @JsonKey(name: 'is_new') this.isNew = false,
-      @JsonKey(name: 'created_at') this.createdAt});
+      @JsonKey(name: 'created_at') this.createdAt})
+      : super._();
 
   factory _$OrderExtraImpl.fromJson(Map<String, dynamic> json) =>
       _$$OrderExtraImplFromJson(json);
@@ -279,7 +280,7 @@ class _$OrderExtraImpl implements _OrderExtra {
   @override
   final String name;
   @override
-  final String type;
+  final ExtraType type;
   @override
   final String? description;
   @override
@@ -287,7 +288,7 @@ class _$OrderExtraImpl implements _OrderExtra {
   final double? amount;
   @override
   @JsonKey(name: 'amount_type')
-  final String amountType;
+  final ExtraAmountType amountType;
   @override
   @DoubleFromStringConverter()
   @JsonKey(name: 'calculated_amount')
@@ -368,23 +369,24 @@ class _$OrderExtraImpl implements _OrderExtra {
   }
 }
 
-abstract class _OrderExtra implements OrderExtra {
+abstract class _OrderExtra extends OrderExtra {
   const factory _OrderExtra(
-          {required final int id,
-          required final String name,
-          required final String type,
-          final String? description,
-          @DoubleFromStringConverter() final double? amount,
-          @JsonKey(name: 'amount_type') required final String amountType,
-          @DoubleFromStringConverter()
-          @JsonKey(name: 'calculated_amount')
-          final double? calculatedAmount,
-          @JsonKey(name: 'extra_id') final int? extraId,
-          @JsonKey(name: 'order_id') required final int orderId,
-          @JsonKey(name: 'order_is_new') final bool? orderIsNew,
-          @JsonKey(name: 'is_new') final bool? isNew,
-          @JsonKey(name: 'created_at') final DateTime? createdAt}) =
-      _$OrderExtraImpl;
+      {required final int id,
+      required final String name,
+      required final ExtraType type,
+      final String? description,
+      @DoubleFromStringConverter() final double? amount,
+      @JsonKey(name: 'amount_type') required final ExtraAmountType amountType,
+      @DoubleFromStringConverter()
+      @JsonKey(name: 'calculated_amount')
+      final double? calculatedAmount,
+      @JsonKey(name: 'extra_id') final int? extraId,
+      @JsonKey(name: 'order_id') required final int orderId,
+      @JsonKey(name: 'order_is_new') final bool? orderIsNew,
+      @JsonKey(name: 'is_new') final bool? isNew,
+      @JsonKey(name: 'created_at')
+      final DateTime? createdAt}) = _$OrderExtraImpl;
+  const _OrderExtra._() : super._();
 
   factory _OrderExtra.fromJson(Map<String, dynamic> json) =
       _$OrderExtraImpl.fromJson;
@@ -394,7 +396,7 @@ abstract class _OrderExtra implements OrderExtra {
   @override
   String get name;
   @override
-  String get type;
+  ExtraType get type;
   @override
   String? get description;
   @override
@@ -402,7 +404,7 @@ abstract class _OrderExtra implements OrderExtra {
   double? get amount;
   @override
   @JsonKey(name: 'amount_type')
-  String get amountType;
+  ExtraAmountType get amountType;
   @override
   @DoubleFromStringConverter()
   @JsonKey(name: 'calculated_amount')

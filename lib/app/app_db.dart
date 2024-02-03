@@ -15,6 +15,7 @@ import 'package:hop_pos/src/order_extras/daos/order_extra_dao.dart';
 import 'package:hop_pos/src/order_extras/models/new_order_extras_table.dart';
 import 'package:hop_pos/src/order_extras/models/order_extra.dart';
 import 'package:hop_pos/src/order_extras/models/order_extras_table.dart';
+import 'package:hop_pos/src/order_items/daos/new_order_item_dao.dart';
 import 'package:hop_pos/src/order_items/daos/order_item_dao.dart';
 import 'package:hop_pos/src/order_items/models/new_order_items_table.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
@@ -128,6 +129,7 @@ AppDb appDb(AppDbRef ref) {
   NewCustomerDao,
   NewScreeningRegistrationDao,
   NewOrderDao,
+  NewOrderItemDao,
 ])
 class AppDb extends _$AppDb {
   AppDb._init() : super(_initDb());

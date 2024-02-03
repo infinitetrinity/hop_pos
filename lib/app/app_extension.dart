@@ -45,6 +45,16 @@ extension DoubleExtensions on double {
   String get formatMoney {
     return NumberFormat.simpleCurrency().format(this);
   }
+
+  double toDecimalPlace(int n) => double.parse(toStringAsFixed(n));
+
+  double percentageOf(double percent) {
+    return percent / 100 * this;
+  }
+
+  double roundDownTo5Cents() {
+    return (this * 20).floor() / 20;
+  }
 }
 
 extension StringColorExtensions on String? {

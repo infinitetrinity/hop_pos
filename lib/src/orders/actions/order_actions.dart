@@ -19,7 +19,7 @@ class OrderActions extends _$OrderActions {
     final newOrder = await ref.read(newOrderRepoProvider).getScreeningCustomerLatestOrder(screening, customer);
 
     if (order != null && newOrder != null) {
-      return order.order.createdAt.isAfter(newOrder.order.createdAt) ? order : newOrder;
+      return order.order.createdAt!.isAfter(newOrder.order.createdAt!) ? order : newOrder;
     }
 
     return order ?? newOrder;

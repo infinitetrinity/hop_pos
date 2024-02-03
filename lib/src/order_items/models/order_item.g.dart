@@ -8,7 +8,7 @@ part of 'order_item.dart';
 
 _$OrderItemImpl _$$OrderItemImplFromJson(Map<String, dynamic> json) =>
     _$OrderItemImpl(
-      id: json['id'] as int,
+      id: json['id'] as int?,
       name: json['name'] as String,
       sku: json['sku'] as String,
       description: json['description'] as String?,
@@ -19,11 +19,13 @@ _$OrderItemImpl _$$OrderItemImplFromJson(Map<String, dynamic> json) =>
       discountType: json['discount_type'] as String?,
       netPrice: const DoubleFromStringConverter()
           .fromJson(json['net_price'] as String?),
-      isCustom: const BoolFromIntConverter().fromJson(json['is_custom'] as int),
+      isCustom: _$JsonConverterFromJson<int, bool>(
+              json['is_custom'], const BoolFromIntConverter().fromJson) ??
+          false,
       orderIsNew: json['order_is_new'] as bool? ?? false,
       cartId: json['cart_id'] as int?,
       productId: json['product_id'] as int?,
-      orderId: json['order_id'] as int,
+      orderId: json['order_id'] as int?,
       isNew: json['is_new'] as bool? ?? false,
       createdAt: json['created_at'] == null
           ? null
@@ -40,7 +42,8 @@ Map<String, dynamic> _$$OrderItemImplToJson(_$OrderItemImpl instance) =>
       'discount': const DoubleFromStringConverter().toJson(instance.discount),
       'discount_type': instance.discountType,
       'net_price': const DoubleFromStringConverter().toJson(instance.netPrice),
-      'is_custom': const BoolFromIntConverter().toJson(instance.isCustom),
+      'is_custom': _$JsonConverterToJson<int, bool>(
+          instance.isCustom, const BoolFromIntConverter().toJson),
       'order_is_new': instance.orderIsNew,
       'cart_id': instance.cartId,
       'product_id': instance.productId,
@@ -48,3 +51,15 @@ Map<String, dynamic> _$$OrderItemImplToJson(_$OrderItemImpl instance) =>
       'is_new': instance.isNew,
       'created_at': instance.createdAt?.toIso8601String(),
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

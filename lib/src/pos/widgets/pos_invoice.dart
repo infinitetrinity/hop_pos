@@ -13,7 +13,7 @@ class PosInvoice extends ConsumerWidget {
     final order = ref.watch(posControllerProvider.select((prov) => prov.order));
     final posLicense = ref.watch(posLicenseStateProvider).asData?.value;
 
-    return order == null
+    return order == null || order.order.id == null
         ? Container()
         : Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),

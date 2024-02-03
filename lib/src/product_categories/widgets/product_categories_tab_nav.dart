@@ -22,11 +22,14 @@ class ProductCategoriesTabNav extends HookConsumerWidget {
             ),
           ),
           child: DefaultTabController(
-            initialIndex:
-                selectedCategory == null ? categories.indexOf(categories.firstWhere((category) => category.id == 0)) : categories.indexOf(selectedCategory),
+            initialIndex: selectedCategory == null
+                ? categories.indexOf(categories.firstWhere((category) => category.id == 0))
+                : categories.indexOf(selectedCategory),
             length: categories.length,
             child: TabBar(
-              onTap: (index) => ref.read(productCategoryControllerProvider().notifier).selectProductCategory(categories[index]),
+              onTap: (index) {
+                ref.read(productCategoryControllerProvider().notifier).selectProductCategory(categories[index]);
+              },
               isScrollable: true,
               tabAlignment: TabAlignment.start,
               indicatorColor: AppColors.brand600,

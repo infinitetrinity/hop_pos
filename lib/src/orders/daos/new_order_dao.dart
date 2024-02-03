@@ -57,7 +57,7 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
       ],
     );
 
-    query.where(ordersTable.id.equals(latestOrder.id));
+    query.where(ordersTable.id.equals(latestOrder.id!));
     final result = await query.get();
     PosOrder order = PosOrder(order: result.first.readTable(newOrdersTable).copyWith(isNew: true));
 
@@ -84,6 +84,8 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
       }
     }
 
-    return order;
+    return order.copyWith(
+      items: List<OrderItem>.from(order.items ?? [])..sort((a, b) => (a.cartId ?? 0).compareTo(b.cartId ?? 0)),
+    );
   }
 }

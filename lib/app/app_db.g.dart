@@ -2973,11 +2973,11 @@ class $OrdersTableTable extends OrdersTable
   static const VerificationMeta _discountTypeMeta =
       const VerificationMeta('discountType');
   @override
-  late final GeneratedColumn<String> discountType = GeneratedColumn<String>(
-      'discount_type', aliasedName, true,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
-      type: DriftSqlType.string,
-      requiredDuringInsert: false);
+  late final GeneratedColumnWithTypeConverter<DiscountType?, String>
+      discountType = GeneratedColumn<String>('discount_type', aliasedName, true,
+              type: DriftSqlType.string, requiredDuringInsert: false)
+          .withConverter<DiscountType?>(
+              $OrdersTableTable.$converterdiscountTypen);
   static const VerificationMeta _subtotalMeta =
       const VerificationMeta('subtotal');
   @override
@@ -3098,12 +3098,7 @@ class $OrdersTableTable extends OrdersTable
       context.handle(_discountMeta,
           discount.isAcceptableOrUnknown(data['discount']!, _discountMeta));
     }
-    if (data.containsKey('discount_type')) {
-      context.handle(
-          _discountTypeMeta,
-          discountType.isAcceptableOrUnknown(
-              data['discount_type']!, _discountTypeMeta));
-    }
+    context.handle(_discountTypeMeta, const VerificationResult.success());
     if (data.containsKey('subtotal')) {
       context.handle(_subtotalMeta,
           subtotal.isAcceptableOrUnknown(data['subtotal']!, _subtotalMeta));
@@ -3177,8 +3172,9 @@ class $OrdersTableTable extends OrdersTable
           .read(DriftSqlType.string, data['${effectivePrefix}invoice_prefix'])!,
       discount: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}discount']),
-      discountType: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}discount_type']),
+      discountType: $OrdersTableTable.$converterdiscountTypen.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.string, data['${effectivePrefix}discount_type'])),
       subtotal: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}subtotal'])!,
       extrasTotal: attachedDatabase.typeMapping
@@ -3202,6 +3198,13 @@ class $OrdersTableTable extends OrdersTable
   $OrdersTableTable createAlias(String alias) {
     return $OrdersTableTable(attachedDatabase, alias);
   }
+
+  static JsonTypeConverter2<DiscountType, String, String>
+      $converterdiscountType =
+      const EnumNameConverter<DiscountType>(DiscountType.values);
+  static JsonTypeConverter2<DiscountType?, String?, String?>
+      $converterdiscountTypen =
+      JsonTypeConverter2.asNullable($converterdiscountType);
 }
 
 class OrdersTableCompanion extends UpdateCompanion<Order> {
@@ -3212,7 +3215,7 @@ class OrdersTableCompanion extends UpdateCompanion<Order> {
   final Value<String> invoiceNo;
   final Value<String> invoicePrefix;
   final Value<double?> discount;
-  final Value<String?> discountType;
+  final Value<DiscountType?> discountType;
   final Value<double> subtotal;
   final Value<double> extrasTotal;
   final Value<double> netTotal;
@@ -3312,7 +3315,7 @@ class OrdersTableCompanion extends UpdateCompanion<Order> {
       Value<String>? invoiceNo,
       Value<String>? invoicePrefix,
       Value<double?>? discount,
-      Value<String?>? discountType,
+      Value<DiscountType?>? discountType,
       Value<double>? subtotal,
       Value<double>? extrasTotal,
       Value<double>? netTotal,
@@ -3366,7 +3369,8 @@ class OrdersTableCompanion extends UpdateCompanion<Order> {
       map['discount'] = Variable<double>(discount.value);
     }
     if (discountType.present) {
-      map['discount_type'] = Variable<String>(discountType.value);
+      map['discount_type'] = Variable<String>(
+          $OrdersTableTable.$converterdiscountTypen.toSql(discountType.value));
     }
     if (subtotal.present) {
       map['subtotal'] = Variable<double>(subtotal.value);
@@ -3834,11 +3838,10 @@ class $OrderExtrasTableTable extends OrderExtrasTable
       requiredDuringInsert: true);
   static const VerificationMeta _typeMeta = const VerificationMeta('type');
   @override
-  late final GeneratedColumn<String> type = GeneratedColumn<String>(
-      'type', aliasedName, false,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
-      type: DriftSqlType.string,
-      requiredDuringInsert: true);
+  late final GeneratedColumnWithTypeConverter<ExtraType, String> type =
+      GeneratedColumn<String>('type', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<ExtraType>($OrderExtrasTableTable.$convertertype);
   static const VerificationMeta _descriptionMeta =
       const VerificationMeta('description');
   @override
@@ -3855,11 +3858,11 @@ class $OrderExtrasTableTable extends OrderExtrasTable
   static const VerificationMeta _amountTypeMeta =
       const VerificationMeta('amountType');
   @override
-  late final GeneratedColumn<String> amountType = GeneratedColumn<String>(
-      'amount_type', aliasedName, false,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
-      type: DriftSqlType.string,
-      requiredDuringInsert: true);
+  late final GeneratedColumnWithTypeConverter<ExtraAmountType, String>
+      amountType = GeneratedColumn<String>('amount_type', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<ExtraAmountType>(
+              $OrderExtrasTableTable.$converteramountType);
   static const VerificationMeta _calculatedAmountMeta =
       const VerificationMeta('calculatedAmount');
   @override
@@ -3915,12 +3918,7 @@ class $OrderExtrasTableTable extends OrderExtrasTable
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
-    if (data.containsKey('type')) {
-      context.handle(
-          _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
-    } else if (isInserting) {
-      context.missing(_typeMeta);
-    }
+    context.handle(_typeMeta, const VerificationResult.success());
     if (data.containsKey('description')) {
       context.handle(
           _descriptionMeta,
@@ -3933,14 +3931,7 @@ class $OrderExtrasTableTable extends OrderExtrasTable
     } else if (isInserting) {
       context.missing(_amountMeta);
     }
-    if (data.containsKey('amount_type')) {
-      context.handle(
-          _amountTypeMeta,
-          amountType.isAcceptableOrUnknown(
-              data['amount_type']!, _amountTypeMeta));
-    } else if (isInserting) {
-      context.missing(_amountTypeMeta);
-    }
+    context.handle(_amountTypeMeta, const VerificationResult.success());
     if (data.containsKey('calculated_amount')) {
       context.handle(
           _calculatedAmountMeta,
@@ -3972,14 +3963,16 @@ class $OrderExtrasTableTable extends OrderExtrasTable
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      type: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}type'])!,
+      type: $OrderExtrasTableTable.$convertertype.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}type'])!),
       description: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}description']),
       amount: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}amount'])!,
-      amountType: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}amount_type'])!,
+      amountType: $OrderExtrasTableTable.$converteramountType.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.string, data['${effectivePrefix}amount_type'])!),
       calculatedAmount: attachedDatabase.typeMapping.read(
           DriftSqlType.double, data['${effectivePrefix}calculated_amount'])!,
       extraId: attachedDatabase.typeMapping
@@ -3993,15 +3986,21 @@ class $OrderExtrasTableTable extends OrderExtrasTable
   $OrderExtrasTableTable createAlias(String alias) {
     return $OrderExtrasTableTable(attachedDatabase, alias);
   }
+
+  static JsonTypeConverter2<ExtraType, String, String> $convertertype =
+      const EnumNameConverter<ExtraType>(ExtraType.values);
+  static JsonTypeConverter2<ExtraAmountType, String, String>
+      $converteramountType =
+      const EnumNameConverter<ExtraAmountType>(ExtraAmountType.values);
 }
 
 class OrderExtrasTableCompanion extends UpdateCompanion<OrderExtra> {
   final Value<int> id;
   final Value<String> name;
-  final Value<String> type;
+  final Value<ExtraType> type;
   final Value<String?> description;
   final Value<double> amount;
-  final Value<String> amountType;
+  final Value<ExtraAmountType> amountType;
   final Value<double> calculatedAmount;
   final Value<int?> extraId;
   final Value<int> orderId;
@@ -4019,10 +4018,10 @@ class OrderExtrasTableCompanion extends UpdateCompanion<OrderExtra> {
   OrderExtrasTableCompanion.insert({
     this.id = const Value.absent(),
     required String name,
-    required String type,
+    required ExtraType type,
     this.description = const Value.absent(),
     required double amount,
-    required String amountType,
+    required ExtraAmountType amountType,
     required double calculatedAmount,
     this.extraId = const Value.absent(),
     required int orderId,
@@ -4059,10 +4058,10 @@ class OrderExtrasTableCompanion extends UpdateCompanion<OrderExtra> {
   OrderExtrasTableCompanion copyWith(
       {Value<int>? id,
       Value<String>? name,
-      Value<String>? type,
+      Value<ExtraType>? type,
       Value<String?>? description,
       Value<double>? amount,
-      Value<String>? amountType,
+      Value<ExtraAmountType>? amountType,
       Value<double>? calculatedAmount,
       Value<int?>? extraId,
       Value<int>? orderId}) {
@@ -4089,7 +4088,8 @@ class OrderExtrasTableCompanion extends UpdateCompanion<OrderExtra> {
       map['name'] = Variable<String>(name.value);
     }
     if (type.present) {
-      map['type'] = Variable<String>(type.value);
+      map['type'] = Variable<String>(
+          $OrderExtrasTableTable.$convertertype.toSql(type.value));
     }
     if (description.present) {
       map['description'] = Variable<String>(description.value);
@@ -4098,7 +4098,8 @@ class OrderExtrasTableCompanion extends UpdateCompanion<OrderExtra> {
       map['amount'] = Variable<double>(amount.value);
     }
     if (amountType.present) {
-      map['amount_type'] = Variable<String>(amountType.value);
+      map['amount_type'] = Variable<String>(
+          $OrderExtrasTableTable.$converteramountType.toSql(amountType.value));
     }
     if (calculatedAmount.present) {
       map['calculated_amount'] = Variable<double>(calculatedAmount.value);
@@ -4663,11 +4664,10 @@ class $NewOrderExtrasTableTable extends NewOrderExtrasTable
       requiredDuringInsert: true);
   static const VerificationMeta _typeMeta = const VerificationMeta('type');
   @override
-  late final GeneratedColumn<String> type = GeneratedColumn<String>(
-      'type', aliasedName, false,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
-      type: DriftSqlType.string,
-      requiredDuringInsert: true);
+  late final GeneratedColumnWithTypeConverter<ExtraType, String> type =
+      GeneratedColumn<String>('type', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<ExtraType>($NewOrderExtrasTableTable.$convertertype);
   static const VerificationMeta _descriptionMeta =
       const VerificationMeta('description');
   @override
@@ -4684,11 +4684,11 @@ class $NewOrderExtrasTableTable extends NewOrderExtrasTable
   static const VerificationMeta _amountTypeMeta =
       const VerificationMeta('amountType');
   @override
-  late final GeneratedColumn<String> amountType = GeneratedColumn<String>(
-      'amount_type', aliasedName, false,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
-      type: DriftSqlType.string,
-      requiredDuringInsert: true);
+  late final GeneratedColumnWithTypeConverter<ExtraAmountType, String>
+      amountType = GeneratedColumn<String>('amount_type', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<ExtraAmountType>(
+              $NewOrderExtrasTableTable.$converteramountType);
   static const VerificationMeta _calculatedAmountMeta =
       const VerificationMeta('calculatedAmount');
   @override
@@ -4761,12 +4761,7 @@ class $NewOrderExtrasTableTable extends NewOrderExtrasTable
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
-    if (data.containsKey('type')) {
-      context.handle(
-          _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
-    } else if (isInserting) {
-      context.missing(_typeMeta);
-    }
+    context.handle(_typeMeta, const VerificationResult.success());
     if (data.containsKey('description')) {
       context.handle(
           _descriptionMeta,
@@ -4779,14 +4774,7 @@ class $NewOrderExtrasTableTable extends NewOrderExtrasTable
     } else if (isInserting) {
       context.missing(_amountMeta);
     }
-    if (data.containsKey('amount_type')) {
-      context.handle(
-          _amountTypeMeta,
-          amountType.isAcceptableOrUnknown(
-              data['amount_type']!, _amountTypeMeta));
-    } else if (isInserting) {
-      context.missing(_amountTypeMeta);
-    }
+    context.handle(_amountTypeMeta, const VerificationResult.success());
     if (data.containsKey('calculated_amount')) {
       context.handle(
           _calculatedAmountMeta,
@@ -4832,14 +4820,16 @@ class $NewOrderExtrasTableTable extends NewOrderExtrasTable
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      type: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}type'])!,
+      type: $NewOrderExtrasTableTable.$convertertype.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}type'])!),
       description: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}description']),
       amount: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}amount'])!,
-      amountType: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}amount_type'])!,
+      amountType: $NewOrderExtrasTableTable.$converteramountType.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.string, data['${effectivePrefix}amount_type'])!),
       calculatedAmount: attachedDatabase.typeMapping.read(
           DriftSqlType.double, data['${effectivePrefix}calculated_amount'])!,
       extraId: attachedDatabase.typeMapping
@@ -4857,15 +4847,21 @@ class $NewOrderExtrasTableTable extends NewOrderExtrasTable
   $NewOrderExtrasTableTable createAlias(String alias) {
     return $NewOrderExtrasTableTable(attachedDatabase, alias);
   }
+
+  static JsonTypeConverter2<ExtraType, String, String> $convertertype =
+      const EnumNameConverter<ExtraType>(ExtraType.values);
+  static JsonTypeConverter2<ExtraAmountType, String, String>
+      $converteramountType =
+      const EnumNameConverter<ExtraAmountType>(ExtraAmountType.values);
 }
 
 class NewOrderExtrasTableCompanion extends UpdateCompanion<OrderExtra> {
   final Value<int> id;
   final Value<String> name;
-  final Value<String> type;
+  final Value<ExtraType> type;
   final Value<String?> description;
   final Value<double> amount;
-  final Value<String> amountType;
+  final Value<ExtraAmountType> amountType;
   final Value<double> calculatedAmount;
   final Value<int?> extraId;
   final Value<int> orderId;
@@ -4887,10 +4883,10 @@ class NewOrderExtrasTableCompanion extends UpdateCompanion<OrderExtra> {
   NewOrderExtrasTableCompanion.insert({
     this.id = const Value.absent(),
     required String name,
-    required String type,
+    required ExtraType type,
     this.description = const Value.absent(),
     required double amount,
-    required String amountType,
+    required ExtraAmountType amountType,
     required double calculatedAmount,
     this.extraId = const Value.absent(),
     required int orderId,
@@ -4935,10 +4931,10 @@ class NewOrderExtrasTableCompanion extends UpdateCompanion<OrderExtra> {
   NewOrderExtrasTableCompanion copyWith(
       {Value<int>? id,
       Value<String>? name,
-      Value<String>? type,
+      Value<ExtraType>? type,
       Value<String?>? description,
       Value<double>? amount,
-      Value<String>? amountType,
+      Value<ExtraAmountType>? amountType,
       Value<double>? calculatedAmount,
       Value<int?>? extraId,
       Value<int>? orderId,
@@ -4969,7 +4965,8 @@ class NewOrderExtrasTableCompanion extends UpdateCompanion<OrderExtra> {
       map['name'] = Variable<String>(name.value);
     }
     if (type.present) {
-      map['type'] = Variable<String>(type.value);
+      map['type'] = Variable<String>(
+          $NewOrderExtrasTableTable.$convertertype.toSql(type.value));
     }
     if (description.present) {
       map['description'] = Variable<String>(description.value);
@@ -4978,7 +4975,9 @@ class NewOrderExtrasTableCompanion extends UpdateCompanion<OrderExtra> {
       map['amount'] = Variable<double>(amount.value);
     }
     if (amountType.present) {
-      map['amount_type'] = Variable<String>(amountType.value);
+      map['amount_type'] = Variable<String>($NewOrderExtrasTableTable
+          .$converteramountType
+          .toSql(amountType.value));
     }
     if (calculatedAmount.present) {
       map['calculated_amount'] = Variable<double>(calculatedAmount.value);
@@ -5770,11 +5769,11 @@ class $NewOrdersTableTable extends NewOrdersTable
   static const VerificationMeta _discountTypeMeta =
       const VerificationMeta('discountType');
   @override
-  late final GeneratedColumn<String> discountType = GeneratedColumn<String>(
-      'discount_type', aliasedName, true,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
-      type: DriftSqlType.string,
-      requiredDuringInsert: false);
+  late final GeneratedColumnWithTypeConverter<DiscountType?, String>
+      discountType = GeneratedColumn<String>('discount_type', aliasedName, true,
+              type: DriftSqlType.string, requiredDuringInsert: false)
+          .withConverter<DiscountType?>(
+              $NewOrdersTableTable.$converterdiscountTypen);
   static const VerificationMeta _subtotalMeta =
       const VerificationMeta('subtotal');
   @override
@@ -5815,7 +5814,9 @@ class $NewOrdersTableTable extends NewOrdersTable
       'customer_nric', aliasedName, false,
       additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
       type: DriftSqlType.string,
-      requiredDuringInsert: true);
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES customers (nric) ON DELETE CASCADE'));
   static const VerificationMeta _createdAtMeta =
       const VerificationMeta('createdAt');
   @override
@@ -5894,12 +5895,7 @@ class $NewOrdersTableTable extends NewOrdersTable
       context.handle(_discountMeta,
           discount.isAcceptableOrUnknown(data['discount']!, _discountMeta));
     }
-    if (data.containsKey('discount_type')) {
-      context.handle(
-          _discountTypeMeta,
-          discountType.isAcceptableOrUnknown(
-              data['discount_type']!, _discountTypeMeta));
-    }
+    context.handle(_discountTypeMeta, const VerificationResult.success());
     if (data.containsKey('subtotal')) {
       context.handle(_subtotalMeta,
           subtotal.isAcceptableOrUnknown(data['subtotal']!, _subtotalMeta));
@@ -5971,8 +5967,9 @@ class $NewOrdersTableTable extends NewOrdersTable
           .read(DriftSqlType.string, data['${effectivePrefix}invoice_prefix'])!,
       discount: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}discount']),
-      discountType: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}discount_type']),
+      discountType: $NewOrdersTableTable.$converterdiscountTypen.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.string, data['${effectivePrefix}discount_type'])),
       subtotal: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}subtotal'])!,
       extrasTotal: attachedDatabase.typeMapping
@@ -5994,6 +5991,13 @@ class $NewOrdersTableTable extends NewOrdersTable
   $NewOrdersTableTable createAlias(String alias) {
     return $NewOrdersTableTable(attachedDatabase, alias);
   }
+
+  static JsonTypeConverter2<DiscountType, String, String>
+      $converterdiscountType =
+      const EnumNameConverter<DiscountType>(DiscountType.values);
+  static JsonTypeConverter2<DiscountType?, String?, String?>
+      $converterdiscountTypen =
+      JsonTypeConverter2.asNullable($converterdiscountType);
 }
 
 class NewOrdersTableCompanion extends UpdateCompanion<Order> {
@@ -6005,7 +6009,7 @@ class NewOrdersTableCompanion extends UpdateCompanion<Order> {
   final Value<String> invoiceNo;
   final Value<String> invoicePrefix;
   final Value<double?> discount;
-  final Value<String?> discountType;
+  final Value<DiscountType?> discountType;
   final Value<double> subtotal;
   final Value<double> extrasTotal;
   final Value<double> netTotal;
@@ -6106,7 +6110,7 @@ class NewOrdersTableCompanion extends UpdateCompanion<Order> {
       Value<String>? invoiceNo,
       Value<String>? invoicePrefix,
       Value<double?>? discount,
-      Value<String?>? discountType,
+      Value<DiscountType?>? discountType,
       Value<double>? subtotal,
       Value<double>? extrasTotal,
       Value<double>? netTotal,
@@ -6162,7 +6166,9 @@ class NewOrdersTableCompanion extends UpdateCompanion<Order> {
       map['discount'] = Variable<double>(discount.value);
     }
     if (discountType.present) {
-      map['discount_type'] = Variable<String>(discountType.value);
+      map['discount_type'] = Variable<String>($NewOrdersTableTable
+          .$converterdiscountTypen
+          .toSql(discountType.value));
     }
     if (subtotal.present) {
       map['subtotal'] = Variable<double>(subtotal.value);
@@ -6844,6 +6850,7 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final NewScreeningRegistrationDao newScreeningRegistrationDao =
       NewScreeningRegistrationDao(this as AppDb);
   late final NewOrderDao newOrderDao = NewOrderDao(this as AppDb);
+  late final NewOrderItemDao newOrderItemDao = NewOrderItemDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -7083,6 +7090,13 @@ abstract class _$AppDb extends GeneratedDatabase {
           ),
           WritePropagation(
             on: TableUpdateQuery.onTableName('screenings',
+                limitUpdateKind: UpdateKind.delete),
+            result: [
+              TableUpdate('new_orders', kind: UpdateKind.delete),
+            ],
+          ),
+          WritePropagation(
+            on: TableUpdateQuery.onTableName('customers',
                 limitUpdateKind: UpdateKind.delete),
             result: [
               TableUpdate('new_orders', kind: UpdateKind.delete),

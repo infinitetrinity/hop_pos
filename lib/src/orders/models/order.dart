@@ -4,18 +4,20 @@ import 'package:hop_pos/src/common/converters/double_from_string_converter.dart'
 part 'order.freezed.dart';
 part 'order.g.dart';
 
+enum DiscountType { dollars, percentage }
+
 @freezed
 class Order with _$Order {
   const factory Order({
-    required int id,
-    @JsonKey(name: 'is_stf') required bool isStf,
-    @JsonKey(name: 'is_utf') required bool isUtf,
+    int? id,
+    @JsonKey(name: 'is_stf') @Default(false) bool? isStf,
+    @JsonKey(name: 'is_utf') @Default(false) bool? isUtf,
     @JsonKey(name: 'e_receipt') bool? eReceipt,
     @JsonKey(name: 'sales_note') String? salesNote,
-    @JsonKey(name: 'invoice_no') required String invoiceNo,
-    @JsonKey(name: 'invoice_prefix') required String invoicePrefix,
+    @JsonKey(name: 'invoice_no') String? invoiceNo,
+    @JsonKey(name: 'invoice_prefix') String? invoicePrefix,
     @DoubleFromStringConverter() double? discount,
-    @JsonKey(name: 'discount_type') String? discountType,
+    @JsonKey(name: 'discount_type') DiscountType? discountType,
     @DoubleFromStringConverter() double? subtotal,
     @DoubleFromStringConverter() @JsonKey(name: 'extras_total') double? extrasTotal,
     @DoubleFromStringConverter() @JsonKey(name: 'net_total') double? netTotal,
@@ -24,7 +26,7 @@ class Order with _$Order {
     @JsonKey(name: 'screening_id') int? screeningId,
     @JsonKey(name: 'customer_id') int? customerId,
     @JsonKey(name: 'customer_nric') String? customerNric,
-    @JsonKey(name: 'created_at') required DateTime createdAt,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
     @JsonKey(name: 'is_new') @Default(false) bool isNew,
   }) = _Order;
 
@@ -40,5 +42,9 @@ class Order with _$Order {
 
   String get displayInvoiceNo {
     return "$invoicePrefix$invoiceNo";
+  }
+
+  bool get isDiscountPercentage {
+    return discountType == DiscountType.percentage;
   }
 }

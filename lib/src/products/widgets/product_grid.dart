@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/app/app_styles.dart';
+import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/products/models/product.dart';
 
-class ProductGrid extends HookWidget {
+class ProductGrid extends HookConsumerWidget {
   const ProductGrid({super.key, required this.product});
   final Product product;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isHover = useState(false);
     final color = product.colorCode.parseColor;
 
@@ -19,8 +21,8 @@ class ProductGrid extends HookWidget {
       onEnter: (_) => isHover.value = true,
       onExit: (_) => isHover.value = false,
       child: GestureDetector(
-        onTap: () {
-          print('selected product');
+        onTap: () async {
+          await ref.read(posControllerProvider.notifier).addProduct(product);
         },
         child: Container(
           padding: const EdgeInsets.all(10),

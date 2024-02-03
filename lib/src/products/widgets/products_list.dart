@@ -24,8 +24,13 @@ class ProductsList extends HookConsumerWidget {
         Align(
           alignment: Alignment.centerRight,
           child: TextButton(
-            style: TextButton.styleFrom(
-              padding: const EdgeInsets.all(0),
+            style: ButtonStyle(
+              overlayColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+                return Colors.transparent;
+              }),
+              padding: MaterialStateProperty.resolveWith<EdgeInsets>((Set<MaterialState> states) {
+                return EdgeInsets.zero;
+              }),
             ),
             onPressed: () => toReorder.value = !toReorder.value,
             child: Text(
@@ -39,18 +44,23 @@ class ProductsList extends HookConsumerWidget {
           ),
         ),
         toReorder.value
-            ? const ProductCategoriesSortList()
+            ? const Column(
+                children: [
+                  SizedBox(height: 10),
+                  ProductCategoriesSortList(),
+                ],
+              )
             : Column(
                 children: [
                   const ProductCategoriesTabNav(),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
                   productsAsync.when(
                     data: (products) => GridsCarousel(
                       controller: controller,
                       items: products,
                       itemBuilder: (item) => ProductGrid(product: item),
-                      height: 635,
-                      aspectRatio: 1.2,
+                      height: 625,
+                      aspectRatio: 1.25,
                       arrows: false,
                     ),
                     error: (err, stack) {

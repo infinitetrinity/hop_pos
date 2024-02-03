@@ -16,11 +16,9 @@ class ProductCategoriesOrder {
     await _storage.write(key: _key, value: categories.join(','));
   }
 
-  static Future<void> setCategoriesOrder(
-      List<ProductCategory>? categories) async {
+  static Future<void> setCategoriesOrder(List<ProductCategory>? categories) async {
     await _storage.delete(key: _key);
-    await _storage.write(
-        key: _key, value: categories?.map((e) => e.id).join(','));
+    await _storage.write(key: _key, value: categories?.map((e) => e.id).join(','));
   }
 
   static Future<List<int>?> getCategoriesOrder() async {

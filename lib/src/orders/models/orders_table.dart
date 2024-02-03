@@ -18,7 +18,7 @@ class OrdersTable extends Table {
   TextColumn get invoiceNo => text().withLength(max: 255)();
   TextColumn get invoicePrefix => text().withLength(max: 255)();
   RealColumn get discount => real().nullable()();
-  TextColumn get discountType => text().nullable().withLength(max: 255)();
+  TextColumn get discountType => textEnum<DiscountType>().nullable()();
   RealColumn get subtotal => real()();
   RealColumn get extrasTotal => real()();
   RealColumn get netTotal => real()();

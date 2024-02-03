@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
+import 'package:hop_pos/src/common/services/flash_message.dart';
 import 'package:hop_pos/src/common/widgets/dialog_footer.dart';
 import 'package:hop_pos/src/common/widgets/dialog_title.dart';
+import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 
-class PosDiscardSalesDialog extends HookWidget {
+class PosDiscardSalesDialog extends HookConsumerWidget {
   const PosDiscardSalesDialog({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isSubmitting = useState(false);
 
     Future<void> discardSales() async {
       isSubmitting.value = true;
+      await ref.read(posControllerProvider.notifier).discardSales();
+      isSubmitting.value = false;
+
+      if (context.mounted) {
+        context.pop();
+        ref.read(flashMessageProvider).flash(message: 'Successfully discarded sale.');
+      }
     }
 
     return Center(

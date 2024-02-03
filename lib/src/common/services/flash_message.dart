@@ -46,7 +46,7 @@ class FlashMessage {
 
     fToast.showToast(
       child: FlashContent(message: flash),
-      toastDuration: Duration(seconds: dismissible ? 5 : 15),
+      toastDuration: Duration(seconds: dismissible ? 3 : 15),
       positionedToastBuilder: (context, child) {
         return Positioned(
           top: 20,

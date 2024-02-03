@@ -10,11 +10,11 @@ _$OrderExtraImpl _$$OrderExtraImplFromJson(Map<String, dynamic> json) =>
     _$OrderExtraImpl(
       id: json['id'] as int,
       name: json['name'] as String,
-      type: json['type'] as String,
+      type: $enumDecode(_$ExtraTypeEnumMap, json['type']),
       description: json['description'] as String?,
       amount:
           const DoubleFromStringConverter().fromJson(json['amount'] as String?),
-      amountType: json['amount_type'] as String,
+      amountType: $enumDecode(_$ExtraAmountTypeEnumMap, json['amount_type']),
       calculatedAmount: const DoubleFromStringConverter()
           .fromJson(json['calculated_amount'] as String?),
       extraId: json['extra_id'] as int?,
@@ -30,10 +30,10 @@ Map<String, dynamic> _$$OrderExtraImplToJson(_$OrderExtraImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'type': instance.type,
+      'type': _$ExtraTypeEnumMap[instance.type]!,
       'description': instance.description,
       'amount': const DoubleFromStringConverter().toJson(instance.amount),
-      'amount_type': instance.amountType,
+      'amount_type': _$ExtraAmountTypeEnumMap[instance.amountType]!,
       'calculated_amount':
           const DoubleFromStringConverter().toJson(instance.calculatedAmount),
       'extra_id': instance.extraId,
@@ -42,3 +42,13 @@ Map<String, dynamic> _$$OrderExtraImplToJson(_$OrderExtraImpl instance) =>
       'is_new': instance.isNew,
       'created_at': instance.createdAt?.toIso8601String(),
     };
+
+const _$ExtraTypeEnumMap = {
+  ExtraType.deduct: 'deduct',
+  ExtraType.add: 'add',
+};
+
+const _$ExtraAmountTypeEnumMap = {
+  ExtraAmountType.dollars: 'dollars',
+  ExtraAmountType.percentage: 'percentage',
+};

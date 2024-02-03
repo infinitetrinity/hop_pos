@@ -21,7 +21,7 @@ class Layout extends StatelessWidget {
               const Header(),
               Container(
                 constraints: const BoxConstraints(maxWidth: 1280),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 25),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
                 child: content,
               ),
             ],

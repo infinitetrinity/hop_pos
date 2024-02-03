@@ -135,12 +135,12 @@ class InitDataResponse with _$InitDataResponse {
     return orders
         .map(
           (order) => OrdersTableCompanion(
-            id: drift.Value(order.id),
-            isStf: drift.Value(order.isStf),
-            isUtf: drift.Value(order.isUtf),
+            id: drift.Value.ofNullable(order.id),
+            isStf: drift.Value(order.isStf ?? false),
+            isUtf: drift.Value(order.isUtf ?? false),
             salesNote: drift.Value(order.salesNote),
-            invoiceNo: drift.Value(order.invoiceNo),
-            invoicePrefix: drift.Value(order.invoicePrefix),
+            invoiceNo: drift.Value.ofNullable(order.invoiceNo),
+            invoicePrefix: drift.Value.ofNullable(order.invoicePrefix),
             discount: drift.Value(order.discount),
             discountType: drift.Value(order.discountType),
             subtotal: drift.Value(order.subtotal ?? 0),
@@ -150,31 +150,14 @@ class InitDataResponse with _$InitDataResponse {
             licenseId: drift.Value.ofNullable(order.licenseId),
             screeningId: drift.Value(order.screeningId),
             customerId: drift.Value.ofNullable(order.customerId),
-            createdAt: drift.Value(order.createdAt),
+            createdAt: drift.Value.ofNullable(order.createdAt),
           ),
         )
         .toList();
   }
 
   List<OrderItemsTableCompanion> getOrderItemsData() {
-    return orderItems
-        .map(
-          (item) => OrderItemsTableCompanion(
-            id: drift.Value(item.id),
-            name: drift.Value(item.name),
-            sku: drift.Value(item.sku),
-            description: drift.Value(item.description),
-            price: drift.Value(item.price ?? 0),
-            discount: drift.Value(item.discount),
-            discountType: drift.Value(item.discountType),
-            netPrice: drift.Value(item.netPrice ?? 0),
-            isCustom: drift.Value(item.isCustom),
-            cartId: drift.Value(item.cartId),
-            productId: drift.Value(item.productId),
-            orderId: drift.Value(item.orderId),
-          ),
-        )
-        .toList();
+    return orderItems.map((item) => item.toData as OrderItemsTableCompanion).toList();
   }
 
   List<OrderExtrasTableCompanion> getOrderExtrasData() {

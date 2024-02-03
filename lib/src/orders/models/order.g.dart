@@ -7,16 +7,17 @@ part of 'order.dart';
 // **************************************************************************
 
 _$OrderImpl _$$OrderImplFromJson(Map<String, dynamic> json) => _$OrderImpl(
-      id: json['id'] as int,
-      isStf: json['is_stf'] as bool,
-      isUtf: json['is_utf'] as bool,
+      id: json['id'] as int?,
+      isStf: json['is_stf'] as bool? ?? false,
+      isUtf: json['is_utf'] as bool? ?? false,
       eReceipt: json['e_receipt'] as bool?,
       salesNote: json['sales_note'] as String?,
-      invoiceNo: json['invoice_no'] as String,
-      invoicePrefix: json['invoice_prefix'] as String,
+      invoiceNo: json['invoice_no'] as String?,
+      invoicePrefix: json['invoice_prefix'] as String?,
       discount: const DoubleFromStringConverter()
           .fromJson(json['discount'] as String?),
-      discountType: json['discount_type'] as String?,
+      discountType:
+          $enumDecodeNullable(_$DiscountTypeEnumMap, json['discount_type']),
       subtotal: const DoubleFromStringConverter()
           .fromJson(json['subtotal'] as String?),
       extrasTotal: const DoubleFromStringConverter()
@@ -29,7 +30,9 @@ _$OrderImpl _$$OrderImplFromJson(Map<String, dynamic> json) => _$OrderImpl(
       screeningId: json['screening_id'] as int?,
       customerId: json['customer_id'] as int?,
       customerNric: json['customer_nric'] as String?,
-      createdAt: DateTime.parse(json['created_at'] as String),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
       isNew: json['is_new'] as bool? ?? false,
     );
 
@@ -43,7 +46,7 @@ Map<String, dynamic> _$$OrderImplToJson(_$OrderImpl instance) =>
       'invoice_no': instance.invoiceNo,
       'invoice_prefix': instance.invoicePrefix,
       'discount': const DoubleFromStringConverter().toJson(instance.discount),
-      'discount_type': instance.discountType,
+      'discount_type': _$DiscountTypeEnumMap[instance.discountType],
       'subtotal': const DoubleFromStringConverter().toJson(instance.subtotal),
       'extras_total':
           const DoubleFromStringConverter().toJson(instance.extrasTotal),
@@ -53,6 +56,11 @@ Map<String, dynamic> _$$OrderImplToJson(_$OrderImpl instance) =>
       'screening_id': instance.screeningId,
       'customer_id': instance.customerId,
       'customer_nric': instance.customerNric,
-      'created_at': instance.createdAt.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
       'is_new': instance.isNew,
     };
+
+const _$DiscountTypeEnumMap = {
+  DiscountType.dollars: 'dollars',
+  DiscountType.percentage: 'percentage',
+};

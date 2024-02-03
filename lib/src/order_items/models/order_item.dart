@@ -1,4 +1,6 @@
+import 'package:drift/drift.dart' as drift;
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/src/common/converters/bool_from_int_converter.dart';
 import 'package:hop_pos/src/common/converters/double_from_string_converter.dart';
@@ -9,7 +11,7 @@ part 'order_item.g.dart';
 @freezed
 class OrderItem with _$OrderItem {
   const factory OrderItem({
-    required int id,
+    int? id,
     required String name,
     required String sku,
     String? description,
@@ -17,11 +19,11 @@ class OrderItem with _$OrderItem {
     @DoubleFromStringConverter() double? discount,
     @JsonKey(name: 'discount_type') String? discountType,
     @DoubleFromStringConverter() @JsonKey(name: 'net_price') double? netPrice,
-    @BoolFromIntConverter() @JsonKey(name: 'is_custom') required bool isCustom,
+    @BoolFromIntConverter() @JsonKey(name: 'is_custom') @Default(false) bool? isCustom,
     @Default(false) @JsonKey(name: 'order_is_new') bool? orderIsNew,
     @JsonKey(name: 'cart_id') int? cartId,
     @JsonKey(name: 'product_id') int? productId,
-    @JsonKey(name: 'order_id') required int orderId,
+    @JsonKey(name: 'order_id') int? orderId,
     @Default(false) @JsonKey(name: 'is_new') bool? isNew,
     @JsonKey(name: 'created_at') DateTime? createdAt,
   }) = _OrderItem;
@@ -38,5 +40,39 @@ class OrderItem with _$OrderItem {
 
   String get displayPrice {
     return price == null ? 0.0.formatMoney : price!.formatMoney;
+  }
+
+  dynamic get toData {
+    return isNew == true
+        ? NewOrderItemsTableCompanion(
+            id: drift.Value.ofNullable(id),
+            name: drift.Value(name),
+            sku: drift.Value(sku),
+            description: drift.Value(description),
+            price: drift.Value(price ?? 0),
+            discount: drift.Value(discount),
+            discountType: drift.Value(discountType),
+            netPrice: drift.Value(netPrice ?? 0),
+            isCustom: drift.Value(isCustom ?? false),
+            cartId: drift.Value(cartId),
+            productId: drift.Value(productId),
+            orderId: drift.Value.ofNullable(orderId),
+            orderIsNew: drift.Value(orderIsNew ?? false),
+            createdAt: drift.Value(DateTime.now()),
+          )
+        : OrderItemsTableCompanion(
+            id: drift.Value.ofNullable(id),
+            name: drift.Value(name),
+            sku: drift.Value(sku),
+            description: drift.Value(description),
+            price: drift.Value(price ?? 0),
+            discount: drift.Value(discount),
+            discountType: drift.Value(discountType),
+            netPrice: drift.Value(netPrice ?? 0),
+            isCustom: drift.Value(isCustom ?? false),
+            cartId: drift.Value(cartId),
+            productId: drift.Value(productId),
+            orderId: drift.Value.ofNullable(orderId),
+          );
   }
 }

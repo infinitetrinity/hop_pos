@@ -6,7 +6,7 @@ part of 'pos_actions.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$posActionsHash() => r'7197f08f8eba256e3c30c0c19ba74d8294141898';
+String _$posActionsHash() => r'8fbad1b3c6c9e729df67af168fc8fe46c227a3b1';
 
 /// See also [PosActions].
 @ProviderFor(PosActions)

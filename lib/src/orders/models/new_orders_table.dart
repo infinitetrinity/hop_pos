@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:hop_pos/src/customers/models/customers_table.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/screenings/models/screenings_table.dart';
 
@@ -17,13 +18,13 @@ class NewOrdersTable extends Table {
   TextColumn get invoiceNo => text().withLength(max: 255)();
   TextColumn get invoicePrefix => text().withLength(max: 255)();
   RealColumn get discount => real().nullable()();
-  TextColumn get discountType => text().nullable().withLength(max: 255)();
+  TextColumn get discountType => textEnum<DiscountType>().nullable()();
   RealColumn get subtotal => real()();
   RealColumn get extrasTotal => real()();
   RealColumn get netTotal => real()();
   RealColumn get rounding => real().nullable()();
   IntColumn get screeningId => integer().references(ScreeningsTable, #id, onDelete: KeyAction.cascade)();
   TextColumn get customerNric =>
-      text().withLength(max: 255).references(ScreeningsTable, #nric, onDelete: KeyAction.cascade)();
+      text().withLength(max: 255).references(CustomersTable, #nric, onDelete: KeyAction.cascade)();
   DateTimeColumn get createdAt => dateTime()();
 }

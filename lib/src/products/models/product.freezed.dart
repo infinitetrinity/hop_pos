@@ -176,7 +176,7 @@ class __$$ProductImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ProductImpl implements _Product {
+class _$ProductImpl extends _Product {
   const _$ProductImpl(
       {required this.id,
       required this.name,
@@ -184,7 +184,8 @@ class _$ProductImpl implements _Product {
       @DoubleFromStringConverter() this.price,
       this.description,
       @JsonKey(name: 'color_code') this.colorCode,
-      @JsonKey(name: 'category_id') this.categoryId});
+      @JsonKey(name: 'category_id') this.categoryId})
+      : super._();
 
   factory _$ProductImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductImplFromJson(json);
@@ -248,7 +249,7 @@ class _$ProductImpl implements _Product {
   }
 }
 
-abstract class _Product implements Product {
+abstract class _Product extends Product {
   const factory _Product(
       {required final int id,
       required final String name,
@@ -257,6 +258,7 @@ abstract class _Product implements Product {
       final String? description,
       @JsonKey(name: 'color_code') final String? colorCode,
       @JsonKey(name: 'category_id') final int? categoryId}) = _$ProductImpl;
+  const _Product._() : super._();
 
   factory _Product.fromJson(Map<String, dynamic> json) = _$ProductImpl.fromJson;
 

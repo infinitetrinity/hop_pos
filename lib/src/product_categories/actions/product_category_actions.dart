@@ -3,6 +3,7 @@ import 'package:hop_pos/src/product_categories/repositories/product_category_rep
 import 'package:hop_pos/src/product_categories/services/product_categories_hidden.dart';
 import 'package:hop_pos/src/product_categories/services/product_categories_order.dart';
 import 'package:hop_pos/src/product_categories/states/selected_product_category_state.dart';
+import 'package:hop_pos/src/products/controllers/products_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'product_category_actions.g.dart';
@@ -42,13 +43,15 @@ class ProductCategoryActions extends _$ProductCategoryActions {
   }
 
   Future<List<ProductCategory>> _sortProductCategories(List<ProductCategory> categories) async {
-    if (await ProductCategoriesOrder.getCategoriesOrder() == null) {
+    final List<int>? sortedIds = await ProductCategoriesOrder.getCategoriesOrder();
+
+    if (sortedIds == null) {
       await ProductCategoriesOrder.setCategoriesOrder(categories);
+      return categories;
     }
 
-    final List<int>? sortedIds = await ProductCategoriesOrder.getCategoriesOrder();
-    if (sortedIds != null) {
-      categories.sort((a, b) {
+    return categories
+      ..sort((a, b) {
         int indexA = sortedIds.indexOf(a.id);
         int indexB = sortedIds.indexOf(b.id);
 
@@ -57,9 +60,6 @@ class ProductCategoryActions extends _$ProductCategoryActions {
 
         return indexA.compareTo(indexB);
       });
-    }
-
-    return categories;
   }
 
   Future<void> reorderProductCategories(int oldIndex, int newIndex) async {
@@ -72,5 +72,6 @@ class ProductCategoryActions extends _$ProductCategoryActions {
 
   void selectProductCategory(ProductCategory category) {
     ref.read(selectedProductCategoryStateProvider.notifier).set(category.id == 0 ? null : category);
+    ref.invalidate(productsControllerProvider);
   }
 }

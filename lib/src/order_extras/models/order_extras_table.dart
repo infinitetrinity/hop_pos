@@ -12,10 +12,10 @@ class OrderExtrasTable extends Table {
   String get tableName => 'order_extras';
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text().withLength(max: 255)();
-  TextColumn get type => text().withLength(max: 255)();
+  TextColumn get type => textEnum<ExtraType>()();
   TextColumn get description => text().nullable().withLength(max: 255)();
   RealColumn get amount => real()();
-  TextColumn get amountType => text().withLength(max: 255)();
+  TextColumn get amountType => textEnum<ExtraAmountType>()();
   RealColumn get calculatedAmount => real()();
   IntColumn get extraId => integer().nullable().references(PosExtrasTable, #id, onDelete: KeyAction.setNull)();
   IntColumn get orderId => integer().references(OrdersTable, #id, onDelete: KeyAction.cascade)();

@@ -1,8 +1,12 @@
+import 'package:hop_pos/src/common/services/flash_message.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/customers/models/customer_form.dart';
 import 'package:hop_pos/src/orders/actions/order_actions.dart';
+import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
+import 'package:hop_pos/src/pos/actions/pos_actions.dart';
 import 'package:hop_pos/src/pos/models/pos_cart.dart';
+import 'package:hop_pos/src/products/models/product.dart';
 import 'package:hop_pos/src/screening_registrations/actions/screening_registration_actions.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
@@ -21,7 +25,7 @@ class PosController extends _$PosController {
     state = state.copyWith(screening: screening);
   }
 
-  void reset() {
+  void _reset() {
     state = state.copyWith(
       customer: null,
       registration: null,
@@ -40,7 +44,7 @@ class PosController extends _$PosController {
     }
 
     PosOrder? order = registration == null || state.screening == null
-        ? null
+        ? const PosOrder(order: Order(isNew: true))
         : await ref.read(orderActionsProvider.notifier).getScreeningCustomerLatestOrder(state.screening!, customer);
 
     state = state.copyWith(
@@ -82,5 +86,25 @@ class PosController extends _$PosController {
         ),
       );
     }
+  }
+
+  Future<void> discardSales() async {
+    _reset();
+  }
+
+  Future<void> addProduct(Product product) async {
+    if (state.customer == null) {
+      ref.read(flashMessageProvider).flash(message: 'Please select a customer first.', type: FlashMessageType.error);
+      return;
+    }
+
+    if (state.order == null) {
+      ref.read(flashMessageProvider).flash(message: 'Invalid order.', type: FlashMessageType.error);
+      return;
+    }
+
+    final order = await ref.read(posActionsProvider.notifier).addProduct(state.order!, product);
+
+    state = state.copyWith(order: order);
   }
 }

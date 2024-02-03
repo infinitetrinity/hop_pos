@@ -20,23 +20,23 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Order {
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_stf')
-  bool get isStf => throw _privateConstructorUsedError;
+  bool? get isStf => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_utf')
-  bool get isUtf => throw _privateConstructorUsedError;
+  bool? get isUtf => throw _privateConstructorUsedError;
   @JsonKey(name: 'e_receipt')
   bool? get eReceipt => throw _privateConstructorUsedError;
   @JsonKey(name: 'sales_note')
   String? get salesNote => throw _privateConstructorUsedError;
   @JsonKey(name: 'invoice_no')
-  String get invoiceNo => throw _privateConstructorUsedError;
+  String? get invoiceNo => throw _privateConstructorUsedError;
   @JsonKey(name: 'invoice_prefix')
-  String get invoicePrefix => throw _privateConstructorUsedError;
+  String? get invoicePrefix => throw _privateConstructorUsedError;
   @DoubleFromStringConverter()
   double? get discount => throw _privateConstructorUsedError;
   @JsonKey(name: 'discount_type')
-  String? get discountType => throw _privateConstructorUsedError;
+  DiscountType? get discountType => throw _privateConstructorUsedError;
   @DoubleFromStringConverter()
   double? get subtotal => throw _privateConstructorUsedError;
   @DoubleFromStringConverter()
@@ -56,7 +56,7 @@ mixin _$Order {
   @JsonKey(name: 'customer_nric')
   String? get customerNric => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_new')
   bool get isNew => throw _privateConstructorUsedError;
 
@@ -71,15 +71,15 @@ abstract class $OrderCopyWith<$Res> {
       _$OrderCopyWithImpl<$Res, Order>;
   @useResult
   $Res call(
-      {int id,
-      @JsonKey(name: 'is_stf') bool isStf,
-      @JsonKey(name: 'is_utf') bool isUtf,
+      {int? id,
+      @JsonKey(name: 'is_stf') bool? isStf,
+      @JsonKey(name: 'is_utf') bool? isUtf,
       @JsonKey(name: 'e_receipt') bool? eReceipt,
       @JsonKey(name: 'sales_note') String? salesNote,
-      @JsonKey(name: 'invoice_no') String invoiceNo,
-      @JsonKey(name: 'invoice_prefix') String invoicePrefix,
+      @JsonKey(name: 'invoice_no') String? invoiceNo,
+      @JsonKey(name: 'invoice_prefix') String? invoicePrefix,
       @DoubleFromStringConverter() double? discount,
-      @JsonKey(name: 'discount_type') String? discountType,
+      @JsonKey(name: 'discount_type') DiscountType? discountType,
       @DoubleFromStringConverter() double? subtotal,
       @DoubleFromStringConverter()
       @JsonKey(name: 'extras_total')
@@ -90,7 +90,7 @@ abstract class $OrderCopyWith<$Res> {
       @JsonKey(name: 'screening_id') int? screeningId,
       @JsonKey(name: 'customer_id') int? customerId,
       @JsonKey(name: 'customer_nric') String? customerNric,
-      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'created_at') DateTime? createdAt,
       @JsonKey(name: 'is_new') bool isNew});
 }
 
@@ -107,13 +107,13 @@ class _$OrderCopyWithImpl<$Res, $Val extends Order>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? isStf = null,
-    Object? isUtf = null,
+    Object? id = freezed,
+    Object? isStf = freezed,
+    Object? isUtf = freezed,
     Object? eReceipt = freezed,
     Object? salesNote = freezed,
-    Object? invoiceNo = null,
-    Object? invoicePrefix = null,
+    Object? invoiceNo = freezed,
+    Object? invoicePrefix = freezed,
     Object? discount = freezed,
     Object? discountType = freezed,
     Object? subtotal = freezed,
@@ -124,22 +124,22 @@ class _$OrderCopyWithImpl<$Res, $Val extends Order>
     Object? screeningId = freezed,
     Object? customerId = freezed,
     Object? customerNric = freezed,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
     Object? isNew = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      isStf: null == isStf
+              as int?,
+      isStf: freezed == isStf
           ? _value.isStf
           : isStf // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isUtf: null == isUtf
+              as bool?,
+      isUtf: freezed == isUtf
           ? _value.isUtf
           : isUtf // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       eReceipt: freezed == eReceipt
           ? _value.eReceipt
           : eReceipt // ignore: cast_nullable_to_non_nullable
@@ -148,14 +148,14 @@ class _$OrderCopyWithImpl<$Res, $Val extends Order>
           ? _value.salesNote
           : salesNote // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoiceNo: null == invoiceNo
+      invoiceNo: freezed == invoiceNo
           ? _value.invoiceNo
           : invoiceNo // ignore: cast_nullable_to_non_nullable
-              as String,
-      invoicePrefix: null == invoicePrefix
+              as String?,
+      invoicePrefix: freezed == invoicePrefix
           ? _value.invoicePrefix
           : invoicePrefix // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
@@ -163,7 +163,7 @@ class _$OrderCopyWithImpl<$Res, $Val extends Order>
       discountType: freezed == discountType
           ? _value.discountType
           : discountType // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DiscountType?,
       subtotal: freezed == subtotal
           ? _value.subtotal
           : subtotal // ignore: cast_nullable_to_non_nullable
@@ -196,10 +196,10 @@ class _$OrderCopyWithImpl<$Res, $Val extends Order>
           ? _value.customerNric
           : customerNric // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       isNew: null == isNew
           ? _value.isNew
           : isNew // ignore: cast_nullable_to_non_nullable
@@ -216,15 +216,15 @@ abstract class _$$OrderImplCopyWith<$Res> implements $OrderCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
-      @JsonKey(name: 'is_stf') bool isStf,
-      @JsonKey(name: 'is_utf') bool isUtf,
+      {int? id,
+      @JsonKey(name: 'is_stf') bool? isStf,
+      @JsonKey(name: 'is_utf') bool? isUtf,
       @JsonKey(name: 'e_receipt') bool? eReceipt,
       @JsonKey(name: 'sales_note') String? salesNote,
-      @JsonKey(name: 'invoice_no') String invoiceNo,
-      @JsonKey(name: 'invoice_prefix') String invoicePrefix,
+      @JsonKey(name: 'invoice_no') String? invoiceNo,
+      @JsonKey(name: 'invoice_prefix') String? invoicePrefix,
       @DoubleFromStringConverter() double? discount,
-      @JsonKey(name: 'discount_type') String? discountType,
+      @JsonKey(name: 'discount_type') DiscountType? discountType,
       @DoubleFromStringConverter() double? subtotal,
       @DoubleFromStringConverter()
       @JsonKey(name: 'extras_total')
@@ -235,7 +235,7 @@ abstract class _$$OrderImplCopyWith<$Res> implements $OrderCopyWith<$Res> {
       @JsonKey(name: 'screening_id') int? screeningId,
       @JsonKey(name: 'customer_id') int? customerId,
       @JsonKey(name: 'customer_nric') String? customerNric,
-      @JsonKey(name: 'created_at') DateTime createdAt,
+      @JsonKey(name: 'created_at') DateTime? createdAt,
       @JsonKey(name: 'is_new') bool isNew});
 }
 
@@ -250,13 +250,13 @@ class __$$OrderImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? isStf = null,
-    Object? isUtf = null,
+    Object? id = freezed,
+    Object? isStf = freezed,
+    Object? isUtf = freezed,
     Object? eReceipt = freezed,
     Object? salesNote = freezed,
-    Object? invoiceNo = null,
-    Object? invoicePrefix = null,
+    Object? invoiceNo = freezed,
+    Object? invoicePrefix = freezed,
     Object? discount = freezed,
     Object? discountType = freezed,
     Object? subtotal = freezed,
@@ -267,22 +267,22 @@ class __$$OrderImplCopyWithImpl<$Res>
     Object? screeningId = freezed,
     Object? customerId = freezed,
     Object? customerNric = freezed,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
     Object? isNew = null,
   }) {
     return _then(_$OrderImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      isStf: null == isStf
+              as int?,
+      isStf: freezed == isStf
           ? _value.isStf
           : isStf // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isUtf: null == isUtf
+              as bool?,
+      isUtf: freezed == isUtf
           ? _value.isUtf
           : isUtf // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       eReceipt: freezed == eReceipt
           ? _value.eReceipt
           : eReceipt // ignore: cast_nullable_to_non_nullable
@@ -291,14 +291,14 @@ class __$$OrderImplCopyWithImpl<$Res>
           ? _value.salesNote
           : salesNote // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoiceNo: null == invoiceNo
+      invoiceNo: freezed == invoiceNo
           ? _value.invoiceNo
           : invoiceNo // ignore: cast_nullable_to_non_nullable
-              as String,
-      invoicePrefix: null == invoicePrefix
+              as String?,
+      invoicePrefix: freezed == invoicePrefix
           ? _value.invoicePrefix
           : invoicePrefix // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
@@ -306,7 +306,7 @@ class __$$OrderImplCopyWithImpl<$Res>
       discountType: freezed == discountType
           ? _value.discountType
           : discountType // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DiscountType?,
       subtotal: freezed == subtotal
           ? _value.subtotal
           : subtotal // ignore: cast_nullable_to_non_nullable
@@ -339,10 +339,10 @@ class __$$OrderImplCopyWithImpl<$Res>
           ? _value.customerNric
           : customerNric // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       isNew: null == isNew
           ? _value.isNew
           : isNew // ignore: cast_nullable_to_non_nullable
@@ -355,13 +355,13 @@ class __$$OrderImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$OrderImpl extends _Order {
   const _$OrderImpl(
-      {required this.id,
-      @JsonKey(name: 'is_stf') required this.isStf,
-      @JsonKey(name: 'is_utf') required this.isUtf,
+      {this.id,
+      @JsonKey(name: 'is_stf') this.isStf = false,
+      @JsonKey(name: 'is_utf') this.isUtf = false,
       @JsonKey(name: 'e_receipt') this.eReceipt,
       @JsonKey(name: 'sales_note') this.salesNote,
-      @JsonKey(name: 'invoice_no') required this.invoiceNo,
-      @JsonKey(name: 'invoice_prefix') required this.invoicePrefix,
+      @JsonKey(name: 'invoice_no') this.invoiceNo,
+      @JsonKey(name: 'invoice_prefix') this.invoicePrefix,
       @DoubleFromStringConverter() this.discount,
       @JsonKey(name: 'discount_type') this.discountType,
       @DoubleFromStringConverter() this.subtotal,
@@ -374,7 +374,7 @@ class _$OrderImpl extends _Order {
       @JsonKey(name: 'screening_id') this.screeningId,
       @JsonKey(name: 'customer_id') this.customerId,
       @JsonKey(name: 'customer_nric') this.customerNric,
-      @JsonKey(name: 'created_at') required this.createdAt,
+      @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'is_new') this.isNew = false})
       : super._();
 
@@ -382,13 +382,13 @@ class _$OrderImpl extends _Order {
       _$$OrderImplFromJson(json);
 
   @override
-  final int id;
+  final int? id;
   @override
   @JsonKey(name: 'is_stf')
-  final bool isStf;
+  final bool? isStf;
   @override
   @JsonKey(name: 'is_utf')
-  final bool isUtf;
+  final bool? isUtf;
   @override
   @JsonKey(name: 'e_receipt')
   final bool? eReceipt;
@@ -397,16 +397,16 @@ class _$OrderImpl extends _Order {
   final String? salesNote;
   @override
   @JsonKey(name: 'invoice_no')
-  final String invoiceNo;
+  final String? invoiceNo;
   @override
   @JsonKey(name: 'invoice_prefix')
-  final String invoicePrefix;
+  final String? invoicePrefix;
   @override
   @DoubleFromStringConverter()
   final double? discount;
   @override
   @JsonKey(name: 'discount_type')
-  final String? discountType;
+  final DiscountType? discountType;
   @override
   @DoubleFromStringConverter()
   final double? subtotal;
@@ -435,7 +435,7 @@ class _$OrderImpl extends _Order {
   final String? customerNric;
   @override
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @override
   @JsonKey(name: 'is_new')
   final bool isNew;
@@ -527,15 +527,15 @@ class _$OrderImpl extends _Order {
 
 abstract class _Order extends Order {
   const factory _Order(
-      {required final int id,
-      @JsonKey(name: 'is_stf') required final bool isStf,
-      @JsonKey(name: 'is_utf') required final bool isUtf,
+      {final int? id,
+      @JsonKey(name: 'is_stf') final bool? isStf,
+      @JsonKey(name: 'is_utf') final bool? isUtf,
       @JsonKey(name: 'e_receipt') final bool? eReceipt,
       @JsonKey(name: 'sales_note') final String? salesNote,
-      @JsonKey(name: 'invoice_no') required final String invoiceNo,
-      @JsonKey(name: 'invoice_prefix') required final String invoicePrefix,
+      @JsonKey(name: 'invoice_no') final String? invoiceNo,
+      @JsonKey(name: 'invoice_prefix') final String? invoicePrefix,
       @DoubleFromStringConverter() final double? discount,
-      @JsonKey(name: 'discount_type') final String? discountType,
+      @JsonKey(name: 'discount_type') final DiscountType? discountType,
       @DoubleFromStringConverter() final double? subtotal,
       @DoubleFromStringConverter()
       @JsonKey(name: 'extras_total')
@@ -548,20 +548,20 @@ abstract class _Order extends Order {
       @JsonKey(name: 'screening_id') final int? screeningId,
       @JsonKey(name: 'customer_id') final int? customerId,
       @JsonKey(name: 'customer_nric') final String? customerNric,
-      @JsonKey(name: 'created_at') required final DateTime createdAt,
+      @JsonKey(name: 'created_at') final DateTime? createdAt,
       @JsonKey(name: 'is_new') final bool isNew}) = _$OrderImpl;
   const _Order._() : super._();
 
   factory _Order.fromJson(Map<String, dynamic> json) = _$OrderImpl.fromJson;
 
   @override
-  int get id;
+  int? get id;
   @override
   @JsonKey(name: 'is_stf')
-  bool get isStf;
+  bool? get isStf;
   @override
   @JsonKey(name: 'is_utf')
-  bool get isUtf;
+  bool? get isUtf;
   @override
   @JsonKey(name: 'e_receipt')
   bool? get eReceipt;
@@ -570,16 +570,16 @@ abstract class _Order extends Order {
   String? get salesNote;
   @override
   @JsonKey(name: 'invoice_no')
-  String get invoiceNo;
+  String? get invoiceNo;
   @override
   @JsonKey(name: 'invoice_prefix')
-  String get invoicePrefix;
+  String? get invoicePrefix;
   @override
   @DoubleFromStringConverter()
   double? get discount;
   @override
   @JsonKey(name: 'discount_type')
-  String? get discountType;
+  DiscountType? get discountType;
   @override
   @DoubleFromStringConverter()
   double? get subtotal;
@@ -608,7 +608,7 @@ abstract class _Order extends Order {
   String? get customerNric;
   @override
   @JsonKey(name: 'created_at')
-  DateTime get createdAt;
+  DateTime? get createdAt;
   @override
   @JsonKey(name: 'is_new')
   bool get isNew;
