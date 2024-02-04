@@ -6,7 +6,7 @@ part of 'pos_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$posControllerHash() => r'415267b16f46393eb0d7929c241189b0b9ddfb5e';
+String _$posControllerHash() => r'472609385221c7aee522166ee03d216fb532320d';
 
 /// See also [PosController].
 @ProviderFor(PosController)

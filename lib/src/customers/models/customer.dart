@@ -18,14 +18,20 @@ class Customer with _$Customer {
     String? email,
     @JsonKey(name: 'mobile_no') String? mobileNo,
     @JsonKey(name: 'is_pending') @Default(false) bool isPending,
-    @JsonKey(name: 'send_account_invitation')
-    @Default(false)
-    bool sendAccountInvitation,
+    @JsonKey(name: 'send_account_invitation') @Default(false) bool sendAccountInvitation,
     @JsonKey(name: 'created_at') DateTime? createdAt,
     @JsonKey(name: 'is_new') @Default(false) bool isNew,
   }) = _Customer;
 
   const Customer._();
+
+  factory Customer.fromJson(Map<String, dynamic> json) => _$CustomerFromJson(json);
+
+  static List<Customer> fromJsonList(dynamic data) {
+    return List<Customer>.from(
+      data.map((el) => Customer.fromJson(el)),
+    );
+  }
 
   dynamic toData() {
     return isNew
@@ -52,22 +58,13 @@ class Customer with _$Customer {
           );
   }
 
-  ToSyncDataTableCompanion toSyncData() {
+  ToSyncDataTableCompanion toSyncData(ToSyncActions action) {
     return ToSyncDataTableCompanion(
       model: const drift.Value(ToSyncModels.customers),
       modelId: drift.Value(id!),
-      action: const drift.Value(ToSyncActions.update),
+      action: drift.Value(action),
       createdAt: drift.Value(DateTime.now()),
       value: drift.Value(toJson()),
-    );
-  }
-
-  factory Customer.fromJson(Map<String, dynamic> json) =>
-      _$CustomerFromJson(json);
-
-  static List<Customer> fromJsonList(dynamic data) {
-    return List<Customer>.from(
-      data.map((el) => Customer.fromJson(el)),
     );
   }
 

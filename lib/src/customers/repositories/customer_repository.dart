@@ -3,6 +3,7 @@ import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/customers/daos/customer_dao.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/to_sync_data/daos/to_sync_data_dao.dart';
+import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'customer_repository.g.dart';
@@ -52,8 +53,7 @@ class CustomerRepository {
       final result =
           await customerDao.updateCustomer(customer.toData(), where ?? db.customersTable.id.equals(customer.id!));
 
-      await toSycnDataDao.insertToSyncData(customer.toSyncData());
-
+      await toSycnDataDao.insertToSyncData(customer.toSyncData(ToSyncActions.update));
       return result;
     });
   }

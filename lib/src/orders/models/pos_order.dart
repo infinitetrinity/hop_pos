@@ -22,31 +22,17 @@ class PosOrder with _$PosOrder {
   factory PosOrder.fromJson(Map<String, dynamic> json) => _$PosOrderFromJson(json);
 
   double get subtotal {
-    if (items == null || items!.isEmpty) {
-      return 0.00;
-    }
-
-    final double result = items!.fold(0, (total, item) => total + (item.netPrice ?? 0));
+    final double result = (items ?? []).fold(0, (total, item) => total + (item.netPrice ?? 0));
     return result.toDecimalPlace(2);
   }
 
   double get cartDiscount {
-    double discount = order.discount ?? 0.00;
-    return order.isDiscountPercentage ? subtotal.percentageOf(discount) : discount;
+    return order.toCalculateDiscount(subtotal);
   }
 
-  double get extraTotal {
-    if (extras == null || extras!.isEmpty) {
-      return 0.00;
-    }
-
-    final double result = extras!.fold(0, (total, extra) {
-      double amount = extra.amount ?? 0;
-
-      if (extra.isPercentage) {
-        amount = subtotal.percentageOf(amount);
-      }
-
+  double get extrasTotal {
+    final double result = (extras ?? []).fold(0, (total, extra) {
+      double amount = extra.toCalculateAmount(subtotal);
       return extra.isAddType ? total + amount : total - amount;
     });
 
@@ -57,7 +43,7 @@ class PosOrder with _$PosOrder {
     double total = subtotal - cartDiscount;
 
     if (total > 0) {
-      total = total + extraTotal;
+      total = total + extrasTotal;
     }
 
     return total.toDecimalPlace(2);

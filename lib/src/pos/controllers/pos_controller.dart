@@ -6,7 +6,6 @@ import 'package:hop_pos/src/order_extras/models/order_extra.dart';
 import 'package:hop_pos/src/orders/actions/order_actions.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
-import 'package:hop_pos/src/pos/actions/pos_actions.dart';
 import 'package:hop_pos/src/pos/models/pos_cart.dart';
 import 'package:hop_pos/src/products/models/product.dart';
 import 'package:hop_pos/src/screening_registrations/actions/screening_registration_actions.dart';
@@ -107,8 +106,7 @@ class PosController extends _$PosController {
       return;
     }
 
-    final order = await ref.read(posActionsProvider).addProduct(state.order!, product);
-
+    final order = await ref.read(orderActionsProvider).addProductToOrder(state.order!, product);
     state = state.copyWith(order: order);
   }
 }

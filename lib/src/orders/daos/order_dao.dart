@@ -151,4 +151,9 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
       items: List<OrderItem>.from(order.items ?? [])..sort((a, b) => (a.cartId ?? 0).compareTo(b.cartId ?? 0)),
     );
   }
+
+  Future<bool> updateOrder(OrdersTableCompanion order, Expression<bool> where) async {
+    final count = await (update(ordersTable)..where((_) => where)).write(order);
+    return count > 0;
+  }
 }

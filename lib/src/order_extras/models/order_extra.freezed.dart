@@ -28,8 +28,8 @@ mixin _$OrderExtra {
   double? get amount => throw _privateConstructorUsedError;
   @JsonKey(name: 'amount_type')
   ExtraAmountType get amountType => throw _privateConstructorUsedError;
-  @DoubleFromStringConverter()
   @JsonKey(name: 'calculated_amount')
+  @DoubleFromStringConverter()
   double? get calculatedAmount => throw _privateConstructorUsedError;
   @JsonKey(name: 'extra_id')
   int? get extraId => throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ mixin _$OrderExtra {
   @JsonKey(name: 'order_is_new')
   bool? get orderIsNew => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_new')
-  bool? get isNew => throw _privateConstructorUsedError;
+  bool get isNew => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   DateTime? get createdAt => throw _privateConstructorUsedError;
 
@@ -61,13 +61,13 @@ abstract class $OrderExtraCopyWith<$Res> {
       String? description,
       @DoubleFromStringConverter() double? amount,
       @JsonKey(name: 'amount_type') ExtraAmountType amountType,
-      @DoubleFromStringConverter()
       @JsonKey(name: 'calculated_amount')
+      @DoubleFromStringConverter()
       double? calculatedAmount,
       @JsonKey(name: 'extra_id') int? extraId,
       @JsonKey(name: 'order_id') int? orderId,
       @JsonKey(name: 'order_is_new') bool? orderIsNew,
-      @JsonKey(name: 'is_new') bool? isNew,
+      @JsonKey(name: 'is_new') bool isNew,
       @JsonKey(name: 'created_at') DateTime? createdAt});
 }
 
@@ -94,7 +94,7 @@ class _$OrderExtraCopyWithImpl<$Res, $Val extends OrderExtra>
     Object? extraId = freezed,
     Object? orderId = freezed,
     Object? orderIsNew = freezed,
-    Object? isNew = freezed,
+    Object? isNew = null,
     Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -138,10 +138,10 @@ class _$OrderExtraCopyWithImpl<$Res, $Val extends OrderExtra>
           ? _value.orderIsNew
           : orderIsNew // ignore: cast_nullable_to_non_nullable
               as bool?,
-      isNew: freezed == isNew
+      isNew: null == isNew
           ? _value.isNew
           : isNew // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as bool,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -165,13 +165,13 @@ abstract class _$$OrderExtraImplCopyWith<$Res>
       String? description,
       @DoubleFromStringConverter() double? amount,
       @JsonKey(name: 'amount_type') ExtraAmountType amountType,
-      @DoubleFromStringConverter()
       @JsonKey(name: 'calculated_amount')
+      @DoubleFromStringConverter()
       double? calculatedAmount,
       @JsonKey(name: 'extra_id') int? extraId,
       @JsonKey(name: 'order_id') int? orderId,
       @JsonKey(name: 'order_is_new') bool? orderIsNew,
-      @JsonKey(name: 'is_new') bool? isNew,
+      @JsonKey(name: 'is_new') bool isNew,
       @JsonKey(name: 'created_at') DateTime? createdAt});
 }
 
@@ -196,7 +196,7 @@ class __$$OrderExtraImplCopyWithImpl<$Res>
     Object? extraId = freezed,
     Object? orderId = freezed,
     Object? orderIsNew = freezed,
-    Object? isNew = freezed,
+    Object? isNew = null,
     Object? createdAt = freezed,
   }) {
     return _then(_$OrderExtraImpl(
@@ -240,10 +240,10 @@ class __$$OrderExtraImplCopyWithImpl<$Res>
           ? _value.orderIsNew
           : orderIsNew // ignore: cast_nullable_to_non_nullable
               as bool?,
-      isNew: freezed == isNew
+      isNew: null == isNew
           ? _value.isNew
           : isNew // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as bool,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -262,8 +262,8 @@ class _$OrderExtraImpl extends _OrderExtra {
       this.description,
       @DoubleFromStringConverter() this.amount,
       @JsonKey(name: 'amount_type') required this.amountType,
-      @DoubleFromStringConverter()
       @JsonKey(name: 'calculated_amount')
+      @DoubleFromStringConverter()
       this.calculatedAmount,
       @JsonKey(name: 'extra_id') this.extraId,
       @JsonKey(name: 'order_id') this.orderId,
@@ -290,8 +290,8 @@ class _$OrderExtraImpl extends _OrderExtra {
   @JsonKey(name: 'amount_type')
   final ExtraAmountType amountType;
   @override
-  @DoubleFromStringConverter()
   @JsonKey(name: 'calculated_amount')
+  @DoubleFromStringConverter()
   final double? calculatedAmount;
   @override
   @JsonKey(name: 'extra_id')
@@ -304,7 +304,7 @@ class _$OrderExtraImpl extends _OrderExtra {
   final bool? orderIsNew;
   @override
   @JsonKey(name: 'is_new')
-  final bool? isNew;
+  final bool isNew;
   @override
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
@@ -377,13 +377,13 @@ abstract class _OrderExtra extends OrderExtra {
       final String? description,
       @DoubleFromStringConverter() final double? amount,
       @JsonKey(name: 'amount_type') required final ExtraAmountType amountType,
-      @DoubleFromStringConverter()
       @JsonKey(name: 'calculated_amount')
+      @DoubleFromStringConverter()
       final double? calculatedAmount,
       @JsonKey(name: 'extra_id') final int? extraId,
       @JsonKey(name: 'order_id') final int? orderId,
       @JsonKey(name: 'order_is_new') final bool? orderIsNew,
-      @JsonKey(name: 'is_new') final bool? isNew,
+      @JsonKey(name: 'is_new') final bool isNew,
       @JsonKey(name: 'created_at')
       final DateTime? createdAt}) = _$OrderExtraImpl;
   const _OrderExtra._() : super._();
@@ -406,8 +406,8 @@ abstract class _OrderExtra extends OrderExtra {
   @JsonKey(name: 'amount_type')
   ExtraAmountType get amountType;
   @override
-  @DoubleFromStringConverter()
   @JsonKey(name: 'calculated_amount')
+  @DoubleFromStringConverter()
   double? get calculatedAmount;
   @override
   @JsonKey(name: 'extra_id')
@@ -420,7 +420,7 @@ abstract class _OrderExtra extends OrderExtra {
   bool? get orderIsNew;
   @override
   @JsonKey(name: 'is_new')
-  bool? get isNew;
+  bool get isNew;
   @override
   @JsonKey(name: 'created_at')
   DateTime? get createdAt;

@@ -39,7 +39,7 @@ class PosExtra with _$PosExtra {
     return type == ExtraType.add;
   }
 
-  double calculateAmount(double value) {
+  double toCalculateAmount(double value) {
     return isPercentage ? value.percentageOf(amount ?? 0) : amount ?? 0;
   }
 }

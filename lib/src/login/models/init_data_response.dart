@@ -132,50 +132,15 @@ class InitDataResponse with _$InitDataResponse {
   }
 
   List<OrdersTableCompanion> getOrdersData() {
-    return orders
-        .map(
-          (order) => OrdersTableCompanion(
-            id: drift.Value.ofNullable(order.id),
-            isStf: drift.Value(order.isStf ?? false),
-            isUtf: drift.Value(order.isUtf ?? false),
-            salesNote: drift.Value(order.salesNote),
-            invoiceNo: drift.Value.ofNullable(order.invoiceNo),
-            invoicePrefix: drift.Value.ofNullable(order.invoicePrefix),
-            discount: drift.Value(order.discount),
-            discountType: drift.Value(order.discountType),
-            subtotal: drift.Value(order.subtotal ?? 0),
-            extrasTotal: drift.Value(order.extrasTotal ?? 0),
-            netTotal: drift.Value(order.netTotal ?? 0),
-            rounding: drift.Value(order.rounding),
-            licenseId: drift.Value.ofNullable(order.licenseId),
-            screeningId: drift.Value(order.screeningId),
-            customerId: drift.Value.ofNullable(order.customerId),
-            createdAt: drift.Value.ofNullable(order.createdAt),
-          ),
-        )
-        .toList();
+    return orders.map((order) => order.toData() as OrdersTableCompanion).toList();
   }
 
   List<OrderItemsTableCompanion> getOrderItemsData() {
-    return orderItems.map((item) => item.toData as OrderItemsTableCompanion).toList();
+    return orderItems.map((item) => item.toData() as OrderItemsTableCompanion).toList();
   }
 
   List<OrderExtrasTableCompanion> getOrderExtrasData() {
-    return orderExtras
-        .map(
-          (extra) => OrderExtrasTableCompanion(
-            id: drift.Value.ofNullable(extra.id),
-            name: drift.Value(extra.name),
-            type: drift.Value(extra.type),
-            description: drift.Value(extra.description),
-            amount: drift.Value(extra.amount ?? 0),
-            amountType: drift.Value(extra.amountType),
-            calculatedAmount: drift.Value(extra.calculatedAmount ?? 0),
-            extraId: drift.Value(extra.extraId),
-            orderId: drift.Value.ofNullable(extra.orderId),
-          ),
-        )
-        .toList();
+    return orderExtras.map((extra) => extra.toData() as OrderExtrasTableCompanion).toList();
   }
 
   List<OrderPaymentsTableCompanion> getOrderPaymentsData() {

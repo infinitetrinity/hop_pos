@@ -42,7 +42,7 @@ class OrderItem with _$OrderItem {
     return price == null ? 0.0.formatMoney : price!.formatMoney;
   }
 
-  dynamic get toData {
+  dynamic toData() {
     return isNew == true
         ? NewOrderItemsTableCompanion(
             id: drift.Value.ofNullable(id),

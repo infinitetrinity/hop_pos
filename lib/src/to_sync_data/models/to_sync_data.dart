@@ -5,7 +5,8 @@ part 'to_sync_data.g.dart';
 
 enum ToSyncActions { update }
 
-enum ToSyncModels { customers }
+// ignore: constant_identifier_names
+enum ToSyncModels { customers, orders, order_extras }
 
 @freezed
 class ToSyncData with _$ToSyncData {
@@ -18,6 +19,5 @@ class ToSyncData with _$ToSyncData {
     required Map<String, dynamic> value,
   }) = _ToSyncData;
 
-  factory ToSyncData.fromJson(Map<String, dynamic> json) =>
-      _$ToSyncDataFromJson(json);
+  factory ToSyncData.fromJson(Map<String, dynamic> json) => _$ToSyncDataFromJson(json);
 }

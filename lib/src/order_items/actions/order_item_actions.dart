@@ -23,7 +23,7 @@ class OrderItemActions {
   });
 
   Future<OrderItem> store(OrderItem item) async {
-    final dynamic repo = item.isNew == true ? orderItemRepo : newOrderItemRepo;
-    return await repo.insert(item.toData);
+    final dynamic repo = item.isNew == true ? newOrderItemRepo : orderItemRepo;
+    return await repo.insert(item.toData());
   }
 }

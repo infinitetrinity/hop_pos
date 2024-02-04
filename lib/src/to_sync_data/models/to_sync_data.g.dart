@@ -28,6 +28,8 @@ Map<String, dynamic> _$$ToSyncDataImplToJson(_$ToSyncDataImpl instance) =>
 
 const _$ToSyncModelsEnumMap = {
   ToSyncModels.customers: 'customers',
+  ToSyncModels.orders: 'orders',
+  ToSyncModels.order_extras: 'order_extras',
 };
 
 const _$ToSyncActionsEnumMap = {
