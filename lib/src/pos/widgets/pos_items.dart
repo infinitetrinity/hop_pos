@@ -28,7 +28,7 @@ class PosItems extends HookConsumerWidget {
     return order == null || order.items == null
         ? Container()
         : Container(
-            constraints: const BoxConstraints(maxHeight: 240),
+            constraints: const BoxConstraints(maxHeight: 220),
             decoration: const BoxDecoration(
               color: AppColors.white,
               border: Border(

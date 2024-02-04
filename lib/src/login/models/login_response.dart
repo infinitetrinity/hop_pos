@@ -1,4 +1,3 @@
-import 'package:drift/drift.dart' as drift;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/company/models/company.dart';
@@ -47,99 +46,30 @@ class LoginResponse with _$LoginResponse {
   }
 
   PosLicensesTableCompanion getPosLicenseData() {
-    return PosLicensesTableCompanion(
-      id: drift.Value(posLicense.id),
-      name: drift.Value(posLicense.name),
-      invoicePrefix: drift.Value(posLicense.invoicePrefix),
-      licenseKey: drift.Value(posLicense.licenseKey),
-      password: drift.Value(posLicense.password),
-      isActive: drift.Value(posLicense.isActive),
-      isActivated: drift.Value(posLicense.isActivated),
-    );
+    return posLicense.toData();
   }
 
   CompanyTableCompanion getCompanyData() {
-    return CompanyTableCompanion(
-      id: drift.Value(company.id),
-      name: drift.Value(company.name),
-      address: drift.Value(company.address),
-      postalCode: drift.Value(company.postalCode),
-      email: drift.Value(company.email),
-      telephone: drift.Value(company.telephone),
-      fax: drift.Value(company.fax),
-      website: drift.Value(company.website),
-      coRegistrationNo: drift.Value(company.coRegistrationNo),
-    );
+    return company.toData();
   }
 
   ReceiptSettingsTableCompanion getReceiptSettingData() {
-    return ReceiptSettingsTableCompanion(
-      id: drift.Value(receiptSetting.id),
-      footerText: drift.Value(receiptSetting.footerText),
-      outstandingSpecimenTitle: drift.Value(receiptSetting.footerText),
-      outstandingSpecimenNoticeTitle: drift.Value(receiptSetting.outstandingSpecimenNoticeTitle),
-      outstandingSpecimenNotice: drift.Value(receiptSetting.outstandingSpecimenNotice),
-      utfTitle: drift.Value(receiptSetting.utfTitle),
-      utfNotice: drift.Value(receiptSetting.utfNotice),
-      stfTitle: drift.Value(receiptSetting.stfTitle),
-      stfNotice: drift.Value(receiptSetting.stfNotice),
-    );
+    return receiptSetting.toData();
   }
 
   List<PosExtrasTableCompanion> getPosExtrasData() {
-    return posExtras
-        .map(
-          (extra) => PosExtrasTableCompanion(
-            id: drift.Value(extra.id),
-            name: drift.Value(extra.name),
-            description: drift.Value(extra.description),
-            type: drift.Value(extra.type),
-            amount: drift.Value(extra.amount ?? 0),
-            amountType: drift.Value(extra.amountType),
-            isActive: drift.Value(extra.isActive),
-          ),
-        )
-        .toList();
+    return posExtras.map((extra) => extra.toData()).toList();
   }
 
   List<PaymentMethodsTableCompanion> getPaymentMethodsData() {
-    return paymentMethods
-        .map(
-          (method) => PaymentMethodsTableCompanion(
-            id: drift.Value(method.id),
-            name: drift.Value(method.name),
-            description: drift.Value(method.description),
-          ),
-        )
-        .toList();
+    return paymentMethods.map((method) => method.toData()).toList();
   }
 
   List<ProductCategoriesTableCompanion> getProductCategoriesData() {
-    return productCategories
-        .map(
-          (category) => ProductCategoriesTableCompanion(
-            id: drift.Value(category.id),
-            name: drift.Value(category.name),
-            description: drift.Value(category.description),
-            colorCode: drift.Value(category.colorCode),
-          ),
-        )
-        .toList();
+    return productCategories.map((category) => category.toData()).toList();
   }
 
   List<ProductsTableCompanion> getProductsData() {
-    return products
-        .map(
-          (product) => ProductsTableCompanion(
-            id: drift.Value(product.id),
-            name: drift.Value(product.name),
-            sku: drift.Value(product.sku),
-            price: drift.Value(product.price ?? 0),
-            description: drift.Value(product.description),
-            colorCode: drift.Value(product.colorCode),
-            categoryId: drift.Value(product.categoryId),
-          ),
-        )
-        .toList();
+    return products.map((product) => product.toData()).toList();
   }
 }

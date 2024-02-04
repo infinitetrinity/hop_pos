@@ -4,8 +4,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/app/app_styles.dart';
+import 'package:hop_pos/src/common/services/flash_message.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/products/models/product.dart';
+import 'package:hop_pos/src/products/widgets/custom_product_dialog.dart';
 
 class ProductGrid extends HookConsumerWidget {
   const ProductGrid({super.key, required this.product});
@@ -15,6 +17,8 @@ class ProductGrid extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isHover = useState(false);
     final color = product.colorCode.parseColor;
+    final customer = ref.watch(posControllerProvider.select((prov) => prov.customer));
+    final order = ref.watch(posControllerProvider.select((prov) => prov.order));
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -22,6 +26,35 @@ class ProductGrid extends HookConsumerWidget {
       onExit: (_) => isHover.value = false,
       child: GestureDetector(
         onTap: () async {
+          if (customer == null) {
+            ref
+                .read(flashMessageProvider)
+                .flash(message: 'Please select a customer first.', type: FlashMessageType.error);
+            return;
+          }
+
+          if (order == null) {
+            ref.read(flashMessageProvider).flash(message: 'Invalid order.', type: FlashMessageType.error);
+            return;
+          }
+
+          if (product.id == 0) {
+            if (product.sku == "Custom" && context.mounted) {
+              return showDialog(
+                context: context,
+                builder: (_) => const CustomProductDialog(),
+              );
+            }
+
+            if (product.sku == "UTF") {
+              return await ref.read(posControllerProvider.notifier).setUTF();
+            }
+
+            if (product.sku == "STF") {
+              return await ref.read(posControllerProvider.notifier).setSTF();
+            }
+          }
+
           await ref.read(posControllerProvider.notifier).addProduct(product);
         },
         child: Container(

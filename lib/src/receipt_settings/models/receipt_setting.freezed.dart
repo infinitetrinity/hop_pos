@@ -217,7 +217,7 @@ class __$$ReceiptSettingImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ReceiptSettingImpl implements _ReceiptSetting {
+class _$ReceiptSettingImpl extends _ReceiptSetting {
   const _$ReceiptSettingImpl(
       {required this.id,
       @JsonKey(name: 'footer_text') this.footerText,
@@ -230,7 +230,8 @@ class _$ReceiptSettingImpl implements _ReceiptSetting {
       @JsonKey(name: 'utf_title') this.utfTitle,
       @JsonKey(name: 'utf_notice') this.utfNotice,
       @JsonKey(name: 'stf_title') this.stfTitle,
-      @JsonKey(name: 'stf_notice') this.stfNotice});
+      @JsonKey(name: 'stf_notice') this.stfNotice})
+      : super._();
 
   factory _$ReceiptSettingImpl.fromJson(Map<String, dynamic> json) =>
       _$$ReceiptSettingImplFromJson(json);
@@ -324,7 +325,7 @@ class _$ReceiptSettingImpl implements _ReceiptSetting {
   }
 }
 
-abstract class _ReceiptSetting implements ReceiptSetting {
+abstract class _ReceiptSetting extends ReceiptSetting {
   const factory _ReceiptSetting(
           {required final int id,
           @JsonKey(name: 'footer_text') final String? footerText,
@@ -339,6 +340,7 @@ abstract class _ReceiptSetting implements ReceiptSetting {
           @JsonKey(name: 'stf_title') final String? stfTitle,
           @JsonKey(name: 'stf_notice') final String? stfNotice}) =
       _$ReceiptSettingImpl;
+  const _ReceiptSetting._() : super._();
 
   factory _ReceiptSetting.fromJson(Map<String, dynamic> json) =
       _$ReceiptSettingImpl.fromJson;

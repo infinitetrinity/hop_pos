@@ -5,15 +5,18 @@ import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/pos/widgets/pos_checkout_btn.dart';
 import 'package:hop_pos/src/pos/widgets/pos_extras.dart';
 import 'package:hop_pos/src/pos/widgets/pos_rounding.dart';
+import 'package:hop_pos/src/pos/widgets/pos_stf.dart';
 import 'package:hop_pos/src/pos/widgets/pos_subtotal.dart';
 import 'package:hop_pos/src/pos/widgets/pos_total.dart';
+import 'package:hop_pos/src/pos/widgets/pos_utf.dart';
 
 class PosCartTotal extends ConsumerWidget {
   const PosCartTotal({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final order = ref.watch(posControllerProvider.select((prov) => prov.order));
+    final isUtf = ref.watch(posControllerProvider.select((prov) => prov.order?.order.isUtf ?? false));
+    final isStf = ref.watch(posControllerProvider.select((prov) => prov.order?.order.isStf ?? false));
 
     return Column(
       children: [
@@ -44,11 +47,16 @@ class PosCartTotal extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           child: Column(
             children: [
+              if (isUtf || isStf)
+                const Column(
+                  children: [
+                    PosUTF(),
+                    PosSTF(),
+                  ],
+                ),
               const PosTotal(),
-              if ((order?.rounding ?? 0) > 0) ...[
-                const SizedBox(height: 5),
-                const PosRounding(),
-              ],
+              const SizedBox(height: 8),
+              const PosRounding(),
             ],
           ),
         ),

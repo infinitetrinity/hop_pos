@@ -151,13 +151,14 @@ class __$$ProductCategoryImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ProductCategoryImpl implements _ProductCategory {
+class _$ProductCategoryImpl extends _ProductCategory {
   const _$ProductCategoryImpl(
       {required this.id,
       required this.name,
       this.description,
       @JsonKey(name: 'color_code') this.colorCode,
-      this.isHidden = false});
+      this.isHidden = false})
+      : super._();
 
   factory _$ProductCategoryImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductCategoryImplFromJson(json);
@@ -215,13 +216,14 @@ class _$ProductCategoryImpl implements _ProductCategory {
   }
 }
 
-abstract class _ProductCategory implements ProductCategory {
+abstract class _ProductCategory extends ProductCategory {
   const factory _ProductCategory(
       {required final int id,
       required final String name,
       final String? description,
       @JsonKey(name: 'color_code') final String? colorCode,
       final bool isHidden}) = _$ProductCategoryImpl;
+  const _ProductCategory._() : super._();
 
   factory _ProductCategory.fromJson(Map<String, dynamic> json) =
       _$ProductCategoryImpl.fromJson;

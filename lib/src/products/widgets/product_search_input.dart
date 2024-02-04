@@ -5,6 +5,7 @@ import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/widgets/form_search_input.dart';
 import 'package:hop_pos/src/common/widgets/search_list.dart';
+import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/products/models/product_with_category.dart';
 import 'package:hop_pos/src/products/states/products_search_state.dart';
 import 'package:hop_pos/src/products/widgets/product_tile.dart';
@@ -32,8 +33,8 @@ class ProductSearchInput extends HookConsumerWidget {
           style: AppStyles.body,
         ),
       ),
-      onSelected: (item) {
-        print('select product');
+      onSelected: (item) async {
+        await ref.read(posControllerProvider.notifier).addProduct(item.product);
       },
     );
   }

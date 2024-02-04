@@ -8,7 +8,7 @@ part of 'product.dart';
 
 _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
     _$ProductImpl(
-      id: json['id'] as int,
+      id: json['id'] as int?,
       name: json['name'] as String,
       sku: json['sku'] as String,
       price:
@@ -16,6 +16,7 @@ _$ProductImpl _$$ProductImplFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String?,
       colorCode: json['color_code'] as String?,
       categoryId: json['category_id'] as int?,
+      isNew: json['is_new'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
@@ -27,4 +28,5 @@ Map<String, dynamic> _$$ProductImplToJson(_$ProductImpl instance) =>
       'description': instance.description,
       'color_code': instance.colorCode,
       'category_id': instance.categoryId,
+      'is_new': instance.isNew,
     };

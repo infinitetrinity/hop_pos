@@ -8,6 +8,7 @@ import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
 import 'package:hop_pos/src/pos/models/pos_cart.dart';
 import 'package:hop_pos/src/products/models/product.dart';
+import 'package:hop_pos/src/products/models/product_form.dart';
 import 'package:hop_pos/src/screening_registrations/actions/screening_registration_actions.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
@@ -108,5 +109,41 @@ class PosController extends _$PosController {
 
     final order = await ref.read(orderActionsProvider).addProductToOrder(state.order!, product);
     state = state.copyWith(order: order);
+  }
+
+  Future<void> addNewProduct(ProductForm data) async {
+    await addProduct(Product.fromJson(data.toJson()));
+  }
+
+  Future<void> setUTF({bool isUtf = true}) async {
+    if (state.order == null || state.order?.order.isUtf == isUtf) {
+      return;
+    }
+
+    state = state.copyWith(
+      order: state.order!.copyWith(
+        order: state.order!.order.copyWith(
+          isUtf: isUtf,
+        ),
+      ),
+    );
+
+    await ref.read(orderActionsProvider).updateOrder(state.order!);
+  }
+
+  Future<void> setSTF({bool isStf = true}) async {
+    if (state.order == null || state.order?.order.isStf == isStf) {
+      return;
+    }
+
+    state = state.copyWith(
+      order: state.order!.copyWith(
+        order: state.order!.order.copyWith(
+          isStf: isStf,
+        ),
+      ),
+    );
+
+    await ref.read(orderActionsProvider).updateOrder(state.order!);
   }
 }

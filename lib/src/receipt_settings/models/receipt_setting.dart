@@ -1,4 +1,6 @@
+import 'package:drift/drift.dart' as drift;
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hop_pos/app/app_db.dart';
 
 part 'receipt_setting.freezed.dart';
 part 'receipt_setting.g.dart';
@@ -17,5 +19,21 @@ class ReceiptSetting with _$ReceiptSetting {
     @JsonKey(name: 'stf_notice') String? stfNotice,
   }) = _ReceiptSetting;
 
+  const ReceiptSetting._();
+
   factory ReceiptSetting.fromJson(Map<String, dynamic> json) => _$ReceiptSettingFromJson(json);
+
+  ReceiptSettingsTableCompanion toData() {
+    return ReceiptSettingsTableCompanion(
+      id: drift.Value(id),
+      footerText: drift.Value(footerText),
+      outstandingSpecimenTitle: drift.Value(footerText),
+      outstandingSpecimenNoticeTitle: drift.Value(outstandingSpecimenNoticeTitle),
+      outstandingSpecimenNotice: drift.Value(outstandingSpecimenNotice),
+      utfTitle: drift.Value(utfTitle),
+      utfNotice: drift.Value(utfNotice),
+      stfTitle: drift.Value(stfTitle),
+      stfNotice: drift.Value(stfNotice),
+    );
+  }
 }

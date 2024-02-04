@@ -180,7 +180,7 @@ class __$$PosLicenseImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PosLicenseImpl implements _PosLicense {
+class _$PosLicenseImpl extends _PosLicense {
   const _$PosLicenseImpl(
       {required this.id,
       required this.name,
@@ -188,7 +188,8 @@ class _$PosLicenseImpl implements _PosLicense {
       @JsonKey(name: 'license_key') required this.licenseKey,
       required this.password,
       @JsonKey(name: 'is_active') required this.isActive,
-      @JsonKey(name: 'is_activated') required this.isActivated});
+      @JsonKey(name: 'is_activated') required this.isActivated})
+      : super._();
 
   factory _$PosLicenseImpl.fromJson(Map<String, dynamic> json) =>
       _$$PosLicenseImplFromJson(json);
@@ -255,7 +256,7 @@ class _$PosLicenseImpl implements _PosLicense {
   }
 }
 
-abstract class _PosLicense implements PosLicense {
+abstract class _PosLicense extends PosLicense {
   const factory _PosLicense(
           {required final int id,
           required final String name,
@@ -265,6 +266,7 @@ abstract class _PosLicense implements PosLicense {
           @JsonKey(name: 'is_active') required final bool isActive,
           @JsonKey(name: 'is_activated') required final bool isActivated}) =
       _$PosLicenseImpl;
+  const _PosLicense._() : super._();
 
   factory _PosLicense.fromJson(Map<String, dynamic> json) =
       _$PosLicenseImpl.fromJson;

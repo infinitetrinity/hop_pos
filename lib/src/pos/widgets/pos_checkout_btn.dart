@@ -10,7 +10,6 @@ class PosCheckoutBtn extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final order = ref.watch(posControllerProvider.select((prov) => prov.order));
     final balance = ref.watch(posControllerProvider.select((prov) => prov.order?.balance ?? 0));
     final canCheckout =
         ref.watch(posControllerProvider.select((prov) => prov.order != null && (prov.order?.items?.length ?? 0) > 0));
