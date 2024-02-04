@@ -20,17 +20,19 @@ class PosExtraRepository {
     required this.posExtraDao,
   });
 
+  Future<List<PosExtra>> getAll() async {
+    return await posExtraDao.getAll();
+  }
+
   Future<PosExtra> insert(PosExtrasTableCompanion extra) async {
     return await posExtraDao.insertExtra(extra);
   }
 
-  Future<List<PosExtra>> insertMany(
-      List<PosExtrasTableCompanion> extras) async {
+  Future<List<PosExtra>> insertMany(List<PosExtrasTableCompanion> extras) async {
     return await posExtraDao.insertExtras(extras);
   }
 
-  Future<bool> update(
-      PosExtrasTableCompanion extra, Expression<bool> where) async {
+  Future<bool> update(PosExtrasTableCompanion extra, Expression<bool> where) async {
     return await posExtraDao.updateExtra(extra, where);
   }
 }

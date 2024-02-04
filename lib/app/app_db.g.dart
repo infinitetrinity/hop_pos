@@ -1074,11 +1074,10 @@ class $PosExtrasTableTable extends PosExtrasTable
       requiredDuringInsert: false);
   static const VerificationMeta _typeMeta = const VerificationMeta('type');
   @override
-  late final GeneratedColumn<String> type = GeneratedColumn<String>(
-      'type', aliasedName, false,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
-      type: DriftSqlType.string,
-      requiredDuringInsert: true);
+  late final GeneratedColumnWithTypeConverter<ExtraType, String> type =
+      GeneratedColumn<String>('type', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<ExtraType>($PosExtrasTableTable.$convertertype);
   static const VerificationMeta _amountMeta = const VerificationMeta('amount');
   @override
   late final GeneratedColumn<double> amount = GeneratedColumn<double>(
@@ -1087,11 +1086,11 @@ class $PosExtrasTableTable extends PosExtrasTable
   static const VerificationMeta _amountTypeMeta =
       const VerificationMeta('amountType');
   @override
-  late final GeneratedColumn<String> amountType = GeneratedColumn<String>(
-      'amount_type', aliasedName, false,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
-      type: DriftSqlType.string,
-      requiredDuringInsert: true);
+  late final GeneratedColumnWithTypeConverter<ExtraAmountType, String>
+      amountType = GeneratedColumn<String>('amount_type', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<ExtraAmountType>(
+              $PosExtrasTableTable.$converteramountType);
   static const VerificationMeta _isActiveMeta =
       const VerificationMeta('isActive');
   @override
@@ -1129,26 +1128,14 @@ class $PosExtrasTableTable extends PosExtrasTable
           description.isAcceptableOrUnknown(
               data['description']!, _descriptionMeta));
     }
-    if (data.containsKey('type')) {
-      context.handle(
-          _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
-    } else if (isInserting) {
-      context.missing(_typeMeta);
-    }
+    context.handle(_typeMeta, const VerificationResult.success());
     if (data.containsKey('amount')) {
       context.handle(_amountMeta,
           amount.isAcceptableOrUnknown(data['amount']!, _amountMeta));
     } else if (isInserting) {
       context.missing(_amountMeta);
     }
-    if (data.containsKey('amount_type')) {
-      context.handle(
-          _amountTypeMeta,
-          amountType.isAcceptableOrUnknown(
-              data['amount_type']!, _amountTypeMeta));
-    } else if (isInserting) {
-      context.missing(_amountTypeMeta);
-    }
+    context.handle(_amountTypeMeta, const VerificationResult.success());
     if (data.containsKey('is_active')) {
       context.handle(_isActiveMeta,
           isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta));
@@ -1170,12 +1157,14 @@ class $PosExtrasTableTable extends PosExtrasTable
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       description: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}description']),
-      type: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}type'])!,
+      type: $PosExtrasTableTable.$convertertype.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}type'])!),
       amount: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}amount'])!,
-      amountType: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}amount_type'])!,
+      amountType: $PosExtrasTableTable.$converteramountType.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.string, data['${effectivePrefix}amount_type'])!),
       isActive: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}is_active'])!,
     );
@@ -1185,15 +1174,21 @@ class $PosExtrasTableTable extends PosExtrasTable
   $PosExtrasTableTable createAlias(String alias) {
     return $PosExtrasTableTable(attachedDatabase, alias);
   }
+
+  static JsonTypeConverter2<ExtraType, String, String> $convertertype =
+      const EnumNameConverter<ExtraType>(ExtraType.values);
+  static JsonTypeConverter2<ExtraAmountType, String, String>
+      $converteramountType =
+      const EnumNameConverter<ExtraAmountType>(ExtraAmountType.values);
 }
 
 class PosExtrasTableCompanion extends UpdateCompanion<PosExtra> {
   final Value<int> id;
   final Value<String> name;
   final Value<String?> description;
-  final Value<String> type;
+  final Value<ExtraType> type;
   final Value<double> amount;
-  final Value<String> amountType;
+  final Value<ExtraAmountType> amountType;
   final Value<bool> isActive;
   const PosExtrasTableCompanion({
     this.id = const Value.absent(),
@@ -1208,9 +1203,9 @@ class PosExtrasTableCompanion extends UpdateCompanion<PosExtra> {
     this.id = const Value.absent(),
     required String name,
     this.description = const Value.absent(),
-    required String type,
+    required ExtraType type,
     required double amount,
-    required String amountType,
+    required ExtraAmountType amountType,
     required bool isActive,
   })  : name = Value(name),
         type = Value(type),
@@ -1241,9 +1236,9 @@ class PosExtrasTableCompanion extends UpdateCompanion<PosExtra> {
       {Value<int>? id,
       Value<String>? name,
       Value<String?>? description,
-      Value<String>? type,
+      Value<ExtraType>? type,
       Value<double>? amount,
-      Value<String>? amountType,
+      Value<ExtraAmountType>? amountType,
       Value<bool>? isActive}) {
     return PosExtrasTableCompanion(
       id: id ?? this.id,
@@ -1269,13 +1264,15 @@ class PosExtrasTableCompanion extends UpdateCompanion<PosExtra> {
       map['description'] = Variable<String>(description.value);
     }
     if (type.present) {
-      map['type'] = Variable<String>(type.value);
+      map['type'] = Variable<String>(
+          $PosExtrasTableTable.$convertertype.toSql(type.value));
     }
     if (amount.present) {
       map['amount'] = Variable<double>(amount.value);
     }
     if (amountType.present) {
-      map['amount_type'] = Variable<String>(amountType.value);
+      map['amount_type'] = Variable<String>(
+          $PosExtrasTableTable.$converteramountType.toSql(amountType.value));
     }
     if (isActive.present) {
       map['is_active'] = Variable<bool>(isActive.value);

@@ -1,6 +1,8 @@
 import 'package:hop_pos/src/common/services/flash_message.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/customers/models/customer_form.dart';
+import 'package:hop_pos/src/order_extras/actions/order_extra_actions.dart';
+import 'package:hop_pos/src/order_extras/models/order_extra.dart';
 import 'package:hop_pos/src/orders/actions/order_actions.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
@@ -37,20 +39,22 @@ class PosController extends _$PosController {
     required Customer customer,
     ScreeningRegistration? registration,
   }) async {
-    if (registration == null && state.screening != null) {
-      registration = await ref
-          .read(screeningRegistrationActionsProvider.notifier)
-          .findByCustomerAndScreening(state.screening!, customer);
+    if (state.screening == null) {
+      return;
     }
 
-    PosOrder? order = registration == null || state.screening == null
-        ? const PosOrder(order: Order(isNew: true))
-        : await ref.read(orderActionsProvider.notifier).getScreeningCustomerLatestOrder(state.screening!, customer);
+    registration ??=
+        await ref.read(screeningRegistrationActionsProvider).findByCustomerAndScreening(state.screening!, customer);
+
+    PosOrder order = await ref.read(orderActionsProvider).getScreeningCustomerLatestOrder(state.screening!, customer) ??
+        const PosOrder(order: Order(isNew: true));
+
+    List<OrderExtra>? extras = await ref.read(orderExtraActionsProvider).getOrderExtras(order);
 
     state = state.copyWith(
       customer: customer,
-      registration: registration?.copyWith(hasOrders: order != null),
-      order: order,
+      registration: registration?.copyWith(hasOrders: order.order.id != null),
+      order: order.copyWith(extras: extras),
     );
   }
 
@@ -75,7 +79,7 @@ class PosController extends _$PosController {
       return null;
     }
 
-    return await ref.watch(screeningRegistrationActionsProvider.notifier).getCustomersCount(state.screening!);
+    return await ref.watch(screeningRegistrationActionsProvider).getCustomersCount(state.screening!);
   }
 
   void setSalesNote(String note) {
@@ -103,7 +107,7 @@ class PosController extends _$PosController {
       return;
     }
 
-    final order = await ref.read(posActionsProvider.notifier).addProduct(state.order!, product);
+    final order = await ref.read(posActionsProvider).addProduct(state.order!, product);
 
     state = state.copyWith(order: order);
   }

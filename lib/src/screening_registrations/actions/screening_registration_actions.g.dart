@@ -7,13 +7,13 @@ part of 'screening_registration_actions.dart';
 // **************************************************************************
 
 String _$screeningRegistrationActionsHash() =>
-    r'c26b8cee6cd9638bd6b683043e3a73ab655654df';
+    r'44e09fc0a9be9679ff90cadb5d163440d0c8a4cf';
 
-/// See also [ScreeningRegistrationActions].
-@ProviderFor(ScreeningRegistrationActions)
+/// See also [screeningRegistrationActions].
+@ProviderFor(screeningRegistrationActions)
 final screeningRegistrationActionsProvider =
-    AutoDisposeNotifierProvider<ScreeningRegistrationActions, void>.internal(
-  ScreeningRegistrationActions.new,
+    AutoDisposeProvider<ScreeningRegistrationActions>.internal(
+  screeningRegistrationActions,
   name: r'screeningRegistrationActionsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
@@ -22,6 +22,7 @@ final screeningRegistrationActionsProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$ScreeningRegistrationActions = AutoDisposeNotifier<void>;
+typedef ScreeningRegistrationActionsRef
+    = AutoDisposeProviderRef<ScreeningRegistrationActions>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

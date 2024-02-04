@@ -20,7 +20,7 @@ OrderExtra _$OrderExtraFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$OrderExtra {
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   ExtraType get type => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
@@ -34,7 +34,7 @@ mixin _$OrderExtra {
   @JsonKey(name: 'extra_id')
   int? get extraId => throw _privateConstructorUsedError;
   @JsonKey(name: 'order_id')
-  int get orderId => throw _privateConstructorUsedError;
+  int? get orderId => throw _privateConstructorUsedError;
   @JsonKey(name: 'order_is_new')
   bool? get orderIsNew => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_new')
@@ -55,7 +55,7 @@ abstract class $OrderExtraCopyWith<$Res> {
       _$OrderExtraCopyWithImpl<$Res, OrderExtra>;
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       String name,
       ExtraType type,
       String? description,
@@ -65,7 +65,7 @@ abstract class $OrderExtraCopyWith<$Res> {
       @JsonKey(name: 'calculated_amount')
       double? calculatedAmount,
       @JsonKey(name: 'extra_id') int? extraId,
-      @JsonKey(name: 'order_id') int orderId,
+      @JsonKey(name: 'order_id') int? orderId,
       @JsonKey(name: 'order_is_new') bool? orderIsNew,
       @JsonKey(name: 'is_new') bool? isNew,
       @JsonKey(name: 'created_at') DateTime? createdAt});
@@ -84,7 +84,7 @@ class _$OrderExtraCopyWithImpl<$Res, $Val extends OrderExtra>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? name = null,
     Object? type = null,
     Object? description = freezed,
@@ -92,16 +92,16 @@ class _$OrderExtraCopyWithImpl<$Res, $Val extends OrderExtra>
     Object? amountType = null,
     Object? calculatedAmount = freezed,
     Object? extraId = freezed,
-    Object? orderId = null,
+    Object? orderId = freezed,
     Object? orderIsNew = freezed,
     Object? isNew = freezed,
     Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -130,10 +130,10 @@ class _$OrderExtraCopyWithImpl<$Res, $Val extends OrderExtra>
           ? _value.extraId
           : extraId // ignore: cast_nullable_to_non_nullable
               as int?,
-      orderId: null == orderId
+      orderId: freezed == orderId
           ? _value.orderId
           : orderId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       orderIsNew: freezed == orderIsNew
           ? _value.orderIsNew
           : orderIsNew // ignore: cast_nullable_to_non_nullable
@@ -159,7 +159,7 @@ abstract class _$$OrderExtraImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       String name,
       ExtraType type,
       String? description,
@@ -169,7 +169,7 @@ abstract class _$$OrderExtraImplCopyWith<$Res>
       @JsonKey(name: 'calculated_amount')
       double? calculatedAmount,
       @JsonKey(name: 'extra_id') int? extraId,
-      @JsonKey(name: 'order_id') int orderId,
+      @JsonKey(name: 'order_id') int? orderId,
       @JsonKey(name: 'order_is_new') bool? orderIsNew,
       @JsonKey(name: 'is_new') bool? isNew,
       @JsonKey(name: 'created_at') DateTime? createdAt});
@@ -186,7 +186,7 @@ class __$$OrderExtraImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? name = null,
     Object? type = null,
     Object? description = freezed,
@@ -194,16 +194,16 @@ class __$$OrderExtraImplCopyWithImpl<$Res>
     Object? amountType = null,
     Object? calculatedAmount = freezed,
     Object? extraId = freezed,
-    Object? orderId = null,
+    Object? orderId = freezed,
     Object? orderIsNew = freezed,
     Object? isNew = freezed,
     Object? createdAt = freezed,
   }) {
     return _then(_$OrderExtraImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -232,10 +232,10 @@ class __$$OrderExtraImplCopyWithImpl<$Res>
           ? _value.extraId
           : extraId // ignore: cast_nullable_to_non_nullable
               as int?,
-      orderId: null == orderId
+      orderId: freezed == orderId
           ? _value.orderId
           : orderId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       orderIsNew: freezed == orderIsNew
           ? _value.orderIsNew
           : orderIsNew // ignore: cast_nullable_to_non_nullable
@@ -256,7 +256,7 @@ class __$$OrderExtraImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$OrderExtraImpl extends _OrderExtra {
   const _$OrderExtraImpl(
-      {required this.id,
+      {this.id,
       required this.name,
       required this.type,
       this.description,
@@ -266,7 +266,7 @@ class _$OrderExtraImpl extends _OrderExtra {
       @JsonKey(name: 'calculated_amount')
       this.calculatedAmount,
       @JsonKey(name: 'extra_id') this.extraId,
-      @JsonKey(name: 'order_id') required this.orderId,
+      @JsonKey(name: 'order_id') this.orderId,
       @JsonKey(name: 'order_is_new') this.orderIsNew = false,
       @JsonKey(name: 'is_new') this.isNew = false,
       @JsonKey(name: 'created_at') this.createdAt})
@@ -276,7 +276,7 @@ class _$OrderExtraImpl extends _OrderExtra {
       _$$OrderExtraImplFromJson(json);
 
   @override
-  final int id;
+  final int? id;
   @override
   final String name;
   @override
@@ -298,7 +298,7 @@ class _$OrderExtraImpl extends _OrderExtra {
   final int? extraId;
   @override
   @JsonKey(name: 'order_id')
-  final int orderId;
+  final int? orderId;
   @override
   @JsonKey(name: 'order_is_new')
   final bool? orderIsNew;
@@ -371,7 +371,7 @@ class _$OrderExtraImpl extends _OrderExtra {
 
 abstract class _OrderExtra extends OrderExtra {
   const factory _OrderExtra(
-      {required final int id,
+      {final int? id,
       required final String name,
       required final ExtraType type,
       final String? description,
@@ -381,7 +381,7 @@ abstract class _OrderExtra extends OrderExtra {
       @JsonKey(name: 'calculated_amount')
       final double? calculatedAmount,
       @JsonKey(name: 'extra_id') final int? extraId,
-      @JsonKey(name: 'order_id') required final int orderId,
+      @JsonKey(name: 'order_id') final int? orderId,
       @JsonKey(name: 'order_is_new') final bool? orderIsNew,
       @JsonKey(name: 'is_new') final bool? isNew,
       @JsonKey(name: 'created_at')
@@ -392,7 +392,7 @@ abstract class _OrderExtra extends OrderExtra {
       _$OrderExtraImpl.fromJson;
 
   @override
-  int get id;
+  int? get id;
   @override
   String get name;
   @override
@@ -414,7 +414,7 @@ abstract class _OrderExtra extends OrderExtra {
   int? get extraId;
   @override
   @JsonKey(name: 'order_id')
-  int get orderId;
+  int? get orderId;
   @override
   @JsonKey(name: 'order_is_new')
   bool? get orderIsNew;

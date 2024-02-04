@@ -9,19 +9,13 @@ part 'screening_controller.g.dart';
 class ScreeningController extends _$ScreeningController {
   @override
   Future<List<List<Screening>>> build() {
-    return ref
-        .watch(screeningActionsProvider.notifier)
-        .getUpcomingScreenings(
-          partitionSize: 20,
-        )
-        .then((dynamic result) {
+    return ref.watch(screeningActionsProvider).getUpcomingScreenings(partitionSize: 20).then((dynamic result) {
       return result as List<List<Screening>>;
     });
   }
 
   void selectScreening(Screening screening) {
-    final screenings =
-        ref.read(screeningActionsProvider.notifier).addToScreenings(state.asData?.value ?? [], screening);
+    final screenings = ref.read(screeningActionsProvider).addToScreenings(state.asData?.value ?? [], screening);
 
     if (screenings != null) {
       state = AsyncValue.data(screenings);
@@ -33,7 +27,7 @@ class ScreeningController extends _$ScreeningController {
     int page = 1,
     int size = 20,
   }) async {
-    return await ref.read(screeningActionsProvider.notifier).getTimeslotsWithVenue(
+    return await ref.read(screeningActionsProvider).getTimeslotsWithVenue(
           screening,
           page: page,
           size: size,
@@ -41,10 +35,10 @@ class ScreeningController extends _$ScreeningController {
   }
 
   Future<int> getTimeslotsCount(Screening screening) async {
-    return await ref.read(screeningActionsProvider.notifier).getTimeslotsCount(screening);
+    return await ref.read(screeningActionsProvider).getTimeslotsCount(screening);
   }
 
   Future<List<Screening>> search(String search) async {
-    return await ref.read(screeningActionsProvider.notifier).search(search);
+    return await ref.read(screeningActionsProvider).search(search);
   }
 }

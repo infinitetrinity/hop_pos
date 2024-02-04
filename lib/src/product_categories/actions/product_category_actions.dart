@@ -2,30 +2,32 @@ import 'package:hop_pos/src/product_categories/models/product_category.dart';
 import 'package:hop_pos/src/product_categories/repositories/product_category_repository.dart';
 import 'package:hop_pos/src/product_categories/services/product_categories_hidden.dart';
 import 'package:hop_pos/src/product_categories/services/product_categories_order.dart';
-import 'package:hop_pos/src/product_categories/states/selected_product_category_state.dart';
-import 'package:hop_pos/src/products/controllers/products_controller.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'product_category_actions.g.dart';
 
 @riverpod
-class ProductCategoryActions extends _$ProductCategoryActions {
-  @override
-  void build() {
-    return;
-  }
+ProductCategoryActions productCategoryActions(ProductCategoryActionsRef ref) {
+  return ProductCategoryActions(
+    productCategoryRepo: ref.watch(productCategoryRepoProvider),
+  );
+}
+
+class ProductCategoryActions {
+  final ProductCategoryRepository productCategoryRepo;
+
+  ProductCategoryActions({
+    required this.productCategoryRepo,
+  });
 
   Future<List<ProductCategory>> getAllProductCategories({bool showHidden = false}) async {
-    final repo = ref.watch(productCategoryRepoProvider);
     const all = ProductCategory(id: 0, name: 'All');
-
-    List<ProductCategory> categories = await repo.getAll();
+    List<ProductCategory> categories = await productCategoryRepo.getAll();
     categories.insert(0, all);
 
     categories = await _sortProductCategories(categories);
     categories = await _hideProductCategories(categories, showHidden);
 
-    selectProductCategory(categories.firstWhere((el) => !el.isHidden));
     return categories;
   }
 
@@ -68,10 +70,5 @@ class ProductCategoryActions extends _$ProductCategoryActions {
 
   Future<void> toggleProductCategory(ProductCategory category) async {
     await ProductCategoriesHidden.toggleCategory(category);
-  }
-
-  void selectProductCategory(ProductCategory category) {
-    ref.read(selectedProductCategoryStateProvider.notifier).set(category.id == 0 ? null : category);
-    ref.invalidate(productsControllerProvider);
   }
 }

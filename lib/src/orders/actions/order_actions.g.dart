@@ -6,13 +6,12 @@ part of 'order_actions.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$orderActionsHash() => r'c294772b0ef072806f07e18d02e99dbdb9cf1a95';
+String _$orderActionsHash() => r'2fe6b4c3d586ee79e5ede96feaace33474525a47';
 
-/// See also [OrderActions].
-@ProviderFor(OrderActions)
-final orderActionsProvider =
-    AutoDisposeNotifierProvider<OrderActions, void>.internal(
-  OrderActions.new,
+/// See also [orderActions].
+@ProviderFor(orderActions)
+final orderActionsProvider = AutoDisposeProvider<OrderActions>.internal(
+  orderActions,
   name: r'orderActionsProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$orderActionsHash,
@@ -20,6 +19,6 @@ final orderActionsProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$OrderActions = AutoDisposeNotifier<void>;
+typedef OrderActionsRef = AutoDisposeProviderRef<OrderActions>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

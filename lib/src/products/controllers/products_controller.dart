@@ -8,12 +8,7 @@ part 'products_controller.g.dart';
 class ProductsController extends _$ProductsController {
   @override
   Future<List<List<Product>>> build() {
-    return ref
-        .watch(productActionsProvider.notifier)
-        .getAllProducts(
-          partitionSize: 16,
-        )
-        .then((dynamic result) {
+    return ref.watch(productActionsProvider).getAllProducts(partitionSize: 16).then((dynamic result) {
       return result as List<List<Product>>;
     });
   }

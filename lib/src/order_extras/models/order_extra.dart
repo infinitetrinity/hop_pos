@@ -1,17 +1,14 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hop_pos/src/common/converters/double_from_string_converter.dart';
+import 'package:hop_pos/src/pos_extras/models/pos_extra.dart';
 
 part 'order_extra.freezed.dart';
 part 'order_extra.g.dart';
 
-enum ExtraType { deduct, add }
-
-enum ExtraAmountType { dollars, percentage }
-
 @freezed
 class OrderExtra with _$OrderExtra {
   const factory OrderExtra({
-    required int id,
+    int? id,
     required String name,
     required ExtraType type,
     String? description,
@@ -19,7 +16,7 @@ class OrderExtra with _$OrderExtra {
     @JsonKey(name: 'amount_type') required ExtraAmountType amountType,
     @DoubleFromStringConverter() @JsonKey(name: 'calculated_amount') double? calculatedAmount,
     @JsonKey(name: 'extra_id') int? extraId,
-    @JsonKey(name: 'order_id') required int orderId,
+    @JsonKey(name: 'order_id') int? orderId,
     @Default(false) @JsonKey(name: 'order_is_new') bool? orderIsNew,
     @Default(false) @JsonKey(name: 'is_new') bool? isNew,
     @JsonKey(name: 'created_at') DateTime? createdAt,
@@ -41,5 +38,9 @@ class OrderExtra with _$OrderExtra {
 
   bool get isAddType {
     return type == ExtraType.add;
+  }
+
+  String get displayName {
+    return "$name ${isPercentage && amount != null ? "($amount%)" : ""}";
   }
 }

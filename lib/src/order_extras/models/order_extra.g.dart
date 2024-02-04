@@ -8,7 +8,7 @@ part of 'order_extra.dart';
 
 _$OrderExtraImpl _$$OrderExtraImplFromJson(Map<String, dynamic> json) =>
     _$OrderExtraImpl(
-      id: json['id'] as int,
+      id: json['id'] as int?,
       name: json['name'] as String,
       type: $enumDecode(_$ExtraTypeEnumMap, json['type']),
       description: json['description'] as String?,
@@ -18,7 +18,7 @@ _$OrderExtraImpl _$$OrderExtraImplFromJson(Map<String, dynamic> json) =>
       calculatedAmount: const DoubleFromStringConverter()
           .fromJson(json['calculated_amount'] as String?),
       extraId: json['extra_id'] as int?,
-      orderId: json['order_id'] as int,
+      orderId: json['order_id'] as int?,
       orderIsNew: json['order_is_new'] as bool? ?? false,
       isNew: json['is_new'] as bool? ?? false,
       createdAt: json['created_at'] == null

@@ -8,20 +8,30 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'order_actions.g.dart';
 
 @riverpod
-class OrderActions extends _$OrderActions {
-  @override
-  void build() {
-    return;
-  }
+OrderActions orderActions(OrderActionsRef ref) {
+  return OrderActions(
+    orderRepo: ref.watch(orderRepoProvider),
+    newOrderRepo: ref.watch(newOrderRepoProvider),
+  );
+}
+
+class OrderActions {
+  final OrderRepository orderRepo;
+  final NewOrderRepository newOrderRepo;
+
+  OrderActions({
+    required this.orderRepo,
+    required this.newOrderRepo,
+  });
 
   Future<PosOrder?> getScreeningCustomerLatestOrder(Screening screening, Customer customer) async {
-    final order = await ref.read(orderRepoProvider).getScreeningCustomerLatestOrder(screening, customer);
-    final newOrder = await ref.read(newOrderRepoProvider).getScreeningCustomerLatestOrder(screening, customer);
+    final order = await orderRepo.getScreeningCustomerLatestOrder(screening, customer);
+    final newOrder = await newOrderRepo.getScreeningCustomerLatestOrder(screening, customer);
 
     if (order != null && newOrder != null) {
       return order.order.createdAt!.isAfter(newOrder.order.createdAt!) ? order : newOrder;
     }
 
-    return order ?? newOrder;
+    return newOrder ?? order;
   }
 }

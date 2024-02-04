@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/src/order_extras/models/order_extra.dart';
 import 'package:hop_pos/src/orders/models/orders_table.dart';
+import 'package:hop_pos/src/pos_extras/models/pos_extra.dart';
 import 'package:hop_pos/src/pos_extras/models/pos_extras_table.dart';
 
 @TableIndex(name: 'order_extras_id', columns: {#id}, unique: true)

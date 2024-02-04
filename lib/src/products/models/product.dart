@@ -32,6 +32,7 @@ class Product with _$Product {
       name: name,
       sku: sku,
       price: price,
+      netPrice: price,
       isNew: true,
     );
   }

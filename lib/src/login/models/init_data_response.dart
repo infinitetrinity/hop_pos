@@ -164,7 +164,7 @@ class InitDataResponse with _$InitDataResponse {
     return orderExtras
         .map(
           (extra) => OrderExtrasTableCompanion(
-            id: drift.Value(extra.id),
+            id: drift.Value.ofNullable(extra.id),
             name: drift.Value(extra.name),
             type: drift.Value(extra.type),
             description: drift.Value(extra.description),
@@ -172,7 +172,7 @@ class InitDataResponse with _$InitDataResponse {
             amountType: drift.Value(extra.amountType),
             calculatedAmount: drift.Value(extra.calculatedAmount ?? 0),
             extraId: drift.Value(extra.extraId),
-            orderId: drift.Value(extra.orderId),
+            orderId: drift.Value.ofNullable(extra.orderId),
           ),
         )
         .toList();

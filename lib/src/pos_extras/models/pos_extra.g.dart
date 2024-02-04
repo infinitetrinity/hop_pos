@@ -11,10 +11,10 @@ _$PosExtraImpl _$$PosExtraImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int,
       name: json['name'] as String,
       description: json['description'] as String?,
-      type: json['type'] as String,
+      type: $enumDecode(_$ExtraTypeEnumMap, json['type']),
       amount:
           const DoubleFromStringConverter().fromJson(json['amount'] as String?),
-      amountType: json['amount_type'] as String,
+      amountType: $enumDecode(_$ExtraAmountTypeEnumMap, json['amount_type']),
       isActive: json['is_active'] as bool,
     );
 
@@ -23,8 +23,18 @@ Map<String, dynamic> _$$PosExtraImplToJson(_$PosExtraImpl instance) =>
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,
-      'type': instance.type,
+      'type': _$ExtraTypeEnumMap[instance.type]!,
       'amount': const DoubleFromStringConverter().toJson(instance.amount),
-      'amount_type': instance.amountType,
+      'amount_type': _$ExtraAmountTypeEnumMap[instance.amountType]!,
       'is_active': instance.isActive,
     };
+
+const _$ExtraTypeEnumMap = {
+  ExtraType.deduct: 'deduct',
+  ExtraType.add: 'add',
+};
+
+const _$ExtraAmountTypeEnumMap = {
+  ExtraAmountType.dollars: 'dollars',
+  ExtraAmountType.percentage: 'percentage',
+};

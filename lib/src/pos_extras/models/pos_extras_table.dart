@@ -9,8 +9,8 @@ class PosExtrasTable extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text().withLength(max: 255)();
   TextColumn get description => text().nullable().withLength(max: 255)();
-  TextColumn get type => text().withLength(max: 255)();
+  TextColumn get type => textEnum<ExtraType>()();
   RealColumn get amount => real()();
-  TextColumn get amountType => text().withLength(max: 255)();
+  TextColumn get amountType => textEnum<ExtraAmountType>()();
   BoolColumn get isActive => boolean()();
 }

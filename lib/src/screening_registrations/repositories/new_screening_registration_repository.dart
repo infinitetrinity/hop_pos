@@ -26,8 +26,8 @@ class NewScreeningRegistrationRepository {
     return await newScreeningRegistrationDao.searchScreeningCustomers(screening, search);
   }
 
-  Future<int> getNewScreeningRegistrationsCount(Screening screening) async {
-    return await newScreeningRegistrationDao.getNewScreeningRegistrationsCount(screening);
+  Future<int> getScreeningRegistrationsCount(Screening screening) async {
+    return await newScreeningRegistrationDao.getScreeningRegistrationsCount(screening);
   }
 
   Future<ScreeningRegistration?> findByCustomerAndScreening(Customer customer, Screening screening) async {

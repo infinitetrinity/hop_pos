@@ -1,28 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'product_category_actions.dart';
+part of 'order_item_actions.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$productCategoryActionsHash() =>
-    r'4e854480117092dff1d1f12ab567b37d1c387f93';
+String _$orderItemActionsHash() => r'd18fa2270716e41624bbf885b0a4102498341df8';
 
-/// See also [productCategoryActions].
-@ProviderFor(productCategoryActions)
-final productCategoryActionsProvider =
-    AutoDisposeProvider<ProductCategoryActions>.internal(
-  productCategoryActions,
-  name: r'productCategoryActionsProvider',
+/// See also [orderItemActions].
+@ProviderFor(orderItemActions)
+final orderItemActionsProvider = AutoDisposeProvider<OrderItemActions>.internal(
+  orderItemActions,
+  name: r'orderItemActionsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$productCategoryActionsHash,
+      : _$orderItemActionsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef ProductCategoryActionsRef
-    = AutoDisposeProviderRef<ProductCategoryActions>;
+typedef OrderItemActionsRef = AutoDisposeProviderRef<OrderItemActions>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

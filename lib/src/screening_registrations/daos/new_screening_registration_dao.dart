@@ -112,7 +112,7 @@ class NewScreeningRegistrationDao extends DatabaseAccessor<AppDb> with _$NewScre
     }).toList();
   }
 
-  Future<int> getNewScreeningRegistrationsCount(Screening screening) async {
+  Future<int> getScreeningRegistrationsCount(Screening screening) async {
     final query = select(newScreeningRegistrationsTable).join(
       [
         innerJoin(

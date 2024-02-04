@@ -14,13 +14,15 @@ class PosItems extends HookConsumerWidget {
     final order = ref.watch(posControllerProvider.select((prov) => prov.order));
 
     ref.listen(posControllerProvider.select((prov) => prov.order?.items), (_, current) {
-      if (controller.hasClients) {
-        controller.animateTo(
-          controller.position.maxScrollExtent + 100,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.fastOutSlowIn,
-        );
-      }
+      Future.delayed(const Duration(milliseconds: 300)).then((value) {
+        if (controller.hasClients) {
+          controller.animateTo(
+            controller.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.fastOutSlowIn,
+          );
+        }
+      });
     });
 
     return order == null || order.items == null
@@ -36,7 +38,7 @@ class PosItems extends HookConsumerWidget {
             child: ListView.builder(
               controller: controller,
               shrinkWrap: true,
-              physics: const AlwaysScrollableScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
               itemCount: order.items!.length,
               itemBuilder: (context, index) => PosItemTile(
                 key: Key('pos-items-${order.order.invoiceNo}-$index'),

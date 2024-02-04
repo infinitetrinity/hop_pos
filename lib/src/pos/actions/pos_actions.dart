@@ -1,4 +1,4 @@
-import 'package:hop_pos/src/order_items/repositories/new_order_item_repository.dart';
+import 'package:hop_pos/src/order_items/actions/order_item_actions.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
 import 'package:hop_pos/src/products/models/product.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -6,11 +6,18 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'pos_actions.g.dart';
 
 @riverpod
-class PosActions extends _$PosActions {
-  @override
-  void build() {
-    return;
-  }
+PosActions posActions(PosActionsRef ref) {
+  return PosActions(
+    orderItemActions: ref.watch(orderItemActionsProvider),
+  );
+}
+
+class PosActions {
+  final OrderItemActions orderItemActions;
+
+  PosActions({
+    required this.orderItemActions,
+  });
 
   Future<PosOrder> addProduct(PosOrder order, Product product) async {
     final items = (order.items ?? []);
@@ -19,6 +26,7 @@ class PosActions extends _$PosActions {
       cartId: items.length + 1,
       orderIsNew: order.order.isNew,
       orderId: order.order.id,
+      isNew: true,
     );
 
     final updatedOrder = order.copyWith(
@@ -28,7 +36,7 @@ class PosActions extends _$PosActions {
         ));
 
     if (updatedOrder.order.id != null) {
-      await ref.read(newOrderItemRepoProvider).insert(newItem.toData);
+      await orderItemActions.store(newItem.toData);
 
       // order.order.isNew
       //     ? await ref.read(newOrderRepoProvider).update(item.toData)

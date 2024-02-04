@@ -7,28 +7,33 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'customer_actions.g.dart';
 
 @riverpod
-class CustomerActions extends _$CustomerActions {
-  @override
-  void build() {
-    return;
-  }
+CustomerActions customerActions(CustomerActionsRef ref) {
+  return CustomerActions(
+    customerRepo: ref.watch(customerRepoProvider),
+    newCustomerRepo: ref.watch(newCustomerRepoProvider),
+  );
+}
+
+class CustomerActions {
+  final CustomerRepository customerRepo;
+  final NewCustomerRepository newCustomerRepo;
+
+  CustomerActions({
+    required this.customerRepo,
+    required this.newCustomerRepo,
+  });
 
   Future<Customer?> findByNric({required String nric, int? excludeId}) async {
-    final repo = ref.read(customerRepoProvider);
-    return await repo.findByNric(nric: nric, excludeId: excludeId);
+    return await customerRepo.findByNric(nric: nric, excludeId: excludeId);
   }
 
   Future<bool> isMobileNoTaken({required String mobileNo, int? excludeId}) async {
-    final repo = ref.read(customerRepoProvider);
-    final customer = await repo.findByMobileNo(mobileNo: mobileNo, excludeId: excludeId);
-
+    final customer = await customerRepo.findByMobileNo(mobileNo: mobileNo, excludeId: excludeId);
     return customer != null;
   }
 
   Future<bool> isEmailTaken({required String email, int? excludeId}) async {
-    final repo = ref.read(customerRepoProvider);
-    final customer = await repo.findByEmail(email: email, excludeId: excludeId);
-
+    final customer = await customerRepo.findByEmail(email: email, excludeId: excludeId);
     return customer != null;
   }
 
@@ -38,8 +43,7 @@ class CustomerActions extends _$CustomerActions {
     }
 
     final customer = Customer.fromJson(form.toJson());
-    final dynamic repo = customer.isNew ? ref.read(newCustomerRepoProvider) : ref.read(customerRepoProvider);
-
+    final dynamic repo = customer.isNew ? newCustomerRepo : customerRepo;
     return repo.update(customer);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:hop_pos/src/product_categories/models/product_category.dart';
 import 'package:hop_pos/src/product_categories/states/selected_product_category_state.dart';
 import 'package:hop_pos/src/products/models/product.dart';
 import 'package:hop_pos/src/products/repositories/product_repository.dart';
@@ -7,16 +8,24 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'product_actions.g.dart';
 
 @riverpod
-class ProductActions extends _$ProductActions {
-  @override
-  void build() {
-    return;
-  }
+ProductActions productActions(ProductActionsRef ref) {
+  return ProductActions(
+    productRepo: ref.watch(productRepoProvider),
+    selectedCategory: ref.watch(selectedProductCategoryStateProvider),
+  );
+}
+
+class ProductActions {
+  final ProductRepository productRepo;
+  final ProductCategory? selectedCategory;
+
+  ProductActions({
+    required this.productRepo,
+    required this.selectedCategory,
+  });
 
   Future<dynamic> getAllProducts({int partitionSize = 0}) async {
-    ProductRepository repo = ref.watch(productRepoProvider);
-    final selectedCategory = ref.watch(selectedProductCategoryStateProvider);
-    final products = await repo.getAll(categoryId: selectedCategory?.id);
+    final products = await productRepo.getAll(categoryId: selectedCategory?.id);
 
     if (selectedCategory == null) {
       const utf = Product(id: 0, name: 'Urine to follow', sku: 'UTF', price: 0);

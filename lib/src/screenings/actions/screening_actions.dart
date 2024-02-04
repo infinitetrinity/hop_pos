@@ -1,3 +1,6 @@
+import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
+import 'package:hop_pos/src/screening_registrations/repositories/new_screening_registration_repository.dart';
+import 'package:hop_pos/src/screening_registrations/repositories/screening_registration_repository.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot_with_venue.dart';
 import 'package:hop_pos/src/screening_timeslots/repositories/screening_timeslot_repository.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
@@ -8,16 +11,30 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'screening_actions.g.dart';
 
 @riverpod
-class ScreeningActions extends _$ScreeningActions {
-  @override
-  void build() {
-    return;
-  }
+ScreeningActions screeningActions(ScreeningActionsRef ref) {
+  return ScreeningActions(
+    screeningRepo: ref.watch(screeningRepoProvider),
+    screeningTimeslotRepoProvider: ref.watch(screeningTimeslotRepoProvider),
+    screeningRegistrationRepo: ref.watch(screeningRegistrationRepoProvider),
+    newScreeningRegistrationRepo: ref.watch(newScreeningRegistrationRepoProvider),
+  );
+}
+
+class ScreeningActions {
+  final ScreeningRepository screeningRepo;
+  final ScreeningTimeslotRepository screeningTimeslotRepoProvider;
+  final ScreeningRegistrationRepository screeningRegistrationRepo;
+  final NewScreeningRegistrationRepository newScreeningRegistrationRepo;
+
+  ScreeningActions({
+    required this.screeningRepo,
+    required this.screeningTimeslotRepoProvider,
+    required this.screeningRegistrationRepo,
+    required this.newScreeningRegistrationRepo,
+  });
 
   Future<dynamic> getUpcomingScreenings({int partitionSize = 0}) async {
-    ScreeningRepository repo = ref.watch(screeningRepoProvider);
-    final screenings = await repo.getUpcoming();
-
+    final screenings = await screeningRepo.getUpcoming();
     return partitionSize > 0 ? partition<Screening>(screenings, partitionSize).toList() : screenings;
   }
 
@@ -32,22 +49,40 @@ class ScreeningActions extends _$ScreeningActions {
     return partition<Screening>(screenings.expand((child) => child), 20).toList();
   }
 
-  Future<List<ScreeningTimeslotWithVenue>> getTimeslotsWithVenue(
-    Screening screening, {
-    int page = 1,
-    int size = 20,
-  }) async {
-    final repo = ref.watch(screeningTimeslotRepoProvider);
-    return await repo.getScreeningTimeslotsWithVenue(screening, page: page, size: size);
+  Future<List<ScreeningTimeslotWithVenue>> getTimeslotsWithVenue(Screening screening,
+      {int page = 1, int size = 20}) async {
+    return await screeningTimeslotRepoProvider.getScreeningTimeslotsWithVenue(screening, page: page, size: size);
   }
 
   Future<int> getTimeslotsCount(Screening screening) async {
-    final repo = ref.watch(screeningTimeslotRepoProvider);
-    return await repo.getScreeningTimeslotsCount(screening);
+    return await screeningTimeslotRepoProvider.getScreeningTimeslotsCount(screening);
   }
 
   Future<List<Screening>> search(String search) async {
-    final repo = ref.watch(screeningRepoProvider);
-    return await repo.search(search);
+    return await screeningRepo.search(search);
+  }
+
+  FutureOr<List<CustomerWithRegistration>> searchScreeningCustomers(Screening screening, String search) async {
+    final registrations = await screeningRegistrationRepo.searchScreeningCustomers(screening, search);
+    final newRegistrations = await newScreeningRegistrationRepo.searchScreeningCustomers(screening, search);
+
+    final sorted = [...registrations, ...newRegistrations]..sort((a, b) {
+        final intA = int.tryParse(a.registration.index ?? '');
+        final intB = int.tryParse(b.registration.index ?? '');
+
+        if (intA == null && intB == null) {
+          return (a.registration.index ?? '').compareTo(b.registration.index ?? '');
+        }
+        if (intA == null) {
+          return 1;
+        }
+        if (intB == null) {
+          return -1;
+        }
+
+        return intA.compareTo(intB);
+      });
+
+    return sorted.take(50).toList();
   }
 }

@@ -3,7 +3,7 @@ import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/customers/models/customer_form.dart';
 import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
-import 'package:hop_pos/src/screening_registrations/actions/screening_registration_actions.dart';
+import 'package:hop_pos/src/screenings/actions/screening_actions.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'customer_controller.g.dart';
@@ -16,19 +16,19 @@ class CustomerController extends _$CustomerController {
   }
 
   Future<Customer?> findByNric({required String nric, int? excludeId}) async {
-    return await ref.read(customerActionsProvider.notifier).findByNric(nric: nric, excludeId: excludeId);
+    return await ref.read(customerActionsProvider).findByNric(nric: nric, excludeId: excludeId);
   }
 
   Future<bool> isMobileNoTaken({required String mobileNo, int? excludeId}) async {
-    return await ref.read(customerActionsProvider.notifier).isMobileNoTaken(mobileNo: mobileNo, excludeId: excludeId);
+    return await ref.read(customerActionsProvider).isMobileNoTaken(mobileNo: mobileNo, excludeId: excludeId);
   }
 
   Future<bool> isEmailTaken({required String email, int? excludeId}) async {
-    return await ref.read(customerActionsProvider.notifier).isEmailTaken(email: email, excludeId: excludeId);
+    return await ref.read(customerActionsProvider).isEmailTaken(email: email, excludeId: excludeId);
   }
 
   Future<bool> updateCustomer(CustomerForm form) async {
-    return await ref.read(customerActionsProvider.notifier).updateCustomer(form);
+    return await ref.read(customerActionsProvider).updateCustomer(form);
   }
 
   FutureOr<List<CustomerWithRegistration>> search(String search) async {
@@ -37,6 +37,6 @@ class CustomerController extends _$CustomerController {
       return [];
     }
 
-    return await ref.read(screeningRegistrationActionsProvider.notifier).searchScreeningCustomers(screening, search);
+    return await ref.read(screeningActionsProvider).searchScreeningCustomers(screening, search);
   }
 }
