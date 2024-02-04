@@ -54,6 +54,15 @@ class PosOrder with _$PosOrder {
   }
 
   double get rounding {
-    return total - totalBeforeRounding;
+    return totalBeforeRounding - total;
+  }
+
+  double get totalPayment {
+    final double result = (payments ?? []).fold(0, (total, payment) => total + (payment.amount ?? 0));
+    return result.toDecimalPlace(2);
+  }
+
+  double get balance {
+    return total - totalPayment;
   }
 }
