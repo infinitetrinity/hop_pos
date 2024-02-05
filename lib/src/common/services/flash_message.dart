@@ -47,13 +47,7 @@ class FlashMessage {
     fToast.showToast(
       child: FlashContent(message: flash),
       toastDuration: Duration(seconds: dismissible ? 3 : 15),
-      positionedToastBuilder: (context, child) {
-        return Positioned(
-          top: 20,
-          left: MediaQuery.of(context).size.width * 0.5 - 250,
-          child: child,
-        );
-      },
+      gravity: ToastGravity.BOTTOM_RIGHT,
     );
   }
 

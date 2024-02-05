@@ -16,7 +16,7 @@ class FlashContent extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          constraints: const BoxConstraints(maxWidth: 600),
+          constraints: const BoxConstraints(maxWidth: 450),
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
           decoration: BoxDecoration(
             color: message.bgColor,
