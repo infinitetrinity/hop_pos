@@ -28,7 +28,7 @@ class ProductDialogForm extends HookWidget {
   Widget build(BuildContext context) {
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final productState = useState<Product?>(product);
-    final form = useState(product == null ? ProductForm(isNew: isCustom) : ProductForm.fromModel(product!));
+    final form = useState(product == null ? ProductForm(isCustom: isCustom) : ProductForm.fromModel(product!));
     final isSubmitting = useState(false);
 
     void handleSubmit({bool submit = false}) {
@@ -139,6 +139,7 @@ class ProductDialogForm extends HookWidget {
                                           ? DiscountType.dollars
                                           : DiscountType.percentage,
                                     );
+
                                     handleSubmit();
                                   },
                                   child: Text(
@@ -154,7 +155,6 @@ class ProductDialogForm extends HookWidget {
                         ),
                         const SizedBox(height: 20),
                         FormTextField(
-                          isRequired: true,
                           label: 'Product Description',
                           value: form.value.description,
                           keyboardType: TextInputType.multiline,

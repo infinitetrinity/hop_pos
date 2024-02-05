@@ -9,6 +9,7 @@ import 'package:hop_pos/src/customers/controllers/customer_controller.dart';
 import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
 import 'package:hop_pos/src/customers/widgets/customer_tile.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 class CustomerSearchInput extends HookConsumerWidget {
   const CustomerSearchInput({super.key});
@@ -36,10 +37,14 @@ class CustomerSearchInput extends HookConsumerWidget {
           style: AppStyles.body,
         ),
       ),
-      onSelected: (item) {
-        ref
+      onSelected: (item) async {
+        context.loaderOverlay.show();
+        await ref
             .read(posControllerProvider.notifier)
             .selectCustomer(customer: item.customer, registration: item.registration);
+        if (context.mounted) {
+          context.loaderOverlay.hide();
+        }
       },
     );
   }

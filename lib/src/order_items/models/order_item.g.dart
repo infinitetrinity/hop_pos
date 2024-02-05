@@ -16,7 +16,8 @@ _$OrderItemImpl _$$OrderItemImplFromJson(Map<String, dynamic> json) =>
           const DoubleFromStringConverter().fromJson(json['price'] as String?),
       discount: const DoubleFromStringConverter()
           .fromJson(json['discount'] as String?),
-      discountType: json['discount_type'] as String?,
+      discountType:
+          $enumDecodeNullable(_$DiscountTypeEnumMap, json['discount_type']),
       netPrice: const DoubleFromStringConverter()
           .fromJson(json['net_price'] as String?),
       isCustom: _$JsonConverterFromJson<int, bool>(
@@ -40,7 +41,7 @@ Map<String, dynamic> _$$OrderItemImplToJson(_$OrderItemImpl instance) =>
       'description': instance.description,
       'price': const DoubleFromStringConverter().toJson(instance.price),
       'discount': const DoubleFromStringConverter().toJson(instance.discount),
-      'discount_type': instance.discountType,
+      'discount_type': _$DiscountTypeEnumMap[instance.discountType],
       'net_price': const DoubleFromStringConverter().toJson(instance.netPrice),
       'is_custom': _$JsonConverterToJson<int, bool>(
           instance.isCustom, const BoolFromIntConverter().toJson),
@@ -51,6 +52,11 @@ Map<String, dynamic> _$$OrderItemImplToJson(_$OrderItemImpl instance) =>
       'is_new': instance.isNew,
       'created_at': instance.createdAt?.toIso8601String(),
     };
+
+const _$DiscountTypeEnumMap = {
+  DiscountType.dollars: 'dollars',
+  DiscountType.percentage: 'percentage',
+};
 
 Value? _$JsonConverterFromJson<Json, Value>(
   Object? json,

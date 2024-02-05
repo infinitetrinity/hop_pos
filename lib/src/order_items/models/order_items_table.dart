@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
+import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/orders_table.dart';
 import 'package:hop_pos/src/products/models/products_table.dart';
 
@@ -19,7 +20,7 @@ class OrderItemsTable extends Table {
   TextColumn get description => text().nullable().withLength(max: 255)();
   RealColumn get price => real()();
   RealColumn get discount => real().nullable()();
-  TextColumn get discountType => text().nullable().withLength(max: 255)();
+  TextColumn get discountType => textEnum<DiscountType>().nullable()();
   RealColumn get netPrice => real()();
   BoolColumn get isCustom => boolean()();
   IntColumn get cartId => integer().nullable()();

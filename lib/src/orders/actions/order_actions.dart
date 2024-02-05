@@ -47,7 +47,6 @@ class OrderActions {
   Future<PosOrder> addProductToOrder(PosOrder order, Product product) async {
     final items = (order.items ?? []);
     final newItem = product.toOrderItem().copyWith(
-          productId: product.id,
           cartId: items.length + 1,
           orderIsNew: order.order.isNew,
           orderId: order.order.id,

@@ -22,16 +22,20 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
 mixin _$Product {
   int? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get sku => throw _privateConstructorUsedError;
-  @DoubleFromStringConverter()
+  String? get sku => throw _privateConstructorUsedError;
   double? get price => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  double? get discount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'discount_type')
+  DiscountType? get discountType => throw _privateConstructorUsedError;
   @JsonKey(name: 'color_code')
   String? get colorCode => throw _privateConstructorUsedError;
   @JsonKey(name: 'category_id')
   int? get categoryId => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_new')
   bool get isNew => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_custom')
+  bool get isCustom => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,12 +50,15 @@ abstract class $ProductCopyWith<$Res> {
   $Res call(
       {int? id,
       String name,
-      String sku,
-      @DoubleFromStringConverter() double? price,
+      String? sku,
+      double? price,
       String? description,
+      double? discount,
+      @JsonKey(name: 'discount_type') DiscountType? discountType,
       @JsonKey(name: 'color_code') String? colorCode,
       @JsonKey(name: 'category_id') int? categoryId,
-      @JsonKey(name: 'is_new') bool isNew});
+      @JsonKey(name: 'is_new') bool isNew,
+      @JsonKey(name: 'is_custom') bool isCustom});
 }
 
 /// @nodoc
@@ -69,12 +76,15 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
   $Res call({
     Object? id = freezed,
     Object? name = null,
-    Object? sku = null,
+    Object? sku = freezed,
     Object? price = freezed,
     Object? description = freezed,
+    Object? discount = freezed,
+    Object? discountType = freezed,
     Object? colorCode = freezed,
     Object? categoryId = freezed,
     Object? isNew = null,
+    Object? isCustom = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -85,10 +95,10 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      sku: null == sku
+      sku: freezed == sku
           ? _value.sku
           : sku // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
@@ -97,6 +107,14 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      discount: freezed == discount
+          ? _value.discount
+          : discount // ignore: cast_nullable_to_non_nullable
+              as double?,
+      discountType: freezed == discountType
+          ? _value.discountType
+          : discountType // ignore: cast_nullable_to_non_nullable
+              as DiscountType?,
       colorCode: freezed == colorCode
           ? _value.colorCode
           : colorCode // ignore: cast_nullable_to_non_nullable
@@ -108,6 +126,10 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
       isNew: null == isNew
           ? _value.isNew
           : isNew // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isCustom: null == isCustom
+          ? _value.isCustom
+          : isCustom // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -123,12 +145,15 @@ abstract class _$$ProductImplCopyWith<$Res> implements $ProductCopyWith<$Res> {
   $Res call(
       {int? id,
       String name,
-      String sku,
-      @DoubleFromStringConverter() double? price,
+      String? sku,
+      double? price,
       String? description,
+      double? discount,
+      @JsonKey(name: 'discount_type') DiscountType? discountType,
       @JsonKey(name: 'color_code') String? colorCode,
       @JsonKey(name: 'category_id') int? categoryId,
-      @JsonKey(name: 'is_new') bool isNew});
+      @JsonKey(name: 'is_new') bool isNew,
+      @JsonKey(name: 'is_custom') bool isCustom});
 }
 
 /// @nodoc
@@ -144,12 +169,15 @@ class __$$ProductImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = null,
-    Object? sku = null,
+    Object? sku = freezed,
     Object? price = freezed,
     Object? description = freezed,
+    Object? discount = freezed,
+    Object? discountType = freezed,
     Object? colorCode = freezed,
     Object? categoryId = freezed,
     Object? isNew = null,
+    Object? isCustom = null,
   }) {
     return _then(_$ProductImpl(
       id: freezed == id
@@ -160,10 +188,10 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      sku: null == sku
+      sku: freezed == sku
           ? _value.sku
           : sku // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
@@ -172,6 +200,14 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      discount: freezed == discount
+          ? _value.discount
+          : discount // ignore: cast_nullable_to_non_nullable
+              as double?,
+      discountType: freezed == discountType
+          ? _value.discountType
+          : discountType // ignore: cast_nullable_to_non_nullable
+              as DiscountType?,
       colorCode: freezed == colorCode
           ? _value.colorCode
           : colorCode // ignore: cast_nullable_to_non_nullable
@@ -184,6 +220,10 @@ class __$$ProductImplCopyWithImpl<$Res>
           ? _value.isNew
           : isNew // ignore: cast_nullable_to_non_nullable
               as bool,
+      isCustom: null == isCustom
+          ? _value.isCustom
+          : isCustom // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -194,12 +234,15 @@ class _$ProductImpl extends _Product {
   const _$ProductImpl(
       {this.id,
       required this.name,
-      required this.sku,
-      @DoubleFromStringConverter() this.price,
+      this.sku,
+      this.price,
       this.description,
+      this.discount,
+      @JsonKey(name: 'discount_type') this.discountType,
       @JsonKey(name: 'color_code') this.colorCode,
       @JsonKey(name: 'category_id') this.categoryId,
-      @JsonKey(name: 'is_new') this.isNew = false})
+      @JsonKey(name: 'is_new') this.isNew = false,
+      @JsonKey(name: 'is_custom') this.isCustom = false})
       : super._();
 
   factory _$ProductImpl.fromJson(Map<String, dynamic> json) =>
@@ -210,12 +253,16 @@ class _$ProductImpl extends _Product {
   @override
   final String name;
   @override
-  final String sku;
+  final String? sku;
   @override
-  @DoubleFromStringConverter()
   final double? price;
   @override
   final String? description;
+  @override
+  final double? discount;
+  @override
+  @JsonKey(name: 'discount_type')
+  final DiscountType? discountType;
   @override
   @JsonKey(name: 'color_code')
   final String? colorCode;
@@ -225,10 +272,13 @@ class _$ProductImpl extends _Product {
   @override
   @JsonKey(name: 'is_new')
   final bool isNew;
+  @override
+  @JsonKey(name: 'is_custom')
+  final bool isCustom;
 
   @override
   String toString() {
-    return 'Product(id: $id, name: $name, sku: $sku, price: $price, description: $description, colorCode: $colorCode, categoryId: $categoryId, isNew: $isNew)';
+    return 'Product(id: $id, name: $name, sku: $sku, price: $price, description: $description, discount: $discount, discountType: $discountType, colorCode: $colorCode, categoryId: $categoryId, isNew: $isNew, isCustom: $isCustom)';
   }
 
   @override
@@ -242,17 +292,34 @@ class _$ProductImpl extends _Product {
             (identical(other.price, price) || other.price == price) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            (identical(other.discount, discount) ||
+                other.discount == discount) &&
+            (identical(other.discountType, discountType) ||
+                other.discountType == discountType) &&
             (identical(other.colorCode, colorCode) ||
                 other.colorCode == colorCode) &&
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId) &&
-            (identical(other.isNew, isNew) || other.isNew == isNew));
+            (identical(other.isNew, isNew) || other.isNew == isNew) &&
+            (identical(other.isCustom, isCustom) ||
+                other.isCustom == isCustom));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, sku, price,
-      description, colorCode, categoryId, isNew);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      sku,
+      price,
+      description,
+      discount,
+      discountType,
+      colorCode,
+      categoryId,
+      isNew,
+      isCustom);
 
   @JsonKey(ignore: true)
   @override
@@ -272,12 +339,15 @@ abstract class _Product extends Product {
   const factory _Product(
       {final int? id,
       required final String name,
-      required final String sku,
-      @DoubleFromStringConverter() final double? price,
+      final String? sku,
+      final double? price,
       final String? description,
+      final double? discount,
+      @JsonKey(name: 'discount_type') final DiscountType? discountType,
       @JsonKey(name: 'color_code') final String? colorCode,
       @JsonKey(name: 'category_id') final int? categoryId,
-      @JsonKey(name: 'is_new') final bool isNew}) = _$ProductImpl;
+      @JsonKey(name: 'is_new') final bool isNew,
+      @JsonKey(name: 'is_custom') final bool isCustom}) = _$ProductImpl;
   const _Product._() : super._();
 
   factory _Product.fromJson(Map<String, dynamic> json) = _$ProductImpl.fromJson;
@@ -287,12 +357,16 @@ abstract class _Product extends Product {
   @override
   String get name;
   @override
-  String get sku;
+  String? get sku;
   @override
-  @DoubleFromStringConverter()
   double? get price;
   @override
   String? get description;
+  @override
+  double? get discount;
+  @override
+  @JsonKey(name: 'discount_type')
+  DiscountType? get discountType;
   @override
   @JsonKey(name: 'color_code')
   String? get colorCode;
@@ -302,6 +376,9 @@ abstract class _Product extends Product {
   @override
   @JsonKey(name: 'is_new')
   bool get isNew;
+  @override
+  @JsonKey(name: 'is_custom')
+  bool get isCustom;
   @override
   @JsonKey(ignore: true)
   _$$ProductImplCopyWith<_$ProductImpl> get copyWith =>

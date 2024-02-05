@@ -8,18 +8,18 @@ part 'product_form.g.dart';
 
 @freezed
 class ProductForm with _$ProductForm {
-  const ProductForm._();
-
   const factory ProductForm({
     int? id,
     String? name,
     String? sku,
     double? price,
-    double? discount,
-    DiscountType? discountType,
     String? description,
-    @JsonKey(name: 'is_new') @Default(false) bool isNew,
+    double? discount,
+    @JsonKey(name: 'discount_type') @Default(DiscountType.percentage) DiscountType? discountType,
+    @JsonKey(name: 'is_custom') @Default(false) bool isCustom,
   }) = _ProductForm;
+
+  const ProductForm._();
 
   factory ProductForm.fromJson(Map<String, dynamic> json) => _$ProductFormFromJson(json);
 
@@ -40,7 +40,7 @@ class ProductForm with _$ProductForm {
   }
 
   String? validateSku() {
-    if (isNew && sku.isNullOrEmpty) {
+    if (isCustom && sku.isNullOrEmpty) {
       return "Product SKU is required";
     }
 

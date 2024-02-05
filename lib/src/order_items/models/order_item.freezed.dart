@@ -29,7 +29,7 @@ mixin _$OrderItem {
   @DoubleFromStringConverter()
   double? get discount => throw _privateConstructorUsedError;
   @JsonKey(name: 'discount_type')
-  String? get discountType => throw _privateConstructorUsedError;
+  DiscountType? get discountType => throw _privateConstructorUsedError;
   @DoubleFromStringConverter()
   @JsonKey(name: 'net_price')
   double? get netPrice => throw _privateConstructorUsedError;
@@ -67,7 +67,7 @@ abstract class $OrderItemCopyWith<$Res> {
       String? description,
       @DoubleFromStringConverter() double? price,
       @DoubleFromStringConverter() double? discount,
-      @JsonKey(name: 'discount_type') String? discountType,
+      @JsonKey(name: 'discount_type') DiscountType? discountType,
       @DoubleFromStringConverter() @JsonKey(name: 'net_price') double? netPrice,
       @BoolFromIntConverter() @JsonKey(name: 'is_custom') bool? isCustom,
       @JsonKey(name: 'order_is_new') bool? orderIsNew,
@@ -135,7 +135,7 @@ class _$OrderItemCopyWithImpl<$Res, $Val extends OrderItem>
       discountType: freezed == discountType
           ? _value.discountType
           : discountType // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DiscountType?,
       netPrice: freezed == netPrice
           ? _value.netPrice
           : netPrice // ignore: cast_nullable_to_non_nullable
@@ -187,7 +187,7 @@ abstract class _$$OrderItemImplCopyWith<$Res>
       String? description,
       @DoubleFromStringConverter() double? price,
       @DoubleFromStringConverter() double? discount,
-      @JsonKey(name: 'discount_type') String? discountType,
+      @JsonKey(name: 'discount_type') DiscountType? discountType,
       @DoubleFromStringConverter() @JsonKey(name: 'net_price') double? netPrice,
       @BoolFromIntConverter() @JsonKey(name: 'is_custom') bool? isCustom,
       @JsonKey(name: 'order_is_new') bool? orderIsNew,
@@ -253,7 +253,7 @@ class __$$OrderItemImplCopyWithImpl<$Res>
       discountType: freezed == discountType
           ? _value.discountType
           : discountType // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DiscountType?,
       netPrice: freezed == netPrice
           ? _value.netPrice
           : netPrice // ignore: cast_nullable_to_non_nullable
@@ -330,7 +330,7 @@ class _$OrderItemImpl extends _OrderItem {
   final double? discount;
   @override
   @JsonKey(name: 'discount_type')
-  final String? discountType;
+  final DiscountType? discountType;
   @override
   @DoubleFromStringConverter()
   @JsonKey(name: 'net_price')
@@ -435,7 +435,7 @@ abstract class _OrderItem extends OrderItem {
       final String? description,
       @DoubleFromStringConverter() final double? price,
       @DoubleFromStringConverter() final double? discount,
-      @JsonKey(name: 'discount_type') final String? discountType,
+      @JsonKey(name: 'discount_type') final DiscountType? discountType,
       @DoubleFromStringConverter()
       @JsonKey(name: 'net_price')
       final double? netPrice,
@@ -468,7 +468,7 @@ abstract class _OrderItem extends OrderItem {
   double? get discount;
   @override
   @JsonKey(name: 'discount_type')
-  String? get discountType;
+  DiscountType? get discountType;
   @override
   @DoubleFromStringConverter()
   @JsonKey(name: 'net_price')

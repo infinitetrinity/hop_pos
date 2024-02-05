@@ -82,12 +82,26 @@ class PosItemTile extends HookConsumerWidget {
                   ),
                 ),
                 const SizedBox(width: 5),
-                Text(
-                  item.displayPrice,
-                  style: AppStyles.bodyLarge.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: canEdit.value && isActionHover.value ? AppColors.white : AppColors.gray800,
-                  ),
+                Column(
+                  children: [
+                    Text(
+                      item.displayNetPrice,
+                      style: AppStyles.bodyLarge.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: canEdit.value && isActionHover.value ? AppColors.white : AppColors.gray800,
+                      ),
+                    ),
+                    if (item.hasDiscount) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        item.displayPrice,
+                        style: AppStyles.bodySmall.copyWith(
+                          decoration: TextDecoration.lineThrough,
+                          color: canEdit.value && isActionHover.value ? AppColors.white : AppColors.gray800,
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
                 const SizedBox(width: 5),
                 MouseRegion(

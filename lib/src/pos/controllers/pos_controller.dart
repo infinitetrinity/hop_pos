@@ -96,7 +96,7 @@ class PosController extends _$PosController {
     _reset();
   }
 
-  Future<void> addProduct(Product product) async {
+  Future<void> addProduct(dynamic product) async {
     if (state.customer == null) {
       ref.read(flashMessageProvider).flash(message: 'Please select a customer first.', type: FlashMessageType.error);
       return;
@@ -107,12 +107,12 @@ class PosController extends _$PosController {
       return;
     }
 
+    if (product is ProductForm) {
+      product = Product.fromJson(product.toJson());
+    }
+
     final order = await ref.read(orderActionsProvider).addProductToOrder(state.order!, product);
     state = state.copyWith(order: order);
-  }
-
-  Future<void> addNewProduct(ProductForm data) async {
-    await addProduct(Product.fromJson(data.toJson()));
   }
 
   Future<void> setUTF({bool isUtf = true}) async {

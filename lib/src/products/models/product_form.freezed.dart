@@ -24,11 +24,12 @@ mixin _$ProductForm {
   String? get name => throw _privateConstructorUsedError;
   String? get sku => throw _privateConstructorUsedError;
   double? get price => throw _privateConstructorUsedError;
-  double? get discount => throw _privateConstructorUsedError;
-  DiscountType? get discountType => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  @JsonKey(name: 'is_new')
-  bool get isNew => throw _privateConstructorUsedError;
+  double? get discount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'discount_type')
+  DiscountType? get discountType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_custom')
+  bool get isCustom => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,10 +48,10 @@ abstract class $ProductFormCopyWith<$Res> {
       String? name,
       String? sku,
       double? price,
-      double? discount,
-      DiscountType? discountType,
       String? description,
-      @JsonKey(name: 'is_new') bool isNew});
+      double? discount,
+      @JsonKey(name: 'discount_type') DiscountType? discountType,
+      @JsonKey(name: 'is_custom') bool isCustom});
 }
 
 /// @nodoc
@@ -70,10 +71,10 @@ class _$ProductFormCopyWithImpl<$Res, $Val extends ProductForm>
     Object? name = freezed,
     Object? sku = freezed,
     Object? price = freezed,
+    Object? description = freezed,
     Object? discount = freezed,
     Object? discountType = freezed,
-    Object? description = freezed,
-    Object? isNew = null,
+    Object? isCustom = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -92,6 +93,10 @@ class _$ProductFormCopyWithImpl<$Res, $Val extends ProductForm>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
       discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
@@ -100,13 +105,9 @@ class _$ProductFormCopyWithImpl<$Res, $Val extends ProductForm>
           ? _value.discountType
           : discountType // ignore: cast_nullable_to_non_nullable
               as DiscountType?,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isNew: null == isNew
-          ? _value.isNew
-          : isNew // ignore: cast_nullable_to_non_nullable
+      isCustom: null == isCustom
+          ? _value.isCustom
+          : isCustom // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -125,10 +126,10 @@ abstract class _$$ProductFormImplCopyWith<$Res>
       String? name,
       String? sku,
       double? price,
-      double? discount,
-      DiscountType? discountType,
       String? description,
-      @JsonKey(name: 'is_new') bool isNew});
+      double? discount,
+      @JsonKey(name: 'discount_type') DiscountType? discountType,
+      @JsonKey(name: 'is_custom') bool isCustom});
 }
 
 /// @nodoc
@@ -146,10 +147,10 @@ class __$$ProductFormImplCopyWithImpl<$Res>
     Object? name = freezed,
     Object? sku = freezed,
     Object? price = freezed,
+    Object? description = freezed,
     Object? discount = freezed,
     Object? discountType = freezed,
-    Object? description = freezed,
-    Object? isNew = null,
+    Object? isCustom = null,
   }) {
     return _then(_$ProductFormImpl(
       id: freezed == id
@@ -168,6 +169,10 @@ class __$$ProductFormImplCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
       discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
@@ -176,13 +181,9 @@ class __$$ProductFormImplCopyWithImpl<$Res>
           ? _value.discountType
           : discountType // ignore: cast_nullable_to_non_nullable
               as DiscountType?,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isNew: null == isNew
-          ? _value.isNew
-          : isNew // ignore: cast_nullable_to_non_nullable
+      isCustom: null == isCustom
+          ? _value.isCustom
+          : isCustom // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -196,10 +197,11 @@ class _$ProductFormImpl extends _ProductForm {
       this.name,
       this.sku,
       this.price,
-      this.discount,
-      this.discountType,
       this.description,
-      @JsonKey(name: 'is_new') this.isNew = false})
+      this.discount,
+      @JsonKey(name: 'discount_type')
+      this.discountType = DiscountType.percentage,
+      @JsonKey(name: 'is_custom') this.isCustom = false})
       : super._();
 
   factory _$ProductFormImpl.fromJson(Map<String, dynamic> json) =>
@@ -214,18 +216,19 @@ class _$ProductFormImpl extends _ProductForm {
   @override
   final double? price;
   @override
-  final double? discount;
-  @override
-  final DiscountType? discountType;
-  @override
   final String? description;
   @override
-  @JsonKey(name: 'is_new')
-  final bool isNew;
+  final double? discount;
+  @override
+  @JsonKey(name: 'discount_type')
+  final DiscountType? discountType;
+  @override
+  @JsonKey(name: 'is_custom')
+  final bool isCustom;
 
   @override
   String toString() {
-    return 'ProductForm(id: $id, name: $name, sku: $sku, price: $price, discount: $discount, discountType: $discountType, description: $description, isNew: $isNew)';
+    return 'ProductForm(id: $id, name: $name, sku: $sku, price: $price, description: $description, discount: $discount, discountType: $discountType, isCustom: $isCustom)';
   }
 
   @override
@@ -237,19 +240,20 @@ class _$ProductFormImpl extends _ProductForm {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.sku, sku) || other.sku == sku) &&
             (identical(other.price, price) || other.price == price) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
             (identical(other.discount, discount) ||
                 other.discount == discount) &&
             (identical(other.discountType, discountType) ||
                 other.discountType == discountType) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.isNew, isNew) || other.isNew == isNew));
+            (identical(other.isCustom, isCustom) ||
+                other.isCustom == isCustom));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, sku, price, discount,
-      discountType, description, isNew);
+  int get hashCode => Object.hash(runtimeType, id, name, sku, price,
+      description, discount, discountType, isCustom);
 
   @JsonKey(ignore: true)
   @override
@@ -271,10 +275,10 @@ abstract class _ProductForm extends ProductForm {
       final String? name,
       final String? sku,
       final double? price,
-      final double? discount,
-      final DiscountType? discountType,
       final String? description,
-      @JsonKey(name: 'is_new') final bool isNew}) = _$ProductFormImpl;
+      final double? discount,
+      @JsonKey(name: 'discount_type') final DiscountType? discountType,
+      @JsonKey(name: 'is_custom') final bool isCustom}) = _$ProductFormImpl;
   const _ProductForm._() : super._();
 
   factory _ProductForm.fromJson(Map<String, dynamic> json) =
@@ -289,14 +293,15 @@ abstract class _ProductForm extends ProductForm {
   @override
   double? get price;
   @override
-  double? get discount;
-  @override
-  DiscountType? get discountType;
-  @override
   String? get description;
   @override
-  @JsonKey(name: 'is_new')
-  bool get isNew;
+  double? get discount;
+  @override
+  @JsonKey(name: 'discount_type')
+  DiscountType? get discountType;
+  @override
+  @JsonKey(name: 'is_custom')
+  bool get isCustom;
   @override
   @JsonKey(ignore: true)
   _$$ProductFormImplCopyWith<_$ProductFormImpl> get copyWith =>

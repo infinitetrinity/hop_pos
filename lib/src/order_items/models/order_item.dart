@@ -4,6 +4,7 @@ import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/src/common/converters/bool_from_int_converter.dart';
 import 'package:hop_pos/src/common/converters/double_from_string_converter.dart';
+import 'package:hop_pos/src/orders/models/order.dart';
 
 part 'order_item.freezed.dart';
 part 'order_item.g.dart';
@@ -17,7 +18,7 @@ class OrderItem with _$OrderItem {
     String? description,
     @DoubleFromStringConverter() double? price,
     @DoubleFromStringConverter() double? discount,
-    @JsonKey(name: 'discount_type') String? discountType,
+    @JsonKey(name: 'discount_type') DiscountType? discountType,
     @DoubleFromStringConverter() @JsonKey(name: 'net_price') double? netPrice,
     @BoolFromIntConverter() @JsonKey(name: 'is_custom') @Default(false) bool? isCustom,
     @Default(false) @JsonKey(name: 'order_is_new') bool? orderIsNew,
@@ -38,8 +39,16 @@ class OrderItem with _$OrderItem {
     );
   }
 
+  String get displayNetPrice {
+    return (netPrice ?? 0).formatMoney;
+  }
+
   String get displayPrice {
-    return price == null ? 0.0.formatMoney : price!.formatMoney;
+    return (price ?? 0).formatMoney;
+  }
+
+  bool get hasDiscount {
+    return discountType != null && (discount ?? 0) > 0;
   }
 
   dynamic toData() {

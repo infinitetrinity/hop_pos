@@ -3471,11 +3471,11 @@ class $OrderItemsTableTable extends OrderItemsTable
   static const VerificationMeta _discountTypeMeta =
       const VerificationMeta('discountType');
   @override
-  late final GeneratedColumn<String> discountType = GeneratedColumn<String>(
-      'discount_type', aliasedName, true,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
-      type: DriftSqlType.string,
-      requiredDuringInsert: false);
+  late final GeneratedColumnWithTypeConverter<DiscountType?, String>
+      discountType = GeneratedColumn<String>('discount_type', aliasedName, true,
+              type: DriftSqlType.string, requiredDuringInsert: false)
+          .withConverter<DiscountType?>(
+              $OrderItemsTableTable.$converterdiscountTypen);
   static const VerificationMeta _netPriceMeta =
       const VerificationMeta('netPrice');
   @override
@@ -3570,12 +3570,7 @@ class $OrderItemsTableTable extends OrderItemsTable
       context.handle(_discountMeta,
           discount.isAcceptableOrUnknown(data['discount']!, _discountMeta));
     }
-    if (data.containsKey('discount_type')) {
-      context.handle(
-          _discountTypeMeta,
-          discountType.isAcceptableOrUnknown(
-              data['discount_type']!, _discountTypeMeta));
-    }
+    context.handle(_discountTypeMeta, const VerificationResult.success());
     if (data.containsKey('net_price')) {
       context.handle(_netPriceMeta,
           netPrice.isAcceptableOrUnknown(data['net_price']!, _netPriceMeta));
@@ -3623,8 +3618,9 @@ class $OrderItemsTableTable extends OrderItemsTable
           .read(DriftSqlType.double, data['${effectivePrefix}price'])!,
       discount: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}discount']),
-      discountType: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}discount_type']),
+      discountType: $OrderItemsTableTable.$converterdiscountTypen.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.string, data['${effectivePrefix}discount_type'])),
       netPrice: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}net_price'])!,
       isCustom: attachedDatabase.typeMapping
@@ -3642,6 +3638,13 @@ class $OrderItemsTableTable extends OrderItemsTable
   $OrderItemsTableTable createAlias(String alias) {
     return $OrderItemsTableTable(attachedDatabase, alias);
   }
+
+  static JsonTypeConverter2<DiscountType, String, String>
+      $converterdiscountType =
+      const EnumNameConverter<DiscountType>(DiscountType.values);
+  static JsonTypeConverter2<DiscountType?, String?, String?>
+      $converterdiscountTypen =
+      JsonTypeConverter2.asNullable($converterdiscountType);
 }
 
 class OrderItemsTableCompanion extends UpdateCompanion<OrderItem> {
@@ -3651,7 +3654,7 @@ class OrderItemsTableCompanion extends UpdateCompanion<OrderItem> {
   final Value<String?> description;
   final Value<double> price;
   final Value<double?> discount;
-  final Value<String?> discountType;
+  final Value<DiscountType?> discountType;
   final Value<double> netPrice;
   final Value<bool> isCustom;
   final Value<int?> cartId;
@@ -3727,7 +3730,7 @@ class OrderItemsTableCompanion extends UpdateCompanion<OrderItem> {
       Value<String?>? description,
       Value<double>? price,
       Value<double?>? discount,
-      Value<String?>? discountType,
+      Value<DiscountType?>? discountType,
       Value<double>? netPrice,
       Value<bool>? isCustom,
       Value<int?>? cartId,
@@ -3771,7 +3774,9 @@ class OrderItemsTableCompanion extends UpdateCompanion<OrderItem> {
       map['discount'] = Variable<double>(discount.value);
     }
     if (discountType.present) {
-      map['discount_type'] = Variable<String>(discountType.value);
+      map['discount_type'] = Variable<String>($OrderItemsTableTable
+          .$converterdiscountTypen
+          .toSql(discountType.value));
     }
     if (netPrice.present) {
       map['net_price'] = Variable<double>(netPrice.value);
@@ -5064,11 +5069,11 @@ class $NewOrderItemsTableTable extends NewOrderItemsTable
   static const VerificationMeta _discountTypeMeta =
       const VerificationMeta('discountType');
   @override
-  late final GeneratedColumn<String> discountType = GeneratedColumn<String>(
-      'discount_type', aliasedName, true,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
-      type: DriftSqlType.string,
-      requiredDuringInsert: false);
+  late final GeneratedColumnWithTypeConverter<DiscountType?, String>
+      discountType = GeneratedColumn<String>('discount_type', aliasedName, true,
+              type: DriftSqlType.string, requiredDuringInsert: false)
+          .withConverter<DiscountType?>(
+              $NewOrderItemsTableTable.$converterdiscountTypen);
   static const VerificationMeta _netPriceMeta =
       const VerificationMeta('netPrice');
   @override
@@ -5180,12 +5185,7 @@ class $NewOrderItemsTableTable extends NewOrderItemsTable
       context.handle(_discountMeta,
           discount.isAcceptableOrUnknown(data['discount']!, _discountMeta));
     }
-    if (data.containsKey('discount_type')) {
-      context.handle(
-          _discountTypeMeta,
-          discountType.isAcceptableOrUnknown(
-              data['discount_type']!, _discountTypeMeta));
-    }
+    context.handle(_discountTypeMeta, const VerificationResult.success());
     if (data.containsKey('net_price')) {
       context.handle(_netPriceMeta,
           netPrice.isAcceptableOrUnknown(data['net_price']!, _netPriceMeta));
@@ -5247,8 +5247,9 @@ class $NewOrderItemsTableTable extends NewOrderItemsTable
           .read(DriftSqlType.double, data['${effectivePrefix}price'])!,
       discount: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}discount']),
-      discountType: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}discount_type']),
+      discountType: $NewOrderItemsTableTable.$converterdiscountTypen.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.string, data['${effectivePrefix}discount_type'])),
       netPrice: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}net_price'])!,
       isCustom: attachedDatabase.typeMapping
@@ -5270,6 +5271,13 @@ class $NewOrderItemsTableTable extends NewOrderItemsTable
   $NewOrderItemsTableTable createAlias(String alias) {
     return $NewOrderItemsTableTable(attachedDatabase, alias);
   }
+
+  static JsonTypeConverter2<DiscountType, String, String>
+      $converterdiscountType =
+      const EnumNameConverter<DiscountType>(DiscountType.values);
+  static JsonTypeConverter2<DiscountType?, String?, String?>
+      $converterdiscountTypen =
+      JsonTypeConverter2.asNullable($converterdiscountType);
 }
 
 class NewOrderItemsTableCompanion extends UpdateCompanion<OrderItem> {
@@ -5279,7 +5287,7 @@ class NewOrderItemsTableCompanion extends UpdateCompanion<OrderItem> {
   final Value<String?> description;
   final Value<double> price;
   final Value<double?> discount;
-  final Value<String?> discountType;
+  final Value<DiscountType?> discountType;
   final Value<double> netPrice;
   final Value<bool> isCustom;
   final Value<bool> orderIsNew;
@@ -5367,7 +5375,7 @@ class NewOrderItemsTableCompanion extends UpdateCompanion<OrderItem> {
       Value<String?>? description,
       Value<double>? price,
       Value<double?>? discount,
-      Value<String?>? discountType,
+      Value<DiscountType?>? discountType,
       Value<double>? netPrice,
       Value<bool>? isCustom,
       Value<bool>? orderIsNew,
@@ -5415,7 +5423,9 @@ class NewOrderItemsTableCompanion extends UpdateCompanion<OrderItem> {
       map['discount'] = Variable<double>(discount.value);
     }
     if (discountType.present) {
-      map['discount_type'] = Variable<String>(discountType.value);
+      map['discount_type'] = Variable<String>($NewOrderItemsTableTable
+          .$converterdiscountTypen
+          .toSql(discountType.value));
     }
     if (netPrice.present) {
       map['net_price'] = Variable<double>(netPrice.value);

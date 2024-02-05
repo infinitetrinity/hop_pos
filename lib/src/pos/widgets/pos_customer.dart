@@ -15,7 +15,7 @@ class PosCustomer extends HookConsumerWidget {
     final link = LayerLink();
     final width = useState<double?>(null);
 
-    ref.listen(posControllerProvider.select((prov) => prov.customer), (_, current) {
+    ref.listen(posControllerProvider, (_, current) {
       if (controller.isShowing) {
         controller.hide();
       }
