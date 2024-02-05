@@ -7,36 +7,35 @@ import 'package:hop_pos/src/common/formatter/decimal_input_formatter.dart';
 import 'package:hop_pos/src/common/widgets/dialog_footer.dart';
 import 'package:hop_pos/src/common/widgets/dialog_title.dart';
 import 'package:hop_pos/src/common/widgets/form_text_field.dart';
+import 'package:hop_pos/src/order_items/models/order_item.dart';
+import 'package:hop_pos/src/order_items/models/order_item_form.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
-import 'package:hop_pos/src/products/models/product.dart';
-import 'package:hop_pos/src/products/models/product_form.dart';
 
-class ProductDialogForm extends HookWidget {
-  const ProductDialogForm({
+class OrderItemDialogForm extends HookWidget {
+  const OrderItemDialogForm({
     super.key,
     required this.title,
-    this.product,
+    this.item,
     required this.onSubmit,
     this.isCustom = false,
   });
   final String title;
-  final Product? product;
-  final void Function(ProductForm form, Product? product) onSubmit;
+  final OrderItem? item;
+  final void Function(OrderItemForm form) onSubmit;
   final bool isCustom;
 
   @override
   Widget build(BuildContext context) {
     final formKey = useMemoized(() => GlobalKey<FormState>());
-    final productState = useState<Product?>(product);
-    final form = useState(product == null ? ProductForm(isCustom: isCustom) : ProductForm.fromModel(product!));
+    final form = useState(item == null ? OrderItemForm(isCustom: isCustom) : OrderItemForm.fromModel(item!));
     final isSubmitting = useState(false);
 
     void handleSubmit({bool submit = false}) {
-      EasyDebounce.debounce('product-form', const Duration(milliseconds: 500), () async {
+      EasyDebounce.debounce('order-item-form', const Duration(milliseconds: 500), () async {
         isSubmitting.value = true;
 
         if (formKey.currentState!.validate() && submit) {
-          onSubmit(form.value, productState.value);
+          onSubmit(form.value);
         }
 
         isSubmitting.value = false;

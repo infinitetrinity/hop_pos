@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
+import 'package:hop_pos/src/order_items/widgets/edit_order_item_dialog.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
@@ -34,9 +35,10 @@ class PosItemTile extends HookConsumerWidget {
         onExit: (_) => isEditHover.value = false,
         child: GestureDetector(
           onTap: canEdit.value
-              ? () {
-                  print('edit item $index');
-                }
+              ? () => showDialog(
+                    context: context,
+                    builder: (_) => EditOrderItemDialog(item: item),
+                  )
               : null,
           child: Container(
             decoration: BoxDecoration(

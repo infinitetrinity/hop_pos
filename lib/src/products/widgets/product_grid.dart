@@ -5,9 +5,9 @@ import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/services/flash_message.dart';
+import 'package:hop_pos/src/order_items/widgets/custom_order_item_dialog.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/products/models/product.dart';
-import 'package:hop_pos/src/products/widgets/custom_product_dialog.dart';
 
 class ProductGrid extends HookConsumerWidget {
   const ProductGrid({super.key, required this.product});
@@ -42,7 +42,7 @@ class ProductGrid extends HookConsumerWidget {
             if (product.sku == "Custom" && context.mounted) {
               return showDialog(
                 context: context,
-                builder: (_) => const CustomProductDialog(),
+                builder: (_) => const CustomOrderItemDialog(),
               );
             }
 

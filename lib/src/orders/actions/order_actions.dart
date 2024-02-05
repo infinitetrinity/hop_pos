@@ -65,7 +65,30 @@ class OrderActions {
     return (await updateOrder(order));
   }
 
-  Future<PosOrder> removeItemFromOrder(PosOrder order, OrderItem item) async {
+  Future<PosOrder> updateOrderItem(PosOrder order, OrderItem item) async {
+    final items = (order.items ?? []);
+    final updatedItem = item.copyWith(
+      netPrice: item.toCalculateNetPrice(),
+    );
+
+    if (order.order.id != null) {
+      await orderItemActions.update(updatedItem);
+    }
+
+    order = order.copyWith(
+      items: items
+          .map(
+            (el) => (el.id == updatedItem.id && el.cartId == updatedItem.cartId && el.isNew == updatedItem.isNew)
+                ? updatedItem
+                : el,
+          )
+          .toList(),
+    );
+
+    return (await updateOrder(order));
+  }
+
+  Future<PosOrder> removeOrderItem(PosOrder order, OrderItem item) async {
     if (order.order.id != null) {
       await orderItemActions.delete(item);
     }

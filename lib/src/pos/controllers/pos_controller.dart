@@ -4,12 +4,12 @@ import 'package:hop_pos/src/customers/models/customer_form.dart';
 import 'package:hop_pos/src/order_extras/actions/order_extra_actions.dart';
 import 'package:hop_pos/src/order_extras/models/order_extra.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
+import 'package:hop_pos/src/order_items/models/order_item_form.dart';
 import 'package:hop_pos/src/orders/actions/order_actions.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
 import 'package:hop_pos/src/pos/models/pos_cart.dart';
 import 'package:hop_pos/src/products/models/product.dart';
-import 'package:hop_pos/src/products/models/product_form.dart';
 import 'package:hop_pos/src/screening_registrations/actions/screening_registration_actions.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
@@ -108,11 +108,26 @@ class PosController extends _$PosController {
       return;
     }
 
-    if (product is ProductForm) {
+    if (product is OrderItemForm) {
       product = Product.fromJson(product.toJson());
     }
 
     final order = await ref.read(orderActionsProvider).addProductToOrder(state.order!, product);
+    state = state.copyWith(order: order);
+  }
+
+  Future<void> updateOrderItem(OrderItemForm form) async {
+    if (state.customer == null) {
+      ref.read(flashMessageProvider).flash(message: 'Please select a customer first.', type: FlashMessageType.error);
+      return;
+    }
+
+    if (state.order == null) {
+      ref.read(flashMessageProvider).flash(message: 'Invalid order.', type: FlashMessageType.error);
+      return;
+    }
+
+    final order = await ref.read(orderActionsProvider).updateOrderItem(state.order!, OrderItem.fromJson(form.toJson()));
     state = state.copyWith(order: order);
   }
 
@@ -131,7 +146,7 @@ class PosController extends _$PosController {
       return;
     }
 
-    final order = await ref.read(orderActionsProvider).removeItemFromOrder(state.order!, item);
+    final order = await ref.read(orderActionsProvider).removeOrderItem(state.order!, item);
     state = state.copyWith(order: order);
   }
 

@@ -30,4 +30,8 @@ class NewOrderItemRepository {
   Future<bool> delete(OrderItem item, {Expression<bool>? where}) async {
     return await newOrderItemDao.deleteOrderItem(item, where ?? db.newOrderItemsTable.id.equals(item.id!));
   }
+
+  Future<bool> update(OrderItem item, {Expression<bool>? where}) async {
+    return await newOrderItemDao.updateOrderItem(item.toData(), where ?? db.newOrderItemsTable.id.equals(item.id!));
+  }
 }

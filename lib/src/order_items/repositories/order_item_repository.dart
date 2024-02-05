@@ -44,4 +44,13 @@ class OrderItemRepository {
       return result;
     });
   }
+
+  Future<bool> update(OrderItem item, {Expression<bool>? where}) async {
+    return await db.transaction(() async {
+      final result = await orderItemDao.updateOrderItem(item.toData(), where ?? db.orderItemsTable.id.equals(item.id!));
+
+      await toSycnDataDao.insertToSyncData(item.toSyncData(ToSyncActions.update));
+      return result;
+    });
+  }
 }

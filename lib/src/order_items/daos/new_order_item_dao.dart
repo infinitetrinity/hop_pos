@@ -17,4 +17,9 @@ class NewOrderItemDao extends DatabaseAccessor<AppDb> with _$NewOrderItemDaoMixi
     final count = await (db.delete(newOrderItemsTable)..where((_) => where)).go();
     return count > 0;
   }
+
+  Future<bool> updateOrderItem(NewOrderItemsTableCompanion item, Expression<bool> where) async {
+    final count = await (update(newOrderItemsTable)..where((_) => where)).write(item);
+    return count > 0;
+  }
 }

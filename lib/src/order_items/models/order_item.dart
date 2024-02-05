@@ -2,8 +2,6 @@ import 'package:drift/drift.dart' as drift;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/app/app_extension.dart';
-import 'package:hop_pos/src/common/converters/bool_from_int_converter.dart';
-import 'package:hop_pos/src/common/converters/double_from_string_converter.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
 
@@ -17,11 +15,11 @@ class OrderItem with _$OrderItem {
     required String name,
     required String sku,
     String? description,
-    @DoubleFromStringConverter() double? price,
-    @DoubleFromStringConverter() double? discount,
+    double? price,
+    double? discount,
     @JsonKey(name: 'discount_type') DiscountType? discountType,
-    @DoubleFromStringConverter() @JsonKey(name: 'net_price') double? netPrice,
-    @BoolFromIntConverter() @JsonKey(name: 'is_custom') @Default(false) bool? isCustom,
+    @JsonKey(name: 'net_price') double? netPrice,
+    @JsonKey(name: 'is_custom') @Default(false) bool? isCustom,
     @Default(false) @JsonKey(name: 'order_is_new') bool? orderIsNew,
     @JsonKey(name: 'cart_id') int? cartId,
     @JsonKey(name: 'product_id') int? productId,
@@ -50,6 +48,18 @@ class OrderItem with _$OrderItem {
 
   bool get hasDiscount {
     return discountType != null && (discount ?? 0) > 0;
+  }
+
+  bool get isPercentageDiscount {
+    return discountType == DiscountType.percentage;
+  }
+
+  double get calculatedDiscount {
+    return isPercentageDiscount ? (price ?? 0).percentageOf(discount ?? 0).toDecimalPlace(2) : discount ?? 0;
+  }
+
+  double toCalculateNetPrice() {
+    return (price ?? 0) - calculatedDiscount;
   }
 
   dynamic toData() {
