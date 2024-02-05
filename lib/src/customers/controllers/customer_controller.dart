@@ -28,7 +28,6 @@ class CustomerController extends _$CustomerController {
   }
 
   Future<bool> updateCustomer(CustomerForm form) async {
-    print('updating customer');
     return await ref.read(customerActionsProvider).updateCustomer(form);
   }
 

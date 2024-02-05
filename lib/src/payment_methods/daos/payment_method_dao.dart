@@ -6,17 +6,14 @@ import 'package:hop_pos/src/payment_methods/models/payment_methods_table.dart';
 part 'payment_method_dao.g.dart';
 
 @DriftAccessor(tables: [PaymentMethodsTable])
-class PaymentMethodDao extends DatabaseAccessor<AppDb>
-    with _$PaymentMethodDaoMixin {
+class PaymentMethodDao extends DatabaseAccessor<AppDb> with _$PaymentMethodDaoMixin {
   PaymentMethodDao(AppDb db) : super(db);
 
-  Future<PaymentMethod> insertMethod(
-      PaymentMethodsTableCompanion method) async {
+  Future<PaymentMethod> insertMethod(PaymentMethodsTableCompanion method) async {
     return await into(paymentMethodsTable).insertReturning(method);
   }
 
-  Future<List<PaymentMethod>> insertMethods(
-      List<PaymentMethodsTableCompanion> methods) async {
+  Future<List<PaymentMethod>> insertMethods(List<PaymentMethodsTableCompanion> methods) async {
     return await transaction(() async {
       List<Future<PaymentMethod>> insertFutures = [];
 
@@ -29,10 +26,8 @@ class PaymentMethodDao extends DatabaseAccessor<AppDb>
     });
   }
 
-  Future<bool> updateMethod(
-      PaymentMethodsTableCompanion method, Expression<bool> where) async {
-    final count =
-        await (update(paymentMethodsTable)..where((_) => where)).write(method);
-    return count > 0;
+  Future<PaymentMethod> getById(int id) {
+    final query = select(paymentMethodsTable)..where((tbl) => tbl.id.equals(id));
+    return query.getSingle();
   }
 }

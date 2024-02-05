@@ -182,7 +182,7 @@ class __$$OrderPaymentImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$OrderPaymentImpl implements _OrderPayment {
+class _$OrderPaymentImpl extends _OrderPayment {
   const _$OrderPaymentImpl(
       {required this.id,
       @DoubleFromStringConverter() this.amount,
@@ -190,7 +190,8 @@ class _$OrderPaymentImpl implements _OrderPayment {
       @JsonKey(name: 'payment_method_id') this.paymentMethodId,
       @JsonKey(name: 'order_is_new') this.orderIsNew = false,
       @JsonKey(name: 'is_new') this.isNew = false,
-      @JsonKey(name: 'created_at') required this.createdAt});
+      @JsonKey(name: 'created_at') required this.createdAt})
+      : super._();
 
   factory _$OrderPaymentImpl.fromJson(Map<String, dynamic> json) =>
       _$$OrderPaymentImplFromJson(json);
@@ -257,7 +258,7 @@ class _$OrderPaymentImpl implements _OrderPayment {
   }
 }
 
-abstract class _OrderPayment implements OrderPayment {
+abstract class _OrderPayment extends OrderPayment {
   const factory _OrderPayment(
           {required final int id,
           @DoubleFromStringConverter() final double? amount,
@@ -267,6 +268,7 @@ abstract class _OrderPayment implements OrderPayment {
           @JsonKey(name: 'is_new') final bool? isNew,
           @JsonKey(name: 'created_at') required final DateTime createdAt}) =
       _$OrderPaymentImpl;
+  const _OrderPayment._() : super._();
 
   factory _OrderPayment.fromJson(Map<String, dynamic> json) =
       _$OrderPaymentImpl.fromJson;
