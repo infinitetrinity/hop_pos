@@ -26,8 +26,8 @@ class OrderItemDao extends DatabaseAccessor<AppDb> with _$OrderItemDaoMixin {
     });
   }
 
-  Future<bool> updateOrderItem(OrderItemsTableCompanion item, Expression<bool> where) async {
-    final count = await (update(orderItemsTable)..where((_) => where)).write(item);
+  Future<bool> deleteOrderItem(OrderItem item, Expression<bool> where) async {
+    final count = await (db.delete(orderItemsTable)..where((_) => where)).go();
     return count > 0;
   }
 }

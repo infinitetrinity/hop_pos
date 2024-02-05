@@ -1,6 +1,7 @@
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/order_extras/actions/order_extra_actions.dart';
 import 'package:hop_pos/src/order_items/actions/order_item_actions.dart';
+import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
 import 'package:hop_pos/src/orders/repositories/new_order_repository.dart';
 import 'package:hop_pos/src/orders/repositories/order_repository.dart';
@@ -46,18 +47,34 @@ class OrderActions {
 
   Future<PosOrder> addProductToOrder(PosOrder order, Product product) async {
     final items = (order.items ?? []);
-    final newItem = product.toOrderItem().copyWith(
+    OrderItem newItem = product.toOrderItem().copyWith(
           cartId: items.length + 1,
           orderIsNew: order.order.isNew,
           orderId: order.order.id,
         );
 
     if (order.order.id != null) {
-      await orderItemActions.store(newItem);
+      final createdItem = await orderItemActions.store(newItem);
+      newItem = newItem.copyWith(id: createdItem.id);
     }
 
     order = order.copyWith(
       items: [...items, newItem],
+    );
+
+    return (await updateOrder(order));
+  }
+
+  Future<PosOrder> removeItemFromOrder(PosOrder order, OrderItem item) async {
+    if (order.order.id != null) {
+      await orderItemActions.delete(item);
+    }
+
+    order = order.copyWith(
+      items: ([...order.items ?? []])
+        ..removeWhere(
+          (el) => el.cartId == item.cartId && el.id == item.id && el.isNew == item.isNew,
+        ),
     );
 
     return (await updateOrder(order));

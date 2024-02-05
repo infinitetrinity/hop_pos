@@ -3,6 +3,7 @@ import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/customers/models/customer_form.dart';
 import 'package:hop_pos/src/order_extras/actions/order_extra_actions.dart';
 import 'package:hop_pos/src/order_extras/models/order_extra.dart';
+import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/orders/actions/order_actions.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
@@ -112,6 +113,25 @@ class PosController extends _$PosController {
     }
 
     final order = await ref.read(orderActionsProvider).addProductToOrder(state.order!, product);
+    state = state.copyWith(order: order);
+  }
+
+  Future<void> deleteOrderItem(OrderItem item) async {
+    if (state.order == null) {
+      ref.read(flashMessageProvider).flash(message: 'Invalid order.', type: FlashMessageType.error);
+      return;
+    }
+
+    final balance = state.order?.balance ?? 0;
+
+    if ((balance - (item.netPrice ?? 0)) < 0) {
+      ref
+          .read(flashMessageProvider)
+          .flash(message: 'Cannot remove product, balance cannot be lesser than 0.', type: FlashMessageType.error);
+      return;
+    }
+
+    final order = await ref.read(orderActionsProvider).removeItemFromOrder(state.order!, item);
     state = state.copyWith(order: order);
   }
 

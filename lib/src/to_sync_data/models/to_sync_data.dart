@@ -3,10 +3,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'to_sync_data.freezed.dart';
 part 'to_sync_data.g.dart';
 
-enum ToSyncActions { update }
+enum ToSyncActions { update, delete }
 
 // ignore: constant_identifier_names
-enum ToSyncModels { customers, orders, order_extras }
+enum ToSyncModels { customers, orders, order_extras, order_items }
 
 @freezed
 class ToSyncData with _$ToSyncData {

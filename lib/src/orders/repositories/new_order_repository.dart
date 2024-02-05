@@ -31,6 +31,6 @@ class NewOrderRepository {
   }
 
   Future<bool> update(Order order, {Expression<bool>? where}) async {
-    return await newOrderDao.updateOrder(order.toData(), where ?? db.ordersTable.id.equals(order.id!));
+    return await newOrderDao.updateOrder(order.toData(), where ?? db.newOrdersTable.id.equals(order.id!));
   }
 }

@@ -26,4 +26,9 @@ class OrderItemActions {
     final dynamic repo = item.isNew == true ? newOrderItemRepo : orderItemRepo;
     return await repo.insert(item.toData());
   }
+
+  Future<bool> delete(OrderItem item) async {
+    final dynamic repo = item.isNew == true ? newOrderItemRepo : orderItemRepo;
+    return await repo.delete(item);
+  }
 }

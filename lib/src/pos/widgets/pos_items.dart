@@ -13,16 +13,14 @@ class PosItems extends HookConsumerWidget {
     final controller = useScrollController();
     final order = ref.watch(posControllerProvider.select((prov) => prov.order));
 
-    ref.listen(posControllerProvider.select((prov) => prov.order?.items), (_, current) {
-      Future.delayed(const Duration(milliseconds: 300)).then((value) {
-        if (controller.hasClients) {
-          controller.animateTo(
-            controller.position.maxScrollExtent,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.fastOutSlowIn,
-          );
-        }
-      });
+    ref.listen(posControllerProvider.select((prov) => prov.order?.items), (previous, current) {
+      if (controller.hasClients && (previous?.length ?? 0) > 0 && (previous?.length ?? 0) < (current?.length ?? 0)) {
+        controller.animateTo(
+          controller.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.fastOutSlowIn,
+        );
+      }
     });
 
     return order == null || order.items == null

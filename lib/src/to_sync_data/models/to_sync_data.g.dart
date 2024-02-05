@@ -30,8 +30,10 @@ const _$ToSyncModelsEnumMap = {
   ToSyncModels.customers: 'customers',
   ToSyncModels.orders: 'orders',
   ToSyncModels.order_extras: 'order_extras',
+  ToSyncModels.order_items: 'order_items',
 };
 
 const _$ToSyncActionsEnumMap = {
   ToSyncActions.update: 'update',
+  ToSyncActions.delete: 'delete',
 };

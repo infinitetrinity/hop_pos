@@ -5,6 +5,7 @@ import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/src/common/converters/bool_from_int_converter.dart';
 import 'package:hop_pos/src/common/converters/double_from_string_converter.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
+import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
 
 part 'order_item.freezed.dart';
 part 'order_item.g.dart';
@@ -83,5 +84,15 @@ class OrderItem with _$OrderItem {
             productId: drift.Value(productId),
             orderId: drift.Value.ofNullable(orderId),
           );
+  }
+
+  ToSyncDataTableCompanion toSyncData(ToSyncActions action) {
+    return ToSyncDataTableCompanion(
+      model: const drift.Value(ToSyncModels.order_items),
+      modelId: drift.Value(id!),
+      action: drift.Value(action),
+      createdAt: drift.Value(DateTime.now()),
+      value: drift.Value(toJson()),
+    );
   }
 }

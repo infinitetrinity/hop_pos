@@ -5,6 +5,7 @@ import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 class PosItemTile extends HookConsumerWidget {
   const PosItemTile({super.key, required this.item, required this.index});
@@ -17,6 +18,14 @@ class PosItemTile extends HookConsumerWidget {
     final canEdit = useState(item.isNew == true);
     final isEditHover = useState(false);
     final isActionHover = useState(false);
+
+    Future<void> deleteItem() async {
+      context.loaderOverlay.show();
+      await ref.read(posControllerProvider.notifier).deleteOrderItem(item);
+      if (context.mounted) {
+        context.loaderOverlay.hide();
+      }
+    }
 
     return Material(
       child: MouseRegion(
@@ -114,10 +123,9 @@ class PosItemTile extends HookConsumerWidget {
                       padding: EdgeInsets.zero,
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
-                      onPressed: () {
+                      onPressed: () async {
                         if (canEdit.value) {
-                          print('delete item $index');
-                          return;
+                          await deleteItem();
                         }
                         canEdit.value = true;
                       },
