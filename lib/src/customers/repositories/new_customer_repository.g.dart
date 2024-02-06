@@ -6,7 +6,7 @@ part of 'new_customer_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$newCustomerRepoHash() => r'e2a3cf6a0ccbb0747a1b11640a2b0a4751cb3a2b';
+String _$newCustomerRepoHash() => r'30c27e2006829b012168e027616af949680de1bb';
 
 /// See also [newCustomerRepo].
 @ProviderFor(newCustomerRepo)

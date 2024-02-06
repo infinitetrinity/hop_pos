@@ -6860,6 +6860,8 @@ abstract class _$AppDb extends GeneratedDatabase {
   late final NewOrderItemDao newOrderItemDao = NewOrderItemDao(this as AppDb);
   late final NewOrderExtraDao newOrderExtraDao =
       NewOrderExtraDao(this as AppDb);
+  late final NewOrderPaymentDao newOrderPaymentDao =
+      NewOrderPaymentDao(this as AppDb);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();

@@ -1,26 +1,28 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'new_order_extra_repository.dart';
+part of 'new_order_payment_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$newOrderExtraRepoHash() => r'd7fab3d2a469e12f701ff974d7768be261d49a75';
+String _$newOrderPaymentRepoHash() =>
+    r'9e554ff72f2c8cf6022aa354717e85e340823bb2';
 
-/// See also [newOrderExtraRepo].
-@ProviderFor(newOrderExtraRepo)
-final newOrderExtraRepoProvider =
-    AutoDisposeProvider<NewOrderExtraRepository>.internal(
-  newOrderExtraRepo,
-  name: r'newOrderExtraRepoProvider',
+/// See also [newOrderPaymentRepo].
+@ProviderFor(newOrderPaymentRepo)
+final newOrderPaymentRepoProvider =
+    AutoDisposeProvider<NewOrderPaymentRepository>.internal(
+  newOrderPaymentRepo,
+  name: r'newOrderPaymentRepoProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$newOrderExtraRepoHash,
+      : _$newOrderPaymentRepoHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef NewOrderExtraRepoRef = AutoDisposeProviderRef<NewOrderExtraRepository>;
+typedef NewOrderPaymentRepoRef
+    = AutoDisposeProviderRef<NewOrderPaymentRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

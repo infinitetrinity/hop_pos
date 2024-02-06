@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/order_items/models/order_items_table.dart';
+import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
 
 part 'order_item_dao.g.dart';
 
@@ -26,13 +27,17 @@ class OrderItemDao extends DatabaseAccessor<AppDb> with _$OrderItemDaoMixin {
     });
   }
 
-  Future<bool> deleteOrderItem(OrderItem item, Expression<bool> where) async {
-    final count = await (db.delete(orderItemsTable)..where((_) => where)).go();
-    return count > 0;
+  Future<bool> deleteOrderItem(OrderItem item) async {
+    return await transaction(() async {
+      final count = await (delete(orderItemsTable)..where((tbl) => tbl.id.equals(item.id!))).go();
+
+      await db.toSycnDataDao.insertToSyncData(item.toSyncData(ToSyncActions.delete));
+      return count > 0;
+    });
   }
 
-  Future<bool> updateOrderItem(OrderItemsTableCompanion item, Expression<bool> where) async {
-    final count = await (update(orderItemsTable)..where((_) => where)).write(item);
+  Future<bool> updateOrderItem(OrderItem item) async {
+    final count = await (update(orderItemsTable)..where((tbl) => tbl.id.equals(item.id!))).write(item.toData());
     return count > 0;
   }
 }

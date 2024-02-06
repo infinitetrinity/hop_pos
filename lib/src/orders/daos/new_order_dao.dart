@@ -8,6 +8,7 @@ import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/order_payments/models/new_order_payments_table.dart';
 import 'package:hop_pos/src/order_payments/models/order_payment.dart';
 import 'package:hop_pos/src/orders/models/new_orders_table.dart';
+import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 
@@ -89,8 +90,8 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
     );
   }
 
-  Future<bool> updateOrder(NewOrdersTableCompanion order, Expression<bool> where) async {
-    final count = await (update(newOrdersTable)..where((_) => where)).write(order);
+  Future<bool> updateOrder(Order order) async {
+    final count = await (update(newOrdersTable)..where((tbl) => tbl.id.equals(order.id!))).write(order.toData());
     return count > 0;
   }
 }

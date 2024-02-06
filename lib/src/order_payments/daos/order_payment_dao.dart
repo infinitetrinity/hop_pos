@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/order_payments/models/order_payment.dart';
 import 'package:hop_pos/src/order_payments/models/order_payments_table.dart';
+import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
 
 part 'order_payment_dao.g.dart';
 
@@ -26,8 +27,12 @@ class OrderPaymentDao extends DatabaseAccessor<AppDb> with _$OrderPaymentDaoMixi
     });
   }
 
-  Future<bool> updateOrderPayment(OrderPaymentsTableCompanion payment, Expression<bool> where) async {
-    final count = await (update(orderPaymentsTable)..where((_) => where)).write(payment);
-    return count > 0;
+  Future<bool> deleteOrderPayment(OrderPayment payment) async {
+    return await transaction(() async {
+      final count = await (delete(orderPaymentsTable)..where((tbl) => tbl.id.equals(payment.id))).go();
+
+      await db.toSycnDataDao.insertToSyncData(payment.toSyncData(ToSyncActions.delete));
+      return count > 0;
+    });
   }
 }

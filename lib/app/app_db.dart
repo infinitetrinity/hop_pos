@@ -21,6 +21,7 @@ import 'package:hop_pos/src/order_items/daos/order_item_dao.dart';
 import 'package:hop_pos/src/order_items/models/new_order_items_table.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/order_items/models/order_items_table.dart';
+import 'package:hop_pos/src/order_payments/daos/new_order_payment_dao.dart';
 import 'package:hop_pos/src/order_payments/daos/order_payment_dao.dart';
 import 'package:hop_pos/src/order_payments/models/new_order_payments_table.dart';
 import 'package:hop_pos/src/order_payments/models/order_payment.dart';
@@ -132,6 +133,7 @@ AppDb appDb(AppDbRef ref) {
   NewOrderDao,
   NewOrderItemDao,
   NewOrderExtraDao,
+  NewOrderPaymentDao,
 ])
 class AppDb extends _$AppDb {
   AppDb._init() : super(_initDb());

@@ -13,13 +13,13 @@ class NewOrderItemDao extends DatabaseAccessor<AppDb> with _$NewOrderItemDaoMixi
     return await into(newOrderItemsTable).insertReturning(item);
   }
 
-  Future<bool> deleteOrderItem(OrderItem item, Expression<bool> where) async {
-    final count = await (db.delete(newOrderItemsTable)..where((_) => where)).go();
+  Future<bool> deleteOrderItem(OrderItem item) async {
+    final count = await (delete(newOrderItemsTable)..where((tbl) => tbl.id.equals(item.id!))).go();
     return count > 0;
   }
 
-  Future<bool> updateOrderItem(NewOrderItemsTableCompanion item, Expression<bool> where) async {
-    final count = await (update(newOrderItemsTable)..where((_) => where)).write(item);
+  Future<bool> updateOrderItem(OrderItem item) async {
+    final count = await (update(newOrderItemsTable)..where((tbl) => tbl.id.equals(item.id!))).write(item.toData());
     return count > 0;
   }
 }

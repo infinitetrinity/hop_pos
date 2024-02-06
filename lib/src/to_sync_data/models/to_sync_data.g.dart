@@ -31,6 +31,7 @@ const _$ToSyncModelsEnumMap = {
   ToSyncModels.orders: 'orders',
   ToSyncModels.order_extras: 'order_extras',
   ToSyncModels.order_items: 'order_items',
+  ToSyncModels.order_payments: 'order_payments',
 };
 
 const _$ToSyncActionsEnumMap = {

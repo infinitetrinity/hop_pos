@@ -1,4 +1,3 @@
-import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/orders/daos/new_order_dao.dart';
@@ -12,17 +11,14 @@ part 'new_order_repository.g.dart';
 @riverpod
 NewOrderRepository newOrderRepo(NewOrderRepoRef ref) {
   return NewOrderRepository(
-    db: ref.watch(appDbProvider),
     newOrderDao: ref.watch(appDbProvider.select((prov) => prov.newOrderDao)),
   );
 }
 
 class NewOrderRepository {
-  final AppDb db;
   final NewOrderDao newOrderDao;
 
   NewOrderRepository({
-    required this.db,
     required this.newOrderDao,
   });
 
@@ -30,7 +26,7 @@ class NewOrderRepository {
     return await newOrderDao.getScreeningCustomerLatestOrder(screening, customer);
   }
 
-  Future<bool> update(Order order, {Expression<bool>? where}) async {
-    return await newOrderDao.updateOrder(order.toData(), where ?? db.newOrdersTable.id.equals(order.id!));
+  Future<bool> update(Order order) async {
+    return await newOrderDao.updateOrder(order);
   }
 }

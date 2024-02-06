@@ -7,6 +7,8 @@ import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/order_payments/models/order_payment.dart';
 import 'package:hop_pos/src/payment_methods/controllers/payment_method_controller.dart';
 import 'package:hop_pos/src/payment_methods/models/payment_method.dart';
+import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 class PosPaymentTile extends HookConsumerWidget {
   const PosPaymentTile({super.key, required this.payment, required this.index});
@@ -19,6 +21,14 @@ class PosPaymentTile extends HookConsumerWidget {
     final paymentMethod = payment.paymentMethodId == null
         ? null
         : ref.watch(paymentMethodControllerProvider.notifier).getPaymentMethodById(payment.paymentMethodId!);
+
+    Future<void> deletePayment() async {
+      context.loaderOverlay.show();
+      await ref.read(posControllerProvider.notifier).deleteOrderPayment(payment);
+      if (context.mounted) {
+        context.loaderOverlay.hide();
+      }
+    }
 
     return FutureBuilder<PaymentMethod?>(
       future: paymentMethod,
@@ -57,9 +67,7 @@ class PosPaymentTile extends HookConsumerWidget {
                         onEnter: (_) => isHover.value = true,
                         onExit: (_) => isHover.value = false,
                         child: GestureDetector(
-                          onTap: () {
-                            print('Delete payment');
-                          },
+                          onTap: deletePayment,
                           child: Text(
                             '(Remove)',
                             style: AppStyles.body.copyWith(

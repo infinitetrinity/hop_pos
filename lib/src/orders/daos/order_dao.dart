@@ -14,6 +14,7 @@ import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/orders_table.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
+import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
 
 part 'order_dao.g.dart';
 
@@ -152,8 +153,12 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
     );
   }
 
-  Future<bool> updateOrder(OrdersTableCompanion order, Expression<bool> where) async {
-    final count = await (update(ordersTable)..where((_) => where)).write(order);
-    return count > 0;
+  Future<bool> updateOrder(Order order) async {
+    return await transaction(() async {
+      final count = await (update(ordersTable)..where((tbl) => tbl.id.equals(order.id!))).write(order.toData());
+
+      await db.toSycnDataDao.insertToSyncData(order.toSyncData(ToSyncActions.update));
+      return count > 0;
+    });
   }
 }

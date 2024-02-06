@@ -1,4 +1,3 @@
-import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/order_payments/daos/order_payment_dao.dart';
 import 'package:hop_pos/src/order_payments/models/order_payment.dart';
@@ -28,7 +27,7 @@ class OrderPaymentRepository {
     return await orderPaymentDao.insertOrderPayments(payments);
   }
 
-  Future<bool> update(OrderPaymentsTableCompanion payment, Expression<bool> where) async {
-    return await orderPaymentDao.updateOrderPayment(payment, where);
+  Future<bool> delete(OrderPayment payment) async {
+    return await orderPaymentDao.deleteOrderPayment(payment);
   }
 }

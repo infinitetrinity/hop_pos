@@ -1,9 +1,6 @@
-import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/customers/daos/customer_dao.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
-import 'package:hop_pos/src/to_sync_data/daos/to_sync_data_dao.dart';
-import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'customer_repository.g.dart';
@@ -11,21 +8,15 @@ part 'customer_repository.g.dart';
 @riverpod
 CustomerRepository customerRepo(CustomerRepoRef ref) {
   return CustomerRepository(
-    db: ref.watch(appDbProvider),
     customerDao: ref.watch(appDbProvider.select((prov) => prov.customerDao)),
-    toSycnDataDao: ref.watch(appDbProvider.select((prov) => prov.toSycnDataDao)),
   );
 }
 
 class CustomerRepository {
-  final AppDb db;
   final CustomerDao customerDao;
-  final ToSycnDataDao toSycnDataDao;
 
   CustomerRepository({
-    required this.db,
     required this.customerDao,
-    required this.toSycnDataDao,
   });
 
   Future<Customer?> findByNric({required String nric, int? excludeId}) async {
@@ -48,13 +39,7 @@ class CustomerRepository {
     return await customerDao.insertCustomers(customers);
   }
 
-  Future<bool> update(Customer customer, {Expression<bool>? where}) async {
-    return await db.transaction(() async {
-      final result =
-          await customerDao.updateCustomer(customer.toData(), where ?? db.customersTable.id.equals(customer.id!));
-
-      await toSycnDataDao.insertToSyncData(customer.toSyncData(ToSyncActions.update));
-      return result;
-    });
+  Future<bool> update(Customer customer) async {
+    return await customerDao.updateCustomer(customer);
   }
 }

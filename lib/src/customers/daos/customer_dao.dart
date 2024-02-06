@@ -6,6 +6,7 @@ import 'package:hop_pos/src/orders/models/new_orders_table.dart';
 import 'package:hop_pos/src/orders/models/orders_table.dart';
 import 'package:hop_pos/src/screening_registrations/models/new_screening_registrations_table.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registrations_table.dart';
+import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
 
 part 'customer_dao.g.dart';
 
@@ -63,9 +64,13 @@ class CustomerDao extends DatabaseAccessor<AppDb> with _$CustomerDaoMixin {
     });
   }
 
-  Future<bool> updateCustomer(CustomersTableCompanion customer, Expression<bool> where) async {
-    final count = await (db.update(customersTable)..where((tbl) => where)).write(customer);
+  Future<bool> updateCustomer(Customer customer) async {
+    return await transaction(() async {
+      final count =
+          await (update(customersTable)..where((tbl) => tbl.id.equals(customer.id!))).write(customer.toData());
 
-    return count > 0;
+      await db.toSycnDataDao.insertToSyncData(customer.toSyncData(ToSyncActions.update));
+      return count > 0;
+    });
   }
 }

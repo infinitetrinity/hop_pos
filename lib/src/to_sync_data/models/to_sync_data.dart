@@ -6,7 +6,7 @@ part 'to_sync_data.g.dart';
 enum ToSyncActions { update, delete }
 
 // ignore: constant_identifier_names
-enum ToSyncModels { customers, orders, order_extras, order_items }
+enum ToSyncModels { customers, orders, order_extras, order_items, order_payments }
 
 @freezed
 class ToSyncData with _$ToSyncData {

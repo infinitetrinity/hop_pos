@@ -5,6 +5,7 @@ import 'package:hop_pos/src/order_extras/actions/order_extra_actions.dart';
 import 'package:hop_pos/src/order_extras/models/order_extra.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/order_items/models/order_item_form.dart';
+import 'package:hop_pos/src/order_payments/models/order_payment.dart';
 import 'package:hop_pos/src/orders/actions/order_actions.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
@@ -26,14 +27,6 @@ class PosController extends _$PosController {
 
   void setScreening(Screening screening) {
     state = state.copyWith(screening: screening);
-  }
-
-  void _reset() {
-    state = state.copyWith(
-      customer: null,
-      registration: null,
-      order: null,
-    );
   }
 
   FutureOr<void> selectCustomer({
@@ -94,7 +87,11 @@ class PosController extends _$PosController {
   }
 
   Future<void> discardSales() async {
-    _reset();
+    state = state.copyWith(
+      customer: null,
+      registration: null,
+      order: null,
+    );
   }
 
   Future<void> addProduct(dynamic product) async {
@@ -146,7 +143,7 @@ class PosController extends _$PosController {
       return;
     }
 
-    final order = await ref.read(orderActionsProvider).removeOrderItem(state.order!, item);
+    final order = await ref.read(orderActionsProvider).deleteOrderItem(state.order!, item);
     state = state.copyWith(order: order);
   }
 
@@ -180,5 +177,15 @@ class PosController extends _$PosController {
     );
 
     await ref.read(orderActionsProvider).updateOrder(state.order!);
+  }
+
+  Future<void> deleteOrderPayment(OrderPayment payment) async {
+    if (state.order == null) {
+      ref.read(flashMessageProvider).flash(message: 'Invalid order.', type: FlashMessageType.error);
+      return;
+    }
+
+    final order = await ref.read(orderActionsProvider).deleteOrderPayment(state.order!, payment);
+    state = state.copyWith(order: order);
   }
 }

@@ -2,6 +2,8 @@ import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/order_extras/actions/order_extra_actions.dart';
 import 'package:hop_pos/src/order_items/actions/order_item_actions.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
+import 'package:hop_pos/src/order_payments/actions/order_payment_actions.dart';
+import 'package:hop_pos/src/order_payments/models/order_payment.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
 import 'package:hop_pos/src/orders/repositories/new_order_repository.dart';
 import 'package:hop_pos/src/orders/repositories/order_repository.dart';
@@ -18,6 +20,7 @@ OrderActions orderActions(OrderActionsRef ref) {
     newOrderRepo: ref.watch(newOrderRepoProvider),
     orderExtraActions: ref.watch(orderExtraActionsProvider),
     orderItemActions: ref.watch(orderItemActionsProvider),
+    orderPaymentActions: ref.watch(orderPaymentActionsProvider),
   );
 }
 
@@ -26,12 +29,14 @@ class OrderActions {
   final NewOrderRepository newOrderRepo;
   final OrderExtraActions orderExtraActions;
   final OrderItemActions orderItemActions;
+  final OrderPaymentActions orderPaymentActions;
 
   OrderActions({
     required this.orderRepo,
     required this.newOrderRepo,
     required this.orderExtraActions,
     required this.orderItemActions,
+    required this.orderPaymentActions,
   });
 
   Future<PosOrder?> getScreeningCustomerLatestOrder(Screening screening, Customer customer) async {
@@ -88,7 +93,7 @@ class OrderActions {
     return (await updateOrder(order));
   }
 
-  Future<PosOrder> removeOrderItem(PosOrder order, OrderItem item) async {
+  Future<PosOrder> deleteOrderItem(PosOrder order, OrderItem item) async {
     if (order.order.id != null) {
       await orderItemActions.delete(item);
     }
@@ -96,7 +101,7 @@ class OrderActions {
     order = order.copyWith(
       items: ([...order.items ?? []])
         ..removeWhere(
-          (el) => el.cartId == item.cartId && el.id == item.id && el.isNew == item.isNew,
+          (el) => el.id == item.id && el.isNew == item.isNew,
         ),
     );
 
@@ -122,6 +127,21 @@ class OrderActions {
       final dynamic repo = order.order.isNew == true ? newOrderRepo : orderRepo;
       await repo.update(order.order);
     }
+
+    return order;
+  }
+
+  Future<PosOrder> deleteOrderPayment(PosOrder order, OrderPayment payment) async {
+    if (order.order.id != null) {
+      await orderPaymentActions.delete(payment);
+    }
+
+    order = order.copyWith(
+      payments: ([...order.payments ?? []])
+        ..removeWhere(
+          (el) => el.id == payment.id && el.isNew == payment.isNew,
+        ),
+    );
 
     return order;
   }

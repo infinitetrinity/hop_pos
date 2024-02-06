@@ -6,7 +6,7 @@ part of 'order_extra_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$orderExtraRepoHash() => r'e66994fc2ce73a26c8a041ad6cdf44d3a81c67f6';
+String _$orderExtraRepoHash() => r'4789c84e1750850af19efd7ab1fb40329f0409c2';
 
 /// See also [orderExtraRepo].
 @ProviderFor(orderExtraRepo)

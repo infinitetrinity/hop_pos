@@ -1,5 +1,8 @@
+import 'package:drift/drift.dart' as drift;
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/common/converters/double_from_string_converter.dart';
+import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
 import 'package:intl/intl.dart';
 
 part 'order_payment.freezed.dart';
@@ -29,5 +32,15 @@ class OrderPayment with _$OrderPayment {
 
   String get displayCreatedAt {
     return DateFormat('dd MMM yyyy, hh:mm a').format(createdAt);
+  }
+
+  ToSyncDataTableCompanion toSyncData(ToSyncActions action) {
+    return ToSyncDataTableCompanion(
+      model: const drift.Value(ToSyncModels.order_payments),
+      modelId: drift.Value(id),
+      action: drift.Value(action),
+      createdAt: drift.Value(DateTime.now()),
+      value: drift.Value(toJson()),
+    );
   }
 }

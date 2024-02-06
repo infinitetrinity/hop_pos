@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/order_extras/models/order_extra.dart';
 import 'package:hop_pos/src/order_extras/models/order_extras_table.dart';
+import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
 
 part 'order_extra_dao.g.dart';
 
@@ -26,8 +27,12 @@ class OrderExtraDao extends DatabaseAccessor<AppDb> with _$OrderExtraDaoMixin {
     });
   }
 
-  Future<bool> updateOrderExtra(OrderExtrasTableCompanion extra, Expression<bool> where) async {
-    final count = await (update(orderExtrasTable)..where((_) => where)).write(extra);
-    return count > 0;
+  Future<bool> updateOrderExtra(OrderExtra extra) async {
+    return await transaction(() async {
+      final count = await (update(orderExtrasTable)..where((tbl) => tbl.id.equals(extra.id!))).write(extra.toData());
+
+      await db.toSycnDataDao.insertToSyncData(extra.toSyncData(ToSyncActions.update));
+      return count > 0;
+    });
   }
 }
