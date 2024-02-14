@@ -30,9 +30,13 @@ class PosOrder with _$PosOrder {
     return order.toCalculateDiscount(subtotal);
   }
 
+  double get subtotalAfterDiscount {
+    return (subtotal - cartDiscount).toDecimalPlace(2);
+  }
+
   double get extrasTotal {
     final double result = (extras ?? []).fold(0, (total, extra) {
-      double amount = extra.toCalculateAmount(subtotal);
+      double amount = extra.toCalculateAmount(subtotalAfterDiscount);
       return extra.isAddType ? total + amount : total - amount;
     });
 
@@ -40,7 +44,7 @@ class PosOrder with _$PosOrder {
   }
 
   double get totalBeforeRounding {
-    double total = subtotal - cartDiscount;
+    double total = subtotalAfterDiscount;
 
     if (total > 0) {
       total = total + extrasTotal;
@@ -54,7 +58,7 @@ class PosOrder with _$PosOrder {
   }
 
   double get rounding {
-    return totalBeforeRounding - total;
+    return (totalBeforeRounding - total).toDecimalPlace(2);
   }
 
   double get totalPayment {
@@ -63,6 +67,10 @@ class PosOrder with _$PosOrder {
   }
 
   double get balance {
-    return total - totalPayment;
+    return (total - totalPayment).toDecimalPlace(2);
+  }
+
+  double get balanceBeforeDiscount {
+    return subtotal - totalPayment;
   }
 }

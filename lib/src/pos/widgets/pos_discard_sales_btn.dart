@@ -4,8 +4,8 @@ import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/pos/widgets/pos_discard_sales_dialog.dart';
 
-class PosDiscaordSalesBtn extends HookWidget {
-  const PosDiscaordSalesBtn({super.key});
+class PosDiscardSalesBtn extends HookWidget {
+  const PosDiscardSalesBtn({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +31,13 @@ class PosDiscaordSalesBtn extends HookWidget {
               size: 18,
               color: isHover.value ? AppColors.white : AppColors.gray700,
             ),
-            const SizedBox(width: 5),
+            const SizedBox(width: 3),
             Text(
               'Discard Sales',
-              style: AppStyles.body.copyWith(color: isHover.value ? AppColors.white : AppColors.gray700),
+              style: AppStyles.body.copyWith(
+                color: isHover.value ? AppColors.white : AppColors.gray700,
+                letterSpacing: 0,
+              ),
             )
           ],
         ),

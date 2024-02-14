@@ -6,7 +6,7 @@ part of 'pos_license_state.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$posLicenseStateHash() => r'befb9a868103c12a2f41e462afbe89c60c938a10';
+String _$posLicenseStateHash() => r'9d33537274a73607c2202055bcdf8300ba771734';
 
 /// See also [posLicenseState].
 @ProviderFor(posLicenseState)

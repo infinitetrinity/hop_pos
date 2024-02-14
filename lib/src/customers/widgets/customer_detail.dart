@@ -14,8 +14,7 @@ class CustomerDetail extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isHover = useState(false);
     final isEditHover = useState(false);
-    final customer =
-        ref.watch(posControllerProvider.select((prov) => prov.customer));
+    final customer = ref.watch(posControllerProvider.select((prov) => prov.customer));
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -29,7 +28,6 @@ class CustomerDetail extends HookConsumerWidget {
                   ? AppColors.brand600
                   : AppColors.white,
           border: const Border(
-            top: BorderSide(color: AppColors.gray300),
             bottom: BorderSide(color: AppColors.gray300),
           ),
         ),
@@ -65,12 +63,10 @@ class CustomerDetail extends HookConsumerWidget {
                   onEnter: (_) => isEditHover.value = true,
                   onExit: (_) => isEditHover.value = false,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 25, horizontal: 12),
+                    padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 12),
                     child: Icon(
                       Icons.edit_note_sharp,
-                      color:
-                          isHover.value ? AppColors.white : AppColors.gray700,
+                      color: isHover.value ? AppColors.white : AppColors.gray700,
                       size: 28,
                     ),
                   ),

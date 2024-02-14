@@ -71,4 +71,17 @@ class ProductCategoryActions {
   Future<void> toggleProductCategory(ProductCategory category) async {
     await ProductCategoriesHidden.toggleCategory(category);
   }
+
+  Future<void> sortProductCategoriesAlphabetically(List<ProductCategory> categories) async {
+    categories.sort((a, b) {
+      return a.name.compareTo(b.name);
+    });
+
+    await ProductCategoriesOrder.setCategoriesOrder(categories);
+  }
+
+  Future<void> toggleAllProductCategories(List<ProductCategory> categories) async {
+    final isAllHidden = categories.where((cat) => !cat.isHidden && cat.id != 0).isEmpty;
+    await ProductCategoriesHidden.toggleAllCategories(categories, hideAll: !isAllHidden);
+  }
 }

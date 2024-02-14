@@ -8,6 +8,7 @@ import 'package:hop_pos/src/order_items/models/order_item_form.dart';
 import 'package:hop_pos/src/order_payments/models/order_payment.dart';
 import 'package:hop_pos/src/orders/actions/order_actions.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
+import 'package:hop_pos/src/orders/models/order_discount_form.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
 import 'package:hop_pos/src/pos/models/pos_cart.dart';
 import 'package:hop_pos/src/products/models/product.dart';
@@ -47,18 +48,20 @@ class PosController extends _$PosController {
 
     state = state.copyWith(
       customer: customer,
-      registration: registration?.copyWith(hasOrders: order.order.id != null),
+      registration: registration?.copyWith(hasOrders: !order.order.isNew),
       order: order.copyWith(extras: extras),
     );
   }
 
-  void addNewCustomer(CustomerForm data) {
+  Future<void> addNewCustomer(CustomerForm data) async {
     final customer = Customer.fromJson(data.toJson());
+    const order = PosOrder(order: Order(isNew: true));
+    List<OrderExtra>? extras = await ref.read(orderExtraActionsProvider).getOrderExtras(order);
 
     state = state.copyWith(
       customer: customer,
       registration: null,
-      order: null,
+      order: order.copyWith(extras: extras),
     );
   }
 
@@ -186,6 +189,52 @@ class PosController extends _$PosController {
     }
 
     final order = await ref.read(orderActionsProvider).deleteOrderPayment(state.order!, payment);
+    state = state.copyWith(order: order);
+  }
+
+  Future<void> checkout() async {
+    if (state.customer == null) {
+      ref.read(flashMessageProvider).flash(message: 'Please select a customer.', type: FlashMessageType.error);
+      return;
+    }
+
+    if (state.order == null) {
+      ref.read(flashMessageProvider).flash(message: 'Invalid order.', type: FlashMessageType.error);
+      return;
+    }
+
+    if ((state.order!.items?.length ?? 0) <= 0) {
+      ref
+          .read(flashMessageProvider)
+          .flash(message: 'Please add at least 1 product into the cart', type: FlashMessageType.error);
+      return;
+    }
+
+    if (state.order!.balance < 0) {
+      ref
+          .read(flashMessageProvider)
+          .flash(message: 'Amount payable cannot be lesser than 0.', type: FlashMessageType.error);
+      return;
+    }
+
+    state = await ref.read(orderActionsProvider).checkout(state);
+  }
+
+  Future<void> setDiscount(OrderDiscountForm form) async {
+    if (state.order == null) {
+      return;
+    }
+
+    state = state.copyWith(
+      order: state.order!.copyWith(
+        order: state.order!.order.copyWith(
+          discount: form.discount,
+          discountType: form.discountType,
+        ),
+      ),
+    );
+
+    final order = await ref.read(orderActionsProvider).updateOrder(state.order!);
     state = state.copyWith(order: order);
   }
 }

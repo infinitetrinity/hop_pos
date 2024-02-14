@@ -11,12 +11,14 @@ class WalkInCustomerDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    void onSubmit(CustomerForm form, Customer? customer) {
+    Future<void> onSubmit(CustomerForm form, Customer? customer) async {
       customer != null
-          ? ref.read(posControllerProvider.notifier).selectCustomer(customer: customer)
-          : ref.read(posControllerProvider.notifier).addNewCustomer(form);
+          ? await ref.read(posControllerProvider.notifier).selectCustomer(customer: customer)
+          : await ref.read(posControllerProvider.notifier).addNewCustomer(form);
 
-      context.pop();
+      if (context.mounted) {
+        context.pop();
+      }
     }
 
     return CustomerDialogForm(

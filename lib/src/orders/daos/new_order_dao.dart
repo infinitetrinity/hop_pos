@@ -58,7 +58,7 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
       ],
     );
 
-    query.where(ordersTable.id.equals(latestOrder.id!));
+    query.where(newOrdersTable.id.equals(latestOrder.id!));
     final result = await query.get();
     PosOrder order = PosOrder(order: result.first.readTable(newOrdersTable).copyWith(isNew: true));
 
@@ -93,5 +93,42 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
   Future<bool> updateOrder(Order order) async {
     final count = await (update(newOrdersTable)..where((tbl) => tbl.id.equals(order.id!))).write(order.toData());
     return count > 0;
+  }
+
+  Future<int> getLastInvoiceNo() async {
+    final row = await (select(newOrdersTable)
+          ..orderBy([(tbl) => OrderingTerm.desc(tbl.invoiceNo.cast<int>())])
+          ..limit(1))
+        .getSingleOrNull();
+
+    return int.tryParse(row?.invoiceNo ?? '') ?? 0;
+  }
+
+  Future<PosOrder> storeWithItemsAndExtras(PosOrder order) async {
+    return await transaction(() async {
+      print('data ${order.order.toData()}');
+
+      final newOrder = await into(newOrdersTable).insertReturning(order.order.toData());
+
+      for (OrderItem item in order.items ?? []) {
+        await db.newOrderItemDao.insertOrderItem(item
+            .copyWith(
+              orderId: newOrder.id!,
+              orderIsNew: true,
+            )
+            .toData());
+      }
+
+      for (OrderExtra extra in order.extras ?? []) {
+        await db.newOrderExtraDao.insertOrderExtra(extra
+            .copyWith(
+              orderId: newOrder.id!,
+              orderIsNew: true,
+            )
+            .toData());
+      }
+
+      return order.copyWith(order: newOrder);
+    });
   }
 }

@@ -2,7 +2,6 @@ import 'package:drift/drift.dart' as drift;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/app/app_extension.dart';
-import 'package:hop_pos/src/common/converters/double_from_string_converter.dart';
 import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
 
 part 'order.freezed.dart';
@@ -20,12 +19,12 @@ class Order with _$Order {
     @JsonKey(name: 'sales_note') String? salesNote,
     @JsonKey(name: 'invoice_no') String? invoiceNo,
     @JsonKey(name: 'invoice_prefix') String? invoicePrefix,
-    @DoubleFromStringConverter() double? discount,
+    double? discount,
     @JsonKey(name: 'discount_type') DiscountType? discountType,
-    @DoubleFromStringConverter() double? subtotal,
-    @DoubleFromStringConverter() @JsonKey(name: 'extras_total') double? extrasTotal,
-    @DoubleFromStringConverter() @JsonKey(name: 'net_total') double? netTotal,
-    @DoubleFromStringConverter() double? rounding,
+    double? subtotal,
+    @JsonKey(name: 'extras_total') double? extrasTotal,
+    @JsonKey(name: 'net_total') double? netTotal,
+    double? rounding,
     @JsonKey(name: 'license_id') int? licenseId,
     @JsonKey(name: 'screening_id') int? screeningId,
     @JsonKey(name: 'customer_id') int? customerId,

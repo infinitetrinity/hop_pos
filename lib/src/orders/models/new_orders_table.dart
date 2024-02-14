@@ -1,5 +1,4 @@
 import 'package:drift/drift.dart';
-import 'package:hop_pos/src/customers/models/customers_table.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/screenings/models/screenings_table.dart';
 
@@ -24,7 +23,6 @@ class NewOrdersTable extends Table {
   RealColumn get netTotal => real()();
   RealColumn get rounding => real().nullable()();
   IntColumn get screeningId => integer().references(ScreeningsTable, #id, onDelete: KeyAction.cascade)();
-  TextColumn get customerNric =>
-      text().withLength(max: 255).references(CustomersTable, #nric, onDelete: KeyAction.cascade)();
+  TextColumn get customerNric => text().withLength(max: 255)();
   DateTimeColumn get createdAt => dateTime()();
 }

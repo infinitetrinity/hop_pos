@@ -33,19 +33,14 @@ mixin _$Order {
   String? get invoiceNo => throw _privateConstructorUsedError;
   @JsonKey(name: 'invoice_prefix')
   String? get invoicePrefix => throw _privateConstructorUsedError;
-  @DoubleFromStringConverter()
   double? get discount => throw _privateConstructorUsedError;
   @JsonKey(name: 'discount_type')
   DiscountType? get discountType => throw _privateConstructorUsedError;
-  @DoubleFromStringConverter()
   double? get subtotal => throw _privateConstructorUsedError;
-  @DoubleFromStringConverter()
   @JsonKey(name: 'extras_total')
   double? get extrasTotal => throw _privateConstructorUsedError;
-  @DoubleFromStringConverter()
   @JsonKey(name: 'net_total')
   double? get netTotal => throw _privateConstructorUsedError;
-  @DoubleFromStringConverter()
   double? get rounding => throw _privateConstructorUsedError;
   @JsonKey(name: 'license_id')
   int? get licenseId => throw _privateConstructorUsedError;
@@ -78,14 +73,12 @@ abstract class $OrderCopyWith<$Res> {
       @JsonKey(name: 'sales_note') String? salesNote,
       @JsonKey(name: 'invoice_no') String? invoiceNo,
       @JsonKey(name: 'invoice_prefix') String? invoicePrefix,
-      @DoubleFromStringConverter() double? discount,
+      double? discount,
       @JsonKey(name: 'discount_type') DiscountType? discountType,
-      @DoubleFromStringConverter() double? subtotal,
-      @DoubleFromStringConverter()
-      @JsonKey(name: 'extras_total')
-      double? extrasTotal,
-      @DoubleFromStringConverter() @JsonKey(name: 'net_total') double? netTotal,
-      @DoubleFromStringConverter() double? rounding,
+      double? subtotal,
+      @JsonKey(name: 'extras_total') double? extrasTotal,
+      @JsonKey(name: 'net_total') double? netTotal,
+      double? rounding,
       @JsonKey(name: 'license_id') int? licenseId,
       @JsonKey(name: 'screening_id') int? screeningId,
       @JsonKey(name: 'customer_id') int? customerId,
@@ -223,14 +216,12 @@ abstract class _$$OrderImplCopyWith<$Res> implements $OrderCopyWith<$Res> {
       @JsonKey(name: 'sales_note') String? salesNote,
       @JsonKey(name: 'invoice_no') String? invoiceNo,
       @JsonKey(name: 'invoice_prefix') String? invoicePrefix,
-      @DoubleFromStringConverter() double? discount,
+      double? discount,
       @JsonKey(name: 'discount_type') DiscountType? discountType,
-      @DoubleFromStringConverter() double? subtotal,
-      @DoubleFromStringConverter()
-      @JsonKey(name: 'extras_total')
-      double? extrasTotal,
-      @DoubleFromStringConverter() @JsonKey(name: 'net_total') double? netTotal,
-      @DoubleFromStringConverter() double? rounding,
+      double? subtotal,
+      @JsonKey(name: 'extras_total') double? extrasTotal,
+      @JsonKey(name: 'net_total') double? netTotal,
+      double? rounding,
       @JsonKey(name: 'license_id') int? licenseId,
       @JsonKey(name: 'screening_id') int? screeningId,
       @JsonKey(name: 'customer_id') int? customerId,
@@ -362,14 +353,12 @@ class _$OrderImpl extends _Order {
       @JsonKey(name: 'sales_note') this.salesNote,
       @JsonKey(name: 'invoice_no') this.invoiceNo,
       @JsonKey(name: 'invoice_prefix') this.invoicePrefix,
-      @DoubleFromStringConverter() this.discount,
+      this.discount,
       @JsonKey(name: 'discount_type') this.discountType,
-      @DoubleFromStringConverter() this.subtotal,
-      @DoubleFromStringConverter()
-      @JsonKey(name: 'extras_total')
-      this.extrasTotal,
-      @DoubleFromStringConverter() @JsonKey(name: 'net_total') this.netTotal,
-      @DoubleFromStringConverter() this.rounding,
+      this.subtotal,
+      @JsonKey(name: 'extras_total') this.extrasTotal,
+      @JsonKey(name: 'net_total') this.netTotal,
+      this.rounding,
       @JsonKey(name: 'license_id') this.licenseId,
       @JsonKey(name: 'screening_id') this.screeningId,
       @JsonKey(name: 'customer_id') this.customerId,
@@ -402,24 +391,19 @@ class _$OrderImpl extends _Order {
   @JsonKey(name: 'invoice_prefix')
   final String? invoicePrefix;
   @override
-  @DoubleFromStringConverter()
   final double? discount;
   @override
   @JsonKey(name: 'discount_type')
   final DiscountType? discountType;
   @override
-  @DoubleFromStringConverter()
   final double? subtotal;
   @override
-  @DoubleFromStringConverter()
   @JsonKey(name: 'extras_total')
   final double? extrasTotal;
   @override
-  @DoubleFromStringConverter()
   @JsonKey(name: 'net_total')
   final double? netTotal;
   @override
-  @DoubleFromStringConverter()
   final double? rounding;
   @override
   @JsonKey(name: 'license_id')
@@ -534,16 +518,12 @@ abstract class _Order extends Order {
       @JsonKey(name: 'sales_note') final String? salesNote,
       @JsonKey(name: 'invoice_no') final String? invoiceNo,
       @JsonKey(name: 'invoice_prefix') final String? invoicePrefix,
-      @DoubleFromStringConverter() final double? discount,
+      final double? discount,
       @JsonKey(name: 'discount_type') final DiscountType? discountType,
-      @DoubleFromStringConverter() final double? subtotal,
-      @DoubleFromStringConverter()
-      @JsonKey(name: 'extras_total')
-      final double? extrasTotal,
-      @DoubleFromStringConverter()
-      @JsonKey(name: 'net_total')
-      final double? netTotal,
-      @DoubleFromStringConverter() final double? rounding,
+      final double? subtotal,
+      @JsonKey(name: 'extras_total') final double? extrasTotal,
+      @JsonKey(name: 'net_total') final double? netTotal,
+      final double? rounding,
       @JsonKey(name: 'license_id') final int? licenseId,
       @JsonKey(name: 'screening_id') final int? screeningId,
       @JsonKey(name: 'customer_id') final int? customerId,
@@ -575,24 +555,19 @@ abstract class _Order extends Order {
   @JsonKey(name: 'invoice_prefix')
   String? get invoicePrefix;
   @override
-  @DoubleFromStringConverter()
   double? get discount;
   @override
   @JsonKey(name: 'discount_type')
   DiscountType? get discountType;
   @override
-  @DoubleFromStringConverter()
   double? get subtotal;
   @override
-  @DoubleFromStringConverter()
   @JsonKey(name: 'extras_total')
   double? get extrasTotal;
   @override
-  @DoubleFromStringConverter()
   @JsonKey(name: 'net_total')
   double? get netTotal;
   @override
-  @DoubleFromStringConverter()
   double? get rounding;
   @override
   @JsonKey(name: 'license_id')

@@ -19,12 +19,21 @@ part 'screening_timeslot_dao.g.dart';
 class ScreeningTimeslotDao extends DatabaseAccessor<AppDb> with _$ScreeningTimeslotDaoMixin {
   ScreeningTimeslotDao(AppDb db) : super(db);
 
+  Future<List<ScreeningTimeslot>> getScreeningTimeslots(Screening screening) async {
+    final query = select(screeningTimeslotsTable)
+      ..where((table) => table.screeningId.equals(screening.id))
+      ..orderBy([(table) => OrderingTerm.asc(table.dateAndTime)]);
+
+    return (await query.get());
+  }
+
   Future<int> getScreeningTimeslotsCount(Screening screening) async {
     final query = select(screeningTimeslotsTable)..where((table) => table.screeningId.equals(screening.id));
     return (await query.get()).length;
   }
 
-  Future<List<ScreeningTimeslotWithVenue>> getScreeningTimeslotsWithVenue(Screening screening, {int page = 1, int size = 20}) async {
+  Future<List<ScreeningTimeslotWithVenue>> getScreeningTimeslotsWithVenue(Screening screening,
+      {int page = 1, int size = 20}) async {
     final query = select(screeningsTable).join(
       [
         innerJoin(

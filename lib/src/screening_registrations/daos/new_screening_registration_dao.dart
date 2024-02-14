@@ -168,4 +168,8 @@ class NewScreeningRegistrationDao extends DatabaseAccessor<AppDb> with _$NewScre
       return row.readTable(newScreeningRegistrationsTable).copyWith(index: row.read(index), isNew: true);
     }).firstOrNull;
   }
+
+  Future<ScreeningRegistration> store(NewScreeningRegistrationsTableCompanion registration) async {
+    return await into(newScreeningRegistrationsTable).insertReturning(registration);
+  }
 }

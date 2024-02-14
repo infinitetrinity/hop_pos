@@ -35,7 +35,7 @@ class OrderExtraActions {
             (extras) => extras
                 .map(
                   (extra) => OrderExtra.fromJson(extra.toJson()).copyWith(
-                    orderIsNew: order.order.isNew,
+                    orderIsNew: true,
                     isNew: true,
                     orderId: order.order.id,
                   ),
@@ -47,7 +47,7 @@ class OrderExtraActions {
     return extras
         ?.map(
           (extra) => extra.copyWith(
-            calculatedAmount: extra.toCalculateAmount(order.subtotal),
+            calculatedAmount: extra.toCalculateAmount(order.subtotalAfterDiscount),
           ),
         )
         .toList();
@@ -56,7 +56,7 @@ class OrderExtraActions {
   Future<PosOrder> updateOrderExtras(PosOrder order) async {
     List<OrderExtra>? updatedExtras = await getOrderExtras(order);
 
-    if (order.order.id != null && updatedExtras != null) {
+    if (!order.order.isNew && updatedExtras != null) {
       for (final extra in updatedExtras) {
         final dynamic repo = extra.isNew == true ? newOrderExtraRepo : orderExtraRepo;
         await repo.update(extra);

@@ -58,13 +58,8 @@ class ProductCategoriesSortList extends HookConsumerWidget {
           ),
         );
       },
-      error: (err, stack) {
-        print('err $stack');
-        return Container(child: Text('error $stack'));
-      },
-      loading: () => Container(
-        child: const Text('loading'),
-      ),
+      error: (err, stack) => Container(),
+      loading: () => Container(),
     );
   }
 }

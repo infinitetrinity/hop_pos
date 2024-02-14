@@ -37,4 +37,8 @@ class OrderRepository {
   Future<bool> update(Order order) async {
     return await orderDao.updateOrder(order);
   }
+
+  Future<int> getLastInvoiceNo(String prefix) async {
+    return await orderDao.getLastInvoiceNo(prefix);
+  }
 }

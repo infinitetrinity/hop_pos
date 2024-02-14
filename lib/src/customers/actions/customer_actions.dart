@@ -1,5 +1,4 @@
 import 'package:hop_pos/src/customers/models/customer.dart';
-import 'package:hop_pos/src/customers/models/customer_form.dart';
 import 'package:hop_pos/src/customers/repositories/customer_repository.dart';
 import 'package:hop_pos/src/customers/repositories/new_customer_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -37,13 +36,12 @@ class CustomerActions {
     return customer != null;
   }
 
-  Future<bool> updateCustomer(CustomerForm form) async {
-    if (form.id == null) {
-      return false;
-    }
-
-    final customer = Customer.fromJson(form.toJson());
+  Future<bool> update(Customer customer) async {
     final dynamic repo = customer.isNew ? newCustomerRepo : customerRepo;
     return repo.update(customer);
+  }
+
+  Future<Customer> store(Customer customer) async {
+    return newCustomerRepo.insert(customer.toData());
   }
 }

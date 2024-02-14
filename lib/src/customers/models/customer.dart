@@ -21,6 +21,7 @@ class Customer with _$Customer {
     @JsonKey(name: 'send_account_invitation') @Default(false) bool sendAccountInvitation,
     @JsonKey(name: 'created_at') DateTime? createdAt,
     @JsonKey(name: 'is_new') @Default(false) bool isNew,
+    @JsonKey(name: 'is_walk_in') @Default(false) bool isWalkIn,
   }) = _Customer;
 
   const Customer._();

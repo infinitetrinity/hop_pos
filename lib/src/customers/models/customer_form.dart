@@ -19,6 +19,7 @@ class CustomerForm with _$CustomerForm {
     @JsonKey(name: 'mobile_no') String? mobileNo,
     @JsonKey(name: 'send_account_invitation') @Default(true) bool sendAccountInvitation,
     @JsonKey(name: 'is_new') @Default(false) bool isNew,
+    @JsonKey(name: 'is_walk_in') @Default(false) bool isWalkIn,
   }) = _CustomerForm;
 
   factory CustomerForm.fromJson(Map<String, dynamic> json) => _$CustomerFormFromJson(json);

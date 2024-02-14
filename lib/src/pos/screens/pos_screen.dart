@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hop_pos/src/common/widgets/layout.dart';
 import 'package:hop_pos/src/pos/widgets/pos_cart_total.dart';
-import 'package:hop_pos/src/pos/widgets/pos_controls.dart';
 import 'package:hop_pos/src/pos/widgets/pos_customer.dart';
+import 'package:hop_pos/src/pos/widgets/pos_header.dart';
 import 'package:hop_pos/src/pos/widgets/pos_invoice.dart';
 import 'package:hop_pos/src/pos/widgets/pos_items.dart';
-import 'package:hop_pos/src/pos/widgets/pos_sales_note.dart';
-import 'package:hop_pos/src/pos/widgets/pos_screening.dart';
-import 'package:hop_pos/src/products/widgets/product_search_input.dart';
+import 'package:hop_pos/src/pos/widgets/pos_product_controls.dart';
 import 'package:hop_pos/src/products/widgets/products_list.dart';
 
 class PosScreen extends StatelessWidget {
@@ -18,7 +16,7 @@ class PosScreen extends StatelessWidget {
     return const Layout(
       Column(
         children: [
-          PosControls(),
+          PosHeader(),
           SizedBox(height: 15),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,8 +25,7 @@ class PosScreen extends StatelessWidget {
                 width: 750,
                 child: Column(
                   children: [
-                    ProductSearchInput(),
-                    SizedBox(height: 5),
+                    PosProductControls(),
                     ProductsList(),
                   ],
                 ),
@@ -38,10 +35,8 @@ class PosScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     PosInvoice(),
-                    PosScreening(),
                     PosCustomer(),
                     PosItems(),
-                    PosSalesNote(),
                     PosCartTotal(),
                   ],
                 ),

@@ -161,4 +161,14 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
       return count > 0;
     });
   }
+
+  Future<int> getLastInvoiceNo(String prefix) async {
+    final row = await (select(ordersTable)
+          ..where((tbl) => tbl.invoicePrefix.equals(prefix))
+          ..orderBy([(tbl) => OrderingTerm.desc(tbl.invoiceNo.cast<int>())])
+          ..limit(1))
+        .getSingleOrNull();
+
+    return int.tryParse(row?.invoiceNo ?? '') ?? 0;
+  }
 }

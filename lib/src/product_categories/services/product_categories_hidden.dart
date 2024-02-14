@@ -11,6 +11,16 @@ class ProductCategoriesHidden {
     return ids?.split(',').map(int.parse).toList();
   }
 
+  static Future<void> toggleAllCategories(List<ProductCategory> categories, {bool hideAll = true}) async {
+    if (hideAll) {
+      categories.removeWhere((cat) => cat.id == 0);
+      await _storage.write(key: _key, value: categories.map((e) => e.id).join(','));
+      return;
+    }
+
+    await _storage.delete(key: _key);
+  }
+
   static Future<void> toggleCategory(ProductCategory category) async {
     final ids = await getHiddenCategories();
     if (ids == null || !ids.contains(category.id)) {
@@ -23,15 +33,12 @@ class ProductCategoriesHidden {
 
   static Future<void> hideCategory(ProductCategory category) async {
     final ids = await getHiddenCategories();
-    await _storage.write(
-        key: _key, value: [...ids ?? [], category.id].join(','));
+    await _storage.write(key: _key, value: [...ids ?? [], category.id].join(','));
   }
 
   static Future<void> unhideCategory(ProductCategory category) async {
     final ids = await getHiddenCategories();
     ids?.remove(category.id);
-    await _storage.write(
-        key: _key,
-        value: ids?.join(',').isNullOrEmpty == true ? null : ids?.join(','));
+    await _storage.write(key: _key, value: ids?.join(',').isNullOrEmpty == true ? null : ids?.join(','));
   }
 }

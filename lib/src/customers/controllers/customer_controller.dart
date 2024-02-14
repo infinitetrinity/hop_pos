@@ -28,7 +28,11 @@ class CustomerController extends _$CustomerController {
   }
 
   Future<bool> updateCustomer(CustomerForm form) async {
-    return await ref.read(customerActionsProvider).updateCustomer(form);
+    if (form.id == null) {
+      return false;
+    }
+
+    return await ref.read(customerActionsProvider).update(Customer.fromJson(form.toJson()));
   }
 
   FutureOr<List<CustomerWithRegistration>> search(String search) async {
@@ -38,5 +42,9 @@ class CustomerController extends _$CustomerController {
     }
 
     return await ref.read(screeningActionsProvider).searchScreeningCustomers(screening, search);
+  }
+
+  Future<Customer> storeCustomer(Customer customer) async {
+    return await ref.read(customerActionsProvider).store(customer);
   }
 }

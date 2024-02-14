@@ -1,7 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
-import 'package:hop_pos/src/orders/models/orders_table.dart';
 import 'package:hop_pos/src/products/models/products_table.dart';
 
 @TableIndex(name: 'new_order_items_id', columns: {#id}, unique: true)
@@ -26,6 +25,6 @@ class NewOrderItemsTable extends Table {
   BoolColumn get orderIsNew => boolean()();
   IntColumn get cartId => integer().nullable()();
   IntColumn get productId => integer().nullable().references(ProductsTable, #id, onDelete: KeyAction.setNull)();
-  IntColumn get orderId => integer().references(OrdersTable, #id, onDelete: KeyAction.cascade)();
+  IntColumn get orderId => integer()();
   DateTimeColumn get createdAt => dateTime()();
 }

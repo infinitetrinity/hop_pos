@@ -51,12 +51,8 @@ class ProductCategoriesTabNav extends HookConsumerWidget {
           ),
         );
       },
-      error: (err, stack) {
-        return Container(child: const Text('error'));
-      },
-      loading: () => Container(
-        child: const Text('loading'),
-      ),
+      error: (err, stack) => Container(),
+      loading: () => Container(),
     );
   }
 }

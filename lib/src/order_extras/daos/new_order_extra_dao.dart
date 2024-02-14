@@ -15,4 +15,8 @@ class NewOrderExtraDao extends DatabaseAccessor<AppDb> with _$NewOrderExtraDaoMi
     final count = await (update(newOrderExtrasTable)..where((tbl) => tbl.id.equals(extra.id!))).write(extra.toData());
     return count > 0;
   }
+
+  Future<OrderExtra> insertOrderExtra(NewOrderExtrasTableCompanion extra) async {
+    return await into(newOrderExtrasTable).insertReturning(extra);
+  }
 }

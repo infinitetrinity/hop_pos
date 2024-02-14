@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:hop_pos/src/customers/actions/customer_actions.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/order_extras/actions/order_extra_actions.dart';
 import 'package:hop_pos/src/order_items/actions/order_item_actions.dart';
@@ -7,7 +10,11 @@ import 'package:hop_pos/src/order_payments/models/order_payment.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
 import 'package:hop_pos/src/orders/repositories/new_order_repository.dart';
 import 'package:hop_pos/src/orders/repositories/order_repository.dart';
+import 'package:hop_pos/src/pos/models/pos_cart.dart';
+import 'package:hop_pos/src/pos_licenses/actions/pos_license_actions.dart';
+import 'package:hop_pos/src/pos_licenses/models/pos_license.dart';
 import 'package:hop_pos/src/products/models/product.dart';
+import 'package:hop_pos/src/screening_registrations/actions/screening_registration_actions.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -21,6 +28,9 @@ OrderActions orderActions(OrderActionsRef ref) {
     orderExtraActions: ref.watch(orderExtraActionsProvider),
     orderItemActions: ref.watch(orderItemActionsProvider),
     orderPaymentActions: ref.watch(orderPaymentActionsProvider),
+    customerActions: ref.watch(customerActionsProvider),
+    screeningRegistrationActions: ref.watch(screeningRegistrationActionsProvider),
+    posLicenseActions: ref.watch(posLicenseActionsProvider),
   );
 }
 
@@ -30,6 +40,9 @@ class OrderActions {
   final OrderExtraActions orderExtraActions;
   final OrderItemActions orderItemActions;
   final OrderPaymentActions orderPaymentActions;
+  final CustomerActions customerActions;
+  final ScreeningRegistrationActions screeningRegistrationActions;
+  final PosLicenseActions posLicenseActions;
 
   OrderActions({
     required this.orderRepo,
@@ -37,6 +50,9 @@ class OrderActions {
     required this.orderExtraActions,
     required this.orderItemActions,
     required this.orderPaymentActions,
+    required this.customerActions,
+    required this.screeningRegistrationActions,
+    required this.posLicenseActions,
   });
 
   Future<PosOrder?> getScreeningCustomerLatestOrder(Screening screening, Customer customer) async {
@@ -58,7 +74,7 @@ class OrderActions {
           orderId: order.order.id,
         );
 
-    if (order.order.id != null) {
+    if (!order.order.isNew) {
       final createdItem = await orderItemActions.store(newItem);
       newItem = newItem.copyWith(id: createdItem.id);
     }
@@ -76,7 +92,7 @@ class OrderActions {
       netPrice: item.toCalculateNetPrice(),
     );
 
-    if (order.order.id != null) {
+    if (!order.order.isNew) {
       await orderItemActions.update(updatedItem);
     }
 
@@ -94,14 +110,14 @@ class OrderActions {
   }
 
   Future<PosOrder> deleteOrderItem(PosOrder order, OrderItem item) async {
-    if (order.order.id != null) {
+    if (!order.order.isNew) {
       await orderItemActions.delete(item);
     }
 
     order = order.copyWith(
       items: ([...order.items ?? []])
         ..removeWhere(
-          (el) => el.id == item.id && el.isNew == item.isNew,
+          (el) => el.cartId == item.cartId && el.id == item.id && el.isNew == item.isNew,
         ),
     );
 
@@ -123,7 +139,7 @@ class OrderActions {
       ),
     );
 
-    if (order.order.id != null) {
+    if (!order.order.isNew) {
       final dynamic repo = order.order.isNew == true ? newOrderRepo : orderRepo;
       await repo.update(order.order);
     }
@@ -131,8 +147,12 @@ class OrderActions {
     return order;
   }
 
+  Future<PosOrder> createNewOrderWithItemsAndExtras(PosOrder order) async {
+    return newOrderRepo.storeWithItemsAndExtras(order);
+  }
+
   Future<PosOrder> deleteOrderPayment(PosOrder order, OrderPayment payment) async {
-    if (order.order.id != null) {
+    if (!order.order.isNew) {
       await orderPaymentActions.delete(payment);
     }
 
@@ -144,5 +164,46 @@ class OrderActions {
     );
 
     return order;
+  }
+
+  Future<String> getNewOrderInvoiceNo(PosLicense? license) async {
+    final lastOrderNo = await orderRepo.getLastInvoiceNo(license?.invoicePrefix ?? '');
+    final lastNewOrderNo = await newOrderRepo.getLastInvoiceNo();
+    final newOrderNo = (max(lastNewOrderNo, lastOrderNo) + 1).toString();
+
+    return newOrderNo.padLeft(4, '0');
+  }
+
+  Future<PosCart> checkout(PosCart cart) async {
+    if (!cart.order!.order.isNew) {
+      final order = await updateOrder(cart.order!);
+      return cart.copyWith(order: order);
+    }
+
+    if (cart.customer!.isNew) {
+      final customer = await customerActions.store(cart.customer!);
+      cart = cart.copyWith(customer: customer);
+    }
+
+    if (cart.customer!.isWalkIn) {
+      final registraion = await screeningRegistrationActions.store(cart.screening!, cart.customer!);
+      cart = cart.copyWith(registration: registraion);
+    }
+
+    final posLicense = await posLicenseActions.getFirst();
+    final invoiceNo = await getNewOrderInvoiceNo(posLicense);
+
+    final order = await createNewOrderWithItemsAndExtras(
+      cart.order!.copyWith(
+        order: cart.order!.order.copyWith(
+          invoiceNo: invoiceNo,
+          invoicePrefix: posLicense?.invoicePrefix,
+          screeningId: cart.screening!.id,
+          customerNric: cart.customer!.nric,
+        ),
+      ),
+    );
+
+    return cart.copyWith(order: order);
   }
 }

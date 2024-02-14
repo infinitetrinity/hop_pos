@@ -33,7 +33,12 @@ class CustomerDialogForm extends HookWidget {
   Widget build(BuildContext context) {
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final customerState = useState<Customer?>(customer);
-    final form = useState(customer == null ? CustomerForm(isNew: isWalkIn) : CustomerForm.fromModel(customer!));
+    final form = useState(customer == null
+        ? CustomerForm(
+            isNew: isWalkIn,
+            isWalkIn: isWalkIn,
+          )
+        : CustomerForm.fromModel(customer!));
     final isSubmitting = useState(false);
     final identityType = useState(Customer.identityTypes.keys.first);
 
@@ -97,8 +102,9 @@ class CustomerDialogForm extends HookWidget {
                                   formKey: formKey,
                                   label: identityType.value == 'nric' ? 'NRIC/FIN' : 'Other Identity No.',
                                   value: form.value.nric,
-                                  validator:
-                                      identityType.value == 'nric' ? form.value.validateNric(minLength: 9, label: "NRIC/FIN") : form.value.validateNric(),
+                                  validator: identityType.value == 'nric'
+                                      ? form.value.validateNric(minLength: 9, label: "NRIC/FIN")
+                                      : form.value.validateNric(),
                                   validateUnique: false,
                                   onChanged: (value, customerFound) {
                                     form.value = form.value.copyWith(nric: value, isNew: customerFound == null);

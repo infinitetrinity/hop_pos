@@ -22,8 +22,13 @@ class ScreeningTimeslotRepository {
     required this.screeningTimeslotDao,
   });
 
-  Future<List<ScreeningTimeslotWithVenue>> getScreeningTimeslotsWithVenue(Screening screening, {int page = 1, int size = 20}) async {
+  Future<List<ScreeningTimeslotWithVenue>> getScreeningTimeslotsWithVenue(Screening screening,
+      {int page = 1, int size = 20}) async {
     return await screeningTimeslotDao.getScreeningTimeslotsWithVenue(screening, page: page, size: size);
+  }
+
+  Future<List<ScreeningTimeslot>> getScreeningTimeslots(Screening screening) async {
+    return await screeningTimeslotDao.getScreeningTimeslots(screening);
   }
 
   Future<int> getScreeningTimeslotsCount(Screening screening) async {

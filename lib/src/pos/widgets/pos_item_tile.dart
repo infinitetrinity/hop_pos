@@ -49,11 +49,9 @@ class PosItemTile extends HookConsumerWidget {
                           ? AppColors.blue100
                           : AppColors.white)
                   : (isActionHover.value ? AppColors.yellow400 : AppColors.gray100),
-              border: index == 1
-                  ? null
-                  : const Border(
-                      top: BorderSide(color: AppColors.gray300),
-                    ),
+              border: const Border(
+                bottom: BorderSide(color: AppColors.gray300),
+              ),
             ),
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: Row(

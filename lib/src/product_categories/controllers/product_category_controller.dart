@@ -27,4 +27,12 @@ class ProductCategoryController extends _$ProductCategoryController {
     ref.read(selectedProductCategoryStateProvider.notifier).set(category.id == 0 ? null : category);
     ref.invalidate(productsControllerProvider);
   }
+
+  Future<void> sortProductCategoriesAlphabetically(List<ProductCategory> categories) async {
+    await ref.read(productCategoryActionsProvider).sortProductCategoriesAlphabetically(categories);
+  }
+
+  Future<void> toggleAllProductCategories(List<ProductCategory> categories) async {
+    await ref.read(productCategoryActionsProvider).toggleAllProductCategories(categories);
+  }
 }

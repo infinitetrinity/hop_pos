@@ -7,7 +7,7 @@ part of 'screening_registration_actions.dart';
 // **************************************************************************
 
 String _$screeningRegistrationActionsHash() =>
-    r'44e09fc0a9be9679ff90cadb5d163440d0c8a4cf';
+    r'b6e2fc013a36e57764be10bd6d85717457bfc5a2';
 
 /// See also [screeningRegistrationActions].
 @ProviderFor(screeningRegistrationActions)

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:hop_pos/app/app_colors.dart';
-import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/services/carousel_hook.dart';
 import 'package:hop_pos/src/common/widgets/grids_carousel.dart';
+import 'package:hop_pos/src/product_categories/states/to_reorder_product_category_state.dart';
+import 'package:hop_pos/src/product_categories/widgets/product_categories_sort_controls.dart';
 import 'package:hop_pos/src/product_categories/widgets/product_categories_sort_list.dart';
 import 'package:hop_pos/src/product_categories/widgets/product_categories_tab_nav.dart';
 import 'package:hop_pos/src/products/controllers/products_controller.dart';
@@ -16,37 +15,15 @@ class ProductsList extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = useCarouselController();
-    final toReorder = useState(false);
+    final isSorting = ref.watch(toReorderProductCategoryStateProvider);
     final productsAsync = ref.watch(productsControllerProvider);
 
     return Column(
       children: [
-        Align(
-          alignment: Alignment.centerRight,
-          child: TextButton(
-            style: ButtonStyle(
-              overlayColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
-                return Colors.transparent;
-              }),
-              padding: MaterialStateProperty.resolveWith<EdgeInsets>((Set<MaterialState> states) {
-                return EdgeInsets.zero;
-              }),
-            ),
-            onPressed: () => toReorder.value = !toReorder.value,
-            child: Text(
-              'Reorder Categories',
-              textAlign: TextAlign.right,
-              style: AppStyles.bodySmall.copyWith(
-                color: AppColors.gray600,
-                decoration: TextDecoration.underline,
-              ),
-            ),
-          ),
-        ),
-        toReorder.value
+        isSorting
             ? const Column(
                 children: [
-                  SizedBox(height: 10),
+                  ProductCategoriesSortControls(),
                   ProductCategoriesSortList(),
                 ],
               )
@@ -63,13 +40,8 @@ class ProductsList extends HookConsumerWidget {
                       aspectRatio: 1.25,
                       arrows: false,
                     ),
-                    error: (err, stack) {
-                      print(err);
-                      return Container(child: const Text('error'));
-                    },
-                    loading: () => Container(
-                      child: const Text('loading'),
-                    ),
+                    error: (err, stack) => Container(),
+                    loading: () => Container(),
                   ),
                 ],
               ),

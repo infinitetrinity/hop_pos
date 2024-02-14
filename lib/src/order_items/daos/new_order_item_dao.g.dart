@@ -7,9 +7,6 @@ mixin _$NewOrderItemDaoMixin on DatabaseAccessor<AppDb> {
   $ProductCategoriesTableTable get productCategoriesTable =>
       attachedDatabase.productCategoriesTable;
   $ProductsTableTable get productsTable => attachedDatabase.productsTable;
-  $ScreeningsTableTable get screeningsTable => attachedDatabase.screeningsTable;
-  $CustomersTableTable get customersTable => attachedDatabase.customersTable;
-  $OrdersTableTable get ordersTable => attachedDatabase.ordersTable;
   $NewOrderItemsTableTable get newOrderItemsTable =>
       attachedDatabase.newOrderItemsTable;
 }

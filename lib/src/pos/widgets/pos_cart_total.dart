@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
+import 'package:hop_pos/src/pos/widgets/pos_cart_discount.dart';
 import 'package:hop_pos/src/pos/widgets/pos_checkout_btn.dart';
 import 'package:hop_pos/src/pos/widgets/pos_extras.dart';
 import 'package:hop_pos/src/pos/widgets/pos_payment_list.dart';
@@ -24,15 +25,13 @@ class PosCartTotal extends ConsumerWidget {
         Container(
           decoration: const BoxDecoration(
             color: AppColors.white,
-            border: Border(
-              top: BorderSide(color: AppColors.gray300),
-            ),
+            border: Border(),
           ),
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           child: const Column(
             children: [
               PosSubtotal(),
-              SizedBox(height: 8),
+              PosCartDiscount(),
               PosExtras(),
             ],
           ),

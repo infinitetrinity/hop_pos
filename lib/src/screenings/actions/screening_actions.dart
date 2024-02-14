@@ -1,6 +1,7 @@
 import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
 import 'package:hop_pos/src/screening_registrations/repositories/new_screening_registration_repository.dart';
 import 'package:hop_pos/src/screening_registrations/repositories/screening_registration_repository.dart';
+import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot_with_venue.dart';
 import 'package:hop_pos/src/screening_timeslots/repositories/screening_timeslot_repository.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
@@ -84,5 +85,12 @@ class ScreeningActions {
       });
 
     return sorted.take(50).toList();
+  }
+
+  Future<ScreeningTimeslot> getScreeningNearestTimeslot(Screening screening) async {
+    final timeslots = await screeningTimeslotRepoProvider.getScreeningTimeslots(screening);
+    final passed = timeslots.where((timeslot) => timeslot.dateAndTime.isBefore(DateTime.now()));
+
+    return passed.lastOrNull ?? timeslots.first;
   }
 }

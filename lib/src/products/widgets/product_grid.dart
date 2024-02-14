@@ -89,8 +89,7 @@ class ProductGrid extends HookConsumerWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 style: AppStyles.body.copyWith(
-                  color: isHover.value ? AppColors.white : AppColors.gray800,
-                  fontWeight: FontWeight.w600,
+                  color: isHover.value ? AppColors.white : AppColors.gray500,
                 ),
               ),
             ],

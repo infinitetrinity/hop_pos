@@ -14,7 +14,9 @@ class PosCheckoutBtn extends ConsumerWidget {
     final canCheckout =
         ref.watch(posControllerProvider.select((prov) => prov.order != null && (prov.order?.items?.length ?? 0) > 0));
 
-    dynamic onCheckout() async {}
+    Future<void> onCheckout() async {
+      await ref.read(posControllerProvider.notifier).checkout();
+    }
 
     return Container(
       color: AppColors.white,

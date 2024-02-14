@@ -30,12 +30,9 @@ class PosItems extends HookConsumerWidget {
     return order == null || order.items == null
         ? Container()
         : Container(
-            constraints: const BoxConstraints(maxHeight: 220),
+            constraints: const BoxConstraints(maxHeight: 325),
             decoration: const BoxDecoration(
               color: AppColors.white,
-              border: Border(
-                bottom: BorderSide(color: AppColors.gray300),
-              ),
             ),
             child: ListView.builder(
               controller: controller,

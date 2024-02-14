@@ -15,6 +15,7 @@ class PosExtras extends ConsumerWidget {
         ? Container()
         : Column(
             children: [
+              const SizedBox(height: 8),
               for (final extra in extras) ...[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

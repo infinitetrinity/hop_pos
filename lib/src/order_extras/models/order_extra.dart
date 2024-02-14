@@ -87,6 +87,6 @@ class OrderExtra with _$OrderExtra {
   }
 
   double toCalculateAmount(double value) {
-    return isPercentage ? value.percentageOf(amount ?? 0) : amount ?? 0;
+    return isPercentage ? value.percentageOf(amount ?? 0).toDecimalPlace(2) : amount ?? 0;
   }
 }

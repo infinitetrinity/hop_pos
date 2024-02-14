@@ -29,4 +29,12 @@ class NewOrderRepository {
   Future<bool> update(Order order) async {
     return await newOrderDao.updateOrder(order);
   }
+
+  Future<PosOrder> storeWithItemsAndExtras(PosOrder order) async {
+    return await newOrderDao.storeWithItemsAndExtras(order);
+  }
+
+  Future<int> getLastInvoiceNo() async {
+    return await newOrderDao.getLastInvoiceNo();
+  }
 }

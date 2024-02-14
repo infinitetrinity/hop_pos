@@ -17,6 +17,7 @@ _$CustomerFormImpl _$$CustomerFormImplFromJson(Map<String, dynamic> json) =>
       mobileNo: json['mobile_no'] as String?,
       sendAccountInvitation: json['send_account_invitation'] as bool? ?? true,
       isNew: json['is_new'] as bool? ?? false,
+      isWalkIn: json['is_walk_in'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$CustomerFormImplToJson(_$CustomerFormImpl instance) =>
@@ -30,4 +31,5 @@ Map<String, dynamic> _$$CustomerFormImplToJson(_$CustomerFormImpl instance) =>
       'mobile_no': instance.mobileNo,
       'send_account_invitation': instance.sendAccountInvitation,
       'is_new': instance.isNew,
+      'is_walk_in': instance.isWalkIn,
     };

@@ -4711,10 +4711,7 @@ class $NewOrderExtrasTableTable extends NewOrderExtrasTable
   @override
   late final GeneratedColumn<int> orderId = GeneratedColumn<int>(
       'order_id', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES orders (id) ON DELETE CASCADE'));
+      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _orderIsNewMeta =
       const VerificationMeta('orderIsNew');
   @override
@@ -5117,10 +5114,7 @@ class $NewOrderItemsTableTable extends NewOrderItemsTable
   @override
   late final GeneratedColumn<int> orderId = GeneratedColumn<int>(
       'order_id', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES orders (id) ON DELETE CASCADE'));
+      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _createdAtMeta =
       const VerificationMeta('createdAt');
   @override
@@ -5821,9 +5815,7 @@ class $NewOrdersTableTable extends NewOrdersTable
       'customer_nric', aliasedName, false,
       additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
       type: DriftSqlType.string,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES customers (nric) ON DELETE CASCADE'));
+      requiredDuringInsert: true);
   static const VerificationMeta _createdAtMeta =
       const VerificationMeta('createdAt');
   @override
@@ -7065,24 +7057,10 @@ abstract class _$AppDb extends GeneratedDatabase {
             ],
           ),
           WritePropagation(
-            on: TableUpdateQuery.onTableName('orders',
-                limitUpdateKind: UpdateKind.delete),
-            result: [
-              TableUpdate('new_order_extras', kind: UpdateKind.delete),
-            ],
-          ),
-          WritePropagation(
             on: TableUpdateQuery.onTableName('products',
                 limitUpdateKind: UpdateKind.delete),
             result: [
               TableUpdate('new_order_items', kind: UpdateKind.update),
-            ],
-          ),
-          WritePropagation(
-            on: TableUpdateQuery.onTableName('orders',
-                limitUpdateKind: UpdateKind.delete),
-            result: [
-              TableUpdate('new_order_items', kind: UpdateKind.delete),
             ],
           ),
           WritePropagation(
@@ -7101,13 +7079,6 @@ abstract class _$AppDb extends GeneratedDatabase {
           ),
           WritePropagation(
             on: TableUpdateQuery.onTableName('screenings',
-                limitUpdateKind: UpdateKind.delete),
-            result: [
-              TableUpdate('new_orders', kind: UpdateKind.delete),
-            ],
-          ),
-          WritePropagation(
-            on: TableUpdateQuery.onTableName('customers',
                 limitUpdateKind: UpdateKind.delete),
             result: [
               TableUpdate('new_orders', kind: UpdateKind.delete),

@@ -32,13 +32,8 @@ class ScreeningsList extends HookConsumerWidget {
         items: screenings,
         itemBuilder: (item) => ScreeningGrid(screening: item),
       ),
-      error: (err, stack) {
-        print(err);
-        return Container(child: const Text('error'));
-      },
-      loading: () => Container(
-        child: const Text('loading'),
-      ),
+      error: (err, stack) => Container(),
+      loading: () => Container(),
     );
   }
 }
