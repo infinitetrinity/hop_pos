@@ -4,8 +4,8 @@ import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 
-class PosExtras extends ConsumerWidget {
-  const PosExtras({super.key});
+class PosExtrasList extends ConsumerWidget {
+  const PosExtrasList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +22,7 @@ class PosExtras extends ConsumerWidget {
                   children: [
                     Text(
                       extra.displayName,
-                      style: AppStyles.body,
+                      style: AppStyles.bodyLarge,
                     ),
                     Text(
                       (extra.calculatedAmount ?? 0).formatMoney,

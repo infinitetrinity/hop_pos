@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/src/common/widgets/layout.dart';
 import 'package:hop_pos/src/pos/widgets/pos_payment_header.dart';
+import 'package:hop_pos/src/pos/widgets/sales_summary/pos_sales_summary.dart';
 
 class PosPaymentScreen extends StatelessWidget {
   const PosPaymentScreen({super.key});
@@ -16,9 +17,13 @@ class PosPaymentScreen extends StatelessWidget {
           Container(
             color: AppColors.white,
             width: double.infinity,
-            height: 600,
+            padding: const EdgeInsets.all(20),
+            height: 700,
             child: const Row(
-              children: [],
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                PosSalesSummary(),
+              ],
             ),
           )
         ],

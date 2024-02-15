@@ -4,7 +4,7 @@ import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/pos/widgets/pos_cart_discount.dart';
 import 'package:hop_pos/src/pos/widgets/pos_checkout_btn.dart';
-import 'package:hop_pos/src/pos/widgets/pos_extras.dart';
+import 'package:hop_pos/src/pos/widgets/pos_extras_list.dart';
 import 'package:hop_pos/src/pos/widgets/pos_payment_list.dart';
 import 'package:hop_pos/src/pos/widgets/pos_rounding.dart';
 import 'package:hop_pos/src/pos/widgets/pos_stf.dart';
@@ -32,7 +32,7 @@ class PosCartTotal extends ConsumerWidget {
             children: [
               PosSubtotal(),
               PosCartDiscount(),
-              PosExtras(),
+              PosExtrasList(),
             ],
           ),
         ),

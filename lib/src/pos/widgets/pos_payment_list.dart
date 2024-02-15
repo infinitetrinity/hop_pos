@@ -5,7 +5,11 @@ import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/pos/widgets/pos_payment_tile.dart';
 
 class PosPaymentList extends ConsumerWidget {
-  const PosPaymentList({super.key});
+  const PosPaymentList({
+    super.key,
+    this.padding = const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+  });
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +26,7 @@ class PosPaymentList extends ConsumerWidget {
                 bottom: BorderSide(color: AppColors.gray300),
               ),
             ),
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+            padding: padding,
             child: ListView.builder(
               shrinkWrap: true,
               physics: const AlwaysScrollableScrollPhysics(),
