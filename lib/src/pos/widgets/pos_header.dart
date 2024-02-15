@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hop_pos/src/pos/widgets/pos_back_btn.dart';
 import 'package:hop_pos/src/pos/widgets/pos_discard_sales_btn.dart';
+import 'package:hop_pos/src/pos/widgets/pos_park_sales_btn.dart';
 import 'package:hop_pos/src/pos/widgets/pos_print_label_btn.dart';
 import 'package:hop_pos/src/pos/widgets/pos_screening.dart';
 
@@ -17,6 +18,7 @@ class PosHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             PosPrintLabelBtn(),
+            PosParkSalesBtn(),
             PosDiscardSalesBtn(),
             PosBackBtn(),
           ],

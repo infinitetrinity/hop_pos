@@ -82,7 +82,7 @@ class PrintService {
             style: textStyle,
           ),
           Text(
-            "Date Screened: ${timeslot?.displayDate}",
+            "Date Screened: ${timeslot?.displayDate ?? ''}",
             style: textStyle,
           ),
         ],

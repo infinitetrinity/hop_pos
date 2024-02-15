@@ -86,6 +86,14 @@ class PosController extends _$PosController {
     }
   }
 
+  void reset() {
+    state = state.copyWith(
+      customer: null,
+      registration: null,
+      order: null,
+    );
+  }
+
   Future<void> discardSales() async {
     if (state.order == null) {
       ref.read(flashMessageProvider).flash(message: 'Invalid order.', type: FlashMessageType.error);
@@ -93,12 +101,7 @@ class PosController extends _$PosController {
     }
 
     await ref.read(orderActionsProvider).deleteOrder(state.order!.order);
-
-    state = state.copyWith(
-      customer: null,
-      registration: null,
-      order: null,
-    );
+    reset();
   }
 
   Future<void> addProduct(dynamic product) async {
