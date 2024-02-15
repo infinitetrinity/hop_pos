@@ -46,4 +46,8 @@ class ScreeningTimeslotRepository {
   Future<bool> update(ScreeningTimeslotsTableCompanion timeslot, Expression<bool> where) async {
     return await screeningTimeslotDao.updateScreeningTimeslot(timeslot, where);
   }
+
+  Future<ScreeningTimeslot?> getById(int id) async {
+    return await screeningTimeslotDao.getById(id);
+  }
 }

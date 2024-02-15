@@ -39,6 +39,8 @@ dependencies:
   infinite_scroll_pagination: ^4.0.0
   easy_debounce: ^2.0.3
   quiver: ^3.2.1
+  printing: ^5.11.1
+  pdf: ^3.10.7
   
 dev_dependencies:
   flutter_test:

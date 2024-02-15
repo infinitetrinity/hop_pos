@@ -186,19 +186,16 @@ class OrderActions {
 
   Future<PosCart> checkout(PosCart cart) async {
     if (cart.order!.order.id != null) {
-      print('update order');
       final order = await updateOrder(cart.order!);
       return cart.copyWith(order: order);
     }
 
     if (cart.customer!.id == null) {
-      print('create new customer');
       final customer = await customerActions.store(cart.customer!);
       cart = cart.copyWith(customer: customer);
     }
 
     if (cart.registration == null) {
-      print('create walk in customer');
       final registraion = await screeningRegistrationActions.store(cart.screening!, cart.customer!);
       cart = cart.copyWith(registration: registraion);
     }
@@ -206,7 +203,6 @@ class OrderActions {
     final posLicense = await posLicenseActions.getFirst();
     final invoiceNo = await getNewOrderInvoiceNo(posLicense);
 
-    print('create new order with items and extra');
     final order = await createNewOrderWithItemsAndExtras(
       cart.order!.copyWith(
         order: cart.order!.order.copyWith(

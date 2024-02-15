@@ -29,6 +29,10 @@ class ScreeningTimeslot with _$ScreeningTimeslot {
     );
   }
 
+  String get displayDate {
+    return DateFormat('dd MMM yyyy').format(dateAndTime);
+  }
+
   String get displayDateTime {
     return DateFormat('hh:mm a, dd MMM yyyy').format(dateAndTime);
   }
@@ -38,7 +42,9 @@ class ScreeningTimeslot with _$ScreeningTimeslot {
   }
 
   bool get hasSpecimenCollection {
-    return specimenCollectionDate != null || !specimenCollectionTime.isNullOrEmpty || !specimenCollectionVenue.isNullOrEmpty;
+    return specimenCollectionDate != null ||
+        !specimenCollectionTime.isNullOrEmpty ||
+        !specimenCollectionVenue.isNullOrEmpty;
   }
 
   String? get displaySpecimenCollectionDate {

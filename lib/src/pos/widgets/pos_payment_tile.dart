@@ -35,52 +35,55 @@ class PosPaymentTile extends HookConsumerWidget {
       builder: (_, snapshot) {
         return snapshot.data == null
             ? Container()
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${snapshot.data?.name} Paid',
-                        style: AppStyles.body,
-                      ),
-                      const SizedBox(height: 3),
-                      Text(
-                        payment.displayCreatedAt,
-                        style: AppStyles.body.copyWith(
-                          color: AppColors.gray800,
+            : Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${snapshot.data?.name} Paid',
+                          style: AppStyles.body,
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        (payment.amount ?? 0).formatMoney,
-                        style: AppStyles.body,
-                      ),
-                      const SizedBox(height: 3),
-                      MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        onEnter: (_) => isHover.value = true,
-                        onExit: (_) => isHover.value = false,
-                        child: GestureDetector(
-                          onTap: deletePayment,
-                          child: Text(
-                            '(Remove)',
-                            style: AppStyles.body.copyWith(
-                              color: AppColors.red600,
-                              decorationColor: AppColors.red600,
-                              decoration: isHover.value ? TextDecoration.underline : null,
+                        const SizedBox(height: 3),
+                        Text(
+                          payment.displayCreatedAt,
+                          style: AppStyles.bodySmall.copyWith(
+                            color: AppColors.gray800,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          (payment.amount ?? 0).formatMoney,
+                          style: AppStyles.body,
+                        ),
+                        const SizedBox(height: 3),
+                        MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          onEnter: (_) => isHover.value = true,
+                          onExit: (_) => isHover.value = false,
+                          child: GestureDetector(
+                            onTap: deletePayment,
+                            child: Text(
+                              '(Remove)',
+                              style: AppStyles.body.copyWith(
+                                color: AppColors.red600,
+                                decorationColor: AppColors.red600,
+                                decoration: isHover.value ? TextDecoration.underline : null,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  )
-                ],
+                      ],
+                    )
+                  ],
+                ),
               );
       },
     );

@@ -95,4 +95,9 @@ class ScreeningTimeslotDao extends DatabaseAccessor<AppDb> with _$ScreeningTimes
     final count = await (update(screeningTimeslotsTable)..where((_) => where)).write(timeslot);
     return count > 0;
   }
+
+  Future<ScreeningTimeslot?> getById(int id) {
+    final query = select(screeningTimeslotsTable)..where((tbl) => tbl.id.equals(id));
+    return query.getSingleOrNull();
+  }
 }
