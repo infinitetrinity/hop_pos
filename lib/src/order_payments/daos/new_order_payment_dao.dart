@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/order_payments/models/new_order_payments_table.dart';
 import 'package:hop_pos/src/order_payments/models/order_payment.dart';
+import 'package:hop_pos/src/orders/models/order.dart';
 
 part 'new_order_payment_dao.g.dart';
 
@@ -15,6 +16,14 @@ class NewOrderPaymentDao extends DatabaseAccessor<AppDb> with _$NewOrderPaymentD
 
   Future<bool> deleteNewOrderPayment(OrderPayment payment) async {
     final count = await (delete(newOrderPaymentsTable)..where((tbl) => tbl.id.equals(payment.id))).go();
+    return count > 0;
+  }
+
+  Future<bool> deleteByOrder(Order order) async {
+    final count = await (delete(newOrderPaymentsTable)
+          ..where((tbl) => tbl.orderId.equals(order.id!))
+          ..where((tbl) => tbl.orderIsNew.equals(order.isNew)))
+        .go();
     return count > 0;
   }
 }

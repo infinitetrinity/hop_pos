@@ -37,12 +37,13 @@ class NewScreeningRegistrationRepository {
   }
 
   Future<ScreeningRegistration> store(Customer customer, ScreeningTimeslot timeslot) async {
-    return await newScreeningRegistrationDao.store(
+    return (await newScreeningRegistrationDao.store(
       NewScreeningRegistrationsTableCompanion(
         customerNric: Value(customer.nric),
         timeslotId: Value(timeslot.id),
         createdAt: Value(DateTime.now()),
       ),
-    );
+    ))
+        .copyWith(isNew: true);
   }
 }

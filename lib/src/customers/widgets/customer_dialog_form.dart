@@ -36,7 +36,6 @@ class CustomerDialogForm extends HookWidget {
     final form = useState(customer == null
         ? CustomerForm(
             isNew: isWalkIn,
-            isWalkIn: isWalkIn,
           )
         : CustomerForm.fromModel(customer!));
     final isSubmitting = useState(false);

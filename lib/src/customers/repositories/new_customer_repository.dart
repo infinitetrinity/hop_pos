@@ -20,7 +20,7 @@ class NewCustomerRepository {
   });
 
   Future<Customer> insert(NewCustomersTableCompanion customer) async {
-    return await newCustomerDao.insertCustomer(customer);
+    return (await newCustomerDao.insertCustomer(customer)).copyWith(isNew: true);
   }
 
   Future<bool> update(Customer customer) async {

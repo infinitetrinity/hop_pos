@@ -106,8 +106,6 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
 
   Future<PosOrder> storeWithItemsAndExtras(PosOrder order) async {
     return await transaction(() async {
-      print('data ${order.order.toData()}');
-
       final newOrder = await into(newOrdersTable).insertReturning(order.order.toData());
 
       for (OrderItem item in order.items ?? []) {
@@ -128,7 +126,18 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
             .toData());
       }
 
-      return order.copyWith(order: newOrder);
+      return order.copyWith(order: newOrder.copyWith(isNew: true));
+    });
+  }
+
+  Future<bool> deleteOrder(Order order) async {
+    return await transaction(() async {
+      await db.newOrderItemDao.deleteByOrder(order);
+      await db.newOrderExtraDao.deleteByOrder(order);
+      await db.newOrderPaymentDao.deleteByOrder(order);
+
+      final count = await (delete(newOrdersTable)..where((tbl) => tbl.id.equals(order.id!))).go();
+      return count > 0;
     });
   }
 }

@@ -41,4 +41,8 @@ class OrderRepository {
   Future<int> getLastInvoiceNo(String prefix) async {
     return await orderDao.getLastInvoiceNo(prefix);
   }
+
+  Future<bool> delete(Order order) async {
+    return await orderDao.deleteOrder(order);
+  }
 }

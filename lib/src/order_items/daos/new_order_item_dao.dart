@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/order_items/models/new_order_items_table.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
+import 'package:hop_pos/src/orders/models/order.dart';
 
 part 'new_order_item_dao.g.dart';
 
@@ -20,6 +21,14 @@ class NewOrderItemDao extends DatabaseAccessor<AppDb> with _$NewOrderItemDaoMixi
 
   Future<bool> updateOrderItem(OrderItem item) async {
     final count = await (update(newOrderItemsTable)..where((tbl) => tbl.id.equals(item.id!))).write(item.toData());
+    return count > 0;
+  }
+
+  Future<bool> deleteByOrder(Order order) async {
+    final count = await (delete(newOrderItemsTable)
+          ..where((tbl) => tbl.orderId.equals(order.id!))
+          ..where((tbl) => tbl.orderIsNew.equals(order.isNew)))
+        .go();
     return count > 0;
   }
 }

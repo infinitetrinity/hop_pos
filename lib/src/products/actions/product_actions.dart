@@ -2,7 +2,6 @@ import 'package:hop_pos/src/product_categories/models/product_category.dart';
 import 'package:hop_pos/src/product_categories/states/selected_product_category_state.dart';
 import 'package:hop_pos/src/products/models/product.dart';
 import 'package:hop_pos/src/products/repositories/product_repository.dart';
-import 'package:quiver/iterables.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'product_actions.g.dart';
@@ -24,7 +23,7 @@ class ProductActions {
     required this.selectedCategory,
   });
 
-  Future<dynamic> getAllProducts({int partitionSize = 0}) async {
+  Future<List<Product>> getAllProducts() async {
     final products = await productRepo.getAll(categoryId: selectedCategory?.id);
 
     if (selectedCategory == null) {
@@ -36,6 +35,6 @@ class ProductActions {
       products.insert(0, customProduct);
     }
 
-    return partitionSize > 0 ? partition<Product>(products, partitionSize).toList() : products;
+    return products;
   }
 }

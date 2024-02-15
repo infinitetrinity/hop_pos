@@ -21,7 +21,6 @@ _$CustomerImpl _$$CustomerImplFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['created_at'] as String),
       isNew: json['is_new'] as bool? ?? false,
-      isWalkIn: json['is_walk_in'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$CustomerImplToJson(_$CustomerImpl instance) =>
@@ -37,5 +36,4 @@ Map<String, dynamic> _$$CustomerImplToJson(_$CustomerImpl instance) =>
       'send_account_invitation': instance.sendAccountInvitation,
       'created_at': instance.createdAt?.toIso8601String(),
       'is_new': instance.isNew,
-      'is_walk_in': instance.isWalkIn,
     };

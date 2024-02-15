@@ -171,4 +171,19 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
 
     return int.tryParse(row?.invoiceNo ?? '') ?? 0;
   }
+
+  Future<bool> deleteOrder(Order order) async {
+    return await transaction(() async {
+      await db.newOrderItemDao.deleteByOrder(order);
+      await db.orderItemDao.deleteByOrder(order);
+      await db.newOrderExtraDao.deleteByOrder(order);
+      await db.orderExtraDao.deleteByOrder(order);
+      await db.newOrderPaymentDao.deleteByOrder(order);
+      await db.orderPaymentDao.deleteByOrder(order);
+
+      final count = await (delete(ordersTable)..where((tbl) => tbl.id.equals(order.id!))).go();
+      await db.toSycnDataDao.insertToSyncData(order.toSyncData(ToSyncActions.delete));
+      return count > 0;
+    });
+  }
 }

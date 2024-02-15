@@ -7,6 +7,7 @@ import 'package:hop_pos/src/order_items/actions/order_item_actions.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/order_payments/actions/order_payment_actions.dart';
 import 'package:hop_pos/src/order_payments/models/order_payment.dart';
+import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
 import 'package:hop_pos/src/orders/repositories/new_order_repository.dart';
 import 'package:hop_pos/src/orders/repositories/order_repository.dart';
@@ -110,7 +111,7 @@ class OrderActions {
   }
 
   Future<PosOrder> deleteOrderItem(PosOrder order, OrderItem item) async {
-    if (!order.order.isNew) {
+    if (order.order.id != null) {
       await orderItemActions.delete(item);
     }
 
@@ -139,12 +140,21 @@ class OrderActions {
       ),
     );
 
-    if (!order.order.isNew) {
+    if (order.order.id != null) {
       final dynamic repo = order.order.isNew == true ? newOrderRepo : orderRepo;
       await repo.update(order.order);
     }
 
     return order;
+  }
+
+  Future<void> deleteOrder(Order order) async {
+    if (order.id == null) {
+      return;
+    }
+
+    final dynamic repo = order.isNew == true ? newOrderRepo : orderRepo;
+    await repo.delete(order);
   }
 
   Future<PosOrder> createNewOrderWithItemsAndExtras(PosOrder order) async {
@@ -175,17 +185,20 @@ class OrderActions {
   }
 
   Future<PosCart> checkout(PosCart cart) async {
-    if (!cart.order!.order.isNew) {
+    if (cart.order!.order.id != null) {
+      print('update order');
       final order = await updateOrder(cart.order!);
       return cart.copyWith(order: order);
     }
 
-    if (cart.customer!.isNew) {
+    if (cart.customer!.id == null) {
+      print('create new customer');
       final customer = await customerActions.store(cart.customer!);
       cart = cart.copyWith(customer: customer);
     }
 
-    if (cart.customer!.isWalkIn) {
+    if (cart.registration == null) {
+      print('create walk in customer');
       final registraion = await screeningRegistrationActions.store(cart.screening!, cart.customer!);
       cart = cart.copyWith(registration: registraion);
     }
@@ -193,6 +206,7 @@ class OrderActions {
     final posLicense = await posLicenseActions.getFirst();
     final invoiceNo = await getNewOrderInvoiceNo(posLicense);
 
+    print('create new order with items and extra');
     final order = await createNewOrderWithItemsAndExtras(
       cart.order!.copyWith(
         order: cart.order!.order.copyWith(
@@ -204,6 +218,9 @@ class OrderActions {
       ),
     );
 
-    return cart.copyWith(order: order);
+    return cart.copyWith(
+      order: order,
+      registration: cart.registration?.copyWith(hasOrders: true),
+    );
   }
 }

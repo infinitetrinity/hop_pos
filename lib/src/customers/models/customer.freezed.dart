@@ -37,8 +37,6 @@ mixin _$Customer {
   DateTime? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_new')
   bool get isNew => throw _privateConstructorUsedError;
-  @JsonKey(name: 'is_walk_in')
-  bool get isWalkIn => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -62,8 +60,7 @@ abstract class $CustomerCopyWith<$Res> {
       @JsonKey(name: 'is_pending') bool isPending,
       @JsonKey(name: 'send_account_invitation') bool sendAccountInvitation,
       @JsonKey(name: 'created_at') DateTime? createdAt,
-      @JsonKey(name: 'is_new') bool isNew,
-      @JsonKey(name: 'is_walk_in') bool isWalkIn});
+      @JsonKey(name: 'is_new') bool isNew});
 }
 
 /// @nodoc
@@ -90,7 +87,6 @@ class _$CustomerCopyWithImpl<$Res, $Val extends Customer>
     Object? sendAccountInvitation = null,
     Object? createdAt = freezed,
     Object? isNew = null,
-    Object? isWalkIn = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -137,10 +133,6 @@ class _$CustomerCopyWithImpl<$Res, $Val extends Customer>
           ? _value.isNew
           : isNew // ignore: cast_nullable_to_non_nullable
               as bool,
-      isWalkIn: null == isWalkIn
-          ? _value.isWalkIn
-          : isWalkIn // ignore: cast_nullable_to_non_nullable
-              as bool,
     ) as $Val);
   }
 }
@@ -164,8 +156,7 @@ abstract class _$$CustomerImplCopyWith<$Res>
       @JsonKey(name: 'is_pending') bool isPending,
       @JsonKey(name: 'send_account_invitation') bool sendAccountInvitation,
       @JsonKey(name: 'created_at') DateTime? createdAt,
-      @JsonKey(name: 'is_new') bool isNew,
-      @JsonKey(name: 'is_walk_in') bool isWalkIn});
+      @JsonKey(name: 'is_new') bool isNew});
 }
 
 /// @nodoc
@@ -190,7 +181,6 @@ class __$$CustomerImplCopyWithImpl<$Res>
     Object? sendAccountInvitation = null,
     Object? createdAt = freezed,
     Object? isNew = null,
-    Object? isWalkIn = null,
   }) {
     return _then(_$CustomerImpl(
       id: freezed == id
@@ -237,10 +227,6 @@ class __$$CustomerImplCopyWithImpl<$Res>
           ? _value.isNew
           : isNew // ignore: cast_nullable_to_non_nullable
               as bool,
-      isWalkIn: null == isWalkIn
-          ? _value.isWalkIn
-          : isWalkIn // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -260,8 +246,7 @@ class _$CustomerImpl extends _Customer {
       @JsonKey(name: 'send_account_invitation')
       this.sendAccountInvitation = false,
       @JsonKey(name: 'created_at') this.createdAt,
-      @JsonKey(name: 'is_new') this.isNew = false,
-      @JsonKey(name: 'is_walk_in') this.isWalkIn = false})
+      @JsonKey(name: 'is_new') this.isNew = false})
       : super._();
 
   factory _$CustomerImpl.fromJson(Map<String, dynamic> json) =>
@@ -295,13 +280,10 @@ class _$CustomerImpl extends _Customer {
   @override
   @JsonKey(name: 'is_new')
   final bool isNew;
-  @override
-  @JsonKey(name: 'is_walk_in')
-  final bool isWalkIn;
 
   @override
   String toString() {
-    return 'Customer(id: $id, fullName: $fullName, nric: $nric, dob: $dob, gender: $gender, email: $email, mobileNo: $mobileNo, isPending: $isPending, sendAccountInvitation: $sendAccountInvitation, createdAt: $createdAt, isNew: $isNew, isWalkIn: $isWalkIn)';
+    return 'Customer(id: $id, fullName: $fullName, nric: $nric, dob: $dob, gender: $gender, email: $email, mobileNo: $mobileNo, isPending: $isPending, sendAccountInvitation: $sendAccountInvitation, createdAt: $createdAt, isNew: $isNew)';
   }
 
   @override
@@ -324,27 +306,13 @@ class _$CustomerImpl extends _Customer {
                 other.sendAccountInvitation == sendAccountInvitation) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
-            (identical(other.isNew, isNew) || other.isNew == isNew) &&
-            (identical(other.isWalkIn, isWalkIn) ||
-                other.isWalkIn == isWalkIn));
+            (identical(other.isNew, isNew) || other.isNew == isNew));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      fullName,
-      nric,
-      dob,
-      gender,
-      email,
-      mobileNo,
-      isPending,
-      sendAccountInvitation,
-      createdAt,
-      isNew,
-      isWalkIn);
+  int get hashCode => Object.hash(runtimeType, id, fullName, nric, dob, gender,
+      email, mobileNo, isPending, sendAccountInvitation, createdAt, isNew);
 
   @JsonKey(ignore: true)
   @override
@@ -373,8 +341,7 @@ abstract class _Customer extends Customer {
       @JsonKey(name: 'send_account_invitation')
       final bool sendAccountInvitation,
       @JsonKey(name: 'created_at') final DateTime? createdAt,
-      @JsonKey(name: 'is_new') final bool isNew,
-      @JsonKey(name: 'is_walk_in') final bool isWalkIn}) = _$CustomerImpl;
+      @JsonKey(name: 'is_new') final bool isNew}) = _$CustomerImpl;
   const _Customer._() : super._();
 
   factory _Customer.fromJson(Map<String, dynamic> json) =
@@ -408,9 +375,6 @@ abstract class _Customer extends Customer {
   @override
   @JsonKey(name: 'is_new')
   bool get isNew;
-  @override
-  @JsonKey(name: 'is_walk_in')
-  bool get isWalkIn;
   @override
   @JsonKey(ignore: true)
   _$$CustomerImplCopyWith<_$CustomerImpl> get copyWith =>

@@ -7,9 +7,7 @@ part 'products_controller.g.dart';
 @riverpod
 class ProductsController extends _$ProductsController {
   @override
-  Future<List<List<Product>>> build() {
-    return ref.watch(productActionsProvider).getAllProducts(partitionSize: 16).then((dynamic result) {
-      return result as List<List<Product>>;
-    });
+  Future<List<Product>> build() {
+    return ref.watch(productActionsProvider).getAllProducts();
   }
 }

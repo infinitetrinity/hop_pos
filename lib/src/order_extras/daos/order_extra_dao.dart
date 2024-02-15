@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/order_extras/models/order_extra.dart';
 import 'package:hop_pos/src/order_extras/models/order_extras_table.dart';
+import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
 
 part 'order_extra_dao.g.dart';
@@ -33,6 +34,28 @@ class OrderExtraDao extends DatabaseAccessor<AppDb> with _$OrderExtraDaoMixin {
 
       await db.toSycnDataDao.insertToSyncData(extra.toSyncData(ToSyncActions.update));
       return count > 0;
+    });
+  }
+
+  Future<bool> deleteOrderExtra(OrderExtra extra) async {
+    return await transaction(() async {
+      final count = await (delete(orderExtrasTable)..where((tbl) => tbl.id.equals(extra.id!))).go();
+
+      await db.toSycnDataDao.insertToSyncData(extra.toSyncData(ToSyncActions.delete));
+      return count > 0;
+    });
+  }
+
+  Future<void> deleteByOrder(Order order) async {
+    return await transaction(() async {
+      final extras = await (select(orderExtrasTable)..where((tbl) => tbl.orderId.equals(order.id!))).get();
+      List<Future<bool>> deleteFutures = [];
+
+      for (OrderExtra extra in extras) {
+        deleteFutures.add(deleteOrderExtra(extra));
+      }
+
+      await Future.wait(deleteFutures);
     });
   }
 }

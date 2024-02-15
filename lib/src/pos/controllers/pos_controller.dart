@@ -30,10 +30,7 @@ class PosController extends _$PosController {
     state = state.copyWith(screening: screening);
   }
 
-  FutureOr<void> selectCustomer({
-    required Customer customer,
-    ScreeningRegistration? registration,
-  }) async {
+  FutureOr<void> selectCustomer({required Customer customer, ScreeningRegistration? registration}) async {
     if (state.screening == null) {
       return;
     }
@@ -48,7 +45,7 @@ class PosController extends _$PosController {
 
     state = state.copyWith(
       customer: customer,
-      registration: registration?.copyWith(hasOrders: !order.order.isNew),
+      registration: registration?.copyWith(hasOrders: order.order.id != null),
       order: order.copyWith(extras: extras),
     );
   }
@@ -90,6 +87,13 @@ class PosController extends _$PosController {
   }
 
   Future<void> discardSales() async {
+    if (state.order == null) {
+      ref.read(flashMessageProvider).flash(message: 'Invalid order.', type: FlashMessageType.error);
+      return;
+    }
+
+    await ref.read(orderActionsProvider).deleteOrder(state.order!.order);
+
     state = state.copyWith(
       customer: null,
       registration: null,

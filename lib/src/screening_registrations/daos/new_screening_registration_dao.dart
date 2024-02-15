@@ -58,9 +58,12 @@ class NewScreeningRegistrationDao extends DatabaseAccessor<AppDb> with _$NewScre
         ),
         leftOuterJoin(
           newOrdersTable,
-          newOrdersTable.customerNric.equalsExp(
-                customersTable.nric,
-              ) &
+          (newOrdersTable.customerNric.equalsExp(
+                    customersTable.nric,
+                  ) |
+                  newOrdersTable.customerNric.equalsExp(
+                    newCustomersTable.nric,
+                  )) &
               newOrdersTable.screeningId.equalsExp(
                 screeningTimeslotsTable.screeningId,
               ),

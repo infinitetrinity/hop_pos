@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/app/app_styles.dart';
+import 'package:hop_pos/routes/pos_routes.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 
 class PosCheckoutBtn extends ConsumerWidget {
@@ -16,6 +17,10 @@ class PosCheckoutBtn extends ConsumerWidget {
 
     Future<void> onCheckout() async {
       await ref.read(posControllerProvider.notifier).checkout();
+
+      if (context.mounted) {
+        PosPaymentRoute().go(context);
+      }
     }
 
     return Container(

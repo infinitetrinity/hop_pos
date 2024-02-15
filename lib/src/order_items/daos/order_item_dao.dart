@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/order_items/models/order_items_table.dart';
+import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
 
 part 'order_item_dao.g.dart';
@@ -37,7 +38,24 @@ class OrderItemDao extends DatabaseAccessor<AppDb> with _$OrderItemDaoMixin {
   }
 
   Future<bool> updateOrderItem(OrderItem item) async {
-    final count = await (update(orderItemsTable)..where((tbl) => tbl.id.equals(item.id!))).write(item.toData());
-    return count > 0;
+    return await transaction(() async {
+      final count = await (update(orderItemsTable)..where((tbl) => tbl.id.equals(item.id!))).write(item.toData());
+
+      await db.toSycnDataDao.insertToSyncData(item.toSyncData(ToSyncActions.update));
+      return count > 0;
+    });
+  }
+
+  Future<void> deleteByOrder(Order order) async {
+    return await transaction(() async {
+      final items = await (select(orderItemsTable)..where((tbl) => tbl.orderId.equals(order.id!))).get();
+      List<Future<bool>> deleteFutures = [];
+
+      for (OrderItem item in items) {
+        deleteFutures.add(deleteOrderItem(item));
+      }
+
+      await Future.wait(deleteFutures);
+    });
   }
 }

@@ -35,6 +35,8 @@ class OrderExtraActions {
             (extras) => extras
                 .map(
                   (extra) => OrderExtra.fromJson(extra.toJson()).copyWith(
+                    id: null,
+                    extraId: extra.id,
                     orderIsNew: true,
                     isNew: true,
                     orderId: order.order.id,
