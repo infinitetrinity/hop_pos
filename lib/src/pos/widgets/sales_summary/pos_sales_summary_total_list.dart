@@ -6,6 +6,7 @@ import 'package:hop_pos/src/pos/widgets/pos_rounding.dart';
 import 'package:hop_pos/src/pos/widgets/pos_subtotal.dart';
 import 'package:hop_pos/src/pos/widgets/sales_summary/pos_sales_summary_balance.dart';
 import 'package:hop_pos/src/pos/widgets/sales_summary/pos_sales_summary_cart_discount.dart';
+import 'package:hop_pos/src/pos/widgets/sales_summary/pos_sales_summary_change.dart';
 import 'package:hop_pos/src/pos/widgets/sales_summary/pos_sales_summary_total.dart';
 
 class PosSalesSummaryTotalList extends StatelessWidget {
@@ -34,6 +35,7 @@ class PosSalesSummaryTotalList extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 8),
           ),
           PosSalesSummaryBalance(),
+          PosSalesSummaryChange(),
         ],
       ),
     );

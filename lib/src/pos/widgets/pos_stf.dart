@@ -6,7 +6,13 @@ import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 
 class PosSTF extends HookConsumerWidget {
-  const PosSTF({super.key});
+  const PosSTF({
+    super.key,
+    this.canRemove = true,
+    this.padding = const EdgeInsets.only(bottom: 8),
+  });
+  final bool canRemove;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -14,21 +20,22 @@ class PosSTF extends HookConsumerWidget {
     final isStf = ref.watch(posControllerProvider.select((prov) => prov.order?.order.isStf ?? false));
 
     return isStf
-        ? Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    color: AppColors.yellow800,
-                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                    child: Text(
-                      'Stool to follow',
-                      style: AppStyles.bodySmall.copyWith(
-                        color: AppColors.white,
-                      ),
+        ? Padding(
+            padding: padding,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  color: AppColors.yellow800,
+                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  child: Text(
+                    'Stool to follow',
+                    style: AppStyles.bodySmall.copyWith(
+                      color: AppColors.white,
                     ),
                   ),
+                ),
+                if (canRemove)
                   MouseRegion(
                     onEnter: (_) => isHover.value = true,
                     onExit: (_) => isHover.value = false,
@@ -45,10 +52,8 @@ class PosSTF extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                ],
-              ),
-              const SizedBox(height: 8),
-            ],
+              ],
+            ),
           )
         : Container();
   }

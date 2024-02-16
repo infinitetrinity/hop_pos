@@ -8,6 +8,7 @@ part of 'pos_order.dart';
 
 _$OrderImpl _$$OrderImplFromJson(Map<String, dynamic> json) => _$OrderImpl(
       order: Order.fromJson(json['order'] as Map<String, dynamic>),
+      payLater: json['payLater'] as bool? ?? false,
       items: (json['items'] as List<dynamic>?)
           ?.map((e) => OrderItem.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -22,6 +23,7 @@ _$OrderImpl _$$OrderImplFromJson(Map<String, dynamic> json) => _$OrderImpl(
 Map<String, dynamic> _$$OrderImplToJson(_$OrderImpl instance) =>
     <String, dynamic>{
       'order': instance.order,
+      'payLater': instance.payLater,
       'items': instance.items,
       'extras': instance.extras,
       'payments': instance.payments,

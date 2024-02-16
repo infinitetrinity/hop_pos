@@ -6,7 +6,13 @@ import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 
 class PosUTF extends HookConsumerWidget {
-  const PosUTF({super.key});
+  const PosUTF({
+    super.key,
+    this.canRemove = true,
+    this.padding = const EdgeInsets.only(bottom: 8),
+  });
+  final bool canRemove;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -14,19 +20,20 @@ class PosUTF extends HookConsumerWidget {
     final isUtf = ref.watch(posControllerProvider.select((prov) => prov.order?.order.isUtf ?? false));
 
     return isUtf
-        ? Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    color: AppColors.yellow300,
-                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                    child: Text(
-                      'Urine to follow',
-                      style: AppStyles.bodySmall,
-                    ),
+        ? Padding(
+            padding: padding,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  color: AppColors.yellow300,
+                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  child: Text(
+                    'Urine to follow',
+                    style: AppStyles.bodySmall,
                   ),
+                ),
+                if (canRemove)
                   MouseRegion(
                     onEnter: (_) => isHover.value = true,
                     onExit: (_) => isHover.value = false,
@@ -43,10 +50,8 @@ class PosUTF extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                ],
-              ),
-              const SizedBox(height: 8),
-            ],
+              ],
+            ),
           )
         : Container();
   }

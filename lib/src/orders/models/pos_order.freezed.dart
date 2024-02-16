@@ -21,6 +21,7 @@ PosOrder _$PosOrderFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$PosOrder {
   Order get order => throw _privateConstructorUsedError;
+  bool? get payLater => throw _privateConstructorUsedError;
   List<OrderItem>? get items => throw _privateConstructorUsedError;
   List<OrderExtra>? get extras => throw _privateConstructorUsedError;
   List<OrderPayment>? get payments => throw _privateConstructorUsedError;
@@ -38,6 +39,7 @@ abstract class $PosOrderCopyWith<$Res> {
   @useResult
   $Res call(
       {Order order,
+      bool? payLater,
       List<OrderItem>? items,
       List<OrderExtra>? extras,
       List<OrderPayment>? payments});
@@ -59,6 +61,7 @@ class _$PosOrderCopyWithImpl<$Res, $Val extends PosOrder>
   @override
   $Res call({
     Object? order = null,
+    Object? payLater = freezed,
     Object? items = freezed,
     Object? extras = freezed,
     Object? payments = freezed,
@@ -68,6 +71,10 @@ class _$PosOrderCopyWithImpl<$Res, $Val extends PosOrder>
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
               as Order,
+      payLater: freezed == payLater
+          ? _value.payLater
+          : payLater // ignore: cast_nullable_to_non_nullable
+              as bool?,
       items: freezed == items
           ? _value.items
           : items // ignore: cast_nullable_to_non_nullable
@@ -101,6 +108,7 @@ abstract class _$$OrderImplCopyWith<$Res> implements $PosOrderCopyWith<$Res> {
   @useResult
   $Res call(
       {Order order,
+      bool? payLater,
       List<OrderItem>? items,
       List<OrderExtra>? extras,
       List<OrderPayment>? payments});
@@ -121,6 +129,7 @@ class __$$OrderImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? order = null,
+    Object? payLater = freezed,
     Object? items = freezed,
     Object? extras = freezed,
     Object? payments = freezed,
@@ -130,6 +139,10 @@ class __$$OrderImplCopyWithImpl<$Res>
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
               as Order,
+      payLater: freezed == payLater
+          ? _value.payLater
+          : payLater // ignore: cast_nullable_to_non_nullable
+              as bool?,
       items: freezed == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
@@ -151,6 +164,7 @@ class __$$OrderImplCopyWithImpl<$Res>
 class _$OrderImpl extends _Order {
   const _$OrderImpl(
       {required this.order,
+      this.payLater = false,
       final List<OrderItem>? items,
       final List<OrderExtra>? extras,
       final List<OrderPayment>? payments})
@@ -164,6 +178,9 @@ class _$OrderImpl extends _Order {
 
   @override
   final Order order;
+  @override
+  @JsonKey()
+  final bool? payLater;
   final List<OrderItem>? _items;
   @override
   List<OrderItem>? get items {
@@ -196,7 +213,7 @@ class _$OrderImpl extends _Order {
 
   @override
   String toString() {
-    return 'PosOrder(order: $order, items: $items, extras: $extras, payments: $payments)';
+    return 'PosOrder(order: $order, payLater: $payLater, items: $items, extras: $extras, payments: $payments)';
   }
 
   @override
@@ -205,6 +222,8 @@ class _$OrderImpl extends _Order {
         (other.runtimeType == runtimeType &&
             other is _$OrderImpl &&
             (identical(other.order, order) || other.order == order) &&
+            (identical(other.payLater, payLater) ||
+                other.payLater == payLater) &&
             const DeepCollectionEquality().equals(other._items, _items) &&
             const DeepCollectionEquality().equals(other._extras, _extras) &&
             const DeepCollectionEquality().equals(other._payments, _payments));
@@ -215,6 +234,7 @@ class _$OrderImpl extends _Order {
   int get hashCode => Object.hash(
       runtimeType,
       order,
+      payLater,
       const DeepCollectionEquality().hash(_items),
       const DeepCollectionEquality().hash(_extras),
       const DeepCollectionEquality().hash(_payments));
@@ -236,6 +256,7 @@ class _$OrderImpl extends _Order {
 abstract class _Order extends PosOrder {
   const factory _Order(
       {required final Order order,
+      final bool? payLater,
       final List<OrderItem>? items,
       final List<OrderExtra>? extras,
       final List<OrderPayment>? payments}) = _$OrderImpl;
@@ -245,6 +266,8 @@ abstract class _Order extends PosOrder {
 
   @override
   Order get order;
+  @override
+  bool? get payLater;
   @override
   List<OrderItem>? get items;
   @override

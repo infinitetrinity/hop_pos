@@ -11,6 +11,7 @@ class PosSalesSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 480,
+      constraints: const BoxConstraints(minHeight: 650),
       decoration: const BoxDecoration(
         border: Border(
           right: BorderSide(color: AppColors.gray300),

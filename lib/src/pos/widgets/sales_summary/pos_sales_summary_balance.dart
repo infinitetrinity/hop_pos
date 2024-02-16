@@ -9,31 +9,34 @@ class PosSalesSummaryBalance extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final totalPayment = ref.watch(posControllerProvider.select((prov) => prov.order?.totalPayment ?? 0));
     final balance = ref.watch(posControllerProvider.select((prov) => prov.order?.balance ?? 0));
 
-    return Column(
-      children: [
-        const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Balance',
-              style: AppStyles.bodyLarge.copyWith(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
+    return totalPayment > 0
+        ? Column(
+            children: [
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Balance',
+                    style: AppStyles.bodyLarge.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  Text(
+                    balance.formatMoney,
+                    style: AppStyles.bodyLarge.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Text(
-              balance.formatMoney,
-              style: AppStyles.bodyLarge.copyWith(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
+            ],
+          )
+        : Container();
   }
 }

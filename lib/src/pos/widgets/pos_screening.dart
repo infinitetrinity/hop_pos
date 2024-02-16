@@ -4,7 +4,7 @@ import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 
-class PosScreening extends HookConsumerWidget {
+class PosScreening extends ConsumerWidget {
   const PosScreening({super.key});
 
   @override

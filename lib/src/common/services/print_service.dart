@@ -91,4 +91,8 @@ class PrintService {
 
     return await printDoc(page);
   }
+
+  Future<bool> printOrderReceipt() async {
+    return false;
+  }
 }

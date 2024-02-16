@@ -225,6 +225,8 @@ class PosController extends _$PosController {
     final order =
         await ref.read(orderActionsProvider).createNewOrderPayment(state.order!, method, state.checkoutAmount ?? 0);
     state = state.copyWith(order: order);
+
+    await setEReceipt(true);
   }
 
   Future<void> deleteOrderPayment(OrderPayment payment) async {
@@ -275,6 +277,23 @@ class PosController extends _$PosController {
         order: state.order!.order.copyWith(
           discount: form.discount,
           discountType: form.discountType,
+        ),
+      ),
+    );
+
+    final order = await ref.read(orderActionsProvider).updateOrder(state.order!);
+    state = state.copyWith(order: order);
+  }
+
+  Future<void> setEReceipt(bool toSendEReceipt) async {
+    if (state.order == null) {
+      return;
+    }
+
+    state = state.copyWith(
+      order: state.order!.copyWith(
+        order: state.order!.order.copyWith(
+          eReceipt: toSendEReceipt,
         ),
       ),
     );

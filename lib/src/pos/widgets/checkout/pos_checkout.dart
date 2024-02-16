@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hop_pos/src/pos/widgets/checkout/pos_checkout_customer.dart';
 import 'package:hop_pos/src/pos/widgets/checkout/pos_checkout_input.dart';
 import 'package:hop_pos/src/pos/widgets/checkout/pos_checkout_payment_methods_list.dart';
+import 'package:hop_pos/src/pos/widgets/checkout/pos_checkout_screening.dart';
 
 class PosCheckout extends StatelessWidget {
   const PosCheckout({super.key});
@@ -14,6 +16,8 @@ class PosCheckout extends StatelessWidget {
           children: [
             PosCheckoutInput(),
             PosCheckoutPaymentMethodsList(),
+            PosCheckoutScreening(),
+            PosCheckoutCustomer(),
           ],
         ),
       ),

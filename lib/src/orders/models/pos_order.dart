@@ -12,6 +12,7 @@ part 'pos_order.g.dart';
 class PosOrder with _$PosOrder {
   const factory PosOrder({
     required Order order,
+    @Default(false) bool? payLater,
     List<OrderItem>? items,
     List<OrderExtra>? extras,
     List<OrderPayment>? payments,
@@ -67,10 +68,20 @@ class PosOrder with _$PosOrder {
   }
 
   double get balance {
-    return (total - totalPayment).toDecimalPlace(2);
+    final amount = (total - totalPayment).toDecimalPlace(2);
+    return amount > 0 ? amount : 0;
   }
 
   double get balanceBeforeDiscount {
     return subtotal - totalPayment;
+  }
+
+  double get change {
+    final amount = (total - totalPayment).toDecimalPlace(2);
+    return amount > 0 ? 0 : amount.abs();
+  }
+
+  bool get isFullyPaid {
+    return balance == 0 || payLater == true;
   }
 }
