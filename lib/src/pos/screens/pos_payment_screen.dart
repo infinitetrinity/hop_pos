@@ -13,7 +13,8 @@ class PosPaymentScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isFullyPaid = ref.watch(posControllerProvider.select((prov) => prov.order?.isFullyPaid ?? false));
+    final isCompleted =
+        ref.watch(posControllerProvider.select((prov) => (prov.order?.isFullyPaid ?? prov.order?.payLater) ?? false));
 
     return Layout(
       Column(
@@ -28,7 +29,7 @@ class PosPaymentScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const PosSalesSummary(),
-                isFullyPaid ? const PosCompleted() : const PosCheckout(),
+                isCompleted ? const PosCompleted() : const PosCheckout(),
               ],
             ),
           )

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hop_pos/src/pos/widgets/completed/pos_completed_back_to_payment_btn.dart';
 import 'package:hop_pos/src/pos/widgets/completed/pos_completed_customer.dart';
 import 'package:hop_pos/src/pos/widgets/completed/pos_completed_done_btn.dart';
 import 'package:hop_pos/src/pos/widgets/completed/pos_completed_e_receipt.dart';
@@ -24,6 +25,7 @@ class PosCompleted extends StatelessWidget {
             PosCompletedEReceipt(),
             SizedBox(height: 30),
             PosCompletedDoneBtn(),
+            PosCompletedBackToPaymentBtn(),
           ],
         ),
       ),

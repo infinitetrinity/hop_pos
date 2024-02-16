@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/routes/pos_routes.dart';
+import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 
-class PosPaymentBackBtn extends HookWidget {
+class PosPaymentBackBtn extends HookConsumerWidget {
   const PosPaymentBackBtn({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isHover = useState(false);
+
+    void onPressed() {
+      ref.read(posControllerProvider.notifier).setPayLater(false);
+      PosRoute().go(context);
+    }
 
     return MouseRegion(
       onEnter: (_) => isHover.value = true,
@@ -20,7 +27,7 @@ class PosPaymentBackBtn extends HookWidget {
           foregroundColor: isHover.value ? AppColors.white : AppColors.gray700,
           padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
         ),
-        onPressed: () => PosRoute().go(context),
+        onPressed: onPressed,
         child: Row(
           children: [
             Icon(

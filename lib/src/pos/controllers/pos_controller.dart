@@ -301,4 +301,12 @@ class PosController extends _$PosController {
     final order = await ref.read(orderActionsProvider).updateOrder(state.order!);
     state = state.copyWith(order: order);
   }
+
+  void setPayLater(bool payLater) {
+    if (state.order != null) {
+      state = state.copyWith(
+        order: state.order!.copyWith(payLater: payLater),
+      );
+    }
+  }
 }

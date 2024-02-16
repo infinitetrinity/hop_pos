@@ -13,6 +13,7 @@ class PosCompletedHeader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final totalPayment = ref.watch(posControllerProvider.select((prov) => prov.order?.totalPayment ?? 0));
+    final balance = ref.watch(posControllerProvider.select((prov) => prov.order?.balance ?? 0));
     final change = ref.watch(posControllerProvider.select((prov) => prov.order?.change ?? 0));
     final isUtfOrStf = ref
         .watch(posControllerProvider.select((prov) => (prov.order?.order.isUtf ?? prov.order?.order.isStf) ?? false));
@@ -22,13 +23,22 @@ class PosCompletedHeader extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            'Payment Received',
-            style: AppStyles.bodyLarge.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: 32,
-            ),
-          ),
+          balance > 0
+              ? Text(
+                  'Payment Incomplete',
+                  style: AppStyles.bodyLarge.copyWith(
+                    color: AppColors.red600,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 32,
+                  ),
+                )
+              : Text(
+                  'Payment Received',
+                  style: AppStyles.bodyLarge.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 32,
+                  ),
+                ),
           const SizedBox(height: 10),
           if (change > 0) ...[
             Text(
