@@ -10,6 +10,7 @@ import 'package:hop_pos/src/orders/actions/order_actions.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/order_discount_form.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
+import 'package:hop_pos/src/payment_methods/models/payment_method.dart';
 import 'package:hop_pos/src/pos/models/pos_cart.dart';
 import 'package:hop_pos/src/products/models/product.dart';
 import 'package:hop_pos/src/screening_registrations/actions/screening_registration_actions.dart';
@@ -91,7 +92,12 @@ class PosController extends _$PosController {
       customer: null,
       registration: null,
       order: null,
+      checkoutAmount: null,
     );
+  }
+
+  void setCheckoutAmount(double amount) {
+    state = state.copyWith(checkoutAmount: amount);
   }
 
   Future<void> discardSales() async {
@@ -187,6 +193,38 @@ class PosController extends _$PosController {
     );
 
     await ref.read(orderActionsProvider).updateOrder(state.order!);
+  }
+
+  Future<void> addNewOrderPayment(PaymentMethod method) async {
+    if (state.order?.order.id == null) {
+      ref.read(flashMessageProvider).flash(message: 'Invalid order.', type: FlashMessageType.error);
+      return;
+    }
+    if (state.order!.balance <= 0) {
+      ref
+          .read(flashMessageProvider)
+          .flash(message: 'Amount payable cannot be equal or lesser than 0.', type: FlashMessageType.error);
+      return;
+    }
+
+    if ((state.checkoutAmount ?? 0) <= 0) {
+      ref
+          .read(flashMessageProvider)
+          .flash(message: 'Payment amount cannot be equal or lower than 0.', type: FlashMessageType.error);
+      return;
+    }
+
+    if (!method.isCash && (state.checkoutAmount ?? 0) > state.order!.balance) {
+      ref.read(flashMessageProvider).flash(
+            message: 'Payment amount cannot be bigger than the balance for this payment method.',
+            type: FlashMessageType.error,
+          );
+      return;
+    }
+
+    final order =
+        await ref.read(orderActionsProvider).createNewOrderPayment(state.order!, method, state.checkoutAmount ?? 0);
+    state = state.copyWith(order: order);
   }
 
   Future<void> deleteOrderPayment(OrderPayment payment) async {

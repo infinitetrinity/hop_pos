@@ -22,6 +22,10 @@ class OrderPaymentActions {
     required this.newOrderPaymentRepo,
   });
 
+  Future<OrderPayment> store(OrderPayment payment) async {
+    return await newOrderPaymentRepo.insert(payment.toData());
+  }
+
   Future<bool> delete(OrderPayment payment) async {
     final dynamic repo = payment.isNew == true ? newOrderPaymentRepo : orderPaymentRepo;
     return await repo.delete(payment);

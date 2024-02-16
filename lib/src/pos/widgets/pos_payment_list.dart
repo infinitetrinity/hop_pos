@@ -19,7 +19,7 @@ class PosPaymentList extends ConsumerWidget {
     return order == null || payments == null || payments.isEmpty
         ? Container()
         : Container(
-            constraints: const BoxConstraints(maxHeight: 100),
+            constraints: const BoxConstraints(maxHeight: 120),
             decoration: const BoxDecoration(
               color: AppColors.white,
               border: Border(

@@ -21,6 +21,7 @@ _$PosCartImpl _$$PosCartImplFromJson(Map<String, dynamic> json) =>
       order: json['order'] == null
           ? null
           : PosOrder.fromJson(json['order'] as Map<String, dynamic>),
+      checkoutAmount: (json['checkoutAmount'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$PosCartImplToJson(_$PosCartImpl instance) =>
@@ -29,4 +30,5 @@ Map<String, dynamic> _$$PosCartImplToJson(_$PosCartImpl instance) =>
       'customer': instance.customer,
       'registration': instance.registration,
       'order': instance.order,
+      'checkoutAmount': instance.checkoutAmount,
     };

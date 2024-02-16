@@ -30,7 +30,7 @@ class OrderPaymentDao extends DatabaseAccessor<AppDb> with _$OrderPaymentDaoMixi
 
   Future<bool> deleteOrderPayment(OrderPayment payment) async {
     return await transaction(() async {
-      final count = await (delete(orderPaymentsTable)..where((tbl) => tbl.id.equals(payment.id))).go();
+      final count = await (delete(orderPaymentsTable)..where((tbl) => tbl.id.equals(payment.id!))).go();
 
       await db.toSycnDataDao.insertToSyncData(payment.toSyncData(ToSyncActions.delete));
       return count > 0;

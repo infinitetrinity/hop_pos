@@ -11,13 +11,13 @@ part 'order_payment.g.dart';
 @freezed
 class OrderPayment with _$OrderPayment {
   const factory OrderPayment({
-    required int id,
+    int? id,
     @DoubleFromStringConverter() double? amount,
     @JsonKey(name: 'order_id') required int orderId,
     @JsonKey(name: 'payment_method_id') int? paymentMethodId,
     @Default(false) @JsonKey(name: 'order_is_new') bool? orderIsNew,
-    @Default(false) @JsonKey(name: 'is_new') bool? isNew,
-    @JsonKey(name: 'created_at') required DateTime createdAt,
+    @Default(false) @JsonKey(name: 'is_new') bool isNew,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
   }) = _OrderPayment;
 
   const OrderPayment._();
@@ -30,14 +30,33 @@ class OrderPayment with _$OrderPayment {
     );
   }
 
-  String get displayCreatedAt {
-    return DateFormat('dd MMM yyyy, hh:mm a').format(createdAt);
+  String? get displayCreatedAt {
+    return createdAt == null ? null : DateFormat('dd MMM yyyy, hh:mm a').format(createdAt!);
+  }
+
+  dynamic toData() {
+    return isNew
+        ? NewOrderPaymentsTableCompanion(
+            id: drift.Value.ofNullable(id),
+            amount: drift.Value(amount ?? 0),
+            orderId: drift.Value(orderId),
+            orderIsNew: drift.Value(orderIsNew ?? false),
+            paymentMethodId: drift.Value(paymentMethodId),
+            createdAt: drift.Value(createdAt ?? DateTime.now()),
+          )
+        : OrderPaymentsTableCompanion(
+            id: drift.Value.ofNullable(id),
+            amount: drift.Value(amount ?? 0),
+            orderId: drift.Value(orderId),
+            paymentMethodId: drift.Value(paymentMethodId),
+            createdAt: drift.Value.ofNullable(createdAt),
+          );
   }
 
   ToSyncDataTableCompanion toSyncData(ToSyncActions action) {
     return ToSyncDataTableCompanion(
       model: const drift.Value(ToSyncModels.order_payments),
-      modelId: drift.Value(id),
+      modelId: drift.Value.ofNullable(id),
       action: drift.Value(action),
       createdAt: drift.Value(DateTime.now()),
       value: drift.Value(toJson()),

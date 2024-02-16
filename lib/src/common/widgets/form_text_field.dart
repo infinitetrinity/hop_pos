@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/widgets/form_hint.dart';
 import 'package:hop_pos/src/common/widgets/form_label.dart';
 
-class FormTextField extends HookWidget {
+class FormTextField extends StatelessWidget {
   const FormTextField({
     super.key,
     this.label,
@@ -29,6 +28,10 @@ class FormTextField extends HookWidget {
     this.maxLines = 1,
     this.suffix,
     this.prefix,
+    this.fontSize = 14,
+    this.textAlign = TextAlign.left,
+    this.autoFocus = false,
+    this.controller,
   });
 
   final String? label;
@@ -51,35 +54,13 @@ class FormTextField extends HookWidget {
   final int? maxLines;
   final String? suffix;
   final String? prefix;
+  final double? fontSize;
+  final TextAlign textAlign;
+  final bool autoFocus;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController controller =
-        useTextEditingController(text: "${prefix ?? ''}$value${suffix ?? ''}");
-
-    if ((suffix?.length ?? 0) > 0) {
-      final offset = controller.text.length - (suffix?.length ?? 0);
-      controller.selection =
-          TextSelection.collapsed(offset: offset > 0 ? offset : 0);
-    }
-
-    useEffect(() {
-      if (controller.text.isEmpty &&
-          value != null &&
-          value!.isNotEmpty &&
-          value != '0.0') {
-        controller.text = "${prefix ?? ''}$value${suffix ?? ''}";
-        final offset = controller.text.length - (suffix?.length ?? 0);
-        controller.selection = TextSelection.collapsed(offset: offset);
-      }
-
-      if (controller.text.isNotEmpty && (value == null || value!.isEmpty)) {
-        controller.text = "";
-      }
-
-      return null;
-    }, [value]);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -90,9 +71,13 @@ class FormTextField extends HookWidget {
             isRequired: isRequired,
           ),
         TextFormField(
+          autofocus: autoFocus,
+          textAlign: textAlign,
           style: AppStyles.body.copyWith(
             color: AppColors.gray800,
+            fontSize: fontSize,
           ),
+          initialValue: controller == null ? value : null,
           validator: validator,
           readOnly: isDisabled,
           maxLines: maxLines,

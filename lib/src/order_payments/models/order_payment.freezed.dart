@@ -20,7 +20,7 @@ OrderPayment _$OrderPaymentFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$OrderPayment {
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   @DoubleFromStringConverter()
   double? get amount => throw _privateConstructorUsedError;
   @JsonKey(name: 'order_id')
@@ -30,9 +30,9 @@ mixin _$OrderPayment {
   @JsonKey(name: 'order_is_new')
   bool? get orderIsNew => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_new')
-  bool? get isNew => throw _privateConstructorUsedError;
+  bool get isNew => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,13 +47,13 @@ abstract class $OrderPaymentCopyWith<$Res> {
       _$OrderPaymentCopyWithImpl<$Res, OrderPayment>;
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       @DoubleFromStringConverter() double? amount,
       @JsonKey(name: 'order_id') int orderId,
       @JsonKey(name: 'payment_method_id') int? paymentMethodId,
       @JsonKey(name: 'order_is_new') bool? orderIsNew,
-      @JsonKey(name: 'is_new') bool? isNew,
-      @JsonKey(name: 'created_at') DateTime createdAt});
+      @JsonKey(name: 'is_new') bool isNew,
+      @JsonKey(name: 'created_at') DateTime? createdAt});
 }
 
 /// @nodoc
@@ -69,19 +69,19 @@ class _$OrderPaymentCopyWithImpl<$Res, $Val extends OrderPayment>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? amount = freezed,
     Object? orderId = null,
     Object? paymentMethodId = freezed,
     Object? orderIsNew = freezed,
-    Object? isNew = freezed,
-    Object? createdAt = null,
+    Object? isNew = null,
+    Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       amount: freezed == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -98,14 +98,14 @@ class _$OrderPaymentCopyWithImpl<$Res, $Val extends OrderPayment>
           ? _value.orderIsNew
           : orderIsNew // ignore: cast_nullable_to_non_nullable
               as bool?,
-      isNew: freezed == isNew
+      isNew: null == isNew
           ? _value.isNew
           : isNew // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      createdAt: null == createdAt
+              as bool,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -119,13 +119,13 @@ abstract class _$$OrderPaymentImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       @DoubleFromStringConverter() double? amount,
       @JsonKey(name: 'order_id') int orderId,
       @JsonKey(name: 'payment_method_id') int? paymentMethodId,
       @JsonKey(name: 'order_is_new') bool? orderIsNew,
-      @JsonKey(name: 'is_new') bool? isNew,
-      @JsonKey(name: 'created_at') DateTime createdAt});
+      @JsonKey(name: 'is_new') bool isNew,
+      @JsonKey(name: 'created_at') DateTime? createdAt});
 }
 
 /// @nodoc
@@ -139,19 +139,19 @@ class __$$OrderPaymentImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? amount = freezed,
     Object? orderId = null,
     Object? paymentMethodId = freezed,
     Object? orderIsNew = freezed,
-    Object? isNew = freezed,
-    Object? createdAt = null,
+    Object? isNew = null,
+    Object? createdAt = freezed,
   }) {
     return _then(_$OrderPaymentImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       amount: freezed == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -168,14 +168,14 @@ class __$$OrderPaymentImplCopyWithImpl<$Res>
           ? _value.orderIsNew
           : orderIsNew // ignore: cast_nullable_to_non_nullable
               as bool?,
-      isNew: freezed == isNew
+      isNew: null == isNew
           ? _value.isNew
           : isNew // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      createdAt: null == createdAt
+              as bool,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ));
   }
 }
@@ -184,20 +184,20 @@ class __$$OrderPaymentImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$OrderPaymentImpl extends _OrderPayment {
   const _$OrderPaymentImpl(
-      {required this.id,
+      {this.id,
       @DoubleFromStringConverter() this.amount,
       @JsonKey(name: 'order_id') required this.orderId,
       @JsonKey(name: 'payment_method_id') this.paymentMethodId,
       @JsonKey(name: 'order_is_new') this.orderIsNew = false,
       @JsonKey(name: 'is_new') this.isNew = false,
-      @JsonKey(name: 'created_at') required this.createdAt})
+      @JsonKey(name: 'created_at') this.createdAt})
       : super._();
 
   factory _$OrderPaymentImpl.fromJson(Map<String, dynamic> json) =>
       _$$OrderPaymentImplFromJson(json);
 
   @override
-  final int id;
+  final int? id;
   @override
   @DoubleFromStringConverter()
   final double? amount;
@@ -212,10 +212,10 @@ class _$OrderPaymentImpl extends _OrderPayment {
   final bool? orderIsNew;
   @override
   @JsonKey(name: 'is_new')
-  final bool? isNew;
+  final bool isNew;
   @override
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
 
   @override
   String toString() {
@@ -260,13 +260,13 @@ class _$OrderPaymentImpl extends _OrderPayment {
 
 abstract class _OrderPayment extends OrderPayment {
   const factory _OrderPayment(
-          {required final int id,
+          {final int? id,
           @DoubleFromStringConverter() final double? amount,
           @JsonKey(name: 'order_id') required final int orderId,
           @JsonKey(name: 'payment_method_id') final int? paymentMethodId,
           @JsonKey(name: 'order_is_new') final bool? orderIsNew,
-          @JsonKey(name: 'is_new') final bool? isNew,
-          @JsonKey(name: 'created_at') required final DateTime createdAt}) =
+          @JsonKey(name: 'is_new') final bool isNew,
+          @JsonKey(name: 'created_at') final DateTime? createdAt}) =
       _$OrderPaymentImpl;
   const _OrderPayment._() : super._();
 
@@ -274,7 +274,7 @@ abstract class _OrderPayment extends OrderPayment {
       _$OrderPaymentImpl.fromJson;
 
   @override
-  int get id;
+  int? get id;
   @override
   @DoubleFromStringConverter()
   double? get amount;
@@ -289,10 +289,10 @@ abstract class _OrderPayment extends OrderPayment {
   bool? get orderIsNew;
   @override
   @JsonKey(name: 'is_new')
-  bool? get isNew;
+  bool get isNew;
   @override
   @JsonKey(name: 'created_at')
-  DateTime get createdAt;
+  DateTime? get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$OrderPaymentImplCopyWith<_$OrderPaymentImpl> get copyWith =>

@@ -199,7 +199,7 @@ class __$$ScreeningRegistrationImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ScreeningRegistrationImpl implements _ScreeningRegistration {
+class _$ScreeningRegistrationImpl extends _ScreeningRegistration {
   const _$ScreeningRegistrationImpl(
       {this.id,
       this.index,
@@ -208,7 +208,8 @@ class _$ScreeningRegistrationImpl implements _ScreeningRegistration {
       @JsonKey(name: 'timeslot_id') required this.timeslotId,
       @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'is_new') this.isNew = false,
-      @JsonKey(name: 'has_orders') this.hasOrders = false});
+      @JsonKey(name: 'has_orders') this.hasOrders = false})
+      : super._();
 
   factory _$ScreeningRegistrationImpl.fromJson(Map<String, dynamic> json) =>
       _$$ScreeningRegistrationImplFromJson(json);
@@ -281,7 +282,7 @@ class _$ScreeningRegistrationImpl implements _ScreeningRegistration {
   }
 }
 
-abstract class _ScreeningRegistration implements ScreeningRegistration {
+abstract class _ScreeningRegistration extends ScreeningRegistration {
   const factory _ScreeningRegistration(
           {final int? id,
           final String? index,
@@ -292,6 +293,7 @@ abstract class _ScreeningRegistration implements ScreeningRegistration {
           @JsonKey(name: 'is_new') final bool isNew,
           @JsonKey(name: 'has_orders') final bool hasOrders}) =
       _$ScreeningRegistrationImpl;
+  const _ScreeningRegistration._() : super._();
 
   factory _ScreeningRegistration.fromJson(Map<String, dynamic> json) =
       _$ScreeningRegistrationImpl.fromJson;

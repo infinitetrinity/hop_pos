@@ -30,4 +30,8 @@ class PaymentMethodRepository {
   Future<PaymentMethod> getById(int id) async {
     return await paymentMethodDao.getById(id);
   }
+
+  Future<List<PaymentMethod>> getAll() async {
+    return await paymentMethodDao.getAll();
+  }
 }

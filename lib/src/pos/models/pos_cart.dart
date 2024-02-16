@@ -14,6 +14,7 @@ class PosCart with _$PosCart {
     Customer? customer,
     ScreeningRegistration? registration,
     PosOrder? order,
+    double? checkoutAmount,
   }) = _PosCart;
 
   const PosCart._();

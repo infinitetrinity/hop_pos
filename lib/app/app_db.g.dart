@@ -5492,10 +5492,7 @@ class $NewOrderPaymentsTableTable extends NewOrderPaymentsTable
   @override
   late final GeneratedColumn<int> orderId = GeneratedColumn<int>(
       'order_id', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES orders (id) ON DELETE CASCADE'));
+      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _paymentMethodIdMeta =
       const VerificationMeta('paymentMethodId');
   @override
@@ -7061,13 +7058,6 @@ abstract class _$AppDb extends GeneratedDatabase {
                 limitUpdateKind: UpdateKind.delete),
             result: [
               TableUpdate('new_order_items', kind: UpdateKind.update),
-            ],
-          ),
-          WritePropagation(
-            on: TableUpdateQuery.onTableName('orders',
-                limitUpdateKind: UpdateKind.delete),
-            result: [
-              TableUpdate('new_order_payments', kind: UpdateKind.delete),
             ],
           ),
           WritePropagation(

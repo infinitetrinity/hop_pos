@@ -11,6 +11,7 @@ import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
 import 'package:hop_pos/src/orders/repositories/new_order_repository.dart';
 import 'package:hop_pos/src/orders/repositories/order_repository.dart';
+import 'package:hop_pos/src/payment_methods/models/payment_method.dart';
 import 'package:hop_pos/src/pos/models/pos_cart.dart';
 import 'package:hop_pos/src/pos_licenses/actions/pos_license_actions.dart';
 import 'package:hop_pos/src/pos_licenses/models/pos_license.dart';
@@ -161,8 +162,24 @@ class OrderActions {
     return newOrderRepo.storeWithItemsAndExtras(order);
   }
 
+  Future<PosOrder> createNewOrderPayment(PosOrder order, PaymentMethod method, double amount) async {
+    final payment = OrderPayment(
+      orderId: order.order.id!,
+      paymentMethodId: method.id,
+      amount: amount,
+      isNew: true,
+      orderIsNew: order.order.isNew,
+    );
+
+    final result = await orderPaymentActions.store(payment);
+
+    return order.copyWith(
+      payments: [...order.payments ?? [], result],
+    );
+  }
+
   Future<PosOrder> deleteOrderPayment(PosOrder order, OrderPayment payment) async {
-    if (!order.order.isNew) {
+    if (order.order.id != null) {
       await orderPaymentActions.delete(payment);
     }
 

@@ -13,7 +13,7 @@ class PosSalesSummaryItemsList extends ConsumerWidget {
     return items == null
         ? Container()
         : SizedBox(
-            height: 300,
+            height: 280,
             child: ListView.builder(
               shrinkWrap: true,
               physics: const AlwaysScrollableScrollPhysics(),

@@ -139,12 +139,13 @@ class __$$ScreeningVenueImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ScreeningVenueImpl implements _ScreeningVenue {
+class _$ScreeningVenueImpl extends _ScreeningVenue {
   const _$ScreeningVenueImpl(
       {required this.id,
       required this.name,
       @JsonKey(name: 'full_address') this.fullAddress,
-      @JsonKey(name: 'screening_form_id') required this.screeningFormId});
+      @JsonKey(name: 'screening_form_id') required this.screeningFormId})
+      : super._();
 
   factory _$ScreeningVenueImpl.fromJson(Map<String, dynamic> json) =>
       _$$ScreeningVenueImplFromJson(json);
@@ -198,13 +199,14 @@ class _$ScreeningVenueImpl implements _ScreeningVenue {
   }
 }
 
-abstract class _ScreeningVenue implements ScreeningVenue {
+abstract class _ScreeningVenue extends ScreeningVenue {
   const factory _ScreeningVenue(
       {required final int id,
       required final String name,
       @JsonKey(name: 'full_address') final String? fullAddress,
       @JsonKey(name: 'screening_form_id')
       required final int screeningFormId}) = _$ScreeningVenueImpl;
+  const _ScreeningVenue._() : super._();
 
   factory _ScreeningVenue.fromJson(Map<String, dynamic> json) =
       _$ScreeningVenueImpl.fromJson;

@@ -14,8 +14,6 @@ mixin _$NewOrderDaoMixin on DatabaseAccessor<AppDb> {
   $PosExtrasTableTable get posExtrasTable => attachedDatabase.posExtrasTable;
   $NewOrderExtrasTableTable get newOrderExtrasTable =>
       attachedDatabase.newOrderExtrasTable;
-  $CustomersTableTable get customersTable => attachedDatabase.customersTable;
-  $OrdersTableTable get ordersTable => attachedDatabase.ordersTable;
   $PaymentMethodsTableTable get paymentMethodsTable =>
       attachedDatabase.paymentMethodsTable;
   $NewOrderPaymentsTableTable get newOrderPaymentsTable =>

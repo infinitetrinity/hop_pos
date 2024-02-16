@@ -7,8 +7,15 @@ part 'payment_method_controller.g.dart';
 @riverpod
 class PaymentMethodController extends _$PaymentMethodController {
   @override
-  void build() {
-    return;
+  Future<List<PaymentMethod>> build() async {
+    final methods = await _getAllPaymentMethods();
+    methods.add(const PaymentMethod(id: 0, name: 'Pay Later'));
+
+    return methods;
+  }
+
+  Future<List<PaymentMethod>> _getAllPaymentMethods() async {
+    return await ref.read(paymentMethodActionsProvider).getAllPaymentMethods();
   }
 
   Future<PaymentMethod> getPaymentMethodById(int id) async {

@@ -1,4 +1,6 @@
+import 'package:drift/drift.dart' as drift;
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/app/app_extension.dart';
 import 'package:intl/intl.dart';
 
@@ -26,6 +28,19 @@ class ScreeningTimeslot with _$ScreeningTimeslot {
   static List<ScreeningTimeslot> fromJsonList(dynamic data) {
     return List<ScreeningTimeslot>.from(
       data.map((el) => ScreeningTimeslot.fromJson(el)),
+    );
+  }
+
+  ScreeningTimeslotsTableCompanion toData() {
+    return ScreeningTimeslotsTableCompanion(
+      id: drift.Value(id),
+      dateAndTime: drift.Value(dateAndTime),
+      slots: drift.Value(slots),
+      specimenCollectionDate: drift.Value(specimenCollectionDate),
+      specimenCollectionTime: drift.Value(specimenCollectionTime),
+      specimenCollectionVenue: drift.Value(specimenCollectionVenue),
+      screeningId: drift.Value(screeningId),
+      venueId: drift.Value(venueId),
     );
   }
 

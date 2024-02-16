@@ -1,4 +1,6 @@
+import 'package:drift/drift.dart' as drift;
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hop_pos/app/app_db.dart';
 
 part 'screening_registration.freezed.dart';
 part 'screening_registration.g.dart';
@@ -16,11 +18,21 @@ class ScreeningRegistration with _$ScreeningRegistration {
     @JsonKey(name: 'has_orders') @Default(false) bool hasOrders,
   }) = _ScreeningRegistration;
 
+  const ScreeningRegistration._();
+
   factory ScreeningRegistration.fromJson(Map<String, dynamic> json) => _$ScreeningRegistrationFromJson(json);
 
   static List<ScreeningRegistration> fromJsonList(dynamic data) {
     return List<ScreeningRegistration>.from(
       data.map((el) => ScreeningRegistration.fromJson(el)),
+    );
+  }
+
+  ScreeningRegistrationsTableCompanion toData() {
+    return ScreeningRegistrationsTableCompanion(
+      index: drift.Value(index),
+      customerId: drift.Value.ofNullable(customerId),
+      timeslotId: drift.Value.ofNullable(timeslotId),
     );
   }
 }

@@ -8,14 +8,16 @@ part of 'order_payment.dart';
 
 _$OrderPaymentImpl _$$OrderPaymentImplFromJson(Map<String, dynamic> json) =>
     _$OrderPaymentImpl(
-      id: json['id'] as int,
+      id: json['id'] as int?,
       amount:
           const DoubleFromStringConverter().fromJson(json['amount'] as String?),
       orderId: json['order_id'] as int,
       paymentMethodId: json['payment_method_id'] as int?,
       orderIsNew: json['order_is_new'] as bool? ?? false,
       isNew: json['is_new'] as bool? ?? false,
-      createdAt: DateTime.parse(json['created_at'] as String),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
     );
 
 Map<String, dynamic> _$$OrderPaymentImplToJson(_$OrderPaymentImpl instance) =>
@@ -26,5 +28,5 @@ Map<String, dynamic> _$$OrderPaymentImplToJson(_$OrderPaymentImpl instance) =>
       'payment_method_id': instance.paymentMethodId,
       'order_is_new': instance.orderIsNew,
       'is_new': instance.isNew,
-      'created_at': instance.createdAt.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
     };

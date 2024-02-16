@@ -15,7 +15,7 @@ class NewOrderPaymentDao extends DatabaseAccessor<AppDb> with _$NewOrderPaymentD
   }
 
   Future<bool> deleteNewOrderPayment(OrderPayment payment) async {
-    final count = await (delete(newOrderPaymentsTable)..where((tbl) => tbl.id.equals(payment.id))).go();
+    final count = await (delete(newOrderPaymentsTable)..where((tbl) => tbl.id.equals(payment.id!))).go();
     return count > 0;
   }
 

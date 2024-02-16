@@ -20,7 +20,7 @@ class NewOrderPaymentRepository {
   });
 
   Future<OrderPayment> insert(NewOrderPaymentsTableCompanion payment) async {
-    return await newOrderPaymentDao.insertNewOrderPayment(payment);
+    return (await newOrderPaymentDao.insertNewOrderPayment(payment)).copyWith(isNew: true);
   }
 
   Future<bool> delete(OrderPayment payment) async {

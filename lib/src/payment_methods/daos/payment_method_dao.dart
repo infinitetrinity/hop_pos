@@ -30,4 +30,11 @@ class PaymentMethodDao extends DatabaseAccessor<AppDb> with _$PaymentMethodDaoMi
     final query = select(paymentMethodsTable)..where((tbl) => tbl.id.equals(id));
     return query.getSingle();
   }
+
+  Future<List<PaymentMethod>> getAll() {
+    final query = select(paymentMethodsTable);
+
+    query.orderBy([(table) => OrderingTerm.asc(table.id)]);
+    return query.get();
+  }
 }

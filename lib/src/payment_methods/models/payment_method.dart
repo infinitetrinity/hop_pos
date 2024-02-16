@@ -30,4 +30,8 @@ class PaymentMethod with _$PaymentMethod {
       description: drift.Value(description),
     );
   }
+
+  bool get isCash {
+    return name.toLowerCase() == 'cash';
+  }
 }

@@ -49,7 +49,7 @@ class PosPaymentTile extends HookConsumerWidget {
                         ),
                         const SizedBox(height: 3),
                         Text(
-                          payment.displayCreatedAt,
+                          payment.displayCreatedAt ?? '',
                           style: AppStyles.bodySmall.copyWith(
                             color: AppColors.gray800,
                           ),

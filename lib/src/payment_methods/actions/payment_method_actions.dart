@@ -18,6 +18,10 @@ class PaymentMethodActions {
     required this.paymentMethodRepo,
   });
 
+  Future<List<PaymentMethod>> getAllPaymentMethods() async {
+    return await paymentMethodRepo.getAll();
+  }
+
   Future<PaymentMethod> getPaymentMethodById(int id) async {
     return await paymentMethodRepo.getById(id);
   }

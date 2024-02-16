@@ -1,4 +1,3 @@
-import 'package:drift/drift.dart' as drift;
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
@@ -54,81 +53,28 @@ class InitDataResponse with _$InitDataResponse {
   }
 
   static int _getLastPage(Map<String, dynamic> data) {
-    return data.values.fold(
-      0,
-      (maxPage, el) => (el['meta']['last_page'] ?? 0) > maxPage ? (el['meta']['last_page'] ?? 0) : maxPage,
-    );
+    return data.values
+        .fold(0, (maxPage, el) => (el['meta']['last_page'] ?? 0) > maxPage ? (el['meta']['last_page'] ?? 0) : maxPage);
   }
 
   List<CustomersTableCompanion> getCustomersData() {
-    return customers
-        .map(
-          (customer) => CustomersTableCompanion(
-            id: drift.Value(customer.id!),
-            fullName: drift.Value(customer.fullName),
-            nric: drift.Value(customer.nric),
-            dob: drift.Value(customer.dob),
-            gender: drift.Value(customer.gender),
-            email: drift.Value(customer.email),
-            mobileNo: drift.Value(customer.mobileNo),
-            isPending: drift.Value(customer.isPending),
-          ),
-        )
-        .toList();
+    return customers.map((customer) => customer.toData() as CustomersTableCompanion).toList();
   }
 
   List<ScreeningsTableCompanion> getScreeningsData() {
-    return screenings
-        .map(
-          (screening) => ScreeningsTableCompanion(
-            id: drift.Value(screening.id),
-            name: drift.Value(screening.name),
-            corporate: drift.Value(screening.corporate),
-          ),
-        )
-        .toList();
+    return screenings.map((screening) => screening.toData()).toList();
   }
 
   List<ScreeningVenuesTableCompanion> getScreeningVenuesData() {
-    return venues
-        .map(
-          (venue) => ScreeningVenuesTableCompanion(
-            id: drift.Value(venue.id),
-            name: drift.Value(venue.name),
-            fullAddress: drift.Value(venue.fullAddress),
-            screeningFormId: drift.Value(venue.screeningFormId),
-          ),
-        )
-        .toList();
+    return venues.map((venue) => venue.toData()).toList();
   }
 
   List<ScreeningTimeslotsTableCompanion> getScreeningTimeslotsData() {
-    return timeslots
-        .map(
-          (timeslot) => ScreeningTimeslotsTableCompanion(
-            id: drift.Value(timeslot.id),
-            dateAndTime: drift.Value(timeslot.dateAndTime),
-            slots: drift.Value(timeslot.slots),
-            specimenCollectionDate: drift.Value(timeslot.specimenCollectionDate),
-            specimenCollectionTime: drift.Value(timeslot.specimenCollectionTime),
-            specimenCollectionVenue: drift.Value(timeslot.specimenCollectionVenue),
-            screeningId: drift.Value(timeslot.screeningId),
-            venueId: drift.Value(timeslot.venueId),
-          ),
-        )
-        .toList();
+    return timeslots.map((timeslot) => timeslot.toData()).toList();
   }
 
   List<ScreeningRegistrationsTableCompanion> getScreeningRegistrationsData() {
-    return registrations
-        .map(
-          (registration) => ScreeningRegistrationsTableCompanion(
-            index: drift.Value(registration.index),
-            customerId: drift.Value.ofNullable(registration.customerId),
-            timeslotId: drift.Value.ofNullable(registration.timeslotId),
-          ),
-        )
-        .toList();
+    return registrations.map((registration) => registration.toData()).toList();
   }
 
   List<OrdersTableCompanion> getOrdersData() {
@@ -144,16 +90,6 @@ class InitDataResponse with _$InitDataResponse {
   }
 
   List<OrderPaymentsTableCompanion> getOrderPaymentsData() {
-    return orderPayments
-        .map(
-          (payment) => OrderPaymentsTableCompanion(
-            id: drift.Value(payment.id),
-            amount: drift.Value(payment.amount ?? 0),
-            orderId: drift.Value(payment.orderId),
-            paymentMethodId: drift.Value(payment.paymentMethodId),
-            createdAt: drift.Value(payment.createdAt),
-          ),
-        )
-        .toList();
+    return orderPayments.map((payment) => payment.toData() as OrderPaymentsTableCompanion).toList();
   }
 }

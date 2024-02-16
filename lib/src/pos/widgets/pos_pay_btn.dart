@@ -6,8 +6,8 @@ import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/routes/pos_routes.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 
-class PosCheckoutBtn extends ConsumerWidget {
-  const PosCheckoutBtn({super.key});
+class PosPayBtn extends ConsumerWidget {
+  const PosPayBtn({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

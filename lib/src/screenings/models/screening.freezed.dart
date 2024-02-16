@@ -117,8 +117,9 @@ class __$$ScreeningImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ScreeningImpl implements _Screening {
-  const _$ScreeningImpl({required this.id, required this.name, this.corporate});
+class _$ScreeningImpl extends _Screening {
+  const _$ScreeningImpl({required this.id, required this.name, this.corporate})
+      : super._();
 
   factory _$ScreeningImpl.fromJson(Map<String, dynamic> json) =>
       _$$ScreeningImplFromJson(json);
@@ -164,11 +165,12 @@ class _$ScreeningImpl implements _Screening {
   }
 }
 
-abstract class _Screening implements Screening {
+abstract class _Screening extends Screening {
   const factory _Screening(
       {required final int id,
       required final String name,
       final String? corporate}) = _$ScreeningImpl;
+  const _Screening._() : super._();
 
   factory _Screening.fromJson(Map<String, dynamic> json) =
       _$ScreeningImpl.fromJson;

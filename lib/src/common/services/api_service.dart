@@ -41,7 +41,6 @@ class ApiService {
   }
 
   Future<bool> checkServerConnection() async {
-    print('check server connection');
     final hasInternet = await InternetConnectionChecker().hasConnection;
     if (!hasInternet) {
       return false;
@@ -78,9 +77,8 @@ class ApiService {
         return null;
       }
 
-      ApiExceptions.handle(e);
-
-      if (e is ApiValidationError) {
+      final handled = ApiExceptions.handle(e);
+      if (!handled) {
         rethrow;
       }
     }
@@ -111,9 +109,8 @@ class ApiService {
         return null;
       }
 
-      ApiExceptions.handle(e);
-
-      if (e is ApiValidationError || e is ApiInvalidResponseError) {
+      final handled = ApiExceptions.handle(e);
+      if (!handled) {
         rethrow;
       }
     }

@@ -6,44 +6,49 @@ import 'package:logger/logger.dart';
 
 class ApiExceptions {
   ApiExceptions();
-  static bool errorHandled = false;
+  static bool isHandled = false;
   static FlashMessage flashMessage = FlashMessage();
 
-  static void handle(dynamic exception) {
-    errorHandled = false;
-    _handleNoInternetConnection(exception);
-    _handleTimeoutOutError(exception);
+  static bool handle(dynamic exception) {
+    if (_handleNoInternetConnection(exception)) {
+      return true;
+    }
+    if (_handleTimeoutOutError(exception)) {
+      return true;
+    }
+
     _handleApiValidationError(exception);
     _handleApiError(exception);
     _handleApiInvalidResponse(exception);
-
-    if (!errorHandled) {
+    if (!isHandled) {
       _handleApiUnknownError(exception);
     }
+
+    return false;
   }
 
-  static void _handleNoInternetConnection(exception) {
+  static bool _handleNoInternetConnection(exception) {
     if (exception is! NoInternetError) {
-      return;
+      return false;
     }
 
-    errorHandled = true;
     flashMessage.flash(
       message: 'No internet connection.',
       type: FlashMessageType.error,
     );
+    return true;
   }
 
-  static void _handleTimeoutOutError(exception) {
+  static bool _handleTimeoutOutError(exception) {
     if (exception is! TimeoutException && exception.toString() != "Connection timed out") {
-      return;
+      return false;
     }
 
-    errorHandled = true;
     flashMessage.flash(
       message: "Error connecting to server, please try again later",
       type: FlashMessageType.error,
     );
+    return true;
   }
 
   static void _handleApiValidationError(exception) {
@@ -51,7 +56,7 @@ class ApiExceptions {
       return;
     }
 
-    errorHandled = true;
+    isHandled = true;
     flashMessage.flash(
       message: exception.message,
       type: FlashMessageType.error,
@@ -63,11 +68,11 @@ class ApiExceptions {
       return;
     }
 
-    errorHandled = true;
     flashMessage.flash(
       message: "API Error: ${exception.message}",
       type: FlashMessageType.error,
     );
+    isHandled = true;
   }
 
   static void _handleApiInvalidResponse(exception) {
@@ -75,9 +80,9 @@ class ApiExceptions {
       return;
     }
 
-    errorHandled = true;
     final logger = Logger();
     logger.e("Api Invalid response error.", error: exception);
+    isHandled = true;
   }
 
   static void _handleApiUnknownError(exception) {
