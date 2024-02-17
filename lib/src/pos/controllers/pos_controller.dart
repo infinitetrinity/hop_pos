@@ -1,3 +1,4 @@
+import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/src/common/services/flash_message.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/customers/models/customer_form.dart';
@@ -225,6 +226,10 @@ class PosController extends _$PosController {
     final order =
         await ref.read(orderActionsProvider).createNewOrderPayment(state.order!, method, state.checkoutAmount ?? 0);
     state = state.copyWith(order: order);
+
+    ref
+        .read(flashMessageProvider)
+        .flash(message: 'Payment of ${(state.checkoutAmount ?? 0).formatMoney} by ${method.name} added.');
 
     await setEReceipt(true);
   }

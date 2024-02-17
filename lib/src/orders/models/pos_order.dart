@@ -2,7 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/src/order_extras/models/order_extra.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
-import 'package:hop_pos/src/order_payments/models/order_payment.dart';
+import 'package:hop_pos/src/order_payments/models/order_payment_with_method.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 
 part 'pos_order.freezed.dart';
@@ -15,7 +15,7 @@ class PosOrder with _$PosOrder {
     @Default(false) bool? payLater,
     List<OrderItem>? items,
     List<OrderExtra>? extras,
-    List<OrderPayment>? payments,
+    List<OrderPaymentWithMethod>? payments,
   }) = _Order;
 
   const PosOrder._();
@@ -63,7 +63,7 @@ class PosOrder with _$PosOrder {
   }
 
   double get totalPayment {
-    final double result = (payments ?? []).fold(0, (total, payment) => total + (payment.amount ?? 0));
+    final double result = (payments ?? []).fold(0, (total, payment) => total + (payment.payment.amount ?? 0));
     return result.toDecimalPlace(2);
   }
 

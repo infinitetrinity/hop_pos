@@ -97,6 +97,10 @@ class Order with _$Order {
     return "$invoicePrefix$invoiceNo";
   }
 
+  bool get hasDiscount {
+    return discountType != null && (discount ?? 0) > 0;
+  }
+
   bool get isDiscountPercentage {
     return discountType == DiscountType.percentage;
   }

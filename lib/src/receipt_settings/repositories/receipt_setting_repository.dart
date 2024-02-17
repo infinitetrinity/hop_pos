@@ -9,8 +9,7 @@ part 'receipt_setting_repository.g.dart';
 @riverpod
 ReceiptSettingRepository receiptSettingRepo(ReceiptSettingRepoRef ref) {
   return ReceiptSettingRepository(
-    receiptSettingDao:
-        ref.watch(appDbProvider.select((prov) => prov.receiptSettingDao)),
+    receiptSettingDao: ref.watch(appDbProvider.select((prov) => prov.receiptSettingDao)),
   );
 }
 
@@ -21,12 +20,11 @@ class ReceiptSettingRepository {
     required this.receiptSettingDao,
   });
 
-  Future<ReceiptSetting> insert(ReceiptSettingsTableCompanion setting) async {
-    return await receiptSettingDao.insertSetting(setting);
+  Future<ReceiptSetting?> getFirst() async {
+    return await receiptSettingDao.getFirst();
   }
 
-  Future<bool> update(
-      ReceiptSettingsTableCompanion setting, Expression<bool> where) async {
-    return await receiptSettingDao.updateSetting(setting, where);
+  Future<ReceiptSetting> insert(ReceiptSettingsTableCompanion setting) async {
+    return await receiptSettingDao.insertSetting(setting);
   }
 }

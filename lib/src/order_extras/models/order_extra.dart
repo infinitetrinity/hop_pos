@@ -83,7 +83,7 @@ class OrderExtra with _$OrderExtra {
   }
 
   String get displayName {
-    return "$name ${isPercentage && amount != null ? "($amount%)" : ""}";
+    return "$name ${isPercentage && amount != null ? "(${(amount ?? 0).removeZeroDecimal()}%)" : ""}";
   }
 
   double toCalculateAmount(double value) {

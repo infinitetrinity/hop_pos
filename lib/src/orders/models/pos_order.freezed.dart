@@ -24,7 +24,8 @@ mixin _$PosOrder {
   bool? get payLater => throw _privateConstructorUsedError;
   List<OrderItem>? get items => throw _privateConstructorUsedError;
   List<OrderExtra>? get extras => throw _privateConstructorUsedError;
-  List<OrderPayment>? get payments => throw _privateConstructorUsedError;
+  List<OrderPaymentWithMethod>? get payments =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,7 +43,7 @@ abstract class $PosOrderCopyWith<$Res> {
       bool? payLater,
       List<OrderItem>? items,
       List<OrderExtra>? extras,
-      List<OrderPayment>? payments});
+      List<OrderPaymentWithMethod>? payments});
 
   $OrderCopyWith<$Res> get order;
 }
@@ -86,7 +87,7 @@ class _$PosOrderCopyWithImpl<$Res, $Val extends PosOrder>
       payments: freezed == payments
           ? _value.payments
           : payments // ignore: cast_nullable_to_non_nullable
-              as List<OrderPayment>?,
+              as List<OrderPaymentWithMethod>?,
     ) as $Val);
   }
 
@@ -111,7 +112,7 @@ abstract class _$$OrderImplCopyWith<$Res> implements $PosOrderCopyWith<$Res> {
       bool? payLater,
       List<OrderItem>? items,
       List<OrderExtra>? extras,
-      List<OrderPayment>? payments});
+      List<OrderPaymentWithMethod>? payments});
 
   @override
   $OrderCopyWith<$Res> get order;
@@ -154,7 +155,7 @@ class __$$OrderImplCopyWithImpl<$Res>
       payments: freezed == payments
           ? _value._payments
           : payments // ignore: cast_nullable_to_non_nullable
-              as List<OrderPayment>?,
+              as List<OrderPaymentWithMethod>?,
     ));
   }
 }
@@ -167,7 +168,7 @@ class _$OrderImpl extends _Order {
       this.payLater = false,
       final List<OrderItem>? items,
       final List<OrderExtra>? extras,
-      final List<OrderPayment>? payments})
+      final List<OrderPaymentWithMethod>? payments})
       : _items = items,
         _extras = extras,
         _payments = payments,
@@ -201,9 +202,9 @@ class _$OrderImpl extends _Order {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<OrderPayment>? _payments;
+  final List<OrderPaymentWithMethod>? _payments;
   @override
-  List<OrderPayment>? get payments {
+  List<OrderPaymentWithMethod>? get payments {
     final value = _payments;
     if (value == null) return null;
     if (_payments is EqualUnmodifiableListView) return _payments;
@@ -259,7 +260,7 @@ abstract class _Order extends PosOrder {
       final bool? payLater,
       final List<OrderItem>? items,
       final List<OrderExtra>? extras,
-      final List<OrderPayment>? payments}) = _$OrderImpl;
+      final List<OrderPaymentWithMethod>? payments}) = _$OrderImpl;
   const _Order._() : super._();
 
   factory _Order.fromJson(Map<String, dynamic> json) = _$OrderImpl.fromJson;
@@ -273,7 +274,7 @@ abstract class _Order extends PosOrder {
   @override
   List<OrderExtra>? get extras;
   @override
-  List<OrderPayment>? get payments;
+  List<OrderPaymentWithMethod>? get payments;
   @override
   @JsonKey(ignore: true)
   _$$OrderImplCopyWith<_$OrderImpl> get copyWith =>

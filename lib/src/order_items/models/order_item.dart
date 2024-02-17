@@ -62,6 +62,14 @@ class OrderItem with _$OrderItem {
     return (price ?? 0) - calculatedDiscount;
   }
 
+  String? get displayDiscount {
+    if (!hasDiscount) {
+      return null;
+    }
+
+    return isPercentageDiscount ? "$discount%" : discount!.formatMoney;
+  }
+
   dynamic toData() {
     return isNew == true
         ? NewOrderItemsTableCompanion(

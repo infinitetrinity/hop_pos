@@ -6,7 +6,7 @@ import 'package:hop_pos/src/order_extras/models/order_extra.dart';
 import 'package:hop_pos/src/order_items/models/new_order_items_table.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/order_payments/models/new_order_payments_table.dart';
-import 'package:hop_pos/src/order_payments/models/order_payment.dart';
+import 'package:hop_pos/src/order_payments/models/order_payment_with_method.dart';
 import 'package:hop_pos/src/orders/models/new_orders_table.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
@@ -55,6 +55,12 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
             newOrdersTable.id,
           ),
         ),
+        leftOuterJoin(
+          paymentMethodsTable,
+          paymentMethodsTable.id.equalsExp(
+            newOrderPaymentsTable.paymentMethodId,
+          ),
+        ),
       ],
     );
 
@@ -78,9 +84,13 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
       }
 
       final newPayment = row.readTableOrNull(newOrderPaymentsTable)?.copyWith(isNew: true);
-      if (newPayment != null && order.payments?.contains(newPayment) != true) {
-        final payments = List<OrderPayment>.from(order.payments ?? []);
-        payments.add(newPayment);
+      final newPaymentMethod = row.readTableOrNull(paymentMethodsTable);
+      final newPaymentWithMethod =
+          newPayment != null ? OrderPaymentWithMethod(payment: newPayment, method: newPaymentMethod) : null;
+
+      if (newPaymentWithMethod != null && order.payments?.contains(newPaymentWithMethod) != true) {
+        final payments = List<OrderPaymentWithMethod>.from(order.payments ?? []);
+        payments.add(newPaymentWithMethod);
         order = order.copyWith(payments: payments);
       }
     }

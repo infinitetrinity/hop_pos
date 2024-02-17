@@ -8,7 +8,7 @@ import 'package:hop_pos/src/order_items/models/new_order_items_table.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/order_items/models/order_items_table.dart';
 import 'package:hop_pos/src/order_payments/models/new_order_payments_table.dart';
-import 'package:hop_pos/src/order_payments/models/order_payment.dart';
+import 'package:hop_pos/src/order_payments/models/order_payment_with_method.dart';
 import 'package:hop_pos/src/order_payments/models/order_payments_table.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/orders_table.dart';
@@ -97,6 +97,15 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
             ordersTable.id,
           ),
         ),
+        leftOuterJoin(
+          paymentMethodsTable,
+          paymentMethodsTable.id.equalsExp(
+                orderPaymentsTable.paymentMethodId,
+              ) |
+              paymentMethodsTable.id.equalsExp(
+                newOrderPaymentsTable.paymentMethodId,
+              ),
+        ),
       ],
     );
 
@@ -119,10 +128,14 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
         order = order.copyWith(extras: extras);
       }
 
-      final payment = row.readTableOrNull(orderPaymentsTable);
-      if (payment != null && order.payments?.contains(payment) != true) {
-        final payments = List<OrderPayment>.from(order.payments ?? []);
-        payments.add(payment);
+      final payment = row.readTableOrNull(orderPaymentsTable)?.copyWith(isNew: true);
+      final paymentMethod = row.readTableOrNull(paymentMethodsTable);
+      final paymentWithMethod =
+          payment != null ? OrderPaymentWithMethod(payment: payment, method: paymentMethod) : null;
+
+      if (paymentWithMethod != null && order.payments?.contains(paymentWithMethod) != true) {
+        final payments = List<OrderPaymentWithMethod>.from(order.payments ?? []);
+        payments.add(paymentWithMethod);
         order = order.copyWith(payments: payments);
       }
 
@@ -141,9 +154,13 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
       }
 
       final newPayment = row.readTableOrNull(newOrderPaymentsTable)?.copyWith(isNew: true);
-      if (newPayment != null && order.payments?.contains(newPayment) != true) {
-        final payments = List<OrderPayment>.from(order.payments ?? []);
-        payments.add(newPayment);
+      final newPaymentMethod = row.readTableOrNull(paymentMethodsTable);
+      final newPaymentWithMethod =
+          newPayment != null ? OrderPaymentWithMethod(payment: newPayment, method: newPaymentMethod) : null;
+
+      if (newPaymentWithMethod != null && order.payments?.contains(newPaymentWithMethod) != true) {
+        final payments = List<OrderPaymentWithMethod>.from(order.payments ?? []);
+        payments.add(newPaymentWithMethod);
         order = order.copyWith(payments: payments);
       }
     }

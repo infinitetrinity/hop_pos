@@ -3,7 +3,9 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  flutter_pos_printer_platform
   flutter_secure_storage_windows
+  network_info_plus
   printing
   screen_retriever
   sqlite3_flutter_libs

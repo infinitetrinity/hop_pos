@@ -6,19 +6,16 @@ import 'package:hop_pos/src/receipt_settings/models/receipt_settings_table.dart'
 part 'receipt_setting_dao.g.dart';
 
 @DriftAccessor(tables: [ReceiptSettingsTable])
-class ReceiptSettingDao extends DatabaseAccessor<AppDb>
-    with _$ReceiptSettingDaoMixin {
+class ReceiptSettingDao extends DatabaseAccessor<AppDb> with _$ReceiptSettingDaoMixin {
   ReceiptSettingDao(AppDb db) : super(db);
 
-  Future<ReceiptSetting> insertSetting(
-      ReceiptSettingsTableCompanion setting) async {
-    return await into(receiptSettingsTable).insertReturning(setting);
+  Future<ReceiptSetting?> getFirst() async {
+    final query = select(receiptSettingsTable);
+
+    return (await query.get()).firstOrNull;
   }
 
-  Future<bool> updateSetting(
-      ReceiptSettingsTableCompanion setting, Expression<bool> where) async {
-    final count = await (update(receiptSettingsTable)..where((_) => where))
-        .write(setting);
-    return count > 0;
+  Future<ReceiptSetting> insertSetting(ReceiptSettingsTableCompanion setting) async {
+    return await into(receiptSettingsTable).insertReturning(setting);
   }
 }

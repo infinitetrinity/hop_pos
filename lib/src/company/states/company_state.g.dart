@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'setup_service.dart';
+part of 'company_state.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$setupServiceHash() => r'135a0e4ac7ef0a9339a008cb6bc6c4abb5467efe';
+String _$companyStateHash() => r'0045b5b46e366ac5368442ccf9350160a031abb1';
 
-/// See also [SetupService].
-@ProviderFor(SetupService)
-final setupServiceProvider = AsyncNotifierProvider<SetupService, void>.internal(
-  SetupService.new,
-  name: r'setupServiceProvider',
+/// See also [companyState].
+@ProviderFor(companyState)
+final companyStateProvider = FutureProvider<Company?>.internal(
+  companyState,
+  name: r'companyStateProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$setupServiceHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$companyStateHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SetupService = AsyncNotifier<void>;
+typedef CompanyStateRef = FutureProviderRef<Company?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

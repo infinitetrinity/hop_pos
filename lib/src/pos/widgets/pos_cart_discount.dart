@@ -16,7 +16,7 @@ class PosCartDiscount extends ConsumerWidget {
         .select((prov) => prov.order?.order.isDiscountPercentage == true && (prov.order?.order.discount ?? 0) > 0));
     final discount = ref.watch(posControllerProvider.select((prov) => prov.order?.cartDiscount ?? 0));
 
-    return order != null && order.balanceBeforeDiscount > 0
+    return order != null && (order.balanceBeforeDiscount > 0 || discount > 0)
         ? Padding(
             padding: const EdgeInsets.only(top: 5),
             child: Row(

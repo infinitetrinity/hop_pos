@@ -16,7 +16,8 @@ _$OrderImpl _$$OrderImplFromJson(Map<String, dynamic> json) => _$OrderImpl(
           ?.map((e) => OrderExtra.fromJson(e as Map<String, dynamic>))
           .toList(),
       payments: (json['payments'] as List<dynamic>?)
-          ?.map((e) => OrderPayment.fromJson(e as Map<String, dynamic>))
+          ?.map(
+              (e) => OrderPaymentWithMethod.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

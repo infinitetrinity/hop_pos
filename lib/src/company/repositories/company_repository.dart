@@ -20,12 +20,15 @@ class CompanyRepository {
     required this.companyDao,
   });
 
+  Future<Company?> getFirst() async {
+    return await companyDao.getFirst();
+  }
+
   Future<Company> insert(CompanyTableCompanion company) async {
     return await companyDao.insertCompany(company);
   }
 
-  Future<bool> update(
-      CompanyTableCompanion company, Expression<bool> where) async {
+  Future<bool> update(CompanyTableCompanion company, Expression<bool> where) async {
     return await companyDao.updateCompany(company, where);
   }
 }

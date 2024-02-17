@@ -55,6 +55,15 @@ extension DoubleExtensions on double {
   double roundDownTo5Cents() {
     return (this * 20).floor() / 20;
   }
+
+  String removeZeroDecimal() {
+    String result = toString();
+    if (result.endsWith('.0')) {
+      result = result.substring(0, result.length - 2);
+    }
+
+    return result;
+  }
 }
 
 extension StringColorExtensions on String? {
@@ -86,5 +95,11 @@ extension StringColorExtensions on String? {
     }
 
     return AppColors.brand600;
+  }
+}
+
+extension ColorExtensions on Color {
+  String get hex {
+    return "#${value.toRadixString(16).substring(2)}";
   }
 }

@@ -7,6 +7,7 @@ import 'package:hop_pos/src/order_items/actions/order_item_actions.dart';
 import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/order_payments/actions/order_payment_actions.dart';
 import 'package:hop_pos/src/order_payments/models/order_payment.dart';
+import 'package:hop_pos/src/order_payments/models/order_payment_with_method.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
 import 'package:hop_pos/src/orders/repositories/new_order_repository.dart';
@@ -174,7 +175,13 @@ class OrderActions {
     final result = await orderPaymentActions.store(payment);
 
     return order.copyWith(
-      payments: [...order.payments ?? [], result],
+      payments: [
+        ...order.payments ?? [],
+        OrderPaymentWithMethod(
+          payment: result,
+          method: method,
+        )
+      ],
     );
   }
 
@@ -186,7 +193,7 @@ class OrderActions {
     order = order.copyWith(
       payments: ([...order.payments ?? []])
         ..removeWhere(
-          (el) => el.id == payment.id && el.isNew == payment.isNew,
+          (el) => el.payment.id == payment.id && el.payment.isNew == payment.isNew,
         ),
     );
 

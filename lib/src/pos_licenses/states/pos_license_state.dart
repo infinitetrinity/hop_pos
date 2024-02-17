@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'pos_license_state.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<PosLicense?> posLicenseState(PosLicenseStateRef ref) async {
-  return await ref.watch(posLicenseActionsProvider).getFirst();
+  return await ref.read(posLicenseActionsProvider).getFirst();
 }

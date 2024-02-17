@@ -41,6 +41,7 @@ dependencies:
   quiver: ^3.2.1
   printing: ^5.11.1
   pdf: ^3.10.7
+  flutter_pos_printer_platform: ^1.4.1
   
 dev_dependencies:
   flutter_test:

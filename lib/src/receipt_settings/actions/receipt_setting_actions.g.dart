@@ -1,25 +1,28 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'pos_license_state.dart';
+part of 'receipt_setting_actions.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$posLicenseStateHash() => r'54d5fec438893d690750a8c535d937b4b886c89a';
+String _$receiptSettingActionsHash() =>
+    r'b33a39c0e7020dfd683f6368bcd1ff81e4fdd6f0';
 
-/// See also [posLicenseState].
-@ProviderFor(posLicenseState)
-final posLicenseStateProvider = FutureProvider<PosLicense?>.internal(
-  posLicenseState,
-  name: r'posLicenseStateProvider',
+/// See also [receiptSettingActions].
+@ProviderFor(receiptSettingActions)
+final receiptSettingActionsProvider =
+    AutoDisposeProvider<ReceiptSettingActions>.internal(
+  receiptSettingActions,
+  name: r'receiptSettingActionsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$posLicenseStateHash,
+      : _$receiptSettingActionsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef PosLicenseStateRef = FutureProviderRef<PosLicense?>;
+typedef ReceiptSettingActionsRef
+    = AutoDisposeProviderRef<ReceiptSettingActions>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
