@@ -27,7 +27,7 @@ class ReceiptSetting with _$ReceiptSetting {
     return ReceiptSettingsTableCompanion(
       id: drift.Value(id),
       footerText: drift.Value(footerText),
-      outstandingSpecimenTitle: drift.Value(footerText),
+      outstandingSpecimenTitle: drift.Value(outstandingSpecimenTitle),
       outstandingSpecimenNoticeTitle: drift.Value(outstandingSpecimenNoticeTitle),
       outstandingSpecimenNotice: drift.Value(outstandingSpecimenNotice),
       utfTitle: drift.Value(utfTitle),

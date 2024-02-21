@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
+import 'package:hop_pos/src/common/services/flash_message.dart';
 import 'package:hop_pos/src/common/services/print_service.dart';
 
 class PosCompletedPrintReceiptBtn extends HookConsumerWidget {
@@ -13,7 +14,13 @@ class PosCompletedPrintReceiptBtn extends HookConsumerWidget {
     final isHover = useState(false);
 
     void printReceipt() async {
-      await ref.read(printServiceProvider).printOrderReceipt();
+      final printed = await ref.read(printServiceProvider).printOrderReceipt();
+      if (!printed) {
+        ref.read(flashMessageProvider).flash(
+              message: 'Unable to print receipt, please check your printer setting and try again',
+              type: FlashMessageType.error,
+            );
+      }
     }
 
     return MouseRegion(

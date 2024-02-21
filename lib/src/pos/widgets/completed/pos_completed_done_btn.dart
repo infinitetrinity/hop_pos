@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
+import 'package:hop_pos/routes/pos_routes.dart';
+import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 
 class PosCompletedDoneBtn extends ConsumerWidget {
   const PosCompletedDoneBtn({super.key});
@@ -14,9 +15,8 @@ class PosCompletedDoneBtn extends ConsumerWidget {
     FocusScope.of(context).requestFocus(focusNode);
 
     void onPressed() {
-      // ref.read(posControllerProvider.notifier).reset();
-      // PosRoute().go(context);
-      context.pop();
+      ref.read(posControllerProvider.notifier).reset();
+      PosRoute().go(context);
     }
 
     return RawKeyboardListener(

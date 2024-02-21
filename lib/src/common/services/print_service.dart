@@ -18,6 +18,8 @@ import 'package:hop_pos/src/receipt_settings/models/receipt_setting.dart';
 import 'package:hop_pos/src/receipt_settings/states/receipt_setting_state.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
 import 'package:hop_pos/src/screening_timeslots/actions/screening_timeslot_actions.dart';
+import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot.dart';
+import 'package:hop_pos/src/screenings/actions/screening_actions.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
@@ -29,6 +31,7 @@ part 'print_service.g.dart';
 @riverpod
 PrintService printService(PrintServiceRef ref) {
   return PrintService(
+    screeningActions: ref.watch(screeningActionsProvider),
     screeningTimeslotActions: ref.watch(screeningTimeslotActionsProvider),
     paymentMethodActions: ref.watch(paymentMethodActionsProvider),
     cart: ref.watch(posControllerProvider),
@@ -38,6 +41,7 @@ PrintService printService(PrintServiceRef ref) {
 }
 
 class PrintService {
+  final ScreeningActions screeningActions;
   final ScreeningTimeslotActions screeningTimeslotActions;
   final PaymentMethodActions paymentMethodActions;
   final PosCart cart;
@@ -45,6 +49,7 @@ class PrintService {
   final ReceiptSetting? receiptSetting;
 
   PrintService({
+    required this.screeningActions,
     required this.screeningTimeslotActions,
     required this.paymentMethodActions,
     required this.cart,
@@ -52,7 +57,7 @@ class PrintService {
     required this.receiptSetting,
   });
 
-  Future<dynamic> printDoc(Page page, {bool toPreview = false}) async {
+  Future<dynamic> printPdf(Page page, {bool toPreview = false}) async {
     final info = await Printing.info();
     if (!info.canPrint || !info.directPrint || !info.canListPrinters) {
       return false;
@@ -64,7 +69,6 @@ class PrintService {
     }
 
     try {
-      print('printing');
       final document = Document();
       document.addPage(page);
 
@@ -113,7 +117,6 @@ class PrintService {
     final generator = Generator(PaperSize.mm80, profile);
 
     try {
-      print('printing $printer');
       final document = Document();
       document.addPage(page);
       final pages = Printing.raster(await document.save());
@@ -174,10 +177,10 @@ class PrintService {
       ),
     );
 
-    return await printDoc(page);
+    return await printPdf(page);
   }
 
-  Future<dynamic> printOrderReceipt() async {
+  Future<bool> printOrderReceipt() async {
     if (cart.order == null) {
       return false;
     }
@@ -218,7 +221,181 @@ class PrintService {
     );
 
     return await printReceipt(page);
-    //return await printDoc(page, toPreview: true);
+  }
+
+  Future<bool> printUtfStfReceipt() async {
+    if (cart.screening == null) {
+      return false;
+    }
+
+    final font = await rootBundle.load("assets/fonts/Inter-Regular.ttf");
+    final fontBold = await rootBundle.load("assets/fonts/Inter-SemiBold.ttf");
+    final closestTimeslot = await screeningActions.getScreeningNearestTimeslot(cart.screening!);
+
+    final textStyle = TextStyle(
+      font: Font.ttf(font),
+      letterSpacing: 0,
+      fontSize: 8,
+      fontFallback: [
+        Font.times(),
+      ],
+    );
+    final textStyleBold = textStyle.copyWith(
+      font: Font.ttf(fontBold),
+      fontWeight: FontWeight.bold,
+    );
+
+    final page = Page(
+      pageFormat: PdfPageFormat.roll80,
+      margin: const EdgeInsets.all(5),
+      build: (context) => Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _printSpecimentHeader(textStyle, textStyleBold),
+          _printSpecimentVenue(closestTimeslot, textStyleBold),
+          _printSpecimentNotice(textStyle, textStyleBold),
+          _printSpecimentUtf(textStyle, textStyleBold),
+          _printSpecimentStf(textStyle, textStyleBold),
+        ],
+      ),
+    );
+
+    return await printReceipt(page);
+  }
+
+  Widget _printSpecimentHeader(TextStyle textStyle, TextStyle textStyleBold) {
+    if (receiptSetting == null) {
+      return Container();
+    }
+
+    return Column(
+      children: [
+        Text(
+          receiptSetting?.outstandingSpecimenTitle ?? 'Outstanding Specimen',
+          textAlign: TextAlign.center,
+          style: textStyleBold.copyWith(
+            fontSize: 20,
+          ),
+        ),
+        _printDottedLine(),
+        if (company != null) ...[
+          Text(
+            company!.name,
+            style: textStyleBold,
+          ),
+          Text(
+            'Helpline Tel: ${company!.telephone}',
+            style: textStyleBold,
+          ),
+          _printDottedLine(),
+        ],
+      ],
+    );
+  }
+
+  Widget _printSpecimentVenue(ScreeningTimeslot timeslot, TextStyle textStyleBold) {
+    if (timeslot.specimenCollectionVenue == null) {
+      return Container();
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Date: ${DateFormat('dd MMM yyyy').format(timeslot.specimenCollectionDate ?? DateTime.now())}',
+          style: textStyleBold.copyWith(
+            fontSize: 20,
+          ),
+        ),
+        Text(
+          'Time: ${timeslot.specimenCollectionTime}',
+          style: textStyleBold.copyWith(
+            fontSize: 20,
+          ),
+        ),
+        Text(
+          'Venue: ${timeslot.specimenCollectionVenue}',
+          style: textStyleBold.copyWith(
+            fontSize: 20,
+          ),
+        ),
+        _printDottedLine(),
+      ],
+    );
+  }
+
+  Widget _printSpecimentNotice(TextStyle textStyle, TextStyle textStyleBold) {
+    if (receiptSetting == null) {
+      return Container();
+    }
+
+    return Column(
+      children: [
+        Text(
+          receiptSetting!.outstandingSpecimenNoticeTitle ?? '',
+          style: textStyleBold,
+        ),
+        SizedBox(height: 5),
+        Text(
+          receiptSetting!.outstandingSpecimenNotice ?? '',
+          textAlign: TextAlign.center,
+          style: textStyle,
+          softWrap: true,
+        ),
+        _printDottedLine(),
+      ],
+    );
+  }
+
+  Widget _printSpecimentUtf(TextStyle textStyle, TextStyle textStyleBold) {
+    if (receiptSetting == null) {
+      return Container();
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Center(
+          child: Text(
+            receiptSetting!.utfTitle ?? '',
+            style: textStyleBold,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        SizedBox(height: 5),
+        Text(
+          receiptSetting!.utfNotice ?? '',
+          style: textStyle,
+        ),
+        _printDottedLine(),
+      ],
+    );
+  }
+
+  Widget _printSpecimentStf(TextStyle textStyle, TextStyle textStyleBold) {
+    if (receiptSetting == null) {
+      return Container();
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Center(
+          child: Text(
+            receiptSetting!.stfTitle ?? '',
+            style: textStyleBold,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        SizedBox(height: 5),
+        Text(
+          receiptSetting!.stfNotice ?? '',
+          style: textStyle,
+        ),
+        _printDottedLine(),
+      ],
+    );
   }
 
   Widget _printRefNo(TextStyle textStyleBold) {
