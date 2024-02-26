@@ -9,7 +9,7 @@ part 'flash_message.g.dart';
 
 enum FlashMessageType { error, success }
 
-@riverpod
+@Riverpod(keepAlive: true)
 FlashMessage flashMessage(FlashMessageRef ref) {
   return FlashMessage();
 }

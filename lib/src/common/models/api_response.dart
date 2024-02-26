@@ -18,28 +18,30 @@ class ApiResponse {
     checkInvalidResponse();
   }
 
-  get body {
-    return response.data;
+  Map<String, dynamic>? get body {
+    return response.data is Map<String, dynamic> ? response.data : null;
   }
 
-  Map<String, dynamic> get data {
-    return body['data'];
+  Map<String, dynamic>? get data {
+    return body?['data'];
   }
 
   String? get message {
-    return body['message'];
+    return body?['message'];
   }
 
-  bool isError() {
-    return body['result'] == 'error' && message != null;
+  String? get result {
+    return body?['result'];
+  }
+
+  Map<String, dynamic>? get errors {
+    return body?['errors'];
   }
 
   void checkApiError() {
-    if (!isError()) {
-      return;
+    if (result == 'error' && message != null) {
+      throw ApiError(message!);
     }
-
-    throw ApiError(message!);
   }
 
   void checkInvalidResponse() {
@@ -47,17 +49,17 @@ class ApiResponse {
       return;
     }
 
-    throw ApiInvalidResponseError(body["message"]);
+    throw ApiInvalidResponseError(message ?? 'Api invalid');
   }
 
   void checkValidationException() {
-    if (response.statusCode != 422 || body == null) {
+    if (response.statusCode != 422 || errors == null) {
       return;
     }
 
     throw ApiValidationError(
-      body['message'],
-      ValidationErrors(errors: body['errors']),
+      message ?? 'Api validation error',
+      ValidationErrors(errors: errors!),
     );
   }
 }

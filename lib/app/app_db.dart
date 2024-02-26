@@ -78,10 +78,7 @@ part 'app_db.g.dart';
 
 @Riverpod(keepAlive: true)
 AppDb appDb(AppDbRef ref) {
-  final db = AppDb.getInstance();
-  ref.onDispose(() => db.close());
-
-  return db;
+  return AppDb.getInstance();
 }
 
 @DriftDatabase(tables: [
@@ -157,20 +154,9 @@ class AppDb extends _$AppDb {
     );
   }
 
-  Future<void> clearDb() async {
-    print('clearing database');
-    return transaction(() async {
-      await customStatement('PRAGMA foreign_keys = OFF');
-      for (final table in allTables) {
-        await delete(table).go();
-      }
-      await customStatement('PRAGMA foreign_keys = ON');
-    });
-  }
-
   Future<void> deleteDb() async {
     print('deleting database');
-    await close();
+    await _instance?.close();
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, name));
     final exists = await file.exists();
@@ -181,28 +167,15 @@ class AppDb extends _$AppDb {
       } catch (e, stackTrace) {
         final logger = Logger();
         logger.e("Fail to delete db", error: e, stackTrace: stackTrace);
-        rethrow;
       }
     }
   }
 
   static LazyDatabase _initDb() {
-    print('opening database');
     return LazyDatabase(() async {
       final dbFolder = await getApplicationDocumentsDirectory();
       final file = File(p.join(dbFolder.path, name));
       return NativeDatabase.createInBackground(file);
     });
-  }
-
-  Stream<int> count(table, countExp) async* {
-    final query = selectOnly(table)..addColumns([countExp]);
-    final result = query.map((row) => row.read(countExp)).watchSingle();
-
-    await for (final value in result) {
-      yield value == null ? 0 : int.parse(value.toString());
-    }
-
-    yield 0;
   }
 }

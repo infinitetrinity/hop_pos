@@ -1,5 +1,5 @@
 import 'package:hop_pos/src/login/models/syncing_progress.dart';
-import 'package:hop_pos/src/login/repositories/login_repository.dart';
+import 'package:hop_pos/src/users/actions/user_actions.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'syncing_state.g.dart';
@@ -24,8 +24,7 @@ class SyncingState extends _$SyncingState {
   }
 
   synced() async {
-    LoginRepository repo = ref.read(loginRepoProvider);
-    await repo.synced();
+    await ref.read(userActionsProvider).updateLastSyncedNow();
     state = state.copyWith(isSyncing: false);
   }
 }

@@ -14,7 +14,8 @@ class PosCompletedPrintUtfStfBtn extends HookConsumerWidget {
     final isHover = useState(false);
 
     void printReceipt() async {
-      final printed = await ref.read(printServiceProvider).printUtfStfReceipt();
+      final printService = await ref.read(printServiceProvider.future);
+      final printed = await printService.printUtfStfReceipt();
       if (!printed) {
         ref.read(flashMessageProvider).flash(
               message: 'Unable to print receipt, please check your printer setting and try again',

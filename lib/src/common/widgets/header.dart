@@ -35,6 +35,7 @@ class Header extends StatelessWidget {
                     samePaths: [
                       LoginRoute().location,
                       PosRoute().location,
+                      PosPaymentRoute().location,
                     ],
                   ),
                   const SizedBox(width: 25),

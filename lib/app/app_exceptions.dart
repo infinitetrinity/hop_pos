@@ -5,15 +5,11 @@ part 'app_exceptions.freezed.dart';
 
 @freezed
 class AppException with _$AppException {
-  const factory AppException.noInternetError() = NoInternetError;
-  const factory AppException.apiServerConnectionError() =
-      ApiServerConnectionError;
-  const factory AppException.apiValidationError(
-      String message, ValidationErrors errors) = ApiValidationError;
+  const factory AppException.noInternetError(String message) = NoInternetError;
+  const factory AppException.apiServerConnectionError(String message) = ApiServerConnectionError;
+  const factory AppException.apiValidationError(String message, ValidationErrors errors) = ApiValidationError;
   const factory AppException.apiError(String message) = ApiError;
-  const factory AppException.apiInvalidResponseError(String message) =
-      ApiInvalidResponseError;
-  const factory AppException.unexpectedError(dynamic message, dynamic stack) =
-      UnexpectedError;
+  const factory AppException.apiInvalidResponseError(String message) = ApiInvalidResponseError;
+  const factory AppException.unexpectedError(dynamic message, dynamic stack) = UnexpectedError;
   const factory AppException.validationError() = ValidationError;
 }

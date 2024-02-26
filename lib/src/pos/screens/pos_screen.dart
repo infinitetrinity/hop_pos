@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hop_pos/src/common/widgets/layout.dart';
+import 'package:hop_pos/src/common/widgets/server_connection_status.dart';
 import 'package:hop_pos/src/pos/widgets/pos_cart_total.dart';
 import 'package:hop_pos/src/pos/widgets/pos_customer.dart';
 import 'package:hop_pos/src/pos/widgets/pos_header.dart';
@@ -38,6 +39,8 @@ class PosScreen extends StatelessWidget {
                     PosCustomer(),
                     PosItems(),
                     PosCartTotal(),
+                    SizedBox(height: 15),
+                    ServerConnectionStatus(),
                   ],
                 ),
               ),

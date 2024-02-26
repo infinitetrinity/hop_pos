@@ -29,14 +29,14 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'print_service.g.dart';
 
 @riverpod
-PrintService printService(PrintServiceRef ref) {
+Future<PrintService> printService(PrintServiceRef ref) async {
   return PrintService(
     screeningActions: ref.watch(screeningActionsProvider),
     screeningTimeslotActions: ref.watch(screeningTimeslotActionsProvider),
     paymentMethodActions: ref.watch(paymentMethodActionsProvider),
     cart: ref.watch(posControllerProvider),
-    company: ref.watch(companyStateProvider).requireValue,
-    receiptSetting: ref.watch(receiptSettingStateProvider).requireValue,
+    company: await ref.watch(companyStateProvider.future),
+    receiptSetting: await ref.watch(receiptSettingStateProvider.future),
   );
 }
 

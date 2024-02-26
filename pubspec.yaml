@@ -42,6 +42,7 @@ dependencies:
   printing: ^5.11.1
   pdf: ^3.10.7
   flutter_pos_printer_platform: ^1.4.1
+  timeago: ^3.6.1
   
 dev_dependencies:
   flutter_test:

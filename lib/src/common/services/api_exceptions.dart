@@ -6,49 +6,36 @@ import 'package:logger/logger.dart';
 
 class ApiExceptions {
   ApiExceptions();
-  static bool isHandled = false;
   static FlashMessage flashMessage = FlashMessage();
 
-  static bool handle(dynamic exception) {
-    if (_handleNoInternetConnection(exception)) {
-      return true;
-    }
-    if (_handleTimeoutOutError(exception)) {
-      return true;
-    }
-
+  static void handle(dynamic exception, StackTrace stackTrace) {
+    _handleNoInternetConnection(exception);
+    _handleTimeoutOutError(exception);
     _handleApiValidationError(exception);
     _handleApiError(exception);
-    _handleApiInvalidResponse(exception);
-    if (!isHandled) {
-      _handleApiUnknownError(exception);
-    }
-
-    return false;
+    _handleApiInvalidResponse(exception, stackTrace);
   }
 
-  static bool _handleNoInternetConnection(exception) {
+  static void _handleNoInternetConnection(exception) {
     if (exception is! NoInternetError) {
-      return false;
+      return;
     }
 
     flashMessage.flash(
       message: 'No internet connection.',
       type: FlashMessageType.error,
     );
-    return true;
   }
 
-  static bool _handleTimeoutOutError(exception) {
+  static void _handleTimeoutOutError(exception) {
     if (exception is! TimeoutException && exception.toString() != "Connection timed out") {
-      return false;
+      return;
     }
 
     flashMessage.flash(
       message: "Error connecting to server, please try again later",
       type: FlashMessageType.error,
     );
-    return true;
   }
 
   static void _handleApiValidationError(exception) {
@@ -56,7 +43,6 @@ class ApiExceptions {
       return;
     }
 
-    isHandled = true;
     flashMessage.flash(
       message: exception.message,
       type: FlashMessageType.error,
@@ -72,21 +58,14 @@ class ApiExceptions {
       message: "API Error: ${exception.message}",
       type: FlashMessageType.error,
     );
-    isHandled = true;
   }
 
-  static void _handleApiInvalidResponse(exception) {
+  static void _handleApiInvalidResponse(exception, StackTrace stackTrace) {
     if (exception is! ApiInvalidResponseError) {
       return;
     }
 
     final logger = Logger();
-    logger.e("Api Invalid response error.", error: exception);
-    isHandled = true;
-  }
-
-  static void _handleApiUnknownError(exception) {
-    final logger = Logger();
-    logger.e("Api unknown error", error: exception);
+    logger.e("Api Invalid response error.", error: exception, stackTrace: stackTrace);
   }
 }

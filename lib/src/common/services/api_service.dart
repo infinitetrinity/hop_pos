@@ -36,7 +36,7 @@ class ApiService {
   Future<void> _checkInternetConnection() async {
     final hasInternet = await InternetConnectionChecker().hasConnection;
     if (!hasInternet) {
-      throw const NoInternetError();
+      throw const NoInternetError('No internet connection.');
     }
   }
 
@@ -72,18 +72,14 @@ class ApiService {
           .timeout(const Duration(seconds: timeOutInSeconds));
 
       return ApiResponse(response: response, supressError: request.supressError);
-    } catch (e) {
+    } catch (e, stackTrace) {
       if (request.supressError) {
         return null;
       }
 
-      final handled = ApiExceptions.handle(e);
-      if (!handled) {
-        rethrow;
-      }
+      ApiExceptions.handle(e, stackTrace);
+      rethrow;
     }
-
-    return null;
   }
 
   Future<ApiResponse?> post(ApiRequest request) async {
@@ -104,17 +100,13 @@ class ApiService {
           .timeout(const Duration(seconds: timeOutInSeconds));
 
       return ApiResponse(response: response, supressError: request.supressError);
-    } catch (e) {
+    } catch (e, stackTrace) {
       if (request.supressError) {
         return null;
       }
 
-      final handled = ApiExceptions.handle(e);
-      if (!handled) {
-        rethrow;
-      }
+      ApiExceptions.handle(e, stackTrace);
+      rethrow;
     }
-
-    return null;
   }
 }

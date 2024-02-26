@@ -5,7 +5,6 @@ import 'package:hop_pos/routes/login_routes.dart';
 import 'package:hop_pos/routes/order_routes.dart';
 import 'package:hop_pos/routes/pos_routes.dart';
 import 'package:hop_pos/routes/screening_routes.dart';
-import 'package:hop_pos/routes/setup_routes.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/users/states/auth_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -18,19 +17,18 @@ GoRouter goRouter(GoRouterRef ref) {
     navigatorKey: navigatorKey,
     routes: [
       $dbScreenRoute,
-      $setupRoute,
       $loginRoute,
       $screeningRoute,
       $orderRoute,
       $posRoute,
     ],
     redirect: (context, state) async {
-      bool isAuthenticated = await ref.watch(authStateProvider.notifier).isLogin();
-      List<String> ignoreRoutes = [DbScreenRoute().location, SetupRoute().location];
-
+      List<String> ignoreRoutes = [DbScreenRoute().location];
       if (ignoreRoutes.contains(state.fullPath)) {
         return null;
       }
+
+      bool isAuthenticated = await ref.watch(authStateProvider.future) != null;
       if (state.fullPath == LoginRoute().location) {
         return isAuthenticated ? ScreeningRoute().location : null;
       }

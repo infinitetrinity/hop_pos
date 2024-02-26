@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hop_pos/app/app_colors.dart';
+import 'package:hop_pos/app/app_exceptions.dart';
+import 'package:hop_pos/src/common/services/flash_message.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:window_manager/window_manager.dart';
 
 extension ContextExtensions on BuildContext {
@@ -101,5 +106,25 @@ extension StringColorExtensions on String? {
 extension ColorExtensions on Color {
   String get hex {
     return "#${value.toRadixString(16).substring(2)}";
+  }
+}
+
+extension AsyncValueExtensions on AsyncValue {
+  void flashError(FlashMessage flashMessage) {
+    if (!isLoading &&
+        hasError &&
+        error is! NoInternetError &&
+        error is! TimeoutException &&
+        error is! ApiValidationError) {
+      String? errorMessage;
+      if (error is AppException) {
+        try {
+          errorMessage = (error as dynamic).message as String;
+        } catch (_) {}
+      }
+
+      errorMessage = errorMessage ?? error.toString();
+      flashMessage.flash(message: errorMessage, type: FlashMessageType.error);
+    }
   }
 }

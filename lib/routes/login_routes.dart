@@ -9,7 +9,7 @@ import 'package:window_manager/window_manager.dart';
 part 'login_routes.g.dart';
 
 @TypedGoRoute<LoginRoute>(
-  path: '/login',
+  path: '/',
 )
 @immutable
 class LoginRoute extends GoRouteData {

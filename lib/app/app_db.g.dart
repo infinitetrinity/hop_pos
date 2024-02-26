@@ -7090,7 +7090,7 @@ abstract class _$AppDb extends GeneratedDatabase {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appDbHash() => r'b7d317fe4151971d9c6e1911fdde93a9ea541c18';
+String _$appDbHash() => r'cf08753a1f6e3369e7ca533d8ac15bd1ebdc004e';
 
 /// See also [appDb].
 @ProviderFor(appDb)

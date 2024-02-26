@@ -17,7 +17,8 @@ class PosPrintLabelBtn extends HookConsumerWidget {
     final registration = ref.watch(posControllerProvider.select((prov) => prov.registration));
 
     void printLabel() async {
-      final result = await ref.read(printServiceProvider).printCustomerRegistrationLabel(customer!, registration);
+      final printService = await ref.read(printServiceProvider.future);
+      final result = await printService.printCustomerRegistrationLabel(customer!, registration);
 
       if (!result) {
         ref.read(flashMessageProvider).flash(message: 'Error printing label', type: FlashMessageType.error);

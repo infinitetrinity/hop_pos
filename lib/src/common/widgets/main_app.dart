@@ -1,38 +1,31 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_routes.dart';
 import 'package:hop_pos/routes/db_routes.dart';
 import 'package:hop_pos/routes/login_routes.dart';
-import 'package:hop_pos/src/common/services/setup_service.dart';
-import 'package:hop_pos/src/common/widgets/logo_loading.dart';
+import 'package:hop_pos/src/login/controllers/login_controller.dart';
 
-class MainApp extends HookConsumerWidget {
+class MainApp extends ConsumerWidget {
   const MainApp({super.key, required this.content});
   final Widget content;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isResetting = useState(false);
+    final goRouter = ref.watch(goRouterProvider);
 
     void onCltrDPressed() {
       if (kDebugMode) {
-        final router = ref.read(goRouterProvider);
-        router.routeInformationProvider.value.uri.path == DbScreenRoute().location
-            ? router.go(LoginRoute().location)
-            : router.go(DbScreenRoute().location);
+        final isDbRoute = goRouter.routeInformationProvider.value.uri.path == DbScreenRoute().location;
+        goRouter.go(isDbRoute ? LoginRoute().location : DbScreenRoute().location);
       }
     }
 
     void onCltrRPressed() async {
-      isResetting.value = true;
-      await ref.read(setupServiceProvider.notifier).resetApp();
-      isResetting.value = false;
-
+      await ref.read(loginControllerProvider.notifier).logout();
       if (context.mounted) {
-        LoginRoute().go(context);
+        goRouter.go(LoginRoute().location);
       }
     }
 
@@ -49,7 +42,7 @@ class MainApp extends HookConsumerWidget {
                 onCltrRPressed();
               }
             },
-            child: isResetting.value ? const LogoLoading() : content,
+            child: content,
           ),
         ),
       ],

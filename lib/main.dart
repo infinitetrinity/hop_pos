@@ -35,9 +35,6 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final goRouter = ref.watch(goRouterProvider);
 
-    //final db = ref.watch(appDbProvider);
-    //db.deleteDb();
-
     return GlobalLoaderOverlay(
       child: MaterialApp.router(
         scrollBehavior: CustomScrollBehavior(),

@@ -18,8 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AppException {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() noInternetError,
-    required TResult Function() apiServerConnectionError,
+    required TResult Function(String message) noInternetError,
+    required TResult Function(String message) apiServerConnectionError,
     required TResult Function(String message, ValidationErrors errors)
         apiValidationError,
     required TResult Function(String message) apiError,
@@ -30,8 +30,8 @@ mixin _$AppException {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? noInternetError,
-    TResult? Function()? apiServerConnectionError,
+    TResult? Function(String message)? noInternetError,
+    TResult? Function(String message)? apiServerConnectionError,
     TResult? Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult? Function(String message)? apiError,
@@ -42,8 +42,8 @@ mixin _$AppException {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? noInternetError,
-    TResult Function()? apiServerConnectionError,
+    TResult Function(String message)? noInternetError,
+    TResult Function(String message)? apiServerConnectionError,
     TResult Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult Function(String message)? apiError,
@@ -114,6 +114,8 @@ abstract class _$$NoInternetErrorImplCopyWith<$Res> {
   factory _$$NoInternetErrorImplCopyWith(_$NoInternetErrorImpl value,
           $Res Function(_$NoInternetErrorImpl) then) =
       __$$NoInternetErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
 }
 
 /// @nodoc
@@ -123,32 +125,57 @@ class __$$NoInternetErrorImplCopyWithImpl<$Res>
   __$$NoInternetErrorImplCopyWithImpl(
       _$NoInternetErrorImpl _value, $Res Function(_$NoInternetErrorImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$NoInternetErrorImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$NoInternetErrorImpl implements NoInternetError {
-  const _$NoInternetErrorImpl();
+  const _$NoInternetErrorImpl(this.message);
+
+  @override
+  final String message;
 
   @override
   String toString() {
-    return 'AppException.noInternetError()';
+    return 'AppException.noInternetError(message: $message)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$NoInternetErrorImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$NoInternetErrorImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$NoInternetErrorImplCopyWith<_$NoInternetErrorImpl> get copyWith =>
+      __$$NoInternetErrorImplCopyWithImpl<_$NoInternetErrorImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() noInternetError,
-    required TResult Function() apiServerConnectionError,
+    required TResult Function(String message) noInternetError,
+    required TResult Function(String message) apiServerConnectionError,
     required TResult Function(String message, ValidationErrors errors)
         apiValidationError,
     required TResult Function(String message) apiError,
@@ -156,14 +183,14 @@ class _$NoInternetErrorImpl implements NoInternetError {
     required TResult Function(dynamic message, dynamic stack) unexpectedError,
     required TResult Function() validationError,
   }) {
-    return noInternetError();
+    return noInternetError(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? noInternetError,
-    TResult? Function()? apiServerConnectionError,
+    TResult? Function(String message)? noInternetError,
+    TResult? Function(String message)? apiServerConnectionError,
     TResult? Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult? Function(String message)? apiError,
@@ -171,14 +198,14 @@ class _$NoInternetErrorImpl implements NoInternetError {
     TResult? Function(dynamic message, dynamic stack)? unexpectedError,
     TResult? Function()? validationError,
   }) {
-    return noInternetError?.call();
+    return noInternetError?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? noInternetError,
-    TResult Function()? apiServerConnectionError,
+    TResult Function(String message)? noInternetError,
+    TResult Function(String message)? apiServerConnectionError,
     TResult Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult Function(String message)? apiError,
@@ -188,7 +215,7 @@ class _$NoInternetErrorImpl implements NoInternetError {
     required TResult orElse(),
   }) {
     if (noInternetError != null) {
-      return noInternetError();
+      return noInternetError(message);
     }
     return orElse();
   }
@@ -243,7 +270,12 @@ class _$NoInternetErrorImpl implements NoInternetError {
 }
 
 abstract class NoInternetError implements AppException {
-  const factory NoInternetError() = _$NoInternetErrorImpl;
+  const factory NoInternetError(final String message) = _$NoInternetErrorImpl;
+
+  String get message;
+  @JsonKey(ignore: true)
+  _$$NoInternetErrorImplCopyWith<_$NoInternetErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -252,6 +284,8 @@ abstract class _$$ApiServerConnectionErrorImplCopyWith<$Res> {
           _$ApiServerConnectionErrorImpl value,
           $Res Function(_$ApiServerConnectionErrorImpl) then) =
       __$$ApiServerConnectionErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
 }
 
 /// @nodoc
@@ -262,33 +296,57 @@ class __$$ApiServerConnectionErrorImplCopyWithImpl<$Res>
       _$ApiServerConnectionErrorImpl _value,
       $Res Function(_$ApiServerConnectionErrorImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$ApiServerConnectionErrorImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$ApiServerConnectionErrorImpl implements ApiServerConnectionError {
-  const _$ApiServerConnectionErrorImpl();
+  const _$ApiServerConnectionErrorImpl(this.message);
+
+  @override
+  final String message;
 
   @override
   String toString() {
-    return 'AppException.apiServerConnectionError()';
+    return 'AppException.apiServerConnectionError(message: $message)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ApiServerConnectionErrorImpl);
+            other is _$ApiServerConnectionErrorImpl &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ApiServerConnectionErrorImplCopyWith<_$ApiServerConnectionErrorImpl>
+      get copyWith => __$$ApiServerConnectionErrorImplCopyWithImpl<
+          _$ApiServerConnectionErrorImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() noInternetError,
-    required TResult Function() apiServerConnectionError,
+    required TResult Function(String message) noInternetError,
+    required TResult Function(String message) apiServerConnectionError,
     required TResult Function(String message, ValidationErrors errors)
         apiValidationError,
     required TResult Function(String message) apiError,
@@ -296,14 +354,14 @@ class _$ApiServerConnectionErrorImpl implements ApiServerConnectionError {
     required TResult Function(dynamic message, dynamic stack) unexpectedError,
     required TResult Function() validationError,
   }) {
-    return apiServerConnectionError();
+    return apiServerConnectionError(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? noInternetError,
-    TResult? Function()? apiServerConnectionError,
+    TResult? Function(String message)? noInternetError,
+    TResult? Function(String message)? apiServerConnectionError,
     TResult? Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult? Function(String message)? apiError,
@@ -311,14 +369,14 @@ class _$ApiServerConnectionErrorImpl implements ApiServerConnectionError {
     TResult? Function(dynamic message, dynamic stack)? unexpectedError,
     TResult? Function()? validationError,
   }) {
-    return apiServerConnectionError?.call();
+    return apiServerConnectionError?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? noInternetError,
-    TResult Function()? apiServerConnectionError,
+    TResult Function(String message)? noInternetError,
+    TResult Function(String message)? apiServerConnectionError,
     TResult Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult Function(String message)? apiError,
@@ -328,7 +386,7 @@ class _$ApiServerConnectionErrorImpl implements ApiServerConnectionError {
     required TResult orElse(),
   }) {
     if (apiServerConnectionError != null) {
-      return apiServerConnectionError();
+      return apiServerConnectionError(message);
     }
     return orElse();
   }
@@ -383,7 +441,13 @@ class _$ApiServerConnectionErrorImpl implements ApiServerConnectionError {
 }
 
 abstract class ApiServerConnectionError implements AppException {
-  const factory ApiServerConnectionError() = _$ApiServerConnectionErrorImpl;
+  const factory ApiServerConnectionError(final String message) =
+      _$ApiServerConnectionErrorImpl;
+
+  String get message;
+  @JsonKey(ignore: true)
+  _$$ApiServerConnectionErrorImplCopyWith<_$ApiServerConnectionErrorImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -459,8 +523,8 @@ class _$ApiValidationErrorImpl implements ApiValidationError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() noInternetError,
-    required TResult Function() apiServerConnectionError,
+    required TResult Function(String message) noInternetError,
+    required TResult Function(String message) apiServerConnectionError,
     required TResult Function(String message, ValidationErrors errors)
         apiValidationError,
     required TResult Function(String message) apiError,
@@ -474,8 +538,8 @@ class _$ApiValidationErrorImpl implements ApiValidationError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? noInternetError,
-    TResult? Function()? apiServerConnectionError,
+    TResult? Function(String message)? noInternetError,
+    TResult? Function(String message)? apiServerConnectionError,
     TResult? Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult? Function(String message)? apiError,
@@ -489,8 +553,8 @@ class _$ApiValidationErrorImpl implements ApiValidationError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? noInternetError,
-    TResult Function()? apiServerConnectionError,
+    TResult Function(String message)? noInternetError,
+    TResult Function(String message)? apiServerConnectionError,
     TResult Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult Function(String message)? apiError,
@@ -630,8 +694,8 @@ class _$ApiErrorImpl implements ApiError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() noInternetError,
-    required TResult Function() apiServerConnectionError,
+    required TResult Function(String message) noInternetError,
+    required TResult Function(String message) apiServerConnectionError,
     required TResult Function(String message, ValidationErrors errors)
         apiValidationError,
     required TResult Function(String message) apiError,
@@ -645,8 +709,8 @@ class _$ApiErrorImpl implements ApiError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? noInternetError,
-    TResult? Function()? apiServerConnectionError,
+    TResult? Function(String message)? noInternetError,
+    TResult? Function(String message)? apiServerConnectionError,
     TResult? Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult? Function(String message)? apiError,
@@ -660,8 +724,8 @@ class _$ApiErrorImpl implements ApiError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? noInternetError,
-    TResult Function()? apiServerConnectionError,
+    TResult Function(String message)? noInternetError,
+    TResult Function(String message)? apiServerConnectionError,
     TResult Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult Function(String message)? apiError,
@@ -801,8 +865,8 @@ class _$ApiInvalidResponseErrorImpl implements ApiInvalidResponseError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() noInternetError,
-    required TResult Function() apiServerConnectionError,
+    required TResult Function(String message) noInternetError,
+    required TResult Function(String message) apiServerConnectionError,
     required TResult Function(String message, ValidationErrors errors)
         apiValidationError,
     required TResult Function(String message) apiError,
@@ -816,8 +880,8 @@ class _$ApiInvalidResponseErrorImpl implements ApiInvalidResponseError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? noInternetError,
-    TResult? Function()? apiServerConnectionError,
+    TResult? Function(String message)? noInternetError,
+    TResult? Function(String message)? apiServerConnectionError,
     TResult? Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult? Function(String message)? apiError,
@@ -831,8 +895,8 @@ class _$ApiInvalidResponseErrorImpl implements ApiInvalidResponseError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? noInternetError,
-    TResult Function()? apiServerConnectionError,
+    TResult Function(String message)? noInternetError,
+    TResult Function(String message)? apiServerConnectionError,
     TResult Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult Function(String message)? apiError,
@@ -982,8 +1046,8 @@ class _$UnexpectedErrorImpl implements UnexpectedError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() noInternetError,
-    required TResult Function() apiServerConnectionError,
+    required TResult Function(String message) noInternetError,
+    required TResult Function(String message) apiServerConnectionError,
     required TResult Function(String message, ValidationErrors errors)
         apiValidationError,
     required TResult Function(String message) apiError,
@@ -997,8 +1061,8 @@ class _$UnexpectedErrorImpl implements UnexpectedError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? noInternetError,
-    TResult? Function()? apiServerConnectionError,
+    TResult? Function(String message)? noInternetError,
+    TResult? Function(String message)? apiServerConnectionError,
     TResult? Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult? Function(String message)? apiError,
@@ -1012,8 +1076,8 @@ class _$UnexpectedErrorImpl implements UnexpectedError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? noInternetError,
-    TResult Function()? apiServerConnectionError,
+    TResult Function(String message)? noInternetError,
+    TResult Function(String message)? apiServerConnectionError,
     TResult Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult Function(String message)? apiError,
@@ -1126,8 +1190,8 @@ class _$ValidationErrorImpl implements ValidationError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() noInternetError,
-    required TResult Function() apiServerConnectionError,
+    required TResult Function(String message) noInternetError,
+    required TResult Function(String message) apiServerConnectionError,
     required TResult Function(String message, ValidationErrors errors)
         apiValidationError,
     required TResult Function(String message) apiError,
@@ -1141,8 +1205,8 @@ class _$ValidationErrorImpl implements ValidationError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? noInternetError,
-    TResult? Function()? apiServerConnectionError,
+    TResult? Function(String message)? noInternetError,
+    TResult? Function(String message)? apiServerConnectionError,
     TResult? Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult? Function(String message)? apiError,
@@ -1156,8 +1220,8 @@ class _$ValidationErrorImpl implements ValidationError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? noInternetError,
-    TResult Function()? apiServerConnectionError,
+    TResult Function(String message)? noInternetError,
+    TResult Function(String message)? apiServerConnectionError,
     TResult Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult Function(String message)? apiError,

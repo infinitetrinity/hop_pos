@@ -31,4 +31,8 @@ class UserRepository {
   Future<bool> update(UsersTableCompanion user, Expression<bool> where) async {
     return await userDao.updateUser(user, where);
   }
+
+  Future<bool> updateLastSyncedNow() async {
+    return await userDao.updateLastSyncedNow();
+  }
 }
