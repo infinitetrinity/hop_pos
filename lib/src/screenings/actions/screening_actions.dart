@@ -5,6 +5,7 @@ import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot_with_venue.dart';
 import 'package:hop_pos/src/screening_timeslots/repositories/screening_timeslot_repository.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
+import 'package:hop_pos/src/screenings/models/screening_with_sales_data.dart';
 import 'package:hop_pos/src/screenings/repositories/screening_repository.dart';
 import 'package:quiver/iterables.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -92,5 +93,16 @@ class ScreeningActions {
     final passed = timeslots.where((timeslot) => timeslot.dateAndTime.isBefore(DateTime.now()));
 
     return passed.lastOrNull ?? timeslots.first;
+  }
+
+  Future<int> getHaveSalesWithinDaysCount({int days = 30, String? search}) async {
+    final screenings = await screeningRepo.getWithOrdersWithinDays(days, page: 0, search: search);
+    return screenings.length;
+  }
+
+  Future<List<ScreeningWithSalesData>> getHaveSalesWithinDays(
+      {int days = 30, int page = 1, int size = 20, String? search}) async {
+    final screenings = await screeningRepo.getWithOrdersWithinDays(days, page: page, size: size, search: search);
+    return await screeningRepo.getSalesData(screenings);
   }
 }

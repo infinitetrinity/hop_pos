@@ -9,4 +9,13 @@ mixin _$ScreeningDaoMixin on DatabaseAccessor<AppDb> {
       attachedDatabase.screeningVenuesTable;
   $ScreeningTimeslotsTableTable get screeningTimeslotsTable =>
       attachedDatabase.screeningTimeslotsTable;
+  $CustomersTableTable get customersTable => attachedDatabase.customersTable;
+  $OrdersTableTable get ordersTable => attachedDatabase.ordersTable;
+  $NewOrdersTableTable get newOrdersTable => attachedDatabase.newOrdersTable;
+  $PaymentMethodsTableTable get paymentMethodsTable =>
+      attachedDatabase.paymentMethodsTable;
+  $OrderPaymentsTableTable get orderPaymentsTable =>
+      attachedDatabase.orderPaymentsTable;
+  $NewOrderPaymentsTableTable get newOrderPaymentsTable =>
+      attachedDatabase.newOrderPaymentsTable;
 }

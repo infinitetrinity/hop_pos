@@ -1,6 +1,7 @@
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/screenings/daos/screening_dao.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
+import 'package:hop_pos/src/screenings/models/screening_with_sales_data.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'screening_repository.g.dart';
@@ -25,5 +26,13 @@ class ScreeningRepository {
 
   Future<List<Screening>> search(String search) {
     return screeningDao.search(search);
+  }
+
+  Future<List<Screening>> getWithOrdersWithinDays(int days, {int page = 1, int size = 20, String? search}) async {
+    return await screeningDao.getWithOrdersWithinDays(days, page: page, size: size, search: search);
+  }
+
+  Future<List<ScreeningWithSalesData>> getSalesData(List<Screening> screenings) async {
+    return await screeningDao.getSalesData(screenings);
   }
 }
