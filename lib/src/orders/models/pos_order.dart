@@ -16,7 +16,7 @@ class PosOrder with _$PosOrder {
     List<OrderItem>? items,
     List<OrderExtra>? extras,
     List<OrderPaymentWithMethod>? payments,
-  }) = _Order;
+  }) = _PosOrder;
 
   const PosOrder._();
 

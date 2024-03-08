@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/widgets/layout.dart';
-import 'package:hop_pos/src/orders/widgets/screening_sales_search_input.dart';
-import 'package:hop_pos/src/orders/widgets/screening_sales_table.dart';
+import 'package:hop_pos/src/orders/widgets/screenings_sales_search_input.dart';
+import 'package:hop_pos/src/orders/widgets/screenings_sales_table.dart';
 
 class OrdersScreen extends StatelessWidget {
   const OrdersScreen({super.key});
@@ -24,8 +24,8 @@ class OrdersScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            const ScreeningSalesSearchInput(),
-            const ScreeningSalesTable(),
+            const ScreeningsSalesSearchInput(),
+            const ScreeningsSalesTable(),
           ],
         ),
       ),

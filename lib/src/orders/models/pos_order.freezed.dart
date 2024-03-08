@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 PosOrder _$PosOrderFromJson(Map<String, dynamic> json) {
-  return _Order.fromJson(json);
+  return _PosOrder.fromJson(json);
 }
 
 /// @nodoc
@@ -101,10 +101,11 @@ class _$PosOrderCopyWithImpl<$Res, $Val extends PosOrder>
 }
 
 /// @nodoc
-abstract class _$$OrderImplCopyWith<$Res> implements $PosOrderCopyWith<$Res> {
-  factory _$$OrderImplCopyWith(
-          _$OrderImpl value, $Res Function(_$OrderImpl) then) =
-      __$$OrderImplCopyWithImpl<$Res>;
+abstract class _$$PosOrderImplCopyWith<$Res>
+    implements $PosOrderCopyWith<$Res> {
+  factory _$$PosOrderImplCopyWith(
+          _$PosOrderImpl value, $Res Function(_$PosOrderImpl) then) =
+      __$$PosOrderImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -119,11 +120,11 @@ abstract class _$$OrderImplCopyWith<$Res> implements $PosOrderCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$OrderImplCopyWithImpl<$Res>
-    extends _$PosOrderCopyWithImpl<$Res, _$OrderImpl>
-    implements _$$OrderImplCopyWith<$Res> {
-  __$$OrderImplCopyWithImpl(
-      _$OrderImpl _value, $Res Function(_$OrderImpl) _then)
+class __$$PosOrderImplCopyWithImpl<$Res>
+    extends _$PosOrderCopyWithImpl<$Res, _$PosOrderImpl>
+    implements _$$PosOrderImplCopyWith<$Res> {
+  __$$PosOrderImplCopyWithImpl(
+      _$PosOrderImpl _value, $Res Function(_$PosOrderImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -135,7 +136,7 @@ class __$$OrderImplCopyWithImpl<$Res>
     Object? extras = freezed,
     Object? payments = freezed,
   }) {
-    return _then(_$OrderImpl(
+    return _then(_$PosOrderImpl(
       order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
@@ -162,8 +163,8 @@ class __$$OrderImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$OrderImpl extends _Order {
-  const _$OrderImpl(
+class _$PosOrderImpl extends _PosOrder {
+  const _$PosOrderImpl(
       {required this.order,
       this.payLater = false,
       final List<OrderItem>? items,
@@ -174,8 +175,8 @@ class _$OrderImpl extends _Order {
         _payments = payments,
         super._();
 
-  factory _$OrderImpl.fromJson(Map<String, dynamic> json) =>
-      _$$OrderImplFromJson(json);
+  factory _$PosOrderImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PosOrderImplFromJson(json);
 
   @override
   final Order order;
@@ -221,7 +222,7 @@ class _$OrderImpl extends _Order {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OrderImpl &&
+            other is _$PosOrderImpl &&
             (identical(other.order, order) || other.order == order) &&
             (identical(other.payLater, payLater) ||
                 other.payLater == payLater) &&
@@ -243,27 +244,28 @@ class _$OrderImpl extends _Order {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$OrderImplCopyWith<_$OrderImpl> get copyWith =>
-      __$$OrderImplCopyWithImpl<_$OrderImpl>(this, _$identity);
+  _$$PosOrderImplCopyWith<_$PosOrderImpl> get copyWith =>
+      __$$PosOrderImplCopyWithImpl<_$PosOrderImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$OrderImplToJson(
+    return _$$PosOrderImplToJson(
       this,
     );
   }
 }
 
-abstract class _Order extends PosOrder {
-  const factory _Order(
+abstract class _PosOrder extends PosOrder {
+  const factory _PosOrder(
       {required final Order order,
       final bool? payLater,
       final List<OrderItem>? items,
       final List<OrderExtra>? extras,
-      final List<OrderPaymentWithMethod>? payments}) = _$OrderImpl;
-  const _Order._() : super._();
+      final List<OrderPaymentWithMethod>? payments}) = _$PosOrderImpl;
+  const _PosOrder._() : super._();
 
-  factory _Order.fromJson(Map<String, dynamic> json) = _$OrderImpl.fromJson;
+  factory _PosOrder.fromJson(Map<String, dynamic> json) =
+      _$PosOrderImpl.fromJson;
 
   @override
   Order get order;
@@ -277,6 +279,6 @@ abstract class _Order extends PosOrder {
   List<OrderPaymentWithMethod>? get payments;
   @override
   @JsonKey(ignore: true)
-  _$$OrderImplCopyWith<_$OrderImpl> get copyWith =>
+  _$$PosOrderImplCopyWith<_$PosOrderImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

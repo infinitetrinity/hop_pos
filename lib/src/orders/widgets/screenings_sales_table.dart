@@ -3,22 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
-import 'package:hop_pos/src/orders/models/screening_sales_datasource.dart';
-import 'package:hop_pos/src/screenings/models/screening.dart';
+import 'package:hop_pos/src/orders/models/screenings_sales_datasource.dart';
+import 'package:hop_pos/src/orders/states/screening_sales_search_state.dart';
 
-class ScreeningSalesTable extends ConsumerWidget {
-  const ScreeningSalesTable({super.key, required this.screening});
-  final Screening screening;
+class ScreeningsSalesTable extends ConsumerWidget {
+  const ScreeningsSalesTable({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final source = ref.watch(screeningSalesDataSourceProvider(screening));
+    final source = ref.watch(screeningsSalesDataSourceProvider);
+    final PaginatorController controller = PaginatorController();
+
+    ref.listen(screeningSalesSearchStateProvider, (_, current) {
+      controller.goToFirstPage();
+    });
 
     return Column(
       children: [
         Container(
           constraints: const BoxConstraints(maxHeight: 650),
           child: AsyncPaginatedDataTable2(
+            controller: controller,
             headingRowColor: MaterialStateColor.resolveWith((states) => AppColors.brand600),
             headingTextStyle: AppStyles.bodyLarge.copyWith(
               color: AppColors.white,
@@ -33,25 +38,26 @@ class ScreeningSalesTable extends ConsumerWidget {
             minWidth: 600,
             source: source,
             rowsPerPage: 10,
-            errorBuilder: (error) => Container(
-              child: Text(error.toString()),
+            empty: Container(
+              padding: const EdgeInsets.all(15),
+              child: Center(
+                child: Text(
+                  'No record found',
+                  style: AppStyles.body,
+                ),
+              ),
             ),
             columns: const [
               DataColumn2(
                 label: Text(
-                  'Invoice',
-                ),
-                fixedWidth: 120,
-              ),
-              DataColumn2(
-                label: Text(
-                  'Customer',
+                  'Screening',
                 ),
               ),
               DataColumn2(
                 label: Text(
-                  'REF',
+                  'Sales',
                 ),
+                numeric: true,
                 fixedWidth: 70,
               ),
               DataColumn2(
@@ -59,56 +65,25 @@ class ScreeningSalesTable extends ConsumerWidget {
                   'Total',
                 ),
                 numeric: true,
-                fixedWidth: 100,
+                fixedWidth: 120,
               ),
               DataColumn2(
                 label: Text(
-                  'Payment',
+                  'Payments',
                 ),
                 numeric: true,
-                fixedWidth: 100,
+                fixedWidth: 120,
               ),
               DataColumn2(
                 label: Text(
-                  'Change',
+                  'STF/UTF',
                 ),
                 numeric: true,
-                fixedWidth: 100,
+                fixedWidth: 90,
               ),
               DataColumn2(
                 label: Text(
-                  'Balance',
-                ),
-                numeric: true,
-                fixedWidth: 100,
-              ),
-              DataColumn2(
-                label: Center(
-                  child: Text(
-                    'STF',
-                  ),
-                ),
-                fixedWidth: 70,
-              ),
-              DataColumn2(
-                label: Center(
-                  child: Text(
-                    'UTF',
-                  ),
-                ),
-                fixedWidth: 70,
-              ),
-              DataColumn2(
-                label: Center(
-                  child: Text(
-                    'Synced',
-                  ),
-                ),
-                fixedWidth: 70,
-              ),
-              DataColumn2(
-                label: Text(
-                  'Created At',
+                  'Last Sales',
                 ),
                 fixedWidth: 170,
               ),

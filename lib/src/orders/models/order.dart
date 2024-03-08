@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
+import 'package:intl/intl.dart';
 
 part 'order.freezed.dart';
 part 'order.g.dart';
@@ -107,5 +108,13 @@ class Order with _$Order {
 
   double toCalculateDiscount(double value) {
     return isDiscountPercentage ? value.percentageOf(discount ?? 0) : discount ?? 0;
+  }
+
+  double get total {
+    return ((netTotal ?? 0) + (rounding ?? 0)).toDecimalPlace(2);
+  }
+
+  String? get displayCreatedAt {
+    return createdAt == null ? null : DateFormat('dd MMM yyyy, hh:mm a').format(createdAt!);
   }
 }

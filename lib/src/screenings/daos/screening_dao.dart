@@ -1,10 +1,13 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/app/app_extension.dart';
+import 'package:hop_pos/src/customers/models/new_customers_table.dart';
 import 'package:hop_pos/src/order_payments/models/new_order_payments_table.dart';
 import 'package:hop_pos/src/order_payments/models/order_payments_table.dart';
 import 'package:hop_pos/src/orders/models/new_orders_table.dart';
+import 'package:hop_pos/src/orders/models/order_with_customer_and_payment.dart';
 import 'package:hop_pos/src/orders/models/orders_table.dart';
+import 'package:hop_pos/src/screening_registrations/models/screening_registrations_table.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslots_table.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:hop_pos/src/screenings/models/screening_with_sales_data.dart';
@@ -19,6 +22,8 @@ part 'screening_dao.g.dart';
   NewOrdersTable,
   OrderPaymentsTable,
   NewOrderPaymentsTable,
+  NewCustomersTable,
+  ScreeningRegistrationsTable,
 ])
 class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
   ScreeningDao(AppDb db) : super(db);
@@ -92,119 +97,119 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
     return (await query.get()).map((row) => row.readTable(screeningsTable)).toList();
   }
 
-  Future<List<ScreeningWithSalesData>> getSalesData(List<Screening> screenings) async {
-    final screeningIds = screenings.map((screening) => screening.id);
-    final ordersCount = ordersTable.id.count(distinct: true);
-    final ordersTotal = ordersTable.netTotal.total() + ordersTable.rounding.total();
-    final ordersPaymentTotal = orderPaymentsTable.amount.total() + newOrderPaymentsTable.amount.total();
-    final ordersStfCount = ordersTable.isStf.count(filter: ordersTable.isStf.equals(true));
-    final ordersUtfCount = ordersTable.isUtf.count(filter: ordersTable.isStf.equals(true));
-    final ordersLastSalesAt = ordersTable.createdAt.max();
+  Future<List<ScreeningWithSalesData>> getScreeningsSalesData(List<Screening> screenings) async {
+    final orders = await db.orderDao.getScreeningOrdersData(screenings);
+    final newOrders = await db.newOrderDao.getScreeningOrdersData(screenings);
 
-    final newOrdersCount = newOrdersTable.id.count(distinct: true);
-    final newOrdersTotal = newOrdersTable.netTotal.total() + newOrdersTable.rounding.total();
-    final newOrdersPaymentTotal = newOrderPaymentsTable.amount.total();
-    final newOrdersStfCount = newOrdersTable.isStf.count(filter: newOrdersTable.isStf.equals(true));
-    final newOrdersUtfCount = newOrdersTable.isUtf.count(filter: newOrdersTable.isUtf.equals(true));
-    final newOrdersLastSalesAt = newOrdersTable.createdAt.max();
+    final Map<int, ScreeningWithSalesData> results = {};
+    for (final order in [...orders, ...newOrders]) {
+      final screeningId = order.screening.id;
 
-    final ordersQuery = Subquery(
-      select(ordersTable).join([
-        leftOuterJoin(
-          orderPaymentsTable,
-          orderPaymentsTable.orderId.equalsExp(ordersTable.id),
-          useColumns: false,
-        ),
-        leftOuterJoin(
-          newOrderPaymentsTable,
-          newOrderPaymentsTable.orderId.equalsExp(
-                ordersTable.id,
-              ) &
-              newOrderPaymentsTable.orderIsNew.equals(false),
-          useColumns: false,
-        ),
-      ])
-        ..addColumns([
-          ordersCount,
-          ordersTotal,
-          ordersPaymentTotal,
-          ordersStfCount,
-          ordersUtfCount,
-          ordersLastSalesAt,
-        ])
-        ..where(ordersTable.screeningId.isIn(screeningIds))
-        ..groupBy([ordersTable.screeningId]),
-      'orders',
-    );
+      if (!results.containsKey(screeningId)) {
+        results[screeningId] = order;
+        continue;
+      }
 
-    final newOrdersQuery = Subquery(
-      select(newOrdersTable).join([
-        leftOuterJoin(
-          newOrderPaymentsTable,
-          newOrderPaymentsTable.orderId.equalsExp(
-                newOrdersTable.id,
-              ) &
-              newOrderPaymentsTable.orderIsNew.equals(true),
-          useColumns: false,
-        ),
-      ])
-        ..addColumns([
-          newOrdersCount,
-          newOrdersTotal,
-          newOrdersPaymentTotal,
-          newOrdersStfCount,
-          newOrdersUtfCount,
-          newOrdersLastSalesAt,
-        ])
-        ..where(newOrdersTable.screeningId.isIn(screeningIds))
-        ..groupBy([newOrdersTable.screeningId]),
-      'new_orders',
-    );
-
-    final totalCount = coalesce([ordersQuery.ref(ordersCount), const Constant(0)]) +
-        coalesce([newOrdersQuery.ref(newOrdersCount), const Constant(0)]);
-    final total = coalesce([ordersQuery.ref(ordersTotal), const Constant(0.0)]) +
-        coalesce([newOrdersQuery.ref(newOrdersTotal), const Constant(0.0)]);
-    final paymentTotal = coalesce([ordersQuery.ref(ordersPaymentTotal), const Constant(0.0)]) +
-        coalesce([newOrdersQuery.ref(newOrdersPaymentTotal), const Constant(0.0)]);
-    final stfCount = coalesce([ordersQuery.ref(ordersStfCount), const Constant(0)]) +
-        coalesce([newOrdersQuery.ref(newOrdersStfCount), const Constant(0)]);
-    final utfCount = coalesce([ordersQuery.ref(ordersUtfCount), const Constant(0)]) +
-        coalesce([newOrdersQuery.ref(newOrdersUtfCount), const Constant(0)]);
-    final lastSalesAt = coalesce([newOrdersQuery.ref(newOrdersLastSalesAt), ordersQuery.ref(ordersLastSalesAt)]);
-
-    final query = select(screeningsTable).join([
-      leftOuterJoin(
-        ordersQuery,
-        ordersQuery.ref(ordersTable.screeningId).equalsExp(screeningsTable.id),
-      ),
-      leftOuterJoin(
-        newOrdersQuery,
-        newOrdersQuery.ref(newOrdersTable.screeningId).equalsExp(screeningsTable.id),
-      ),
-    ])
-      ..addColumns([
-        totalCount,
-        total,
-        paymentTotal,
-        stfCount,
-        utfCount,
-        lastSalesAt,
-      ])
-      ..orderBy([OrderingTerm.desc(lastSalesAt)])
-      ..where(screeningsTable.id.isIn(screeningIds));
-
-    return (await query.get()).map((row) {
-      return ScreeningWithSalesData(
-        screening: row.readTable(screeningsTable),
-        salesCount: row.read(totalCount) ?? 0,
-        salesTotal: row.read(total) ?? 0,
-        paymentTotal: row.read(paymentTotal) ?? 0,
-        stfCount: row.read(stfCount) ?? 0,
-        utfCount: row.read(utfCount) ?? 0,
-        lastSalesAt: row.read(lastSalesAt)!,
+      final existOrder = results[screeningId]!;
+      results[screeningId] = existOrder.copyWith(
+        salesCount: existOrder.salesCount + order.salesCount,
+        salesTotal: existOrder.salesTotal + order.salesTotal,
+        paymentTotal: existOrder.paymentTotal + order.paymentTotal,
+        stfCount: existOrder.stfCount + order.stfCount,
+        utfCount: existOrder.utfCount + order.utfCount,
+        lastSalesAt: existOrder.lastSalesAt.isAfter(order.lastSalesAt) ? existOrder.lastSalesAt : order.lastSalesAt,
       );
-    }).toList();
+    }
+
+    return results.values.toList()..sort((a, b) => b.lastSalesAt.compareTo(a.lastSalesAt));
+  }
+
+  Future<List<OrderWithCustomerAndPayment>> getScreeningOrders(
+    Screening screening, {
+    int page = 1,
+    int size = 20,
+    String? search,
+  }) async {
+    final orders = await db.orderDao.getScreeningOrders(screening, search: search);
+    final newOrders = await db.newOrderDao.getScreeningOrders(screening, search: search);
+
+    final sorted = [...orders, ...newOrders]..sort((a, b) {
+        final intA = int.tryParse(a.index ?? '');
+        final intB = int.tryParse(b.index ?? '');
+
+        if (intA == null && intB == null) {
+          return (a.index ?? '').compareTo(b.index ?? '');
+        }
+        if (intA == null) {
+          return 1;
+        }
+        if (intB == null) {
+          return -1;
+        }
+
+        return intA.compareTo(intB);
+      });
+
+    final start = size * (page - 1);
+    final end = start + size > sorted.length ? sorted.length : start + size;
+    return sorted.sublist(start, end).toList();
+  }
+
+  Future<int> getScreeningOrdersTotalCount(Screening screening, {String? search}) async {
+    final orderCountExp = ordersTable.id.count();
+
+    final orderQuery = selectOnly(ordersTable)
+      ..addColumns([orderCountExp])
+      ..where(ordersTable.screeningId.equals(screening.id));
+
+    final newOrderCountExp = newOrdersTable.id.count();
+
+    final newOrderQuery = selectOnly(newOrdersTable)
+      ..addColumns([newOrderCountExp])
+      ..where(newOrdersTable.screeningId.equals(screening.id));
+
+    if (!search.isNullOrEmpty) {
+      orderQuery.join(
+        [
+          leftOuterJoin(
+            customersTable,
+            customersTable.id.equalsExp(
+              ordersTable.customerId,
+            ),
+            useColumns: false,
+          ),
+        ],
+      ).where(ordersTable.invoiceNo.like("%$search%") |
+          ordersTable.invoicePrefix.like("%$search%") |
+          customersTable.fullName.like("%$search%") |
+          customersTable.nric.like("%$search%"));
+
+      newOrderQuery.join(
+        [
+          leftOuterJoin(
+            customersTable,
+            customersTable.nric.equalsExp(
+              newOrdersTable.customerNric,
+            ),
+            useColumns: false,
+          ),
+          leftOuterJoin(
+            newCustomersTable,
+            newCustomersTable.nric.equalsExp(
+              newOrdersTable.customerNric,
+            ),
+            useColumns: false,
+          ),
+        ],
+      ).where(newOrdersTable.invoiceNo.like("%$search%") |
+          newOrdersTable.invoicePrefix.like("%$search%") |
+          customersTable.fullName.like("%$search%") |
+          customersTable.nric.like("%$search%"));
+    }
+
+    final orderCount = (await orderQuery.getSingle()).read(orderCountExp) ?? 0;
+    final newOrderCount = (await newOrderQuery.getSingle()).read(newOrderCountExp) ?? 0;
+    return orderCount + newOrderCount;
   }
 
   Future<List<Screening>> search(String search) {

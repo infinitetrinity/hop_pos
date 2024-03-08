@@ -18,4 +18,8 @@ mixin _$ScreeningDaoMixin on DatabaseAccessor<AppDb> {
       attachedDatabase.orderPaymentsTable;
   $NewOrderPaymentsTableTable get newOrderPaymentsTable =>
       attachedDatabase.newOrderPaymentsTable;
+  $NewCustomersTableTable get newCustomersTable =>
+      attachedDatabase.newCustomersTable;
+  $ScreeningRegistrationsTableTable get screeningRegistrationsTable =>
+      attachedDatabase.screeningRegistrationsTable;
 }

@@ -1,4 +1,5 @@
 import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
+import 'package:hop_pos/src/orders/models/order_with_customer_and_payment.dart';
 import 'package:hop_pos/src/screening_registrations/repositories/new_screening_registration_repository.dart';
 import 'package:hop_pos/src/screening_registrations/repositories/screening_registration_repository.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot.dart';
@@ -103,6 +104,15 @@ class ScreeningActions {
   Future<List<ScreeningWithSalesData>> getHaveSalesWithinDays(
       {int days = 30, int page = 1, int size = 20, String? search}) async {
     final screenings = await screeningRepo.getWithOrdersWithinDays(days, page: page, size: size, search: search);
-    return await screeningRepo.getSalesData(screenings);
+    return await screeningRepo.getScreeningsSalesData(screenings);
+  }
+
+  Future<List<OrderWithCustomerAndPayment>> getScreeningOrders(Screening screening,
+      {int page = 1, int size = 20, String? search}) async {
+    return await screeningRepo.getScreeningOrders(screening, page: page, size: size, search: search);
+  }
+
+  Future<int> getScreeningOrdersTotalCount(Screening screening, {String? search}) async {
+    return await screeningRepo.getScreeningOrdersTotalCount(screening, search: search);
   }
 }

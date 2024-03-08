@@ -1,4 +1,5 @@
 import 'package:hop_pos/app/app_db.dart';
+import 'package:hop_pos/src/orders/models/order_with_customer_and_payment.dart';
 import 'package:hop_pos/src/screenings/daos/screening_dao.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:hop_pos/src/screenings/models/screening_with_sales_data.dart';
@@ -32,7 +33,16 @@ class ScreeningRepository {
     return await screeningDao.getWithOrdersWithinDays(days, page: page, size: size, search: search);
   }
 
-  Future<List<ScreeningWithSalesData>> getSalesData(List<Screening> screenings) async {
-    return await screeningDao.getSalesData(screenings);
+  Future<List<ScreeningWithSalesData>> getScreeningsSalesData(List<Screening> screenings) async {
+    return await screeningDao.getScreeningsSalesData(screenings);
+  }
+
+  Future<List<OrderWithCustomerAndPayment>> getScreeningOrders(Screening screening,
+      {int page = 1, int size = 20, String? search}) async {
+    return await screeningDao.getScreeningOrders(screening, page: page, size: size, search: search);
+  }
+
+  Future<int> getScreeningOrdersTotalCount(Screening screening, {String? search}) async {
+    return await screeningDao.getScreeningOrdersTotalCount(screening, search: search);
   }
 }

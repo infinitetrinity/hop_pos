@@ -18,6 +18,10 @@ RouteBase get $orderRoute => GoRouteData.$route(
           path: 'incomplete',
           factory: $IncompleteOrderRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'screening',
+          factory: $ScreeningOrdersRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -54,4 +58,26 @@ extension $IncompleteOrderRouteExtension on IncompleteOrderRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+extension $ScreeningOrdersRouteExtension on ScreeningOrdersRoute {
+  static ScreeningOrdersRoute _fromState(GoRouterState state) =>
+      ScreeningOrdersRoute(
+        $extra: state.extra as Screening,
+      );
+
+  String get location => GoRouteData.$location(
+        '/orders/screening',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: $extra);
+
+  Future<T?> push<T>(BuildContext context) =>
+      context.push<T>(location, extra: $extra);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location, extra: $extra);
+
+  void replace(BuildContext context) =>
+      context.replace(location, extra: $extra);
 }

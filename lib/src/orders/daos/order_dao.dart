@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
+import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/order_extras/models/new_order_extras_table.dart';
 import 'package:hop_pos/src/order_extras/models/order_extra.dart';
@@ -11,9 +12,13 @@ import 'package:hop_pos/src/order_payments/models/new_order_payments_table.dart'
 import 'package:hop_pos/src/order_payments/models/order_payment_with_method.dart';
 import 'package:hop_pos/src/order_payments/models/order_payments_table.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
+import 'package:hop_pos/src/orders/models/order_with_customer_and_payment.dart';
 import 'package:hop_pos/src/orders/models/orders_table.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
+import 'package:hop_pos/src/screening_registrations/models/screening_registrations_table.dart';
+import 'package:hop_pos/src/screening_timeslots/models/screening_timeslots_table.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
+import 'package:hop_pos/src/screenings/models/screening_with_sales_data.dart';
 import 'package:hop_pos/src/to_sync_data/models/to_sync_data.dart';
 
 part 'order_dao.g.dart';
@@ -26,6 +31,8 @@ part 'order_dao.g.dart';
   NewOrderItemsTable,
   NewOrderExtrasTable,
   NewOrderPaymentsTable,
+  ScreeningTimeslotsTable,
+  ScreeningRegistrationsTable,
 ])
 class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
   OrderDao(AppDb db) : super(db);
@@ -168,6 +175,113 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
     return order.copyWith(
       items: List<OrderItem>.from(order.items ?? [])..sort((a, b) => (a.cartId ?? 0).compareTo(b.cartId ?? 0)),
     );
+  }
+
+  Future<List<ScreeningWithSalesData>> getScreeningOrdersData(List<Screening> screenings) async {
+    final screeningIds = screenings.map((screening) => screening.id);
+    final oCount = ordersTable.id.count();
+    final oUtf = ordersTable.isUtf.cast<int>().sum();
+    final oStf = ordersTable.isStf.cast<int>().sum();
+    final oTotal = ordersTable.netTotal.total() + ordersTable.rounding.total();
+    final oLastSalesAt = ordersTable.createdAt.max();
+
+    final oPaymentQuery = selectOnly(orderPaymentsTable)
+      ..addColumns([orderPaymentsTable.amount.total()])
+      ..where(orderPaymentsTable.orderId.equalsExp(ordersTable.id));
+
+    final oNewPaymentQuery = selectOnly(newOrderPaymentsTable)
+      ..addColumns([newOrderPaymentsTable.amount.total()])
+      ..where(
+          newOrderPaymentsTable.orderId.equalsExp(ordersTable.id) & newOrderPaymentsTable.orderIsNew.isValue(false));
+
+    final oTotalPayment =
+        subqueryExpression<double>(oPaymentQuery).total() + subqueryExpression<double>(oNewPaymentQuery).total();
+
+    final query = selectOnly(ordersTable)
+      ..addColumns([
+        ordersTable.screeningId,
+        oCount,
+        oUtf,
+        oStf,
+        oTotal,
+        oTotalPayment,
+        oLastSalesAt,
+      ])
+      ..where(ordersTable.screeningId.isIn(screeningIds))
+      ..groupBy([ordersTable.screeningId]);
+
+    return (await query.get()).map((row) {
+      return ScreeningWithSalesData(
+        screening: screenings.firstWhere((screening) => screening.id == row.read(ordersTable.screeningId)),
+        salesCount: row.read(oCount) ?? 0,
+        salesTotal: row.read(oTotal) ?? 0,
+        paymentTotal: row.read(oTotalPayment) ?? 0,
+        stfCount: row.read(oStf) ?? 0,
+        utfCount: row.read(oUtf) ?? 0,
+        lastSalesAt: row.read(oLastSalesAt)!,
+      );
+    }).toList();
+  }
+
+  Future<List<OrderWithCustomerAndPayment>> getScreeningOrders(Screening screening, {String? search}) async {
+    final timeslotQuery = selectOnly(screeningTimeslotsTable)
+      ..addColumns([screeningTimeslotsTable.id])
+      ..where(screeningTimeslotsTable.screeningId.equals(screening.id));
+
+    final indexQuery = selectOnly(screeningRegistrationsTable)
+      ..addColumns([screeningRegistrationsTable.index])
+      ..where(screeningRegistrationsTable.customerId.equalsExp(customersTable.id) &
+          screeningRegistrationsTable.timeslotId.isInQuery(timeslotQuery));
+
+    final index = coalesce<String>([
+      subqueryExpression(indexQuery),
+      customersTable.nric.substr(-5, 5),
+    ]);
+
+    final paymentQuery = selectOnly(orderPaymentsTable)
+      ..addColumns([orderPaymentsTable.amount])
+      ..where(orderPaymentsTable.orderId.equalsExp(ordersTable.id));
+
+    final newPaymentQuery = selectOnly(newOrderPaymentsTable)
+      ..addColumns([newOrderPaymentsTable.amount])
+      ..where(
+          newOrderPaymentsTable.orderId.equalsExp(ordersTable.id) & newOrderPaymentsTable.orderIsNew.isValue(false));
+
+    final totalPayment = coalesce<double>([subqueryExpression(paymentQuery), const Constant(0)]) +
+        coalesce<double>([subqueryExpression(newPaymentQuery), const Constant(0)]);
+
+    final query = select(ordersTable).join(
+      [
+        innerJoin(
+          customersTable,
+          customersTable.id.equalsExp(
+            ordersTable.customerId,
+          ),
+        ),
+      ],
+    )
+      ..where(ordersTable.screeningId.equals(screening.id))
+      ..orderBy([OrderingTerm.asc(index.cast<int>())]);
+
+    query.addColumns([index, totalPayment]);
+
+    if (!search.isNullOrEmpty) {
+      query.where(ordersTable.invoiceNo.like("%$search%") |
+          ordersTable.invoicePrefix.like("%$search%") |
+          customersTable.fullName.like("%$search%") |
+          customersTable.nric.like("%$search%"));
+    }
+
+    return (await query.get())
+        .map(
+          (row) => OrderWithCustomerAndPayment(
+            order: row.readTable(ordersTable),
+            customer: row.readTable(customersTable),
+            index: row.read(index),
+            totalPayment: row.read(totalPayment),
+          ),
+        )
+        .toList();
   }
 
   Future<bool> updateOrder(Order order) async {

@@ -24,4 +24,10 @@ mixin _$OrderDaoMixin on DatabaseAccessor<AppDb> {
       attachedDatabase.newOrderExtrasTable;
   $NewOrderPaymentsTableTable get newOrderPaymentsTable =>
       attachedDatabase.newOrderPaymentsTable;
+  $ScreeningVenuesTableTable get screeningVenuesTable =>
+      attachedDatabase.screeningVenuesTable;
+  $ScreeningTimeslotsTableTable get screeningTimeslotsTable =>
+      attachedDatabase.screeningTimeslotsTable;
+  $ScreeningRegistrationsTableTable get screeningRegistrationsTable =>
+      attachedDatabase.screeningRegistrationsTable;
 }
