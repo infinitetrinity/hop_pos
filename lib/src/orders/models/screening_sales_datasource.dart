@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/app/app_routes.dart';
+import 'package:hop_pos/routes/pos_routes.dart';
 import 'package:hop_pos/src/orders/states/screening_sales_search_state.dart';
+import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/screenings/actions/screening_actions.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -15,6 +17,7 @@ part 'screening_sales_datasource.g.dart';
 Raw<ScreeningSalesDataSource> screeningSalesDataSource(ScreeningSalesDataSourceRef ref, Screening screening) {
   return ScreeningSalesDataSource(
     screening: screening,
+    posController: ref.watch(posControllerProvider.notifier),
     screeningActions: ref.watch(screeningActionsProvider),
     search: ref.watch(screeningSalesSearchStateProvider),
     goRouter: ref.watch(goRouterProvider),
@@ -23,12 +26,18 @@ Raw<ScreeningSalesDataSource> screeningSalesDataSource(ScreeningSalesDataSourceR
 
 class ScreeningSalesDataSource extends AsyncDataTableSource {
   final Screening screening;
+  final PosController posController;
   final ScreeningActions screeningActions;
   final String? search;
   final GoRouter goRouter;
 
-  ScreeningSalesDataSource(
-      {required this.screening, required this.screeningActions, required this.search, required this.goRouter});
+  ScreeningSalesDataSource({
+    required this.screening,
+    required this.posController,
+    required this.screeningActions,
+    required this.search,
+    required this.goRouter,
+  });
 
   @override
   Future<AsyncRowsResponse> getRows(int startIndex, int count) async {
@@ -42,13 +51,14 @@ class ScreeningSalesDataSource extends AsyncDataTableSource {
         bool isStriped = data.indexOf(item) % 2 != 0;
 
         return DataRow2(
-          onTap: () {
-            print('tapped');
+          onTap: () async {
+            await posController.setPosOrder(item);
+            goRouter.go(PosRoute().location);
           },
           key: ValueKey("${item.order.id}-${item.order.displayInvoiceNo}"),
           color: MaterialStateProperty.resolveWith<Color?>((states) {
             return states.contains(MaterialState.hovered)
-                ? AppColors.blue600
+                ? const Color.fromARGB(255, 33, 40, 53)
                 : (isStriped ? AppColors.gray100.withOpacity(0.8) : AppColors.white.withOpacity(0.8));
           }),
           cells: [

@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
+import 'package:hop_pos/src/screenings/models/screening.dart';
 
 part 'order_with_customer_and_payment.freezed.dart';
 part 'order_with_customer_and_payment.g.dart';
@@ -9,6 +10,7 @@ part 'order_with_customer_and_payment.g.dart';
 @freezed
 class OrderWithCustomerAndPayment with _$OrderWithCustomerAndPayment {
   const factory OrderWithCustomerAndPayment({
+    required Screening screening,
     required Order order,
     required Customer customer,
     String? index,

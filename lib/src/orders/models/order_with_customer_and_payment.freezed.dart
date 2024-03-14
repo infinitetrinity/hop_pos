@@ -21,6 +21,7 @@ OrderWithCustomerAndPayment _$OrderWithCustomerAndPaymentFromJson(
 
 /// @nodoc
 mixin _$OrderWithCustomerAndPayment {
+  Screening get screening => throw _privateConstructorUsedError;
   Order get order => throw _privateConstructorUsedError;
   Customer get customer => throw _privateConstructorUsedError;
   String? get index => throw _privateConstructorUsedError;
@@ -41,8 +42,13 @@ abstract class $OrderWithCustomerAndPaymentCopyWith<$Res> {
           OrderWithCustomerAndPayment>;
   @useResult
   $Res call(
-      {Order order, Customer customer, String? index, double? totalPayment});
+      {Screening screening,
+      Order order,
+      Customer customer,
+      String? index,
+      double? totalPayment});
 
+  $ScreeningCopyWith<$Res> get screening;
   $OrderCopyWith<$Res> get order;
   $CustomerCopyWith<$Res> get customer;
 }
@@ -61,12 +67,17 @@ class _$OrderWithCustomerAndPaymentCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? screening = null,
     Object? order = null,
     Object? customer = null,
     Object? index = freezed,
     Object? totalPayment = freezed,
   }) {
     return _then(_value.copyWith(
+      screening: null == screening
+          ? _value.screening
+          : screening // ignore: cast_nullable_to_non_nullable
+              as Screening,
       order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
@@ -84,6 +95,14 @@ class _$OrderWithCustomerAndPaymentCopyWithImpl<$Res,
           : totalPayment // ignore: cast_nullable_to_non_nullable
               as double?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ScreeningCopyWith<$Res> get screening {
+    return $ScreeningCopyWith<$Res>(_value.screening, (value) {
+      return _then(_value.copyWith(screening: value) as $Val);
+    });
   }
 
   @override
@@ -113,8 +132,14 @@ abstract class _$$OrderWithCustomerAndPaymentImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Order order, Customer customer, String? index, double? totalPayment});
+      {Screening screening,
+      Order order,
+      Customer customer,
+      String? index,
+      double? totalPayment});
 
+  @override
+  $ScreeningCopyWith<$Res> get screening;
   @override
   $OrderCopyWith<$Res> get order;
   @override
@@ -134,12 +159,17 @@ class __$$OrderWithCustomerAndPaymentImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? screening = null,
     Object? order = null,
     Object? customer = null,
     Object? index = freezed,
     Object? totalPayment = freezed,
   }) {
     return _then(_$OrderWithCustomerAndPaymentImpl(
+      screening: null == screening
+          ? _value.screening
+          : screening // ignore: cast_nullable_to_non_nullable
+              as Screening,
       order: null == order
           ? _value.order
           : order // ignore: cast_nullable_to_non_nullable
@@ -164,7 +194,8 @@ class __$$OrderWithCustomerAndPaymentImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$OrderWithCustomerAndPaymentImpl extends _OrderWithCustomerAndPayment {
   const _$OrderWithCustomerAndPaymentImpl(
-      {required this.order,
+      {required this.screening,
+      required this.order,
       required this.customer,
       this.index,
       this.totalPayment})
@@ -174,6 +205,8 @@ class _$OrderWithCustomerAndPaymentImpl extends _OrderWithCustomerAndPayment {
           Map<String, dynamic> json) =>
       _$$OrderWithCustomerAndPaymentImplFromJson(json);
 
+  @override
+  final Screening screening;
   @override
   final Order order;
   @override
@@ -185,7 +218,7 @@ class _$OrderWithCustomerAndPaymentImpl extends _OrderWithCustomerAndPayment {
 
   @override
   String toString() {
-    return 'OrderWithCustomerAndPayment(order: $order, customer: $customer, index: $index, totalPayment: $totalPayment)';
+    return 'OrderWithCustomerAndPayment(screening: $screening, order: $order, customer: $customer, index: $index, totalPayment: $totalPayment)';
   }
 
   @override
@@ -193,6 +226,8 @@ class _$OrderWithCustomerAndPaymentImpl extends _OrderWithCustomerAndPayment {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OrderWithCustomerAndPaymentImpl &&
+            (identical(other.screening, screening) ||
+                other.screening == screening) &&
             (identical(other.order, order) || other.order == order) &&
             (identical(other.customer, customer) ||
                 other.customer == customer) &&
@@ -204,7 +239,7 @@ class _$OrderWithCustomerAndPaymentImpl extends _OrderWithCustomerAndPayment {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, order, customer, index, totalPayment);
+      Object.hash(runtimeType, screening, order, customer, index, totalPayment);
 
   @JsonKey(ignore: true)
   @override
@@ -224,7 +259,8 @@ class _$OrderWithCustomerAndPaymentImpl extends _OrderWithCustomerAndPayment {
 abstract class _OrderWithCustomerAndPayment
     extends OrderWithCustomerAndPayment {
   const factory _OrderWithCustomerAndPayment(
-      {required final Order order,
+      {required final Screening screening,
+      required final Order order,
       required final Customer customer,
       final String? index,
       final double? totalPayment}) = _$OrderWithCustomerAndPaymentImpl;
@@ -233,6 +269,8 @@ abstract class _OrderWithCustomerAndPayment
   factory _OrderWithCustomerAndPayment.fromJson(Map<String, dynamic> json) =
       _$OrderWithCustomerAndPaymentImpl.fromJson;
 
+  @override
+  Screening get screening;
   @override
   Order get order;
   @override

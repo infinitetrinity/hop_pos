@@ -41,4 +41,8 @@ class NewOrderRepository {
   Future<bool> delete(Order order) async {
     return await newOrderDao.deleteOrder(order);
   }
+
+  Future<PosOrder?> getPosOrder(Order order) async {
+    return await newOrderDao.getPosOrder(order);
+  }
 }

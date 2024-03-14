@@ -69,6 +69,10 @@ class OrderActions {
     return newOrder ?? order;
   }
 
+  Future<PosOrder?> getPosOrder(Order order) async {
+    return order.isNew ? await newOrderRepo.getPosOrder(order) : await orderRepo.getPosOrder(order);
+  }
+
   Future<PosOrder> addProductToOrder(PosOrder order, Product product) async {
     final items = (order.items ?? []);
     OrderItem newItem = product.toOrderItem().copyWith(

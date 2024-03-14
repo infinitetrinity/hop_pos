@@ -115,4 +115,8 @@ class ScreeningActions {
   Future<int> getScreeningOrdersTotalCount(Screening screening, {String? search}) async {
     return await screeningRepo.getScreeningOrdersTotalCount(screening, search: search);
   }
+
+  Future<Screening?> getScreeningById(int id) async {
+    return await screeningRepo.getById(id);
+  }
 }

@@ -34,6 +34,10 @@ class OrderRepository {
     return await orderDao.getScreeningCustomerLatestOrder(screening, customer);
   }
 
+  Future<PosOrder?> getPosOrder(Order order) async {
+    return await orderDao.getPosOrder(order);
+  }
+
   Future<bool> update(Order order) async {
     return await orderDao.updateOrder(order);
   }

@@ -235,4 +235,9 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
       return result;
     });
   }
+
+  Future<Screening?> getById(int id) {
+    final query = select(screeningsTable)..where((tbl) => tbl.id.equals(id));
+    return query.getSingleOrNull();
+  }
 }

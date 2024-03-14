@@ -9,6 +9,7 @@ part of 'order_with_customer_and_payment.dart';
 _$OrderWithCustomerAndPaymentImpl _$$OrderWithCustomerAndPaymentImplFromJson(
         Map<String, dynamic> json) =>
     _$OrderWithCustomerAndPaymentImpl(
+      screening: Screening.fromJson(json['screening'] as Map<String, dynamic>),
       order: Order.fromJson(json['order'] as Map<String, dynamic>),
       customer: Customer.fromJson(json['customer'] as Map<String, dynamic>),
       index: json['index'] as String?,
@@ -18,6 +19,7 @@ _$OrderWithCustomerAndPaymentImpl _$$OrderWithCustomerAndPaymentImplFromJson(
 Map<String, dynamic> _$$OrderWithCustomerAndPaymentImplToJson(
         _$OrderWithCustomerAndPaymentImpl instance) =>
     <String, dynamic>{
+      'screening': instance.screening,
       'order': instance.order,
       'customer': instance.customer,
       'index': instance.index,

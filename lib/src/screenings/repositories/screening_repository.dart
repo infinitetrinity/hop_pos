@@ -45,4 +45,8 @@ class ScreeningRepository {
   Future<int> getScreeningOrdersTotalCount(Screening screening, {String? search}) async {
     return await screeningDao.getScreeningOrdersTotalCount(screening, search: search);
   }
+
+  Future<Screening?> getById(int id) async {
+    return await screeningDao.getById(id);
+  }
 }

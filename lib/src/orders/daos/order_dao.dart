@@ -54,18 +54,7 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
     });
   }
 
-  Future<PosOrder?> getScreeningCustomerLatestOrder(Screening screening, Customer customer) async {
-    final latestOrder = await (select(ordersTable)
-          ..where((tbl) => tbl.screeningId.equals(screening.id))
-          ..where((tbl) => tbl.customerId.equals(customer.id!))
-          ..orderBy([(tbl) => OrderingTerm.desc(tbl.createdAt)])
-          ..limit(1))
-        .getSingleOrNull();
-
-    if (latestOrder == null) {
-      return null;
-    }
-
+  Future<PosOrder?> getPosOrder(Order order) async {
     final query = select(ordersTable).join(
       [
         leftOuterJoin(
@@ -116,23 +105,23 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
       ],
     );
 
-    query.where(ordersTable.id.equals(latestOrder.id!));
+    query.where(ordersTable.id.equals(order.id!));
     final result = await query.get();
-    PosOrder order = PosOrder(order: result.first.readTable(ordersTable));
+    PosOrder posOrder = PosOrder(order: result.first.readTable(ordersTable));
 
     for (final row in result) {
       final item = row.readTableOrNull(orderItemsTable);
-      if (item != null && order.items?.contains(item) != true) {
-        final items = List<OrderItem>.from(order.items ?? []);
+      if (item != null && posOrder.items?.contains(item) != true) {
+        final items = List<OrderItem>.from(posOrder.items ?? []);
         items.add(item);
-        order = order.copyWith(items: items);
+        posOrder = posOrder.copyWith(items: items);
       }
 
       final extra = row.readTableOrNull(orderExtrasTable);
-      if (extra != null && order.extras?.contains(extra) != true) {
-        final extras = List<OrderExtra>.from(order.extras ?? []);
+      if (extra != null && posOrder.extras?.contains(extra) != true) {
+        final extras = List<OrderExtra>.from(posOrder.extras ?? []);
         extras.add(extra);
-        order = order.copyWith(extras: extras);
+        posOrder = posOrder.copyWith(extras: extras);
       }
 
       final payment = row.readTableOrNull(orderPaymentsTable)?.copyWith(isNew: true);
@@ -140,24 +129,24 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
       final paymentWithMethod =
           payment != null ? OrderPaymentWithMethod(payment: payment, method: paymentMethod) : null;
 
-      if (paymentWithMethod != null && order.payments?.contains(paymentWithMethod) != true) {
-        final payments = List<OrderPaymentWithMethod>.from(order.payments ?? []);
+      if (paymentWithMethod != null && posOrder.payments?.contains(paymentWithMethod) != true) {
+        final payments = List<OrderPaymentWithMethod>.from(posOrder.payments ?? []);
         payments.add(paymentWithMethod);
-        order = order.copyWith(payments: payments);
+        posOrder = posOrder.copyWith(payments: payments);
       }
 
       final newItem = row.readTableOrNull(newOrderItemsTable)?.copyWith(isNew: true);
-      if (newItem != null && order.items?.contains(newItem) != true) {
-        final items = List<OrderItem>.from(order.items ?? []);
+      if (newItem != null && posOrder.items?.contains(newItem) != true) {
+        final items = List<OrderItem>.from(posOrder.items ?? []);
         items.add(newItem);
-        order = order.copyWith(items: items);
+        posOrder = posOrder.copyWith(items: items);
       }
 
       final newExtra = row.readTableOrNull(newOrderExtrasTable)?.copyWith(isNew: true);
-      if (newExtra != null && order.extras?.contains(newExtra) != true) {
-        final extras = List<OrderExtra>.from(order.extras ?? []);
+      if (newExtra != null && posOrder.extras?.contains(newExtra) != true) {
+        final extras = List<OrderExtra>.from(posOrder.extras ?? []);
         extras.add(newExtra);
-        order = order.copyWith(extras: extras);
+        posOrder = posOrder.copyWith(extras: extras);
       }
 
       final newPayment = row.readTableOrNull(newOrderPaymentsTable)?.copyWith(isNew: true);
@@ -165,16 +154,31 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
       final newPaymentWithMethod =
           newPayment != null ? OrderPaymentWithMethod(payment: newPayment, method: newPaymentMethod) : null;
 
-      if (newPaymentWithMethod != null && order.payments?.contains(newPaymentWithMethod) != true) {
-        final payments = List<OrderPaymentWithMethod>.from(order.payments ?? []);
+      if (newPaymentWithMethod != null && posOrder.payments?.contains(newPaymentWithMethod) != true) {
+        final payments = List<OrderPaymentWithMethod>.from(posOrder.payments ?? []);
         payments.add(newPaymentWithMethod);
-        order = order.copyWith(payments: payments);
+        posOrder = posOrder.copyWith(payments: payments);
       }
     }
 
-    return order.copyWith(
-      items: List<OrderItem>.from(order.items ?? [])..sort((a, b) => (a.cartId ?? 0).compareTo(b.cartId ?? 0)),
+    return posOrder.copyWith(
+      items: List<OrderItem>.from(posOrder.items ?? [])..sort((a, b) => (a.cartId ?? 0).compareTo(b.cartId ?? 0)),
     );
+  }
+
+  Future<PosOrder?> getScreeningCustomerLatestOrder(Screening screening, Customer customer) async {
+    final latestOrder = await (select(ordersTable)
+          ..where((tbl) => tbl.screeningId.equals(screening.id))
+          ..where((tbl) => tbl.customerId.equals(customer.id!))
+          ..orderBy([(tbl) => OrderingTerm.desc(tbl.createdAt)])
+          ..limit(1))
+        .getSingleOrNull();
+
+    if (latestOrder == null) {
+      return null;
+    }
+
+    return await getPosOrder(latestOrder);
   }
 
   Future<List<ScreeningWithSalesData>> getScreeningOrdersData(List<Screening> screenings) async {
@@ -275,6 +279,7 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
     return (await query.get())
         .map(
           (row) => OrderWithCustomerAndPayment(
+            screening: screening,
             order: row.readTable(ordersTable),
             customer: row.readTable(customersTable),
             index: row.read(index),

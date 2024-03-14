@@ -10,6 +10,7 @@ import 'package:hop_pos/src/order_payments/models/order_payment.dart';
 import 'package:hop_pos/src/orders/actions/order_actions.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/order_discount_form.dart';
+import 'package:hop_pos/src/orders/models/order_with_customer_and_payment.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
 import 'package:hop_pos/src/payment_methods/models/payment_method.dart';
 import 'package:hop_pos/src/pos/models/pos_cart.dart';
@@ -313,5 +314,19 @@ class PosController extends _$PosController {
         order: state.order!.copyWith(payLater: payLater),
       );
     }
+  }
+
+  Future<void> setPosOrder(OrderWithCustomerAndPayment order) async {
+    final registration = await ref
+        .read(screeningRegistrationActionsProvider)
+        .findByCustomerAndScreening(order.screening, order.customer);
+    final posOrder = await ref.read(orderActionsProvider).getPosOrder(order.order);
+
+    state = state.copyWith(
+      screening: order.screening,
+      customer: order.customer,
+      registration: registration,
+      order: posOrder,
+    );
   }
 }

@@ -7,7 +7,7 @@ part of 'screening_sales_datasource.dart';
 // **************************************************************************
 
 String _$screeningSalesDataSourceHash() =>
-    r'7fd2f453f604aa531b6f4235b34d325a78a46fdd';
+    r'3096ea9c0389c8d891c99de2cac20c6a5ddbca44';
 
 /// Copied from Dart SDK
 class _SystemHash {
