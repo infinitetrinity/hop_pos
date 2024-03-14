@@ -17,6 +17,7 @@ Raw<ScreeningsSalesDataSource> screeningsSalesDataSource(ScreeningsSalesDataSour
   return ScreeningsSalesDataSource(
     screeningActions: ref.watch(screeningActionsProvider),
     search: ref.watch(screeningSalesSearchStateProvider),
+    searchNotifier: ref.watch(screeningSalesSearchStateProvider.notifier),
     goRouter: ref.watch(goRouterProvider),
   );
 }
@@ -24,9 +25,15 @@ Raw<ScreeningsSalesDataSource> screeningsSalesDataSource(ScreeningsSalesDataSour
 class ScreeningsSalesDataSource extends AsyncDataTableSource {
   final ScreeningActions screeningActions;
   final String? search;
+  final ScreeningSalesSearchState searchNotifier;
   final GoRouter goRouter;
 
-  ScreeningsSalesDataSource({required this.screeningActions, required this.search, required this.goRouter});
+  ScreeningsSalesDataSource({
+    required this.screeningActions,
+    required this.search,
+    required this.searchNotifier,
+    required this.goRouter,
+  });
 
   @override
   Future<AsyncRowsResponse> getRows(int startIndex, int count) async {
@@ -41,6 +48,7 @@ class ScreeningsSalesDataSource extends AsyncDataTableSource {
 
         return DataRow2(
           onTap: () {
+            searchNotifier.set(null);
             goRouter.go(ScreeningOrdersRoute($extra: item.screening).location, extra: item.screening);
           },
           key: ValueKey(item.screening.id),

@@ -7,7 +7,7 @@ part of 'screening_sales_search_state.dart';
 // **************************************************************************
 
 String _$screeningSalesSearchStateHash() =>
-    r'8b3b2090b40461bb331e788dd9c3a5cafab754c4';
+    r'fffd5298df7a581adccf1a79895bdec9e6449a23';
 
 /// See also [ScreeningSalesSearchState].
 @ProviderFor(ScreeningSalesSearchState)

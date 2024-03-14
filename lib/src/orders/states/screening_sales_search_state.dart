@@ -9,7 +9,7 @@ class ScreeningSalesSearchState extends _$ScreeningSalesSearchState {
     return null;
   }
 
-  void set(String query) {
+  void set(String? query) {
     state = query;
   }
 }

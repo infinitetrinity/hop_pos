@@ -7,7 +7,7 @@ part of 'screenings_sales_datasource.dart';
 // **************************************************************************
 
 String _$screeningsSalesDataSourceHash() =>
-    r'3fd2ea0be7504c5021605df40d48f4f7a557eaaf';
+    r'07b348f45cd2b8c404f2828e6c041fe76b2933cc';
 
 /// See also [screeningsSalesDataSource].
 @ProviderFor(screeningsSalesDataSource)

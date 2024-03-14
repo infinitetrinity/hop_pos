@@ -59,7 +59,7 @@ class PosOrder with _$PosOrder {
   }
 
   double get rounding {
-    return (totalBeforeRounding - total).toDecimalPlace(2);
+    return 0 - (totalBeforeRounding - total).toDecimalPlace(2);
   }
 
   double get totalPayment {

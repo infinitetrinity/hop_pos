@@ -19,7 +19,7 @@ class PosRounding extends ConsumerWidget {
           style: AppStyles.bodyLarge,
         ),
         Text(
-          "-${(order?.rounding ?? 0).formatMoney}",
+          (order?.rounding ?? 0).formatMoney,
           style: AppStyles.bodyLarge,
         ),
       ],

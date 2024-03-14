@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/routes/order_routes.dart';
+import 'package:hop_pos/src/orders/states/screening_sales_search_state.dart';
 
-class ScreeningSalesBackBtn extends HookWidget {
+class ScreeningSalesBackBtn extends HookConsumerWidget {
   const ScreeningSalesBackBtn({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isHover = useState(false);
 
     return MouseRegion(
@@ -20,7 +22,10 @@ class ScreeningSalesBackBtn extends HookWidget {
           foregroundColor: isHover.value ? AppColors.white : AppColors.gray700,
           padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
         ),
-        onPressed: () => OrderRoute().go(context),
+        onPressed: () {
+          ref.invalidate(screeningSalesSearchStateProvider);
+          OrderRoute().go(context);
+        },
         child: Row(
           children: [
             Icon(

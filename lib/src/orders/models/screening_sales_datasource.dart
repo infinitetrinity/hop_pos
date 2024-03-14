@@ -20,6 +20,7 @@ Raw<ScreeningSalesDataSource> screeningSalesDataSource(ScreeningSalesDataSourceR
     posController: ref.watch(posControllerProvider.notifier),
     screeningActions: ref.watch(screeningActionsProvider),
     search: ref.watch(screeningSalesSearchStateProvider),
+    searchNotifier: ref.watch(screeningSalesSearchStateProvider.notifier),
     goRouter: ref.watch(goRouterProvider),
   );
 }
@@ -29,6 +30,7 @@ class ScreeningSalesDataSource extends AsyncDataTableSource {
   final PosController posController;
   final ScreeningActions screeningActions;
   final String? search;
+  final ScreeningSalesSearchState searchNotifier;
   final GoRouter goRouter;
 
   ScreeningSalesDataSource({
@@ -36,6 +38,7 @@ class ScreeningSalesDataSource extends AsyncDataTableSource {
     required this.posController,
     required this.screeningActions,
     required this.search,
+    required this.searchNotifier,
     required this.goRouter,
   });
 
@@ -52,6 +55,7 @@ class ScreeningSalesDataSource extends AsyncDataTableSource {
 
         return DataRow2(
           onTap: () async {
+            searchNotifier.set(null);
             await posController.setPosOrder(item);
             goRouter.go(PosRoute().location);
           },

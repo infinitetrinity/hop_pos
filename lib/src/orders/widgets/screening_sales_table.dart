@@ -33,8 +33,14 @@ class ScreeningSalesTable extends ConsumerWidget {
             minWidth: 600,
             source: source,
             rowsPerPage: 10,
-            errorBuilder: (error) => Container(
-              child: Text(error.toString()),
+            empty: Container(
+              padding: const EdgeInsets.all(15),
+              child: Center(
+                child: Text(
+                  'No record found',
+                  style: AppStyles.body,
+                ),
+              ),
             ),
             columns: const [
               DataColumn2(
