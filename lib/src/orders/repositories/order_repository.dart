@@ -2,6 +2,7 @@ import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/orders/daos/order_dao.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
+import 'package:hop_pos/src/orders/models/order_with_customer_and_payment.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -48,5 +49,13 @@ class OrderRepository {
 
   Future<bool> delete(Order order) async {
     return await orderDao.deleteOrder(order);
+  }
+
+  Future<List<OrderWithCustomerAndPayment>> getIncompleteOrdersWithinDays(int days, {String? search}) async {
+    return await orderDao.getIncompleteOrdersWithinDays(days, search: search);
+  }
+
+  Future<int> getIncompleteOrdersWithinDaysCount(int days, {String? search}) async {
+    return await orderDao.getIncompleteOrdersWithinDaysCount(days, search: search);
   }
 }

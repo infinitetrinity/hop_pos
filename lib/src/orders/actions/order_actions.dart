@@ -9,6 +9,7 @@ import 'package:hop_pos/src/order_payments/actions/order_payment_actions.dart';
 import 'package:hop_pos/src/order_payments/models/order_payment.dart';
 import 'package:hop_pos/src/order_payments/models/order_payment_with_method.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
+import 'package:hop_pos/src/orders/models/order_with_customer_and_payment.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
 import 'package:hop_pos/src/orders/repositories/new_order_repository.dart';
 import 'package:hop_pos/src/orders/repositories/order_repository.dart';
@@ -246,5 +247,28 @@ class OrderActions {
       order: order,
       registration: cart.registration?.copyWith(hasOrders: true),
     );
+  }
+
+  Future<List<OrderWithCustomerAndPayment>> getIncompleteOrdersWithinDays({
+    int days = 30,
+    int page = 1,
+    int size = 20,
+    String? search,
+  }) async {
+    final orders = await orderRepo.getIncompleteOrdersWithinDays(days, search: search);
+    final newOrders = await newOrderRepo.getIncompleteOrdersWithinDays(days, search: search);
+
+    final sorted = [...orders, ...newOrders]..sort((a, b) => b.order.createdAt!.compareTo(a.order.createdAt!));
+
+    final start = size * (page - 1);
+    final end = start + size > sorted.length ? sorted.length : start + size;
+    return sorted.sublist(start, end).toList();
+  }
+
+  Future<int> getIncompleteOrdersWithinDaysCount({int days = 30, String? search}) async {
+    final orderCount = await orderRepo.getIncompleteOrdersWithinDaysCount(days, search: search);
+    final newOrderCount = await newOrderRepo.getIncompleteOrdersWithinDaysCount(days, search: search);
+
+    return orderCount + newOrderCount;
   }
 }

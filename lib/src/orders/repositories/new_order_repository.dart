@@ -2,6 +2,7 @@ import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/orders/daos/new_order_dao.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
+import 'package:hop_pos/src/orders/models/order_with_customer_and_payment.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -44,5 +45,13 @@ class NewOrderRepository {
 
   Future<PosOrder?> getPosOrder(Order order) async {
     return await newOrderDao.getPosOrder(order);
+  }
+
+  Future<List<OrderWithCustomerAndPayment>> getIncompleteOrdersWithinDays(int days, {String? search}) async {
+    return await newOrderDao.getIncompleteOrdersWithinDays(days, search: search);
+  }
+
+  Future<int> getIncompleteOrdersWithinDaysCount(int days, {String? search}) async {
+    return await newOrderDao.getIncompleteOrdersWithinDaysCount(days, search: search);
   }
 }

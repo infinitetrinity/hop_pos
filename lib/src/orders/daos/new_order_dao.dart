@@ -184,23 +184,13 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
   }
 
   Future<List<OrderWithCustomerAndPayment>> getScreeningOrders(Screening screening, {String? search}) async {
-    final timeslotQuery = selectOnly(screeningTimeslotsTable)
-      ..addColumns([screeningTimeslotsTable.id])
-      ..where(screeningTimeslotsTable.screeningId.equals(screening.id));
-
-    final indexQuery = selectOnly(screeningRegistrationsTable)
-      ..addColumns([screeningRegistrationsTable.index])
-      ..where(screeningRegistrationsTable.customerId.equalsExp(customersTable.id) &
-          screeningRegistrationsTable.timeslotId.isInQuery(timeslotQuery));
-
     final index = coalesce<String>([
-      subqueryExpression(indexQuery),
       newCustomersTable.nric.substr(-5, 5),
       customersTable.nric.substr(-5, 5),
     ]);
 
     final paymentQuery = selectOnly(newOrderPaymentsTable)
-      ..addColumns([newOrderPaymentsTable.amount])
+      ..addColumns([newOrderPaymentsTable.amount.total()])
       ..where(
           newOrderPaymentsTable.orderId.equalsExp(newOrdersTable.id) & newOrderPaymentsTable.orderIsNew.isValue(true));
 
@@ -297,5 +287,120 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
       final count = await (delete(newOrdersTable)..where((tbl) => tbl.id.equals(order.id!))).go();
       return count > 0;
     });
+  }
+
+  Future<List<OrderWithCustomerAndPayment>> getIncompleteOrdersWithinDays(int days, {String? search}) async {
+    final index = coalesce<String>([
+      newCustomersTable.nric.substr(-5, 5),
+      customersTable.nric.substr(-5, 5),
+    ]);
+
+    final paymentQuery = selectOnly(newOrderPaymentsTable)
+      ..addColumns([newOrderPaymentsTable.amount.total()])
+      ..where(
+          newOrderPaymentsTable.orderId.equalsExp(newOrdersTable.id) & newOrderPaymentsTable.orderIsNew.isValue(true));
+
+    final totalPayment = coalesce<double>([subqueryExpression(paymentQuery), const Constant(0)]);
+
+    final isIncomplete = (newOrdersTable.netTotal + newOrdersTable.rounding - totalPayment).isBiggerThanValue(0.0001);
+
+    final query = select(newOrdersTable).join(
+      [
+        innerJoin(
+          screeningsTable,
+          screeningsTable.id.equalsExp(
+            newOrdersTable.screeningId,
+          ),
+        ),
+        leftOuterJoin(
+          customersTable,
+          customersTable.nric.equalsExp(
+            newOrdersTable.customerNric,
+          ),
+        ),
+        leftOuterJoin(
+          newCustomersTable,
+          newCustomersTable.nric.equalsExp(
+            newOrdersTable.customerNric,
+          ),
+        ),
+      ],
+    )
+      ..where(newOrdersTable.createdAt.isBetweenValues(
+        DateTime.now().subtract(Duration(days: days)),
+        DateTime.now(),
+      ))
+      ..where(isIncomplete.isValue(true))
+      ..orderBy([OrderingTerm.desc(newOrdersTable.createdAt)]);
+
+    query.addColumns([index, totalPayment, isIncomplete]);
+
+    if (!search.isNullOrEmpty) {
+      query.where(newOrdersTable.invoiceNo.like("%$search%") |
+          newOrdersTable.invoicePrefix.like("%$search%") |
+          newCustomersTable.fullName.like("%$search%") |
+          newCustomersTable.nric.like("%$search%") |
+          customersTable.fullName.like("%$search%") |
+          customersTable.nric.like("%$search%"));
+    }
+
+    return (await query.get()).map((row) {
+      final customer =
+          row.readTableOrNull(customersTable) ?? row.readTableOrNull(newCustomersTable)?.copyWith(isNew: true);
+
+      return OrderWithCustomerAndPayment(
+        screening: row.readTable(screeningsTable),
+        order: row.readTable(newOrdersTable).copyWith(isNew: true),
+        customer: customer!,
+        index: row.read(index),
+        totalPayment: row.read(totalPayment),
+      );
+    }).toList();
+  }
+
+  Future<int> getIncompleteOrdersWithinDaysCount(int days, {String? search}) async {
+    final paymentQuery = selectOnly(newOrderPaymentsTable)
+      ..addColumns([newOrderPaymentsTable.amount.total()])
+      ..where(
+          newOrderPaymentsTable.orderId.equalsExp(newOrdersTable.id) & newOrderPaymentsTable.orderIsNew.isValue(true));
+
+    final totalPayment = coalesce<double>([subqueryExpression(paymentQuery), const Constant(0)]);
+
+    final isIncomplete = (newOrdersTable.netTotal + newOrdersTable.rounding - totalPayment).isBiggerThanValue(0.0001);
+
+    final query = select(newOrdersTable).join(
+      [
+        leftOuterJoin(
+          customersTable,
+          customersTable.nric.equalsExp(
+            newOrdersTable.customerNric,
+          ),
+        ),
+        leftOuterJoin(
+          newCustomersTable,
+          newCustomersTable.nric.equalsExp(
+            newOrdersTable.customerNric,
+          ),
+        ),
+      ],
+    )
+      ..where(newOrdersTable.createdAt.isBetweenValues(
+        DateTime.now().subtract(Duration(days: days)),
+        DateTime.now(),
+      ))
+      ..where(isIncomplete.isValue(true));
+
+    query.addColumns([totalPayment, isIncomplete]);
+
+    if (!search.isNullOrEmpty) {
+      query.where(newOrdersTable.invoiceNo.like("%$search%") |
+          newOrdersTable.invoicePrefix.like("%$search%") |
+          newCustomersTable.fullName.like("%$search%") |
+          newCustomersTable.nric.like("%$search%") |
+          customersTable.fullName.like("%$search%") |
+          customersTable.nric.like("%$search%"));
+    }
+
+    return (await query.get()).length;
   }
 }
