@@ -1,12 +1,16 @@
 import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/app/app_extension.dart';
+import 'package:hop_pos/src/customers/models/customer.dart';
+import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
 import 'package:hop_pos/src/customers/models/new_customers_table.dart';
 import 'package:hop_pos/src/order_payments/models/new_order_payments_table.dart';
 import 'package:hop_pos/src/order_payments/models/order_payments_table.dart';
 import 'package:hop_pos/src/orders/models/new_orders_table.dart';
 import 'package:hop_pos/src/orders/models/order_with_customer_and_payment.dart';
 import 'package:hop_pos/src/orders/models/orders_table.dart';
+import 'package:hop_pos/src/screening_registrations/models/new_screening_registrations_table.dart';
+import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registrations_table.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslots_table.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
@@ -24,6 +28,7 @@ part 'screening_dao.g.dart';
   NewOrderPaymentsTable,
   NewCustomersTable,
   ScreeningRegistrationsTable,
+  NewScreeningRegistrationsTable,
 ])
 class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
   ScreeningDao(AppDb db) : super(db);
@@ -239,5 +244,149 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
   Future<Screening?> getById(int id) {
     final query = select(screeningsTable)..where((tbl) => tbl.id.equals(id));
     return query.getSingleOrNull();
+  }
+
+  Future<List<CustomerWithRegistration>> searchScreeningCustomers(Screening screening, String search) async {
+    final query = select(screeningsTable).join(
+      [
+        innerJoin(
+          screeningTimeslotsTable,
+          screeningTimeslotsTable.screeningId.equalsExp(
+            screeningsTable.id,
+          ),
+        ),
+        leftOuterJoin(
+          screeningRegistrationsTable,
+          screeningRegistrationsTable.timeslotId.equalsExp(screeningTimeslotsTable.id),
+        ),
+        leftOuterJoin(
+          newScreeningRegistrationsTable,
+          newScreeningRegistrationsTable.timeslotId.equalsExp(screeningTimeslotsTable.id),
+        ),
+        leftOuterJoin(
+          customersTable,
+          customersTable.id.equalsExp(screeningRegistrationsTable.customerId) |
+              customersTable.nric.equalsExp(newScreeningRegistrationsTable.customerNric),
+        ),
+        leftOuterJoin(
+          newCustomersTable,
+          newCustomersTable.nric.equalsExp(newScreeningRegistrationsTable.customerNric),
+        ),
+      ],
+    )
+      ..where(screeningsTable.id.equals(screening.id))
+      ..where(coalesce([customersTable.id, newCustomersTable.id]).isNotNull());
+
+    if (!search.isNullOrEmpty) {
+      String refSearch = search.startsWith('r') ? search.substring(1) : search;
+      query.where(
+        customersTable.fullName.like("%$search%") |
+            customersTable.nric.like("%$search%") |
+            newCustomersTable.fullName.like("%$search%") |
+            newCustomersTable.nric.like("%$search%") |
+            screeningRegistrationsTable.index.like("$refSearch%"),
+      );
+    }
+
+    final index = coalesce([
+      screeningRegistrationsTable.index,
+      newScreeningRegistrationsTable.index,
+      customersTable.nric.substr(-5, 5),
+      newCustomersTable.nric.substr(-5, 5),
+    ]);
+
+    final ordersCount = subqueryExpression<int>(selectOnly(ordersTable)
+      ..addColumns([ordersTable.id.count()])
+      ..where(
+          ordersTable.screeningId.equalsExp(screeningsTable.id) & ordersTable.customerId.equalsExp(customersTable.id)));
+
+    final newOrdersCount = subqueryExpression<int>(selectOnly(newOrdersTable)
+      ..addColumns([newOrdersTable.id.count()])
+      ..where(
+        newOrdersTable.screeningId.equalsExp(screeningsTable.id) &
+            (newOrdersTable.customerNric.equalsExp(customersTable.nric) |
+                newOrdersTable.customerNric.equalsExp(newCustomersTable.nric)),
+      ));
+
+    query.addColumns([index, ordersCount, newOrdersCount]);
+    query.groupBy([customersTable.id, newCustomersTable.id]);
+    query.orderBy([OrderingTerm.asc(index.cast<int>())]);
+    query.limit(50);
+
+    return (await query.get()).map((row) {
+      final customer = row.readTableOrNull(customersTable) == null
+          ? row.readTable(newCustomersTable).copyWith(isNew: true)
+          : row.readTable(customersTable);
+
+      final registration = row.readTableOrNull(screeningRegistrationsTable) == null
+          ? row.readTable(newScreeningRegistrationsTable).copyWith(isNew: true)
+          : row.readTable(screeningRegistrationsTable);
+
+      return CustomerWithRegistration(
+        customer: customer,
+        registration: registration.copyWith(
+          index: row.read(index),
+          hasOrders: (row.read(ordersCount) ?? 0) > 0 || (row.read(newOrdersCount) ?? 0) > 0,
+        ),
+      );
+    }).toList();
+  }
+
+  Future<int> getCustomersCount(Screening screening) async {
+    final timeslotQuery = selectOnly(screeningTimeslotsTable)
+      ..addColumns([screeningTimeslotsTable.id])
+      ..where(screeningTimeslotsTable.screeningId.isValue(screening.id));
+
+    final rCountQuery = selectOnly(screeningRegistrationsTable)
+      ..addColumns([screeningRegistrationsTable.customerId.count()])
+      ..where(screeningRegistrationsTable.timeslotId.isInQuery(timeslotQuery));
+
+    final nrCountQuery = selectOnly(newScreeningRegistrationsTable)
+      ..addColumns([newScreeningRegistrationsTable.customerNric.count()])
+      ..where(newScreeningRegistrationsTable.timeslotId.isInQuery(timeslotQuery));
+
+    final rCount = (await rCountQuery.getSingle()).read(screeningRegistrationsTable.customerId.count()) ?? 0;
+    final nrCount = (await nrCountQuery.getSingle()).read(newScreeningRegistrationsTable.customerNric.count()) ?? 0;
+    return rCount + nrCount;
+  }
+
+  Future<ScreeningRegistration?> findScreeningCustomerRegistration(Screening screening, Customer customer) async {
+    final query = select(screeningTimeslotsTable).join(
+      [
+        leftOuterJoin(
+          screeningRegistrationsTable,
+          screeningRegistrationsTable.timeslotId.equalsExp(
+            screeningTimeslotsTable.id,
+          ),
+        ),
+        innerJoin(
+          newScreeningRegistrationsTable,
+          newScreeningRegistrationsTable.id.equalsExp(
+            screeningRegistrationsTable.timeslotId,
+          ),
+        ),
+      ],
+    )
+      ..where(screeningTimeslotsTable.screeningId.isValue(screening.id))
+      ..where(screeningRegistrationsTable.customerId.isValue(customer.id!) |
+          newScreeningRegistrationsTable.customerNric.isValue(customer.nric!))
+      ..limit(1);
+
+    final index = coalesce([
+      screeningRegistrationsTable.index,
+      Constant(customer.nricIndex),
+    ]);
+    query.addColumns([index]);
+
+    final result = await query.getSingleOrNull();
+    if (result == null) {
+      return null;
+    }
+
+    final registration = result.readTableOrNull(screeningRegistrationsTable) == null
+        ? result.readTable(newScreeningRegistrationsTable).copyWith(isNew: true)
+        : result.readTable(screeningRegistrationsTable);
+
+    return registration.copyWith(index: result.read(index));
   }
 }

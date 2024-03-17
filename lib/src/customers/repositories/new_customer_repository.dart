@@ -26,4 +26,16 @@ class NewCustomerRepository {
   Future<bool> update(Customer customer) async {
     return await newCustomerDao.updateCustomer(customer);
   }
+
+  Future<Customer?> findByNric({required String nric, int? excludeId}) async {
+    return await newCustomerDao.findByNric(nric: nric, excludeId: excludeId);
+  }
+
+  Future<Customer?> findByMobileNo({required String mobileNo, int? excludeId}) async {
+    return await newCustomerDao.findByMobileNo(mobileNo: mobileNo, excludeId: excludeId);
+  }
+
+  Future<Customer?> findByEmail({required String email, int? excludeId}) async {
+    return await newCustomerDao.findByEmail(email: email, excludeId: excludeId);
+  }
 }

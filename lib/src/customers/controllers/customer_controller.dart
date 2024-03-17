@@ -47,4 +47,8 @@ class CustomerController extends _$CustomerController {
   Future<Customer> storeCustomer(Customer customer) async {
     return await ref.read(customerActionsProvider).store(customer);
   }
+
+  Future<void> setLatestScreeningPos(Customer customer) async {
+    await ref.watch(customerActionsProvider).setLatestScreeningPos(customer);
+  }
 }

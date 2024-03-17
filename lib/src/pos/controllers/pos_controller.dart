@@ -15,8 +15,8 @@ import 'package:hop_pos/src/orders/models/pos_order.dart';
 import 'package:hop_pos/src/payment_methods/models/payment_method.dart';
 import 'package:hop_pos/src/pos/models/pos_cart.dart';
 import 'package:hop_pos/src/products/models/product.dart';
-import 'package:hop_pos/src/screening_registrations/actions/screening_registration_actions.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
+import 'package:hop_pos/src/screenings/actions/screening_actions.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -39,7 +39,7 @@ class PosController extends _$PosController {
     }
 
     registration ??=
-        await ref.read(screeningRegistrationActionsProvider).findByCustomerAndScreening(state.screening!, customer);
+        await ref.read(screeningActionsProvider).findScreeningCustomerRegistration(state.screening!, customer);
 
     PosOrder order = await ref.read(orderActionsProvider).getScreeningCustomerLatestOrder(state.screening!, customer) ??
         const PosOrder(order: Order(isNew: true));
@@ -76,7 +76,7 @@ class PosController extends _$PosController {
       return null;
     }
 
-    return await ref.watch(screeningRegistrationActionsProvider).getCustomersCount(state.screening!);
+    return await ref.watch(screeningActionsProvider).getCustomersCount(state.screening!);
   }
 
   void setSalesNote(String note) {
@@ -317,9 +317,8 @@ class PosController extends _$PosController {
   }
 
   Future<void> setPosOrder(OrderWithCustomerAndPayment order) async {
-    final registration = await ref
-        .read(screeningRegistrationActionsProvider)
-        .findByCustomerAndScreening(order.screening, order.customer);
+    final registration =
+        await ref.read(screeningActionsProvider).findScreeningCustomerRegistration(order.screening, order.customer);
     final posOrder = await ref.read(orderActionsProvider).getPosOrder(order.order);
 
     state = state.copyWith(

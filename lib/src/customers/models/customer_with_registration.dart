@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
+import 'package:hop_pos/src/screenings/models/screening.dart';
 
 part 'customer_with_registration.freezed.dart';
 part 'customer_with_registration.g.dart';
@@ -9,6 +10,7 @@ part 'customer_with_registration.g.dart';
 class CustomerWithRegistration with _$CustomerWithRegistration {
   const factory CustomerWithRegistration({
     required Customer customer,
+    Screening? screening,
     required ScreeningRegistration registration,
   }) = _CustomerWithRegistration;
 

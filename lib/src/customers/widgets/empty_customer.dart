@@ -29,17 +29,21 @@ class EmptyCustomer extends ConsumerWidget {
             FutureBuilder<int?>(
               future: customersCount,
               builder: (_, snapshot) {
-                return Column(
-                  children: [
-                    const SizedBox(height: 2),
-                    Text(
-                      "${snapshot.data} customers",
-                      style: AppStyles.body.copyWith(
-                        color: isHover ? AppColors.white : AppColors.gray500,
-                      ),
-                    ),
-                  ],
-                );
+                return snapshot.data == null
+                    ? Container(
+                        child: Text(snapshot.error.toString()),
+                      )
+                    : Column(
+                        children: [
+                          const SizedBox(height: 2),
+                          Text(
+                            "${snapshot.data} customers",
+                            style: AppStyles.body.copyWith(
+                              color: isHover ? AppColors.white : AppColors.gray500,
+                            ),
+                          ),
+                        ],
+                      );
               },
             ),
             const SizedBox(height: 2),

@@ -6,7 +6,7 @@ part of 'screening_actions.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$screeningActionsHash() => r'a1b2cd351f0bbc3c0176a9af423f13ba305f77a9';
+String _$screeningActionsHash() => r'7aee1d51fa3a12d8fba489749ba57666525db8e9';
 
 /// See also [screeningActions].
 @ProviderFor(screeningActions)

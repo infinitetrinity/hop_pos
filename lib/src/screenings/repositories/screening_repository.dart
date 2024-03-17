@@ -1,5 +1,8 @@
 import 'package:hop_pos/app/app_db.dart';
+import 'package:hop_pos/src/customers/models/customer.dart';
+import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
 import 'package:hop_pos/src/orders/models/order_with_customer_and_payment.dart';
+import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
 import 'package:hop_pos/src/screenings/daos/screening_dao.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:hop_pos/src/screenings/models/screening_with_sales_data.dart';
@@ -48,5 +51,17 @@ class ScreeningRepository {
 
   Future<Screening?> getById(int id) async {
     return await screeningDao.getById(id);
+  }
+
+  Future<List<CustomerWithRegistration>> searchScreeningCustomers(Screening screening, String search) async {
+    return await screeningDao.searchScreeningCustomers(screening, search);
+  }
+
+  Future<int?> getCustomersCount(Screening screening) async {
+    return await screeningDao.getCustomersCount(screening);
+  }
+
+  Future<ScreeningRegistration?> findScreeningCustomerRegistration(Screening screening, Customer customer) async {
+    return await screeningDao.findScreeningCustomerRegistration(screening, customer);
   }
 }

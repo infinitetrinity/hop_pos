@@ -1,7 +1,7 @@
+import 'package:hop_pos/src/customers/models/customer.dart';
 import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
 import 'package:hop_pos/src/orders/models/order_with_customer_and_payment.dart';
-import 'package:hop_pos/src/screening_registrations/repositories/new_screening_registration_repository.dart';
-import 'package:hop_pos/src/screening_registrations/repositories/screening_registration_repository.dart';
+import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot_with_venue.dart';
 import 'package:hop_pos/src/screening_timeslots/repositories/screening_timeslot_repository.dart';
@@ -18,22 +18,16 @@ ScreeningActions screeningActions(ScreeningActionsRef ref) {
   return ScreeningActions(
     screeningRepo: ref.watch(screeningRepoProvider),
     screeningTimeslotRepoProvider: ref.watch(screeningTimeslotRepoProvider),
-    screeningRegistrationRepo: ref.watch(screeningRegistrationRepoProvider),
-    newScreeningRegistrationRepo: ref.watch(newScreeningRegistrationRepoProvider),
   );
 }
 
 class ScreeningActions {
   final ScreeningRepository screeningRepo;
   final ScreeningTimeslotRepository screeningTimeslotRepoProvider;
-  final ScreeningRegistrationRepository screeningRegistrationRepo;
-  final NewScreeningRegistrationRepository newScreeningRegistrationRepo;
 
   ScreeningActions({
     required this.screeningRepo,
     required this.screeningTimeslotRepoProvider,
-    required this.screeningRegistrationRepo,
-    required this.newScreeningRegistrationRepo,
   });
 
   Future<dynamic> getUpcomingScreenings({int partitionSize = 0}) async {
@@ -65,30 +59,6 @@ class ScreeningActions {
     return await screeningRepo.search(search);
   }
 
-  FutureOr<List<CustomerWithRegistration>> searchScreeningCustomers(Screening screening, String search) async {
-    final registrations = await screeningRegistrationRepo.searchScreeningCustomers(screening, search);
-    final newRegistrations = await newScreeningRegistrationRepo.searchScreeningCustomers(screening, search);
-
-    final sorted = [...registrations, ...newRegistrations]..sort((a, b) {
-        final intA = int.tryParse(a.registration.index ?? '');
-        final intB = int.tryParse(b.registration.index ?? '');
-
-        if (intA == null && intB == null) {
-          return (a.registration.index ?? '').compareTo(b.registration.index ?? '');
-        }
-        if (intA == null) {
-          return 1;
-        }
-        if (intB == null) {
-          return -1;
-        }
-
-        return intA.compareTo(intB);
-      });
-
-    return sorted.take(50).toList();
-  }
-
   Future<ScreeningTimeslot> getScreeningNearestTimeslot(Screening screening) async {
     final timeslots = await screeningTimeslotRepoProvider.getScreeningTimeslots(screening);
     final passed = timeslots.where((timeslot) => timeslot.dateAndTime.isBefore(DateTime.now()));
@@ -118,5 +88,17 @@ class ScreeningActions {
 
   Future<Screening?> getScreeningById(int id) async {
     return await screeningRepo.getById(id);
+  }
+
+  FutureOr<List<CustomerWithRegistration>> searchScreeningCustomers(Screening screening, String search) async {
+    return await screeningRepo.searchScreeningCustomers(screening, search);
+  }
+
+  Future<int?> getCustomersCount(Screening screening) async {
+    return await screeningRepo.getCustomersCount(screening);
+  }
+
+  Future<ScreeningRegistration?> findScreeningCustomerRegistration(Screening screening, Customer customer) async {
+    return await screeningRepo.findScreeningCustomerRegistration(screening, customer);
   }
 }

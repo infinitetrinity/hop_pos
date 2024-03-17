@@ -22,4 +22,6 @@ mixin _$ScreeningDaoMixin on DatabaseAccessor<AppDb> {
       attachedDatabase.newCustomersTable;
   $ScreeningRegistrationsTableTable get screeningRegistrationsTable =>
       attachedDatabase.screeningRegistrationsTable;
+  $NewScreeningRegistrationsTableTable get newScreeningRegistrationsTable =>
+      attachedDatabase.newScreeningRegistrationsTable;
 }

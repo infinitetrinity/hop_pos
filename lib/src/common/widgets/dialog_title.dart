@@ -22,6 +22,7 @@ class DialogTitle extends StatelessWidget {
               fontSize: 19,
               color: AppColors.white,
               fontWeight: FontWeight.w600,
+              decoration: TextDecoration.none,
             ),
           ),
           const Spacer(),

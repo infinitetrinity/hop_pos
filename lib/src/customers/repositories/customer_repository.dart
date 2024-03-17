@@ -1,6 +1,8 @@
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/customers/daos/customer_dao.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
+import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
+import 'package:hop_pos/src/customers/models/customer_with_screenings_and_orders.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'customer_repository.g.dart';
@@ -41,5 +43,13 @@ class CustomerRepository {
 
   Future<bool> update(Customer customer) async {
     return await customerDao.updateCustomer(customer);
+  }
+
+  Future<CustomerWithScreeningsAndOrders?> findCustomerDetail(String nric) async {
+    return await customerDao.findCustomerDetail(nric);
+  }
+
+  Future<List<CustomerWithRegistration>> getCustomerScreenings(Customer customer) async {
+    return await customerDao.getCustomerScreenings(customer);
   }
 }

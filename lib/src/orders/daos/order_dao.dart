@@ -439,4 +439,63 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
 
     return (await query.get()).length;
   }
+
+  Future<List<OrderWithCustomerAndPayment>> getCustomerOrders(Customer customer) async {
+    final query = select(ordersTable).join(
+      [
+        innerJoin(
+          customersTable,
+          customersTable.id.equalsExp(
+            ordersTable.customerId,
+          ),
+        ),
+        innerJoin(
+          screeningRegistrationsTable,
+          screeningRegistrationsTable.customerId.equalsExp(
+            customersTable.id,
+          ),
+        ),
+        innerJoin(
+          screeningsTable,
+          screeningsTable.id.equalsExp(
+            ordersTable.screeningId,
+          ),
+        ),
+      ],
+    )
+      ..where(customersTable.id.equals(customer.id!))
+      ..groupBy([ordersTable.id])
+      ..orderBy([OrderingTerm.desc(ordersTable.createdAt)]);
+
+    final index = coalesce<String>([
+      screeningRegistrationsTable.index,
+      customersTable.nric.substr(-5, 5),
+    ]);
+
+    final paymentQuery = selectOnly(orderPaymentsTable)
+      ..addColumns([orderPaymentsTable.amount.total()])
+      ..where(orderPaymentsTable.orderId.equalsExp(ordersTable.id));
+
+    final newPaymentQuery = selectOnly(newOrderPaymentsTable)
+      ..addColumns([newOrderPaymentsTable.amount.total()])
+      ..where(
+          newOrderPaymentsTable.orderId.equalsExp(ordersTable.id) & newOrderPaymentsTable.orderIsNew.isValue(false));
+
+    final totalPayment = coalesce<double>([subqueryExpression(paymentQuery), const Constant(0)]) +
+        coalesce<double>([subqueryExpression(newPaymentQuery), const Constant(0)]);
+
+    query.addColumns([index, totalPayment]);
+
+    return (await query.get())
+        .map(
+          (row) => OrderWithCustomerAndPayment(
+            screening: row.readTable(screeningsTable),
+            order: row.readTable(ordersTable),
+            customer: row.readTable(customersTable),
+            index: row.read(index),
+            totalPayment: row.read(totalPayment),
+          ),
+        )
+        .toList();
+  }
 }

@@ -38,7 +38,7 @@ class Customer with _$Customer {
         ? NewCustomersTableCompanion(
             id: drift.Value.ofNullable(id),
             fullName: drift.Value(fullName),
-            nric: drift.Value.ofNullable(nric),
+            nric: drift.Value.ofNullable(nric?.toUpperCase()),
             dob: drift.Value(dob),
             gender: drift.Value(gender),
             email: drift.Value(email),
@@ -49,7 +49,7 @@ class Customer with _$Customer {
         : CustomersTableCompanion(
             id: drift.Value.ofNullable(id),
             fullName: drift.Value(fullName),
-            nric: drift.Value(nric),
+            nric: drift.Value(nric?.toUpperCase()),
             dob: drift.Value(dob),
             gender: drift.Value(gender),
             email: drift.Value(email),

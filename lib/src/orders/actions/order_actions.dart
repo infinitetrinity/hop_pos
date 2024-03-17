@@ -225,7 +225,8 @@ class OrderActions {
     }
 
     if (cart.registration == null) {
-      final registraion = await screeningRegistrationActions.store(cart.screening!, cart.customer!);
+      final registraion =
+          await screeningRegistrationActions.insertNewScreeningRegistration(cart.screening!, cart.customer!);
       cart = cart.copyWith(registration: registraion);
     }
 
