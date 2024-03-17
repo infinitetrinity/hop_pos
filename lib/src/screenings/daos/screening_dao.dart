@@ -324,6 +324,7 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
 
       return CustomerWithRegistration(
         customer: customer,
+        screening: screening,
         registration: registration.copyWith(
           index: row.read(index),
           hasOrders: (row.read(ordersCount) ?? 0) > 0 || (row.read(newOrdersCount) ?? 0) > 0,

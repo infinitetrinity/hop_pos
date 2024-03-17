@@ -1,23 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:hop_pos/app/app_colors.dart';
-import 'package:hop_pos/src/common/widgets/form_button.dart';
 import 'package:hop_pos/src/common/widgets/info_banner.dart';
 import 'package:hop_pos/src/common/widgets/text_input.dart';
-import 'package:hop_pos/src/customers/controllers/customer_controller.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
+import 'package:hop_pos/src/customers/widgets/pos_customer_latest_screening_btn.dart';
 
-class CustomerDetailDialog extends ConsumerWidget {
+class CustomerDetailDialog extends StatelessWidget {
   const CustomerDetailDialog({super.key, required this.customer, required this.haveScreening});
   final Customer customer;
   final bool haveScreening;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    void transactLatestScreening() async {
-      await ref.read(customerControllerProvider.notifier).setLatestScreeningPos(customer);
-    }
-
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
       child: Column(
@@ -86,12 +79,7 @@ class CustomerDetailDialog extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                FormButton(
-                  text: 'Transact Latest Screening',
-                  background: AppColors.brand600,
-                  maxWidth: 240,
-                  onSubmit: transactLatestScreening,
-                ),
+                PosCustomerLatestScreeningBtn(customer: customer),
               ],
             )
           ],

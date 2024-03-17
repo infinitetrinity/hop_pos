@@ -22,7 +22,8 @@ CustomerWithRegistration _$CustomerWithRegistrationFromJson(
 /// @nodoc
 mixin _$CustomerWithRegistration {
   Customer get customer => throw _privateConstructorUsedError;
-  Screening? get screening => throw _privateConstructorUsedError;
+  Screening get screening => throw _privateConstructorUsedError;
+  ScreeningTimeslot? get timeslot => throw _privateConstructorUsedError;
   ScreeningRegistration get registration => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,11 +40,13 @@ abstract class $CustomerWithRegistrationCopyWith<$Res> {
   @useResult
   $Res call(
       {Customer customer,
-      Screening? screening,
+      Screening screening,
+      ScreeningTimeslot? timeslot,
       ScreeningRegistration registration});
 
   $CustomerCopyWith<$Res> get customer;
-  $ScreeningCopyWith<$Res>? get screening;
+  $ScreeningCopyWith<$Res> get screening;
+  $ScreeningTimeslotCopyWith<$Res>? get timeslot;
   $ScreeningRegistrationCopyWith<$Res> get registration;
 }
 
@@ -62,7 +65,8 @@ class _$CustomerWithRegistrationCopyWithImpl<$Res,
   @override
   $Res call({
     Object? customer = null,
-    Object? screening = freezed,
+    Object? screening = null,
+    Object? timeslot = freezed,
     Object? registration = null,
   }) {
     return _then(_value.copyWith(
@@ -70,10 +74,14 @@ class _$CustomerWithRegistrationCopyWithImpl<$Res,
           ? _value.customer
           : customer // ignore: cast_nullable_to_non_nullable
               as Customer,
-      screening: freezed == screening
+      screening: null == screening
           ? _value.screening
           : screening // ignore: cast_nullable_to_non_nullable
-              as Screening?,
+              as Screening,
+      timeslot: freezed == timeslot
+          ? _value.timeslot
+          : timeslot // ignore: cast_nullable_to_non_nullable
+              as ScreeningTimeslot?,
       registration: null == registration
           ? _value.registration
           : registration // ignore: cast_nullable_to_non_nullable
@@ -91,13 +99,21 @@ class _$CustomerWithRegistrationCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $ScreeningCopyWith<$Res>? get screening {
-    if (_value.screening == null) {
+  $ScreeningCopyWith<$Res> get screening {
+    return $ScreeningCopyWith<$Res>(_value.screening, (value) {
+      return _then(_value.copyWith(screening: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ScreeningTimeslotCopyWith<$Res>? get timeslot {
+    if (_value.timeslot == null) {
       return null;
     }
 
-    return $ScreeningCopyWith<$Res>(_value.screening!, (value) {
-      return _then(_value.copyWith(screening: value) as $Val);
+    return $ScreeningTimeslotCopyWith<$Res>(_value.timeslot!, (value) {
+      return _then(_value.copyWith(timeslot: value) as $Val);
     });
   }
 
@@ -121,13 +137,16 @@ abstract class _$$CustomerWithRegistrationImplCopyWith<$Res>
   @useResult
   $Res call(
       {Customer customer,
-      Screening? screening,
+      Screening screening,
+      ScreeningTimeslot? timeslot,
       ScreeningRegistration registration});
 
   @override
   $CustomerCopyWith<$Res> get customer;
   @override
-  $ScreeningCopyWith<$Res>? get screening;
+  $ScreeningCopyWith<$Res> get screening;
+  @override
+  $ScreeningTimeslotCopyWith<$Res>? get timeslot;
   @override
   $ScreeningRegistrationCopyWith<$Res> get registration;
 }
@@ -146,7 +165,8 @@ class __$$CustomerWithRegistrationImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? customer = null,
-    Object? screening = freezed,
+    Object? screening = null,
+    Object? timeslot = freezed,
     Object? registration = null,
   }) {
     return _then(_$CustomerWithRegistrationImpl(
@@ -154,10 +174,14 @@ class __$$CustomerWithRegistrationImplCopyWithImpl<$Res>
           ? _value.customer
           : customer // ignore: cast_nullable_to_non_nullable
               as Customer,
-      screening: freezed == screening
+      screening: null == screening
           ? _value.screening
           : screening // ignore: cast_nullable_to_non_nullable
-              as Screening?,
+              as Screening,
+      timeslot: freezed == timeslot
+          ? _value.timeslot
+          : timeslot // ignore: cast_nullable_to_non_nullable
+              as ScreeningTimeslot?,
       registration: null == registration
           ? _value.registration
           : registration // ignore: cast_nullable_to_non_nullable
@@ -170,7 +194,10 @@ class __$$CustomerWithRegistrationImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CustomerWithRegistrationImpl implements _CustomerWithRegistration {
   const _$CustomerWithRegistrationImpl(
-      {required this.customer, this.screening, required this.registration});
+      {required this.customer,
+      required this.screening,
+      this.timeslot,
+      required this.registration});
 
   factory _$CustomerWithRegistrationImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomerWithRegistrationImplFromJson(json);
@@ -178,13 +205,15 @@ class _$CustomerWithRegistrationImpl implements _CustomerWithRegistration {
   @override
   final Customer customer;
   @override
-  final Screening? screening;
+  final Screening screening;
+  @override
+  final ScreeningTimeslot? timeslot;
   @override
   final ScreeningRegistration registration;
 
   @override
   String toString() {
-    return 'CustomerWithRegistration(customer: $customer, screening: $screening, registration: $registration)';
+    return 'CustomerWithRegistration(customer: $customer, screening: $screening, timeslot: $timeslot, registration: $registration)';
   }
 
   @override
@@ -196,6 +225,8 @@ class _$CustomerWithRegistrationImpl implements _CustomerWithRegistration {
                 other.customer == customer) &&
             (identical(other.screening, screening) ||
                 other.screening == screening) &&
+            (identical(other.timeslot, timeslot) ||
+                other.timeslot == timeslot) &&
             (identical(other.registration, registration) ||
                 other.registration == registration));
   }
@@ -203,7 +234,7 @@ class _$CustomerWithRegistrationImpl implements _CustomerWithRegistration {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, customer, screening, registration);
+      Object.hash(runtimeType, customer, screening, timeslot, registration);
 
   @JsonKey(ignore: true)
   @override
@@ -223,7 +254,8 @@ class _$CustomerWithRegistrationImpl implements _CustomerWithRegistration {
 abstract class _CustomerWithRegistration implements CustomerWithRegistration {
   const factory _CustomerWithRegistration(
           {required final Customer customer,
-          final Screening? screening,
+          required final Screening screening,
+          final ScreeningTimeslot? timeslot,
           required final ScreeningRegistration registration}) =
       _$CustomerWithRegistrationImpl;
 
@@ -233,7 +265,9 @@ abstract class _CustomerWithRegistration implements CustomerWithRegistration {
   @override
   Customer get customer;
   @override
-  Screening? get screening;
+  Screening get screening;
+  @override
+  ScreeningTimeslot? get timeslot;
   @override
   ScreeningRegistration get registration;
   @override

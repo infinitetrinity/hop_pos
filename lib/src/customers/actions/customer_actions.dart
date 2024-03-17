@@ -3,7 +3,6 @@ import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
 import 'package:hop_pos/src/customers/models/customer_with_screenings_and_orders.dart';
 import 'package:hop_pos/src/customers/repositories/customer_repository.dart';
 import 'package:hop_pos/src/customers/repositories/new_customer_repository.dart';
-import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'customer_actions.g.dart';
@@ -61,9 +60,14 @@ class CustomerActions {
     return customer;
   }
 
-  Future<void> setLatestScreeningPos(Customer customer) async {
+  Future<CustomerWithRegistration?> getLatestRegistration(Customer customer) async {
     final dynamic repo = customer.isNew ? newCustomerRepo : customerRepo;
     List<CustomerWithRegistration> screenings = await repo.getCustomerScreenings(customer);
-  }
 
+    final date = DateTime.now().subtract(const Duration(days: 14));
+    final screening =
+        screenings.where((screening) => screening.timeslot?.dateAndTime.isAfter(date) == true).firstOrNull;
+
+    return screening ?? screenings.firstOrNull;
+  }
 }

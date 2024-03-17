@@ -101,7 +101,6 @@ class CustomerDao extends DatabaseAccessor<AppDb> with _$CustomerDaoMixin {
           screeningTimeslotsTable.screeningId.equalsExp(
             screeningsTable.id,
           ),
-          useColumns: false,
         ),
         leftOuterJoin(
           screeningRegistrationsTable,
@@ -119,7 +118,7 @@ class CustomerDao extends DatabaseAccessor<AppDb> with _$CustomerDaoMixin {
     )
       ..where(screeningRegistrationsTable.customerId.isValue(customer.id!) |
           newScreeningRegistrationsTable.customerNric.isValue(customer.nric!))
-      ..orderBy([OrderingTerm.desc(screeningTimeslotsTable.dateAndTime)]);
+      ..orderBy([OrderingTerm.asc(screeningTimeslotsTable.dateAndTime)]);
 
     final index = coalesce([
       screeningRegistrationsTable.index,
@@ -136,6 +135,7 @@ class CustomerDao extends DatabaseAccessor<AppDb> with _$CustomerDaoMixin {
       return CustomerWithRegistration(
         customer: customer,
         screening: row.readTable(screeningsTable),
+        timeslot: row.readTable(screeningTimeslotsTable),
         registration: registration.copyWith(index: row.read(index)),
       );
     }).toList();

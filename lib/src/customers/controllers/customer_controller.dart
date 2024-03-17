@@ -48,7 +48,17 @@ class CustomerController extends _$CustomerController {
     return await ref.read(customerActionsProvider).store(customer);
   }
 
-  Future<void> setLatestScreeningPos(Customer customer) async {
-    await ref.watch(customerActionsProvider).setLatestScreeningPos(customer);
+  Future<bool> setLatestScreeningPos(Customer customer) async {
+    final registration = await ref.watch(customerActionsProvider).getLatestRegistration(customer);
+    if (registration == null) {
+      return false;
+    }
+
+    ref.read(posControllerProvider.notifier).setScreening(registration.screening);
+    await ref
+        .read(posControllerProvider.notifier)
+        .selectCustomer(customer: registration.customer, registration: registration.registration);
+
+    return true;
   }
 }

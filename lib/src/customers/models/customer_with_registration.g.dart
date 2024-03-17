@@ -10,9 +10,11 @@ _$CustomerWithRegistrationImpl _$$CustomerWithRegistrationImplFromJson(
         Map<String, dynamic> json) =>
     _$CustomerWithRegistrationImpl(
       customer: Customer.fromJson(json['customer'] as Map<String, dynamic>),
-      screening: json['screening'] == null
+      screening: Screening.fromJson(json['screening'] as Map<String, dynamic>),
+      timeslot: json['timeslot'] == null
           ? null
-          : Screening.fromJson(json['screening'] as Map<String, dynamic>),
+          : ScreeningTimeslot.fromJson(
+              json['timeslot'] as Map<String, dynamic>),
       registration: ScreeningRegistration.fromJson(
           json['registration'] as Map<String, dynamic>),
     );
@@ -22,5 +24,6 @@ Map<String, dynamic> _$$CustomerWithRegistrationImplToJson(
     <String, dynamic>{
       'customer': instance.customer,
       'screening': instance.screening,
+      'timeslot': instance.timeslot,
       'registration': instance.registration,
     };
