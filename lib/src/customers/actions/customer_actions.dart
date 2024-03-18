@@ -55,9 +55,7 @@ class CustomerActions {
   }
 
   Future<CustomerWithScreeningsAndOrders?> findCustomerDetail(String nric) async {
-    final customer = await customerRepo.findCustomerDetail(nric);
-
-    return customer;
+    return await customerRepo.findCustomerDetail(nric);
   }
 
   Future<CustomerWithRegistration?> getLatestRegistration(Customer customer) async {

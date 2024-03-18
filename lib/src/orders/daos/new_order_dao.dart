@@ -14,7 +14,6 @@ import 'package:hop_pos/src/orders/models/new_orders_table.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/orders/models/order_with_customer_and_payment.dart';
 import 'package:hop_pos/src/orders/models/pos_order.dart';
-import 'package:hop_pos/src/pos/models/pos_cart.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registrations_table.dart';
 import 'package:hop_pos/src/screening_timeslots/models/screening_timeslots_table.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
@@ -34,6 +33,40 @@ part 'new_order_dao.g.dart';
 ])
 class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
   NewOrderDao(AppDb db) : super(db);
+
+  Expression<String> _getIndexExpression({Screening? screening}) {
+    final timeslotQuery = selectOnly(screeningTimeslotsTable)..addColumns([screeningTimeslotsTable.id]);
+
+    screening == null
+        ? timeslotQuery.where(screeningTimeslotsTable.screeningId.equalsExp(screeningsTable.id))
+        : timeslotQuery.where(screeningTimeslotsTable.screeningId.equals(screening.id));
+
+    final indexQuery = selectOnly(screeningRegistrationsTable)
+      ..addColumns([screeningRegistrationsTable.index])
+      ..where(screeningRegistrationsTable.customerId.equalsExp(customersTable.id) &
+          screeningRegistrationsTable.timeslotId.isInQuery(timeslotQuery));
+
+    return coalesce<String>([
+      subqueryExpression(indexQuery),
+      newCustomersTable.nric.substr(-5, 5),
+      customersTable.nric.substr(-5, 5),
+    ]);
+  }
+
+  Expression<double> _getTotalPaymentExpression() {
+    final paymentQuery = selectOnly(newOrderPaymentsTable)
+      ..addColumns([newOrderPaymentsTable.amount.total()])
+      ..where(
+          newOrderPaymentsTable.orderId.equalsExp(newOrdersTable.id) & newOrderPaymentsTable.orderIsNew.isValue(true));
+
+    return coalesce<double>([subqueryExpression(paymentQuery), const Constant(0)]);
+  }
+
+  Customer _getCustomerFromTypedResult(TypedResult row) {
+    return row.readTableOrNull(customersTable) == null
+        ? row.readTable(newCustomersTable).copyWith(isNew: true)
+        : row.readTable(customersTable);
+  }
 
   Future<PosOrder?> getPosOrder(Order order) async {
     final query = select(newOrdersTable).join(
@@ -116,32 +149,6 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
     return await getPosOrder(latestOrder);
   }
 
-  Future<List<PosCart>> getScreeningNewOrders(Screening screening) async {
-    final query = select(newOrdersTable).join(
-      [
-        leftOuterJoin(
-          customersTable,
-          customersTable.nric.equalsExp(
-            newOrdersTable.customerNric,
-          ),
-        ),
-        leftOuterJoin(
-          newCustomersTable,
-          newCustomersTable.nric.equalsExp(
-            newOrdersTable.customerNric,
-          ),
-        ),
-      ],
-    )..where(newOrdersTable.screeningId.equals(screening.id));
-
-    return (await query.get())
-        .map((row) => PosCart(
-              customer: row.readTableOrNull(newCustomersTable) ?? row.readTableOrNull(customersTable),
-              order: PosOrder(order: row.readTable(newOrdersTable)),
-            ))
-        .toList();
-  }
-
   Future<List<ScreeningWithSalesData>> getScreeningOrdersData(List<Screening> screenings) async {
     final screeningIds = screenings.map((screening) => screening.id);
     final oCount = newOrdersTable.id.count();
@@ -149,13 +156,7 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
     final oStf = newOrdersTable.isStf.cast<int>().sum();
     final oTotal = newOrdersTable.netTotal.total() + newOrdersTable.rounding.total();
     final oLastSalesAt = newOrdersTable.createdAt.max();
-
-    final oNewPaymentQuery = selectOnly(newOrderPaymentsTable)
-      ..addColumns([newOrderPaymentsTable.amount.total()])
-      ..where(
-          newOrderPaymentsTable.orderId.equalsExp(newOrdersTable.id) & newOrderPaymentsTable.orderIsNew.isValue(true));
-
-    final oTotalPayment = subqueryExpression<double>(oNewPaymentQuery).total();
+    final oTotalPayment = _getTotalPaymentExpression().total();
 
     final query = selectOnly(newOrdersTable)
       ..addColumns([
@@ -184,17 +185,8 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
   }
 
   Future<List<OrderWithCustomerAndPayment>> getScreeningOrders(Screening screening, {String? search}) async {
-    final index = coalesce<String>([
-      newCustomersTable.nric.substr(-5, 5),
-      customersTable.nric.substr(-5, 5),
-    ]);
-
-    final paymentQuery = selectOnly(newOrderPaymentsTable)
-      ..addColumns([newOrderPaymentsTable.amount.total()])
-      ..where(
-          newOrderPaymentsTable.orderId.equalsExp(newOrdersTable.id) & newOrderPaymentsTable.orderIsNew.isValue(true));
-
-    final totalPayment = coalesce<double>([subqueryExpression(paymentQuery), const Constant(0)]);
+    final index = _getIndexExpression(screening: screening);
+    final totalPayment = _getTotalPaymentExpression();
 
     final query = select(newOrdersTable).join(
       [
@@ -221,17 +213,16 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
       query.where(newOrdersTable.invoiceNo.like("%$search%") |
           newOrdersTable.invoicePrefix.like("%$search%") |
           customersTable.fullName.like("%$search%") |
-          customersTable.nric.like("%$search%"));
+          customersTable.nric.like("%$search%") |
+          newCustomersTable.fullName.like("%$search%") |
+          newCustomersTable.nric.like("%$search%"));
     }
 
     return (await query.get()).map((row) {
-      final customer =
-          row.readTableOrNull(customersTable) ?? row.readTableOrNull(newCustomersTable)?.copyWith(isNew: true);
-
       return OrderWithCustomerAndPayment(
         screening: screening,
         order: row.readTable(newOrdersTable).copyWith(isNew: true),
-        customer: customer!,
+        customer: _getCustomerFromTypedResult(row),
         index: row.read(index),
         totalPayment: row.read(totalPayment),
       );
@@ -290,18 +281,8 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
   }
 
   Future<List<OrderWithCustomerAndPayment>> getIncompleteOrdersWithinDays(int days, {String? search}) async {
-    final index = coalesce<String>([
-      newCustomersTable.nric.substr(-5, 5),
-      customersTable.nric.substr(-5, 5),
-    ]);
-
-    final paymentQuery = selectOnly(newOrderPaymentsTable)
-      ..addColumns([newOrderPaymentsTable.amount.total()])
-      ..where(
-          newOrderPaymentsTable.orderId.equalsExp(newOrdersTable.id) & newOrderPaymentsTable.orderIsNew.isValue(true));
-
-    final totalPayment = coalesce<double>([subqueryExpression(paymentQuery), const Constant(0)]);
-
+    final index = _getIndexExpression();
+    final totalPayment = _getTotalPaymentExpression();
     final isIncomplete = (newOrdersTable.netTotal + newOrdersTable.rounding - totalPayment).isBiggerThanValue(0.0001);
 
     final query = select(newOrdersTable).join(
@@ -345,31 +326,25 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
     }
 
     return (await query.get()).map((row) {
-      final customer =
-          row.readTableOrNull(customersTable) ?? row.readTableOrNull(newCustomersTable)?.copyWith(isNew: true);
-
       return OrderWithCustomerAndPayment(
         screening: row.readTable(screeningsTable),
         order: row.readTable(newOrdersTable).copyWith(isNew: true),
-        customer: customer!,
+        customer: _getCustomerFromTypedResult(row),
         index: row.read(index),
         totalPayment: row.read(totalPayment),
       );
     }).toList();
   }
 
-  Future<int> getIncompleteOrdersWithinDaysCount(int days, {String? search}) async {
-    final paymentQuery = selectOnly(newOrderPaymentsTable)
-      ..addColumns([newOrderPaymentsTable.amount.total()])
-      ..where(
-          newOrderPaymentsTable.orderId.equalsExp(newOrdersTable.id) & newOrderPaymentsTable.orderIsNew.isValue(true));
-
-    final totalPayment = coalesce<double>([subqueryExpression(paymentQuery), const Constant(0)]);
-
-    final isIncomplete = (newOrdersTable.netTotal + newOrdersTable.rounding - totalPayment).isBiggerThanValue(0.0001);
-
+  Future<List<OrderWithCustomerAndPayment>> getCustomerOrders(Customer customer) async {
     final query = select(newOrdersTable).join(
       [
+        innerJoin(
+          screeningsTable,
+          screeningsTable.id.equalsExp(
+            newOrdersTable.screeningId,
+          ),
+        ),
         leftOuterJoin(
           customersTable,
           customersTable.nric.equalsExp(
@@ -384,23 +359,25 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
         ),
       ],
     )
-      ..where(newOrdersTable.createdAt.isBetweenValues(
-        DateTime.now().subtract(Duration(days: days)),
-        DateTime.now(),
-      ))
-      ..where(isIncomplete.isValue(true));
+      ..groupBy([newOrdersTable.id])
+      ..orderBy([OrderingTerm.desc(newOrdersTable.createdAt)]);
 
-    query.addColumns([totalPayment, isIncomplete]);
+    customer.isNew
+        ? query.where(newCustomersTable.nric.equals(customer.nric!))
+        : query.where(customersTable.id.equals(customer.id!));
 
-    if (!search.isNullOrEmpty) {
-      query.where(newOrdersTable.invoiceNo.like("%$search%") |
-          newOrdersTable.invoicePrefix.like("%$search%") |
-          newCustomersTable.fullName.like("%$search%") |
-          newCustomersTable.nric.like("%$search%") |
-          customersTable.fullName.like("%$search%") |
-          customersTable.nric.like("%$search%"));
-    }
+    final index = _getIndexExpression();
+    final totalPayment = _getTotalPaymentExpression();
+    query.addColumns([index, totalPayment]);
 
-    return (await query.get()).length;
+    return (await query.get()).map((row) {
+      return OrderWithCustomerAndPayment(
+        screening: row.readTable(screeningsTable),
+        order: row.readTable(newOrdersTable).copyWith(isNew: true),
+        customer: _getCustomerFromTypedResult(row),
+        index: row.read(index),
+        totalPayment: row.read(totalPayment),
+      );
+    }).toList();
   }
 }

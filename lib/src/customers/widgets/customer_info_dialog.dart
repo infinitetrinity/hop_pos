@@ -4,6 +4,7 @@ import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/widgets/dialog_title.dart';
 import 'package:hop_pos/src/customers/models/customer_with_screenings_and_orders.dart';
 import 'package:hop_pos/src/customers/widgets/customer_detail_dialog.dart';
+import 'package:hop_pos/src/customers/widgets/customer_screenings_table.dart';
 
 class CustomerInfoDialog extends StatelessWidget {
   const CustomerInfoDialog({super.key, required this.customer});
@@ -40,14 +41,16 @@ class CustomerInfoDialog extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        height: 600,
+                        height: 700,
                         child: TabBarView(
                           children: [
                             CustomerDetailDialog(
                               customer: customer.customer,
                               haveScreening: customer.screenings?.isNotEmpty == true,
                             ),
-                            Container(),
+                            CustomerScreeningsTable(
+                              registrations: customer.screenings ?? [],
+                            ),
                             Container(),
                           ],
                         ),

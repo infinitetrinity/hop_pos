@@ -25,13 +25,19 @@ class ScreeningVenusWithTimelotsDetail extends HookConsumerWidget {
     }
 
     getTimeslots(pageKey) async {
-      final timeslots = await ref.read(screeningControllerProvider.notifier).getTimeslotsWithVenue(screening!, page: pageKey + 1, size: pageSize);
-      pageSize * pageKey < timeslotsCount.value ? controller.appendPage(timeslots, pageKey + 1) : controller.appendLastPage(timeslots);
+      final timeslots = await ref
+          .read(screeningControllerProvider.notifier)
+          .getTimeslotsWithVenue(screening!, page: pageKey + 1, size: pageSize);
+      pageSize * pageKey < timeslotsCount.value
+          ? controller.appendPage(timeslots, pageKey + 1)
+          : controller.appendLastPage(timeslots);
     }
 
     useEffect(() {
-      getTimeslotsCount();
-      controller.addPageRequestListener(getTimeslots);
+      if (context.mounted) {
+        getTimeslotsCount();
+        controller.addPageRequestListener(getTimeslots);
+      }
 
       return () {
         controller.removePageRequestListener(getTimeslots);
@@ -75,9 +81,12 @@ class ScreeningVenusWithTimelotsDetail extends HookConsumerWidget {
                           ),
                         ),
                         const SelectableText('Specimen Collection'),
-                        if (!item.timeslot.specimenCollectionVenue.isNullOrEmpty) SelectableText('Venue: ${item.timeslot.specimenCollectionVenue}'),
-                        if (item.timeslot.displaySpecimenCollectionDate != null) SelectableText('Date: ${item.timeslot.displaySpecimenCollectionDate}'),
-                        if (!item.timeslot.specimenCollectionTime.isNullOrEmpty) SelectableText('Time: ${item.timeslot.specimenCollectionTime}'),
+                        if (!item.timeslot.specimenCollectionVenue.isNullOrEmpty)
+                          SelectableText('Venue: ${item.timeslot.specimenCollectionVenue}'),
+                        if (item.timeslot.displaySpecimenCollectionDate != null)
+                          SelectableText('Date: ${item.timeslot.displaySpecimenCollectionDate}'),
+                        if (!item.timeslot.specimenCollectionTime.isNullOrEmpty)
+                          SelectableText('Time: ${item.timeslot.specimenCollectionTime}'),
                       ],
                     ],
                   ),

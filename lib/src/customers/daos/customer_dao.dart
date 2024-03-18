@@ -5,6 +5,7 @@ import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
 import 'package:hop_pos/src/customers/models/customer_with_screenings_and_orders.dart';
 import 'package:hop_pos/src/customers/models/customers_table.dart';
 import 'package:hop_pos/src/orders/models/new_orders_table.dart';
+import 'package:hop_pos/src/orders/models/order_with_customer_and_payment.dart';
 import 'package:hop_pos/src/orders/models/orders_table.dart';
 import 'package:hop_pos/src/screening_registrations/models/new_screening_registrations_table.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registrations_table.dart';
@@ -83,14 +84,20 @@ class CustomerDao extends DatabaseAccessor<AppDb> with _$CustomerDaoMixin {
     }
 
     final screenings = await getCustomerScreenings(customer);
-    final orders = await db.orderDao.getCustomerOrders(customer);
-    //find new registration and orders
+    final orders = await getCustomerOrders(customer);
 
     return CustomerWithScreeningsAndOrders(
       customer: customer,
       screenings: screenings,
       orders: orders,
     );
+  }
+
+  Future<List<OrderWithCustomerAndPayment>> getCustomerOrders(Customer customer) async {
+    final orders = customer.isNew ? [] : await db.orderDao.getCustomerOrders(customer);
+    final newOrders = await db.newOrderDao.getCustomerOrders(customer);
+
+    return [...orders, ...newOrders]..sort((a, b) => b.order.createdAt!.compareTo(a.order.createdAt!));
   }
 
   Future<List<CustomerWithRegistration>> getCustomerScreenings(Customer customer) async {
@@ -118,7 +125,7 @@ class CustomerDao extends DatabaseAccessor<AppDb> with _$CustomerDaoMixin {
     )
       ..where(screeningRegistrationsTable.customerId.isValue(customer.id!) |
           newScreeningRegistrationsTable.customerNric.isValue(customer.nric!))
-      ..orderBy([OrderingTerm.asc(screeningTimeslotsTable.dateAndTime)]);
+      ..orderBy([OrderingTerm.desc(screeningTimeslotsTable.dateAndTime)]);
 
     final index = coalesce([
       screeningRegistrationsTable.index,
@@ -127,17 +134,25 @@ class CustomerDao extends DatabaseAccessor<AppDb> with _$CustomerDaoMixin {
     ]);
     query.addColumns([index]);
 
-    return (await query.get()).map((row) {
+    List<CustomerWithRegistration> result = [];
+    for (final row in (await query.get())) {
+      final screening = row.readTable(screeningsTable);
       final registration = row.readTableOrNull(screeningRegistrationsTable) == null
           ? row.readTable(newScreeningRegistrationsTable).copyWith(isNew: true)
           : row.readTable(screeningRegistrationsTable);
 
-      return CustomerWithRegistration(
+      final order = await db.orderDao.getScreeningCustomerLatestOrder(screening, customer);
+      final newOrder = await db.newOrderDao.getScreeningCustomerLatestOrder(screening, customer);
+
+      result.add(CustomerWithRegistration(
         customer: customer,
         screening: row.readTable(screeningsTable),
         timeslot: row.readTable(screeningTimeslotsTable),
+        order: newOrder ?? order,
         registration: registration.copyWith(index: row.read(index)),
-      );
-    }).toList();
+      ));
+    }
+
+    return result;
   }
 }

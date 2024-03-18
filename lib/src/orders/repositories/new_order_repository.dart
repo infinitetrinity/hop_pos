@@ -52,6 +52,7 @@ class NewOrderRepository {
   }
 
   Future<int> getIncompleteOrdersWithinDaysCount(int days, {String? search}) async {
-    return await newOrderDao.getIncompleteOrdersWithinDaysCount(days, search: search);
+    final orders = await newOrderDao.getIncompleteOrdersWithinDays(days, search: search);
+    return orders.length;
   }
 }

@@ -29,6 +29,12 @@ class PosController extends _$PosController {
     return const PosCart();
   }
 
+  Future<PosOrder> _getNewPosOrder() async {
+    const order = PosOrder(order: Order(isNew: true));
+    List<OrderExtra>? extras = await ref.read(orderExtraActionsProvider).getOrderExtras(order);
+    return order.copyWith(extras: extras);
+  }
+
   void setScreening(Screening screening) {
     state = state.copyWith(screening: screening);
   }
@@ -316,7 +322,7 @@ class PosController extends _$PosController {
     }
   }
 
-  Future<void> setPosOrder(OrderWithCustomerAndPayment order) async {
+  Future<void> setPosOrderWithCustomerAndPayment(OrderWithCustomerAndPayment order) async {
     final registration =
         await ref.read(screeningActionsProvider).findScreeningCustomerRegistration(order.screening, order.customer);
     final posOrder = await ref.read(orderActionsProvider).getPosOrder(order.order);
@@ -325,7 +331,21 @@ class PosController extends _$PosController {
       screening: order.screening,
       customer: order.customer,
       registration: registration,
-      order: posOrder,
+      order: posOrder ?? await _getNewPosOrder(),
+    );
+  }
+
+  Future<void> setState({
+    required Screening screening,
+    required ScreeningRegistration registration,
+    required Customer customer,
+    PosOrder? order,
+  }) async {
+    state = state.copyWith(
+      screening: screening,
+      customer: customer,
+      registration: registration,
+      order: order ?? await _getNewPosOrder(),
     );
   }
 }

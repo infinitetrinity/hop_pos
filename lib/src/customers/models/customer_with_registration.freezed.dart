@@ -25,6 +25,7 @@ mixin _$CustomerWithRegistration {
   Screening get screening => throw _privateConstructorUsedError;
   ScreeningTimeslot? get timeslot => throw _privateConstructorUsedError;
   ScreeningRegistration get registration => throw _privateConstructorUsedError;
+  PosOrder? get order => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,12 +43,14 @@ abstract class $CustomerWithRegistrationCopyWith<$Res> {
       {Customer customer,
       Screening screening,
       ScreeningTimeslot? timeslot,
-      ScreeningRegistration registration});
+      ScreeningRegistration registration,
+      PosOrder? order});
 
   $CustomerCopyWith<$Res> get customer;
   $ScreeningCopyWith<$Res> get screening;
   $ScreeningTimeslotCopyWith<$Res>? get timeslot;
   $ScreeningRegistrationCopyWith<$Res> get registration;
+  $PosOrderCopyWith<$Res>? get order;
 }
 
 /// @nodoc
@@ -68,6 +71,7 @@ class _$CustomerWithRegistrationCopyWithImpl<$Res,
     Object? screening = null,
     Object? timeslot = freezed,
     Object? registration = null,
+    Object? order = freezed,
   }) {
     return _then(_value.copyWith(
       customer: null == customer
@@ -86,6 +90,10 @@ class _$CustomerWithRegistrationCopyWithImpl<$Res,
           ? _value.registration
           : registration // ignore: cast_nullable_to_non_nullable
               as ScreeningRegistration,
+      order: freezed == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as PosOrder?,
     ) as $Val);
   }
 
@@ -124,6 +132,18 @@ class _$CustomerWithRegistrationCopyWithImpl<$Res,
       return _then(_value.copyWith(registration: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PosOrderCopyWith<$Res>? get order {
+    if (_value.order == null) {
+      return null;
+    }
+
+    return $PosOrderCopyWith<$Res>(_value.order!, (value) {
+      return _then(_value.copyWith(order: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -139,7 +159,8 @@ abstract class _$$CustomerWithRegistrationImplCopyWith<$Res>
       {Customer customer,
       Screening screening,
       ScreeningTimeslot? timeslot,
-      ScreeningRegistration registration});
+      ScreeningRegistration registration,
+      PosOrder? order});
 
   @override
   $CustomerCopyWith<$Res> get customer;
@@ -149,6 +170,8 @@ abstract class _$$CustomerWithRegistrationImplCopyWith<$Res>
   $ScreeningTimeslotCopyWith<$Res>? get timeslot;
   @override
   $ScreeningRegistrationCopyWith<$Res> get registration;
+  @override
+  $PosOrderCopyWith<$Res>? get order;
 }
 
 /// @nodoc
@@ -168,6 +191,7 @@ class __$$CustomerWithRegistrationImplCopyWithImpl<$Res>
     Object? screening = null,
     Object? timeslot = freezed,
     Object? registration = null,
+    Object? order = freezed,
   }) {
     return _then(_$CustomerWithRegistrationImpl(
       customer: null == customer
@@ -186,18 +210,24 @@ class __$$CustomerWithRegistrationImplCopyWithImpl<$Res>
           ? _value.registration
           : registration // ignore: cast_nullable_to_non_nullable
               as ScreeningRegistration,
+      order: freezed == order
+          ? _value.order
+          : order // ignore: cast_nullable_to_non_nullable
+              as PosOrder?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$CustomerWithRegistrationImpl implements _CustomerWithRegistration {
+class _$CustomerWithRegistrationImpl extends _CustomerWithRegistration {
   const _$CustomerWithRegistrationImpl(
       {required this.customer,
       required this.screening,
       this.timeslot,
-      required this.registration});
+      required this.registration,
+      this.order})
+      : super._();
 
   factory _$CustomerWithRegistrationImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomerWithRegistrationImplFromJson(json);
@@ -210,10 +240,12 @@ class _$CustomerWithRegistrationImpl implements _CustomerWithRegistration {
   final ScreeningTimeslot? timeslot;
   @override
   final ScreeningRegistration registration;
+  @override
+  final PosOrder? order;
 
   @override
   String toString() {
-    return 'CustomerWithRegistration(customer: $customer, screening: $screening, timeslot: $timeslot, registration: $registration)';
+    return 'CustomerWithRegistration(customer: $customer, screening: $screening, timeslot: $timeslot, registration: $registration, order: $order)';
   }
 
   @override
@@ -228,13 +260,14 @@ class _$CustomerWithRegistrationImpl implements _CustomerWithRegistration {
             (identical(other.timeslot, timeslot) ||
                 other.timeslot == timeslot) &&
             (identical(other.registration, registration) ||
-                other.registration == registration));
+                other.registration == registration) &&
+            (identical(other.order, order) || other.order == order));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, customer, screening, timeslot, registration);
+  int get hashCode => Object.hash(
+      runtimeType, customer, screening, timeslot, registration, order);
 
   @JsonKey(ignore: true)
   @override
@@ -251,13 +284,14 @@ class _$CustomerWithRegistrationImpl implements _CustomerWithRegistration {
   }
 }
 
-abstract class _CustomerWithRegistration implements CustomerWithRegistration {
+abstract class _CustomerWithRegistration extends CustomerWithRegistration {
   const factory _CustomerWithRegistration(
-          {required final Customer customer,
-          required final Screening screening,
-          final ScreeningTimeslot? timeslot,
-          required final ScreeningRegistration registration}) =
-      _$CustomerWithRegistrationImpl;
+      {required final Customer customer,
+      required final Screening screening,
+      final ScreeningTimeslot? timeslot,
+      required final ScreeningRegistration registration,
+      final PosOrder? order}) = _$CustomerWithRegistrationImpl;
+  const _CustomerWithRegistration._() : super._();
 
   factory _CustomerWithRegistration.fromJson(Map<String, dynamic> json) =
       _$CustomerWithRegistrationImpl.fromJson;
@@ -270,6 +304,8 @@ abstract class _CustomerWithRegistration implements CustomerWithRegistration {
   ScreeningTimeslot? get timeslot;
   @override
   ScreeningRegistration get registration;
+  @override
+  PosOrder? get order;
   @override
   @JsonKey(ignore: true)
   _$$CustomerWithRegistrationImplCopyWith<_$CustomerWithRegistrationImpl>

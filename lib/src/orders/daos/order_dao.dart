@@ -37,6 +37,38 @@ part 'order_dao.g.dart';
 class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
   OrderDao(AppDb db) : super(db);
 
+  Expression<String> _getIndexExpression({Screening? screening}) {
+    final timeslotQuery = selectOnly(screeningTimeslotsTable)..addColumns([screeningTimeslotsTable.id]);
+
+    screening == null
+        ? timeslotQuery.where(screeningTimeslotsTable.screeningId.equalsExp(screeningsTable.id))
+        : timeslotQuery.where(screeningTimeslotsTable.screeningId.equals(screening.id));
+
+    final indexQuery = selectOnly(screeningRegistrationsTable)
+      ..addColumns([screeningRegistrationsTable.index])
+      ..where(screeningRegistrationsTable.customerId.equalsExp(customersTable.id) &
+          screeningRegistrationsTable.timeslotId.isInQuery(timeslotQuery));
+
+    return coalesce<String>([
+      subqueryExpression(indexQuery),
+      customersTable.nric.substr(-5, 5),
+    ]);
+  }
+
+  Expression<double> _getTotalPaymentExpression() {
+    final paymentQuery = selectOnly(orderPaymentsTable)
+      ..addColumns([orderPaymentsTable.amount.total()])
+      ..where(orderPaymentsTable.orderId.equalsExp(ordersTable.id));
+
+    final newPaymentQuery = selectOnly(newOrderPaymentsTable)
+      ..addColumns([newOrderPaymentsTable.amount.total()])
+      ..where(
+          newOrderPaymentsTable.orderId.equalsExp(ordersTable.id) & newOrderPaymentsTable.orderIsNew.isValue(false));
+
+    return coalesce<double>([subqueryExpression(paymentQuery), const Constant(0)]) +
+        coalesce<double>([subqueryExpression(newPaymentQuery), const Constant(0)]);
+  }
+
   Future<Order> insertOrder(OrdersTableCompanion order) async {
     return await into(ordersTable).insertReturning(order);
   }
@@ -188,18 +220,7 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
     final oStf = ordersTable.isStf.cast<int>().sum();
     final oTotal = ordersTable.netTotal.total() + ordersTable.rounding.total();
     final oLastSalesAt = ordersTable.createdAt.max();
-
-    final oPaymentQuery = selectOnly(orderPaymentsTable)
-      ..addColumns([orderPaymentsTable.amount.total()])
-      ..where(orderPaymentsTable.orderId.equalsExp(ordersTable.id));
-
-    final oNewPaymentQuery = selectOnly(newOrderPaymentsTable)
-      ..addColumns([newOrderPaymentsTable.amount.total()])
-      ..where(
-          newOrderPaymentsTable.orderId.equalsExp(ordersTable.id) & newOrderPaymentsTable.orderIsNew.isValue(false));
-
-    final oTotalPayment =
-        subqueryExpression<double>(oPaymentQuery).total() + subqueryExpression<double>(oNewPaymentQuery).total();
+    final oTotalPayment = _getTotalPaymentExpression().total();
 
     final query = selectOnly(ordersTable)
       ..addColumns([
@@ -228,31 +249,8 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
   }
 
   Future<List<OrderWithCustomerAndPayment>> getScreeningOrders(Screening screening, {String? search}) async {
-    final timeslotQuery = selectOnly(screeningTimeslotsTable)
-      ..addColumns([screeningTimeslotsTable.id])
-      ..where(screeningTimeslotsTable.screeningId.equals(screening.id));
-
-    final indexQuery = selectOnly(screeningRegistrationsTable)
-      ..addColumns([screeningRegistrationsTable.index])
-      ..where(screeningRegistrationsTable.customerId.equalsExp(customersTable.id) &
-          screeningRegistrationsTable.timeslotId.isInQuery(timeslotQuery));
-
-    final index = coalesce<String>([
-      subqueryExpression(indexQuery),
-      customersTable.nric.substr(-5, 5),
-    ]);
-
-    final paymentQuery = selectOnly(orderPaymentsTable)
-      ..addColumns([orderPaymentsTable.amount.total()])
-      ..where(orderPaymentsTable.orderId.equalsExp(ordersTable.id));
-
-    final newPaymentQuery = selectOnly(newOrderPaymentsTable)
-      ..addColumns([newOrderPaymentsTable.amount.total()])
-      ..where(
-          newOrderPaymentsTable.orderId.equalsExp(ordersTable.id) & newOrderPaymentsTable.orderIsNew.isValue(false));
-
-    final totalPayment = coalesce<double>([subqueryExpression(paymentQuery), const Constant(0)]) +
-        coalesce<double>([subqueryExpression(newPaymentQuery), const Constant(0)]);
+    final index = _getIndexExpression(screening: screening);
+    final totalPayment = _getTotalPaymentExpression();
 
     final query = select(ordersTable).join(
       [
@@ -324,32 +322,8 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
   }
 
   Future<List<OrderWithCustomerAndPayment>> getIncompleteOrdersWithinDays(int days, {String? search}) async {
-    final timeslotQuery = selectOnly(screeningTimeslotsTable)
-      ..addColumns([screeningTimeslotsTable.id])
-      ..where(screeningTimeslotsTable.screeningId.equalsExp(screeningsTable.id));
-
-    final indexQuery = selectOnly(screeningRegistrationsTable)
-      ..addColumns([screeningRegistrationsTable.index])
-      ..where(screeningRegistrationsTable.customerId.equalsExp(customersTable.id) &
-          screeningRegistrationsTable.timeslotId.isInQuery(timeslotQuery));
-
-    final index = coalesce<String>([
-      subqueryExpression(indexQuery),
-      customersTable.nric.substr(-5, 5),
-    ]);
-
-    final paymentQuery = selectOnly(orderPaymentsTable)
-      ..addColumns([orderPaymentsTable.amount.total()])
-      ..where(orderPaymentsTable.orderId.equalsExp(ordersTable.id));
-
-    final newPaymentQuery = selectOnly(newOrderPaymentsTable)
-      ..addColumns([newOrderPaymentsTable.amount.total()])
-      ..where(
-          newOrderPaymentsTable.orderId.equalsExp(ordersTable.id) & newOrderPaymentsTable.orderIsNew.isValue(false));
-
-    final totalPayment = coalesce<double>([subqueryExpression(paymentQuery), const Constant(0)]) +
-        coalesce<double>([subqueryExpression(newPaymentQuery), const Constant(0)]);
-
+    final index = _getIndexExpression();
+    final totalPayment = _getTotalPaymentExpression();
     final isIncomplete = (ordersTable.netTotal + ordersTable.rounding - totalPayment).isBiggerThanValue(0.0001);
 
     final query = select(ordersTable).join(
@@ -397,49 +371,6 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
         .toList();
   }
 
-  Future<int> getIncompleteOrdersWithinDaysCount(int days, {String? search}) async {
-    final paymentQuery = selectOnly(orderPaymentsTable)
-      ..addColumns([orderPaymentsTable.amount.total()])
-      ..where(orderPaymentsTable.orderId.equalsExp(ordersTable.id));
-
-    final newPaymentQuery = selectOnly(newOrderPaymentsTable)
-      ..addColumns([newOrderPaymentsTable.amount.total()])
-      ..where(
-          newOrderPaymentsTable.orderId.equalsExp(ordersTable.id) & newOrderPaymentsTable.orderIsNew.isValue(false));
-
-    final totalPayment = coalesce<double>([subqueryExpression(paymentQuery), const Constant(0)]) +
-        coalesce<double>([subqueryExpression(newPaymentQuery), const Constant(0)]);
-
-    final isIncomplete = (ordersTable.netTotal + ordersTable.rounding - totalPayment).isBiggerThanValue(0.0001);
-
-    final query = select(ordersTable).join(
-      [
-        innerJoin(
-          customersTable,
-          customersTable.id.equalsExp(
-            ordersTable.customerId,
-          ),
-        ),
-      ],
-    )
-      ..where(ordersTable.createdAt.isBetweenValues(
-        DateTime.now().subtract(Duration(days: days)),
-        DateTime.now(),
-      ))
-      ..where(isIncomplete.isValue(true));
-
-    query.addColumns([totalPayment, isIncomplete]);
-
-    if (!search.isNullOrEmpty) {
-      query.where(ordersTable.invoiceNo.like("%$search%") |
-          ordersTable.invoicePrefix.like("%$search%") |
-          customersTable.fullName.like("%$search%") |
-          customersTable.nric.like("%$search%"));
-    }
-
-    return (await query.get()).length;
-  }
-
   Future<List<OrderWithCustomerAndPayment>> getCustomerOrders(Customer customer) async {
     final query = select(ordersTable).join(
       [
@@ -447,12 +378,6 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
           customersTable,
           customersTable.id.equalsExp(
             ordersTable.customerId,
-          ),
-        ),
-        innerJoin(
-          screeningRegistrationsTable,
-          screeningRegistrationsTable.customerId.equalsExp(
-            customersTable.id,
           ),
         ),
         innerJoin(
@@ -467,23 +392,8 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
       ..groupBy([ordersTable.id])
       ..orderBy([OrderingTerm.desc(ordersTable.createdAt)]);
 
-    final index = coalesce<String>([
-      screeningRegistrationsTable.index,
-      customersTable.nric.substr(-5, 5),
-    ]);
-
-    final paymentQuery = selectOnly(orderPaymentsTable)
-      ..addColumns([orderPaymentsTable.amount.total()])
-      ..where(orderPaymentsTable.orderId.equalsExp(ordersTable.id));
-
-    final newPaymentQuery = selectOnly(newOrderPaymentsTable)
-      ..addColumns([newOrderPaymentsTable.amount.total()])
-      ..where(
-          newOrderPaymentsTable.orderId.equalsExp(ordersTable.id) & newOrderPaymentsTable.orderIsNew.isValue(false));
-
-    final totalPayment = coalesce<double>([subqueryExpression(paymentQuery), const Constant(0)]) +
-        coalesce<double>([subqueryExpression(newPaymentQuery), const Constant(0)]);
-
+    final index = _getIndexExpression();
+    final totalPayment = _getTotalPaymentExpression();
     query.addColumns([index, totalPayment]);
 
     return (await query.get())

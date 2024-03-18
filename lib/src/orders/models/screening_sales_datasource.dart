@@ -56,7 +56,7 @@ class ScreeningSalesDataSource extends AsyncDataTableSource {
         return DataRow2(
           onTap: () async {
             searchNotifier.set(null);
-            await posController.setPosOrder(item);
+            await posController.setPosOrderWithCustomerAndPayment(item);
             goRouter.go(PosRoute().location);
           },
           key: ValueKey("${item.order.id}-${item.order.displayInvoiceNo}"),
