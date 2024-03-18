@@ -218,7 +218,15 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
   }
 
   Future<List<Screening>> search(String search) {
-    final query = select(screeningsTable)..where((table) => table.name.like("%$search%"));
+    final query = select(screeningsTable);
+
+    if (search.startsWith('s') && int.tryParse(search.substring(1)) != null) {
+      final id = int.tryParse(search.substring(1))!;
+      query.where((tbl) => tbl.id.isValue(id));
+    } else {
+      query.where((table) => table.name.like("%$search%"));
+    }
+
     query.orderBy([(table) => OrderingTerm.desc(table.id)]);
     query.limit(20);
     return query.get();
