@@ -82,7 +82,7 @@ class OrderActions {
           orderId: order.order.id,
         );
 
-    if (!order.order.isNew) {
+    if (order.order.id != null) {
       final createdItem = await orderItemActions.store(newItem);
       newItem = newItem.copyWith(id: createdItem.id);
     }
@@ -100,7 +100,7 @@ class OrderActions {
       netPrice: item.toCalculateNetPrice(),
     );
 
-    if (!order.order.isNew) {
+    if (order.order.id != null) {
       await orderItemActions.update(updatedItem);
     }
 

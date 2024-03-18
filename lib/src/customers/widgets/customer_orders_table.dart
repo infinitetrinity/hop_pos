@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
-import 'package:hop_pos/src/customers/models/customer_screenings_datasource.dart';
-import 'package:hop_pos/src/customers/models/customer_with_registration.dart';
+import 'package:hop_pos/src/customers/models/customer_orders_datasource.dart';
+import 'package:hop_pos/src/orders/models/order_with_customer_and_payment.dart';
 
-class CustomerScreeningsTable extends ConsumerWidget {
-  const CustomerScreeningsTable({super.key, required this.registrations});
-  final List<CustomerWithRegistration> registrations;
+class CustomerOrdersTable extends ConsumerWidget {
+  const CustomerOrdersTable({super.key, required this.orders});
+  final List<OrderWithCustomerAndPayment> orders;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final source = ref.watch(customerScreeningsDataSourceProvider(registrations));
+    final source = ref.watch(customerOrdersDataSourceProvider(orders));
 
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -51,9 +51,29 @@ class CustomerScreeningsTable extends ConsumerWidget {
                 ),
                 DataColumn2(
                   label: Text(
-                    'DateTime',
+                    'Invoice',
                   ),
-                  fixedWidth: 190,
+                  fixedWidth: 120,
+                ),
+                DataColumn2(
+                  label: Text(
+                    'REF',
+                  ),
+                  fixedWidth: 70,
+                ),
+                DataColumn2(
+                  label: Text(
+                    'Total',
+                  ),
+                  numeric: true,
+                  fixedWidth: 100,
+                ),
+                DataColumn2(
+                  label: Text(
+                    'Balance',
+                  ),
+                  numeric: true,
+                  fixedWidth: 100,
                 ),
                 DataColumn2(
                   label: Center(
@@ -61,7 +81,7 @@ class CustomerScreeningsTable extends ConsumerWidget {
                       'STF',
                     ),
                   ),
-                  fixedWidth: 60,
+                  fixedWidth: 70,
                 ),
                 DataColumn2(
                   label: Center(
@@ -69,15 +89,7 @@ class CustomerScreeningsTable extends ConsumerWidget {
                       'UTF',
                     ),
                   ),
-                  fixedWidth: 60,
-                ),
-                DataColumn2(
-                  label: Center(
-                    child: Text(
-                      'Status',
-                    ),
-                  ),
-                  fixedWidth: 120,
+                  fixedWidth: 70,
                 ),
                 DataColumn2(
                   label: Center(
@@ -86,6 +98,12 @@ class CustomerScreeningsTable extends ConsumerWidget {
                     ),
                   ),
                   fixedWidth: 70,
+                ),
+                DataColumn2(
+                  label: Text(
+                    'Created At',
+                  ),
+                  fixedWidth: 170,
                 ),
               ],
               source: source,
