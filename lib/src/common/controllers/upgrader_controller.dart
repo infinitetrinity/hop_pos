@@ -1,6 +1,5 @@
 import 'package:hop_pos/src/common/models/api_response.dart';
 import 'package:hop_pos/src/common/services/api_service.dart';
-import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -33,9 +32,7 @@ class UpgraderController extends _$UpgraderController {
       }
 
       return response!.body!["tag_name"].substring(1);
-    } catch (e, stackTrace) {
-      final logger = Logger();
-      logger.e("Upgrade check failed in getting latest version.", error: e, stackTrace: stackTrace);
+    } catch (e) {
       return null;
     }
   }
@@ -51,10 +48,8 @@ class UpgraderController extends _$UpgraderController {
       }
 
       return response!.body!["body"];
-    } catch (e, stackTrace) {
-      final logger = Logger();
-      logger.e("Upgrade check failed in getting change log.", error: e, stackTrace: stackTrace);
+    } catch (e) {
+      return null;
     }
-    return null;
   }
 }
