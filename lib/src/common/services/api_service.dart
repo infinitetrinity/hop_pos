@@ -16,7 +16,7 @@ ApiService apiService(ApiServiceRef ref) {
 }
 
 class ApiService {
-  static const int timeOutInSeconds = 10;
+  static const int timeOutInSeconds = 30;
 
   Future<Map<String, String>> _getHeaders() async {
     Map<String, String> header = {
@@ -27,7 +27,6 @@ class ApiService {
     String? token = await AuthToken.getAuthToken();
     if (token != null) {
       header['Authorization'] = 'Bearer $token';
-      print(token);
     }
 
     return header;
