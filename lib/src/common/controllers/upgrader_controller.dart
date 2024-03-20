@@ -23,7 +23,7 @@ class UpgraderController extends _$UpgraderController {
 
   Future<String> getBinaryUrl() async {
     final version = await getCurrentVersion();
-    return "https://github.com/infinitetrinity/hop_pos/releases/download/$version/hop_pos-win-$version.exe";
+    return "https://github.com/infinitetrinity/hop_pos/releases/download/$version/hop_pos.exe";
   }
 
   Future<String?> getLatestVersion() async {
