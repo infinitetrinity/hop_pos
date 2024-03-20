@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_routes.dart';
 import 'package:hop_pos/routes/db_routes.dart';
 import 'package:hop_pos/routes/login_routes.dart';
-import 'package:hop_pos/src/common/widgets/auto_upgrader.dart';
 import 'package:hop_pos/src/login/controllers/login_controller.dart';
 
 class MainApp extends ConsumerWidget {
@@ -43,12 +42,7 @@ class MainApp extends ConsumerWidget {
                 onCltrRPressed();
               }
             },
-            child: Stack(
-              children: [
-                content,
-                const AutoUpgrader(),
-              ],
-            ),
+            child: content,
           ),
         ),
       ],

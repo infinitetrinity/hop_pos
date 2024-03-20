@@ -57,6 +57,24 @@ class ApiService {
     }
   }
 
+  Future<ApiResponse?> getFromUrl(String url) async {
+    try {
+      final hasInternet = await InternetConnectionChecker().hasConnection;
+      if (!hasInternet) {
+        return null;
+      }
+
+      final Response response = await Dio().get(url).timeout(const Duration(seconds: timeOutInSeconds));
+      return ApiResponse(
+        response: response,
+        supressError: true,
+      );
+    } catch (e, stackTrace) {
+      ApiExceptions.handle(e, stackTrace);
+      rethrow;
+    }
+  }
+
   Future<ApiResponse?> get(ApiRequest request) async {
     try {
       await _checkInternetConnection();

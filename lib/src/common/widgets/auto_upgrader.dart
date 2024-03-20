@@ -18,11 +18,10 @@ class AutoUpgrader extends ConsumerWidget {
             : UpdatWidget(
                 currentVersion: snapshot.data ?? '',
                 getLatestVersion: () async {
-                  ref.watch(upgraderControllerProvider.notifier).getLatestVersion();
-                  return null;
+                  return ref.watch(upgraderControllerProvider.notifier).getLatestVersion();
                 },
-                getBinaryUrl: (_) async {
-                  return ref.watch(upgraderControllerProvider.notifier).getBinaryUrl();
+                getBinaryUrl: (version) async {
+                  return ref.watch(upgraderControllerProvider.notifier).getBinaryUrl(version);
                 },
                 appName: "HOP POS",
                 getChangelog: (_, __) async {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hop_pos/app/app_colors.dart';
+import 'package:hop_pos/src/common/widgets/auto_upgrader.dart';
 import 'package:hop_pos/src/common/widgets/header.dart';
 
 class Layout extends StatelessWidget {
@@ -9,6 +10,7 @@ class Layout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: const AutoUpgrader(),
       body: SingleChildScrollView(
         child: Container(
           width: double.infinity,
