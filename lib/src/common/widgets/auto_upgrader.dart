@@ -8,7 +8,7 @@ class AutoUpgrader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentVersion = ref.watch(upgraderControllerProvider.notifier).getCurrentVersion();
+    final currentVersion = ref.read(upgraderControllerProvider.notifier).getCurrentVersion();
 
     return FutureBuilder<String>(
       future: currentVersion,
@@ -16,16 +16,20 @@ class AutoUpgrader extends ConsumerWidget {
         return snapshot.data == null
             ? Container()
             : UpdatWidget(
+                getDownloadFileLocation: (_) async {
+                  return ref.read(upgraderControllerProvider.notifier).getDownloadFileLocation();
+                },
                 currentVersion: snapshot.data ?? '',
+                closeOnInstall: true,
                 getLatestVersion: () async {
-                  return ref.watch(upgraderControllerProvider.notifier).getLatestVersion();
+                  return ref.read(upgraderControllerProvider.notifier).getLatestVersion();
                 },
                 getBinaryUrl: (version) async {
-                  return ref.watch(upgraderControllerProvider.notifier).getBinaryUrl(version);
+                  return ref.read(upgraderControllerProvider.notifier).getBinaryUrl(version);
                 },
                 appName: "HOP POS",
                 getChangelog: (_, __) async {
-                  return ref.watch(upgraderControllerProvider.notifier).getChangelog();
+                  return ref.read(upgraderControllerProvider.notifier).getChangelog();
                 },
               );
       },

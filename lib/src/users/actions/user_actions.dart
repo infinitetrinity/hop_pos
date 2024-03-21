@@ -25,6 +25,7 @@ class UserActions {
   }
 
   Future<void> login(User user, String accessToken) async {
+    await AuthToken.deleteAuthToken();
     await AuthToken.setAuthToken(accessToken);
   }
 

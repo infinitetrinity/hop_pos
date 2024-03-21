@@ -6,6 +6,7 @@ import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/routes/screening_routes.dart';
 import 'package:hop_pos/src/common/services/flash_message.dart';
+import 'package:hop_pos/src/common/widgets/auto_upgrader.dart';
 import 'package:hop_pos/src/login/controllers/login_controller.dart';
 import 'package:hop_pos/src/login/models/login_request.dart';
 import 'package:hop_pos/src/login/models/syncing_progress.dart';
@@ -37,6 +38,7 @@ class LoginScreen extends HookConsumerWidget {
     });
 
     return Scaffold(
+      floatingActionButton: const AutoUpgrader(),
       body: Container(
         color: AppColors.white,
         child: Row(
