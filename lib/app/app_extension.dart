@@ -123,7 +123,7 @@ extension AsyncValueExtensions on AsyncValue {
         } catch (_) {}
       }
 
-      errorMessage = errorMessage ?? error.toString();
+      errorMessage = errorMessage.isNullOrEmpty ? error.toString() : errorMessage!;
       flashMessage.flash(message: errorMessage, type: FlashMessageType.error);
     }
   }

@@ -156,13 +156,13 @@ class AppDb extends _$AppDb {
 
   Future<void> deleteDb() async {
     await _instance?.close();
+    _instance = null;
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, name));
     final exists = await file.exists();
     if (exists) {
       try {
         await file.delete();
-        _instance = null;
       } catch (e, stackTrace) {
         final logger = Logger();
         logger.e("Fail to delete db", error: e, stackTrace: stackTrace);

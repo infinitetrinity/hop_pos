@@ -4,6 +4,7 @@ import 'package:hop_pos/app/app_exceptions.dart';
 import 'package:hop_pos/src/common/models/api_request.dart';
 import 'package:hop_pos/src/common/models/api_response.dart';
 import 'package:hop_pos/src/common/services/api_service.dart';
+import 'package:hop_pos/src/common/services/auth_token.dart';
 import 'package:hop_pos/src/login/models/init_data_response.dart';
 import 'package:hop_pos/src/login/models/login_request.dart';
 import 'package:hop_pos/src/login/models/login_response.dart';
@@ -50,6 +51,7 @@ class LoginAction {
     }
 
     try {
+      await AuthToken.deleteAuthToken();
       await db.deleteDb();
       await insertLoginData(LoginResponse.fromJson(response.data!));
       await downloadInitData();
