@@ -1,3 +1,4 @@
+import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/company/states/company_state.dart';
 import 'package:hop_pos/src/login/actions/login_action.dart';
 import 'package:hop_pos/src/login/models/login_request.dart';
@@ -21,11 +22,13 @@ class LoginController extends _$LoginController {
   Future<bool> login(LoginRequest request) async {
     final loginAction = ref.read(loginActionProvider);
     state = await AsyncValue.guard(() => loginAction.login(request));
+    _reset();
     return state.hasError ? false : true;
   }
 
   Future<void> logout() async {
     await ref.read(loginActionProvider).logout();
     _reset();
+    ref.invalidate(appDbProvider);
   }
 }

@@ -166,6 +166,7 @@ class AppDb extends _$AppDb {
       } catch (e, stackTrace) {
         final logger = Logger();
         logger.e("Fail to delete db", error: e, stackTrace: stackTrace);
+        rethrow;
       }
     }
   }
