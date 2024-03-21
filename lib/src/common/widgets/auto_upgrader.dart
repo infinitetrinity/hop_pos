@@ -16,9 +16,6 @@ class AutoUpgrader extends ConsumerWidget {
         return snapshot.data == null
             ? Container()
             : UpdatWidget(
-                getDownloadFileLocation: (_) async {
-                  return ref.read(upgraderControllerProvider.notifier).getDownloadFileLocation();
-                },
                 currentVersion: snapshot.data ?? '',
                 closeOnInstall: true,
                 getLatestVersion: () async {
