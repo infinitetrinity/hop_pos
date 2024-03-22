@@ -17,7 +17,10 @@ class PosItems extends HookConsumerWidget {
 
     ref.listen(posControllerProvider.select((prov) => prov.order?.items), (previous, current) {
       Timer(const Duration(milliseconds: 250), () {
-        if (controller.hasClients && (previous?.length ?? 0) > 0 && (previous?.length ?? 0) < (current?.length ?? 0)) {
+        if (context.mounted &&
+            controller.hasClients &&
+            (previous?.length ?? 0) > 0 &&
+            (previous?.length ?? 0) < (current?.length ?? 0)) {
           controller.animateTo(
             controller.position.maxScrollExtent,
             duration: const Duration(milliseconds: 300),

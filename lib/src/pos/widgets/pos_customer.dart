@@ -16,7 +16,7 @@ class PosCustomer extends HookConsumerWidget {
     final width = useState<double?>(null);
 
     ref.listen(posControllerProvider, (_, current) {
-      if (controller.isShowing) {
+      if (controller.isShowing && context.mounted) {
         controller.hide();
       }
     });

@@ -181,6 +181,7 @@ class PrintService {
   }
 
   Future<bool> printOrderReceipt() async {
+    print('printing receipt');
     if (cart.order == null) {
       return false;
     }
@@ -224,6 +225,7 @@ class PrintService {
   }
 
   Future<bool> printUtfStfReceipt() async {
+    print('printing utf/stf receipt');
     if (cart.screening == null) {
       return false;
     }
