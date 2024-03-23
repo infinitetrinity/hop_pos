@@ -52,4 +52,8 @@ class CustomerRepository {
   Future<List<CustomerWithRegistration>> getCustomerScreenings(Customer customer) async {
     return await customerDao.getCustomerScreenings(customer);
   }
+
+  Future<bool> deleteById(int id) async {
+    return customerDao.deleteById(id);
+  }
 }

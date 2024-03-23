@@ -33,7 +33,7 @@ class CustomerDetailDialog extends StatelessWidget {
               Flexible(
                 child: TextInput(
                   label: 'Full Name',
-                  content: customer.fullName ?? '',
+                  content: customer.fullName,
                 ),
               ),
             ],

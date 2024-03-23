@@ -35,4 +35,8 @@ class ProductCategoryRepository {
   Future<bool> update(ProductCategoriesTableCompanion category, Expression<bool> where) async {
     return await productCategoryDao.updateCategory(category, where);
   }
+
+  Future<bool> deleteById(int id) async {
+    return productCategoryDao.deleteById(id);
+  }
 }

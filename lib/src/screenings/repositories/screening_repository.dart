@@ -64,4 +64,8 @@ class ScreeningRepository {
   Future<ScreeningRegistration?> findScreeningCustomerRegistration(Screening screening, Customer customer) async {
     return await screeningDao.findScreeningCustomerRegistration(screening, customer);
   }
+
+  Future<bool> deleteById(int id) async {
+    return screeningDao.deleteById(id);
+  }
 }

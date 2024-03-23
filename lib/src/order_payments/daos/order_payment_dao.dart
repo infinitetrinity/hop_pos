@@ -49,4 +49,10 @@ class OrderPaymentDao extends DatabaseAccessor<AppDb> with _$OrderPaymentDaoMixi
       await Future.wait(deleteFutures);
     });
   }
+
+  Future<void> insertOrUpdateMany(List<OrderPayment> payments) async {
+    for (final payment in payments) {
+      await into(orderPaymentsTable).insert(payment.toData(), onConflict: DoUpdate((_) => payment.toData()));
+    }
+  }
 }

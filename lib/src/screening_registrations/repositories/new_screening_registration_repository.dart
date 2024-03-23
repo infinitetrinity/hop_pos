@@ -32,4 +32,8 @@ class NewScreeningRegistrationRepository {
     ))
         .copyWith(isNew: true);
   }
+
+  Future<List<ScreeningRegistration>> getAll() async {
+    return newScreeningRegistrationDao.getAll();
+  }
 }

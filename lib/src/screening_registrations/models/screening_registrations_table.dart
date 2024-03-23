@@ -13,4 +13,7 @@ class ScreeningRegistrationsTable extends Table {
   TextColumn get index => text().nullable()();
   IntColumn get customerId => integer().references(CustomersTable, #id, onDelete: KeyAction.cascade)();
   IntColumn get timeslotId => integer().references(ScreeningTimeslotsTable, #id, onDelete: KeyAction.cascade)();
+
+  @override
+  List<String> get customConstraints => ['UNIQUE (customer_id, timeslot_id)'];
 }

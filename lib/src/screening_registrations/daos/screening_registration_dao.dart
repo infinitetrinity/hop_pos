@@ -36,4 +36,20 @@ class ScreeningRegistrationDao extends DatabaseAccessor<AppDb> with _$ScreeningR
       return result;
     });
   }
+
+  Future<bool> deleteById(int timeslotId, int customerId) async {
+    final count = await (delete(screeningRegistrationsTable)
+          ..where((tbl) => tbl.timeslotId.equals(timeslotId))
+          ..where((tbl) => tbl.customerId.equals(customerId)))
+        .go();
+    return count > 0;
+  }
+
+  Future<void> insertOrUpdateMany(List<ScreeningRegistration> registrations) async {
+    for (final registration in registrations) {
+      await into(screeningRegistrationsTable).insert(registration.toData(),
+          onConflict: DoUpdate((_) => registration.toData(),
+              target: [screeningRegistrationsTable.customerId, screeningRegistrationsTable.timeslotId]));
+    }
+  }
 }

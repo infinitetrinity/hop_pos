@@ -1,4 +1,3 @@
-import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/receipt_settings/daos/receipt_setting_dao.dart';
 import 'package:hop_pos/src/receipt_settings/models/receipt_setting.dart';

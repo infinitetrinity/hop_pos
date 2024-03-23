@@ -408,4 +408,10 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
         )
         .toList();
   }
+
+  Future<void> insertOrUpdateMany(List<Order> orders) async {
+    for (final order in orders) {
+      await into(ordersTable).insert(order.toData(), onConflict: DoUpdate((_) => order.toData()));
+    }
+  }
 }

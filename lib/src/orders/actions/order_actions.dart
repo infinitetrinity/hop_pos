@@ -272,4 +272,8 @@ class OrderActions {
 
     return orderCount + newOrderCount;
   }
+
+  Future<List<Order>> getAllNew() async {
+    return newOrderRepo.getAll();
+  }
 }

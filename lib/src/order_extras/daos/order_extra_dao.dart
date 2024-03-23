@@ -58,4 +58,10 @@ class OrderExtraDao extends DatabaseAccessor<AppDb> with _$OrderExtraDaoMixin {
       await Future.wait(deleteFutures);
     });
   }
+
+  Future<void> insertOrUpdateMany(List<OrderExtra> extras) async {
+    for (final extra in extras) {
+      await into(orderExtrasTable).insert(extra.toData(), onConflict: DoUpdate((_) => extra.toData()));
+    }
+  }
 }

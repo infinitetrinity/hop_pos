@@ -26,4 +26,8 @@ class NewOrderPaymentRepository {
   Future<bool> delete(OrderPayment payment) async {
     return await newOrderPaymentDao.deleteNewOrderPayment(payment);
   }
+
+  Future<List<OrderPayment>> getAll() async {
+    return newOrderPaymentDao.getAll();
+  }
 }

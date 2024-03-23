@@ -26,4 +26,8 @@ class ScreeningRegistrationRepository {
   Future<List<ScreeningRegistration>> insertMany(List<ScreeningRegistrationsTableCompanion> registrations) async {
     return await screeningRegistrationDao.insertScreeningRegistrations(registrations);
   }
+
+  Future<bool> deleteById(int timeslotId, int customerId) async {
+    return screeningRegistrationDao.deleteById(timeslotId, customerId);
+  }
 }

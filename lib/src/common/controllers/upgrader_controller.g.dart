@@ -7,7 +7,7 @@ part of 'upgrader_controller.dart';
 // **************************************************************************
 
 String _$upgraderControllerHash() =>
-    r'f231e1fd765e39e39c6354bf6a963dfd4efdc848';
+    r'483091a36d46c7d61820ed40d9317bd0d51e7efb';
 
 /// See also [UpgraderController].
 @ProviderFor(UpgraderController)

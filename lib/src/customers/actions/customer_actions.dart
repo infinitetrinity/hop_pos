@@ -68,4 +68,12 @@ class CustomerActions {
 
     return screening ?? screenings.firstOrNull;
   }
+
+  Future<List<Customer>> getAllNew() async {
+    return newCustomerRepo.getAll();
+  }
+
+  Future<bool> deleteById(int id) async {
+    return customerRepo.deleteById(id);
+  }
 }

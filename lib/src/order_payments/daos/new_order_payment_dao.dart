@@ -26,4 +26,16 @@ class NewOrderPaymentDao extends DatabaseAccessor<AppDb> with _$NewOrderPaymentD
         .go();
     return count > 0;
   }
+
+  Future<List<OrderPayment>> getAll() {
+    final query = select(newOrderPaymentsTable);
+
+    query.orderBy([(table) => OrderingTerm.asc(table.id)]);
+    return query.get();
+  }
+
+  Future<bool> deleteByIds(List<int> ids) async {
+    final count = await (delete(newOrderPaymentsTable)..where((tbl) => tbl.id.isIn(ids))).go();
+    return count > 0;
+  }
 }

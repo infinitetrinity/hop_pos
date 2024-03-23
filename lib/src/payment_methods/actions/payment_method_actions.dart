@@ -25,4 +25,8 @@ class PaymentMethodActions {
   Future<PaymentMethod> getPaymentMethodById(int id) async {
     return await paymentMethodRepo.getById(id);
   }
+
+  Future<bool> deleteById(int id) async {
+    return paymentMethodRepo.deleteById(id);
+  }
 }

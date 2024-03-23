@@ -66,4 +66,15 @@ class ProductDao extends DatabaseAccessor<AppDb> with _$ProductDaoMixin {
       return result;
     });
   }
+
+  Future<bool> deleteById(int id) async {
+    final count = await (delete(productsTable)..where((tbl) => tbl.id.equals(id))).go();
+    return count > 0;
+  }
+
+  Future<void> insertOrUpdateMany(List<Product> products) async {
+    for (final product in products) {
+      await into(productsTable).insert(product.toData(), onConflict: DoUpdate((_) => product.toData()));
+    }
+  }
 }

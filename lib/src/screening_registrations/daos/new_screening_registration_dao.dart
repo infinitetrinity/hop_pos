@@ -25,4 +25,16 @@ class NewScreeningRegistrationDao extends DatabaseAccessor<AppDb> with _$NewScre
       NewScreeningRegistrationsTableCompanion registration) async {
     return await into(newScreeningRegistrationsTable).insertReturning(registration);
   }
+
+  Future<List<ScreeningRegistration>> getAll() {
+    final query = select(newScreeningRegistrationsTable);
+
+    query.orderBy([(table) => OrderingTerm.asc(table.id)]);
+    return query.get();
+  }
+
+  Future<bool> deleteByIds(List<int> ids) async {
+    final count = await (delete(newScreeningRegistrationsTable)..where((tbl) => tbl.id.isIn(ids))).go();
+    return count > 0;
+  }
 }

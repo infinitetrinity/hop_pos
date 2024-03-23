@@ -28,4 +28,8 @@ class ScreeningRegistrationActions {
     final timeslot = await screeningActions.getScreeningNearestTimeslot(screening);
     return await newScreeningRegistrationRepo.insertNewScreeningRegistration(customer, timeslot);
   }
+
+  Future<List<ScreeningRegistration>> getAllNew() async {
+    return newScreeningRegistrationRepo.getAll();
+  }
 }

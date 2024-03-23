@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:hop_pos/app/api_routes.dart';
 import 'package:hop_pos/app/app_exceptions.dart';
 import 'package:hop_pos/src/common/models/api_request.dart';
 import 'package:hop_pos/src/common/models/api_response.dart';
@@ -25,6 +24,7 @@ class ApiService {
     };
 
     String? token = await AuthToken.getAuthToken();
+    print('token $token');
     if (token != null) {
       header['Authorization'] = 'Bearer $token';
     }
@@ -36,24 +36,6 @@ class ApiService {
     final hasInternet = await InternetConnectionChecker().hasConnection;
     if (!hasInternet) {
       throw const NoInternetError('No internet connection.');
-    }
-  }
-
-  Future<bool> checkServerConnection() async {
-    final hasInternet = await InternetConnectionChecker().hasConnection;
-    if (!hasInternet) {
-      return false;
-    }
-
-    try {
-      ApiResponse? result = await get(const ApiRequest(
-        path: ApiRoutes.serverStatus,
-        supressError: true,
-      ));
-
-      return result != null;
-    } catch (e) {
-      return false;
     }
   }
 

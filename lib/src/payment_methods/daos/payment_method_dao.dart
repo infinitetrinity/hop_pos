@@ -37,4 +37,15 @@ class PaymentMethodDao extends DatabaseAccessor<AppDb> with _$PaymentMethodDaoMi
     query.orderBy([(table) => OrderingTerm.asc(table.id)]);
     return query.get();
   }
+
+  Future<bool> deleteById(int id) async {
+    final count = await (delete(paymentMethodsTable)..where((tbl) => tbl.id.equals(id))).go();
+    return count > 0;
+  }
+
+  Future<void> insertOrUpdateMany(List<PaymentMethod> methods) async {
+    for (final method in methods) {
+      await into(paymentMethodsTable).insert(method.toData(), onConflict: DoUpdate((_) => method.toData()));
+    }
+  }
 }

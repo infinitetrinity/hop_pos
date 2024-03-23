@@ -23,4 +23,8 @@ class CompanyDao extends DatabaseAccessor<AppDb> with _$CompanyDaoMixin {
     final count = await (update(companyTable)..where((_) => where)).write(company);
     return count > 0;
   }
+
+  Future<void> insertOrUpdate(Company company) async {
+    await into(companyTable).insert(company.toData(), onConflict: DoUpdate((_) => company.toData()));
+  }
 }

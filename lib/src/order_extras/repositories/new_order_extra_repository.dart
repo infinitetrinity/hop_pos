@@ -22,4 +22,8 @@ class NewOrderExtraRepository {
   Future<bool> update(OrderExtra extra) async {
     return await newOrderExtraDao.updateOrderExtra(extra);
   }
+
+  Future<List<OrderExtra>> getAll() async {
+    return newOrderExtraDao.getAll();
+  }
 }

@@ -37,4 +37,10 @@ class PosExtraDao extends DatabaseAccessor<AppDb> with _$PosExtraDaoMixin {
     final count = await (update(posExtrasTable)..where((_) => where)).write(extra);
     return count > 0;
   }
+
+  Future<void> insertOrUpdateMany(List<PosExtra> extras) async {
+    for (final extra in extras) {
+      await into(posExtrasTable).insert(extra.toData(), onConflict: DoUpdate((_) => extra.toData()));
+    }
+  }
 }

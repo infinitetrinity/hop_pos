@@ -37,4 +37,8 @@ class ProductActions {
 
     return products;
   }
+
+  Future<bool> deleteById(int id) async {
+    return productRepo.deleteById(id);
+  }
 }

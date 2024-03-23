@@ -1,5 +1,4 @@
 import 'package:hop_pos/src/screenings/actions/screening_actions.dart';
-import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:hop_pos/src/screenings/models/screening_with_sales_data.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

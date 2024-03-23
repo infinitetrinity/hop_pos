@@ -38,4 +38,8 @@ class NewCustomerRepository {
   Future<Customer?> findByEmail({required String email, int? excludeId}) async {
     return await newCustomerDao.findByEmail(email: email, excludeId: excludeId);
   }
+
+  Future<List<Customer>> getAll() async {
+    return await newCustomerDao.getAll();
+  }
 }

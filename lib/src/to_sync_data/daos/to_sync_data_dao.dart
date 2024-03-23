@@ -26,4 +26,16 @@ class ToSycnDataDao extends DatabaseAccessor<AppDb> with _$ToSycnDataDaoMixin {
         .go();
     return count > 0;
   }
+
+  Future<List<ToSyncData>> getAll() {
+    final query = select(toSyncDataTable);
+
+    query.orderBy([(table) => OrderingTerm.asc(table.id)]);
+    return query.get();
+  }
+
+  Future<bool> deleteByIds(List<int> ids) async {
+    final count = await (delete(toSyncDataTable)..where((tbl) => tbl.id.isIn(ids))).go();
+    return count > 0;
+  }
 }

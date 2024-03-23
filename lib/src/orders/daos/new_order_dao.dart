@@ -380,4 +380,16 @@ class NewOrderDao extends DatabaseAccessor<AppDb> with _$NewOrderDaoMixin {
       );
     }).toList();
   }
+
+  Future<List<Order>> getAll() {
+    final query = select(newOrdersTable);
+
+    query.orderBy([(table) => OrderingTerm.asc(table.id)]);
+    return query.get();
+  }
+
+  Future<bool> deleteByIds(List<int> ids) async {
+    final count = await (delete(newOrdersTable)..where((tbl) => tbl.id.isIn(ids))).go();
+    return count > 0;
+  }
 }

@@ -30,4 +30,8 @@ class OrderPaymentActions {
     final dynamic repo = payment.isNew == true ? newOrderPaymentRepo : orderPaymentRepo;
     return await repo.delete(payment);
   }
+
+  Future<List<OrderPayment>> getAllNew() async {
+    return newOrderPaymentRepo.getAll();
+  }
 }

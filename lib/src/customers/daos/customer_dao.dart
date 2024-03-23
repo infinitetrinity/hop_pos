@@ -155,4 +155,15 @@ class CustomerDao extends DatabaseAccessor<AppDb> with _$CustomerDaoMixin {
 
     return result;
   }
+
+  Future<bool> deleteById(int id) async {
+    final count = await (delete(customersTable)..where((tbl) => tbl.id.equals(id))).go();
+    return count > 0;
+  }
+
+  Future<void> insertOrUpdateMany(List<Customer> customers) async {
+    for (final customer in customers) {
+      await into(customersTable).insert(customer.toData(), onConflict: DoUpdate((_) => customer.toData()));
+    }
+  }
 }

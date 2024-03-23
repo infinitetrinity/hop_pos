@@ -46,4 +46,16 @@ class NewCustomerDao extends DatabaseAccessor<AppDb> with _$NewCustomerDaoMixin 
 
     return (await query.get()).firstOrNull;
   }
+
+  Future<List<Customer>> getAll() {
+    final query = select(newCustomersTable);
+
+    query.orderBy([(table) => OrderingTerm.asc(table.id)]);
+    return query.get();
+  }
+
+  Future<bool> deleteByIds(List<int> ids) async {
+    final count = await (delete(newCustomersTable)..where((tbl) => tbl.id.isIn(ids))).go();
+    return count > 0;
+  }
 }

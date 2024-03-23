@@ -31,4 +31,16 @@ class NewOrderItemDao extends DatabaseAccessor<AppDb> with _$NewOrderItemDaoMixi
         .go();
     return count > 0;
   }
+
+  Future<List<OrderItem>> getAll() {
+    final query = select(newOrderItemsTable);
+
+    query.orderBy([(table) => OrderingTerm.asc(table.id)]);
+    return query.get();
+  }
+
+  Future<bool> deleteByIds(List<int> ids) async {
+    final count = await (delete(newOrderItemsTable)..where((tbl) => tbl.id.isIn(ids))).go();
+    return count > 0;
+  }
 }

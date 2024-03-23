@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:hop_pos/src/common/services/api_service.dart';
+import 'package:hop_pos/src/common/actions/syncing_action.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'server_connection_state.g.dart';
@@ -16,9 +16,9 @@ class SeverConnectionState extends _$SeverConnectionState {
   }
 
   FutureOr<bool> checkServerConnection() async {
+    print('checking server');
     state = const AsyncLoading();
-    ApiService api = ref.read(apiServiceProvider);
-    final result = await api.checkServerConnection();
+    final result = await ref.read(syncingActionProvider).checkServerConnection();
     state = AsyncValue.data(result);
     return result;
   }

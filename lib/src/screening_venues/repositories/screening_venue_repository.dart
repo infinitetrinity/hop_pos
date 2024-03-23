@@ -9,8 +9,7 @@ part 'screening_venue_repository.g.dart';
 @riverpod
 ScreeningVenueRepository screeningVenueRepo(ScreeningVenueRepoRef ref) {
   return ScreeningVenueRepository(
-    screeningVenueDao:
-        ref.watch(appDbProvider.select((prov) => prov.screeningVenueDao)),
+    screeningVenueDao: ref.watch(appDbProvider.select((prov) => prov.screeningVenueDao)),
   );
 }
 
@@ -25,13 +24,15 @@ class ScreeningVenueRepository {
     return await screeningVenueDao.insertScreeningVenue(venue);
   }
 
-  Future<List<ScreeningVenue>> insertMany(
-      List<ScreeningVenuesTableCompanion> venues) async {
+  Future<List<ScreeningVenue>> insertMany(List<ScreeningVenuesTableCompanion> venues) async {
     return await screeningVenueDao.insertScreeningVenues(venues);
   }
 
-  Future<bool> update(
-      ScreeningVenuesTableCompanion venue, Expression<bool> where) async {
+  Future<bool> update(ScreeningVenuesTableCompanion venue, Expression<bool> where) async {
     return await screeningVenueDao.updateScreeningVenue(venue, where);
+  }
+
+  Future<bool> deleteById(int id) async {
+    return screeningVenueDao.deleteById(id);
   }
 }

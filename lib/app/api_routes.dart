@@ -4,4 +4,5 @@ class ApiRoutes {
   static const activateLicense = 'license-activation';
   static const downloadInitData = 'download-data';
   static const serverStatus = 'server-status';
+  static const syncServer = 'sync';
 }

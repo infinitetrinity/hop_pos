@@ -398,4 +398,15 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
 
     return registration.copyWith(index: result.read(index));
   }
+
+  Future<bool> deleteById(int id) async {
+    final count = await (delete(screeningsTable)..where((tbl) => tbl.id.equals(id))).go();
+    return count > 0;
+  }
+
+  Future<void> insertOrUpdateMany(List<Screening> screenings) async {
+    for (final screening in screenings) {
+      await into(screeningsTable).insert(screening.toData(), onConflict: DoUpdate((_) => screening.toData()));
+    }
+  }
 }

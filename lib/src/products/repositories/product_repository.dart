@@ -35,4 +35,8 @@ class ProductRepository {
   Future<List<Product>> insertMany(List<ProductsTableCompanion> products) async {
     return await productDao.insertProducts(products);
   }
+
+  Future<bool> deleteById(int id) async {
+    return productDao.deleteById(id);
+  }
 }

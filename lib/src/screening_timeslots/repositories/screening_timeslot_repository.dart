@@ -50,4 +50,8 @@ class ScreeningTimeslotRepository {
   Future<ScreeningTimeslot?> getById(int id) async {
     return await screeningTimeslotDao.getById(id);
   }
+
+  Future<bool> deleteById(int id) async {
+    return screeningTimeslotDao.deleteById(id);
+  }
 }

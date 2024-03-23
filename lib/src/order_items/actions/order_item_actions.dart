@@ -36,4 +36,8 @@ class OrderItemActions {
     final dynamic repo = item.isNew == true ? newOrderItemRepo : orderItemRepo;
     return await repo.update(item);
   }
+
+  Future<List<OrderItem>> getAllNew() async {
+    return newOrderItemRepo.getAll();
+  }
 }

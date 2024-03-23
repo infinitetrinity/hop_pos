@@ -37,4 +37,15 @@ class ProductCategoryDao extends DatabaseAccessor<AppDb> with _$ProductCategoryD
     final count = await (update(productCategoriesTable)..where((_) => where)).write(category);
     return count > 0;
   }
+
+  Future<bool> deleteById(int id) async {
+    final count = await (delete(productCategoriesTable)..where((tbl) => tbl.id.equals(id))).go();
+    return count > 0;
+  }
+
+  Future<void> insertOrUpdateMany(List<ProductCategory> categories) async {
+    for (final category in categories) {
+      await into(productCategoriesTable).insert(category.toData(), onConflict: DoUpdate((_) => category.toData()));
+    }
+  }
 }

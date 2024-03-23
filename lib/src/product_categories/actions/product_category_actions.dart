@@ -84,4 +84,8 @@ class ProductCategoryActions {
     final isAllHidden = categories.where((cat) => !cat.isHidden && cat.id != 0).isEmpty;
     await ProductCategoriesHidden.toggleAllCategories(categories, hideAll: !isAllHidden);
   }
+
+  Future<bool> deleteById(int id) async {
+    return productCategoryRepo.deleteById(id);
+  }
 }

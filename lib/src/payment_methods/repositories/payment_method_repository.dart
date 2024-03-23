@@ -34,4 +34,8 @@ class PaymentMethodRepository {
   Future<List<PaymentMethod>> getAll() async {
     return await paymentMethodDao.getAll();
   }
+
+  Future<bool> deleteById(int id) async {
+    return paymentMethodDao.deleteById(id);
+  }
 }

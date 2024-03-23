@@ -18,4 +18,8 @@ class ReceiptSettingDao extends DatabaseAccessor<AppDb> with _$ReceiptSettingDao
   Future<ReceiptSetting> insertSetting(ReceiptSettingsTableCompanion setting) async {
     return await into(receiptSettingsTable).insertReturning(setting);
   }
+
+  Future<void> insertOrUpdate(ReceiptSetting setting) async {
+    await into(receiptSettingsTable).insert(setting.toData(), onConflict: DoUpdate((_) => setting.toData()));
+  }
 }

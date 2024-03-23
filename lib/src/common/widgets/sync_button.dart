@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/services/flash_message.dart';
 import 'package:hop_pos/src/common/states/server_connection_state.dart';
+import 'package:hop_pos/src/common/states/syncing_server_state.dart';
 import 'package:hop_pos/src/pos_licenses/states/pos_license_state.dart';
 
 class SyncButton extends HookConsumerWidget {
@@ -12,31 +12,46 @@ class SyncButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isConnecting = useState(false);
-    final isConnected = ref.watch(severConnectionStateProvider).asData?.value;
     final posLicense = ref.watch(posLicenseStateProvider).asData?.value;
+    final isConnecting = ref.watch(severConnectionStateProvider);
+    final isSyncing = ref.watch(syncingServerStateProvider);
+    final isConnected = ref.watch(severConnectionStateProvider).asData?.value == true;
 
     Color getBackgroundColor() {
-      if (isConnecting.value || isConnected == null) {
+      if (isConnecting.isLoading || isSyncing.isLoading) {
         return AppColors.yellow600;
       }
 
-      return isConnected == true ? AppColors.green600 : AppColors.red600;
+      return isConnected ? AppColors.green600 : AppColors.red600;
+    }
+
+    String getText() {
+      if (isConnecting.isLoading) {
+        return 'Connecting..';
+      }
+      if (isSyncing.isLoading) {
+        return 'Syncing..';
+      }
+
+      return isConnected ? 'Click to sync' : 'Click to connect';
     }
 
     onPressed() async {
-      if (isConnecting.value || isConnected == null) {
+      if (isConnecting.isLoading || isSyncing.isLoading) {
         return;
       }
 
       if (isConnected) {
-        print('to sync');
+        final result = await ref.read(syncingServerStateProvider.notifier).syncingServer();
+        ref.read(flashMessageProvider).flash(
+              message:
+                  result ? 'Succesfully synced to server.' : 'Error syncing to the server, please try again later.',
+              type: result ? FlashMessageType.success : FlashMessageType.error,
+            );
         return;
       }
 
-      isConnecting.value = true;
       final reconnect = await ref.read(severConnectionStateProvider.notifier).checkServerConnection();
-      isConnecting.value = false;
       if (!reconnect) {
         ref.read(flashMessageProvider).flash(
               message: 'Error connecting to the server, please try again later.',
@@ -71,7 +86,7 @@ class SyncButton extends HookConsumerWidget {
                 ),
               ),
             Text(
-              isConnected == true ? 'Click to sync' : (isConnecting.value ? 'Connecting...' : 'Click to connect'),
+              getText(),
               style: AppStyles.body.copyWith(
                 color: AppColors.white,
               ),

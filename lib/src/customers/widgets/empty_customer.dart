@@ -30,7 +30,7 @@ class EmptyCustomer extends ConsumerWidget {
               future: customersCount,
               builder: (_, snapshot) {
                 return snapshot.data == null
-                    ? Container(
+                    ? SizedBox(
                         child: Text(snapshot.error.toString()),
                       )
                     : Column(

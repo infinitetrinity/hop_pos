@@ -100,4 +100,15 @@ class ScreeningTimeslotDao extends DatabaseAccessor<AppDb> with _$ScreeningTimes
     final query = select(screeningTimeslotsTable)..where((tbl) => tbl.id.equals(id));
     return query.getSingleOrNull();
   }
+
+  Future<bool> deleteById(int id) async {
+    final count = await (delete(screeningTimeslotsTable)..where((tbl) => tbl.id.equals(id))).go();
+    return count > 0;
+  }
+
+  Future<void> insertOrUpdateMany(List<ScreeningTimeslot> timeslots) async {
+    for (final timeslot in timeslots) {
+      await into(screeningTimeslotsTable).insert(timeslot.toData(), onConflict: DoUpdate((_) => timeslot.toData()));
+    }
+  }
 }

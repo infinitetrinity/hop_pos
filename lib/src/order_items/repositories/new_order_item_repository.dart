@@ -30,4 +30,8 @@ class NewOrderItemRepository {
   Future<bool> update(OrderItem item) async {
     return await newOrderItemDao.updateOrderItem(item);
   }
+
+  Future<List<OrderItem>> getAll() async {
+    return newOrderItemDao.getAll();
+  }
 }

@@ -55,4 +55,8 @@ class NewOrderRepository {
     final orders = await newOrderDao.getIncompleteOrdersWithinDays(days, search: search);
     return orders.length;
   }
+
+  Future<List<Order>> getAll() async {
+    return newOrderDao.getAll();
+  }
 }

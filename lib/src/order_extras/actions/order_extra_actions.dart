@@ -67,4 +67,8 @@ class OrderExtraActions {
 
     return order.copyWith(extras: updatedExtras);
   }
+
+  Future<List<OrderExtra>> getAllNew() async {
+    return newOrderExtraRepo.getAll();
+  }
 }
