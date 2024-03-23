@@ -25,6 +25,7 @@ import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot.dart';
 import 'package:hop_pos/src/screening_venues/models/screening_venue.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'syncing_action.g.dart';
@@ -110,23 +111,18 @@ class SyncingAction {
         await _removeDeletedRecords(ToDeleteRecordData.fromJsonList(result.body!['delete_records']));
         await _removeSyncedRecords(List<int>.from(result.body!['sync_records']));
         await _toSyncRecords(result.body!['data']);
-
-        final createdRecords = (result.body!['created_records'] as Map<String, dynamic>)
-            .map((key, value) => MapEntry(key, List<int>.from(value)));
-        await _removeCreatedRecords(createdRecords);
-
+        await _removeCreatedRecords(result.body!['created_records']);
         await db.userDao.updateLastSyncedNow();
         return true;
       });
     } catch (e, stackTrace) {
-      print('sync error $e');
-      print('sync error $stackTrace');
+      final logger = Logger();
+      logger.e("Sync error.", error: e, stackTrace: stackTrace);
       return false;
     }
   }
 
   Future<void> _removeDeletedRecords(List<ToDeleteRecordData> toDeleteData) async {
-    print('remove deleted');
     if (toDeleteData.isEmpty) {
       return;
     }
@@ -163,7 +159,6 @@ class SyncingAction {
   }
 
   Future<void> _removeSyncedRecords(List<int> ids) async {
-    print('remove synced');
     if (ids.isEmpty) {
       return;
     }
@@ -172,7 +167,6 @@ class SyncingAction {
   }
 
   Future<void> _toSyncRecords(Map<String, dynamic> data) async {
-    print('to sync');
     final company = Company.fromJson(data['company']);
     final receiptSetting = ReceiptSetting.fromJson(data['receipt_settings']);
     final posExtras = PosExtra.fromJsonList(data['pos_extras']);
@@ -206,8 +200,8 @@ class SyncingAction {
     await db.orderPaymentDao.insertOrUpdateMany(orderPayments);
   }
 
-  Future<void> _removeCreatedRecords(Map<String, List<int>> data) async {
-    print('to remove created');
+  Future<void> _removeCreatedRecords(Map<String, dynamic> records) async {
+    final data = records.map((key, value) => MapEntry(key, List<int>.from(value)));
     await db.newCustomerDao.deleteByIds(data['customers'] ?? []);
     await db.newScreeningRegistrationDao.deleteByIds(data['registrations'] ?? []);
 

@@ -368,7 +368,7 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
             screeningTimeslotsTable.id,
           ),
         ),
-        innerJoin(
+        leftOuterJoin(
           newScreeningRegistrationsTable,
           newScreeningRegistrationsTable.id.equalsExp(
             screeningRegistrationsTable.timeslotId,

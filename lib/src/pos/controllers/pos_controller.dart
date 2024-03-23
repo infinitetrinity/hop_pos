@@ -330,7 +330,7 @@ class PosController extends _$PosController {
     state = state.copyWith(
       screening: order.screening,
       customer: order.customer,
-      registration: registration,
+      registration: registration?.copyWith(hasOrders: posOrder != null),
       order: posOrder ?? await _getNewPosOrder(),
     );
   }

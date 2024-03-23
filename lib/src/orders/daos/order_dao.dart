@@ -324,7 +324,7 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
   Future<List<OrderWithCustomerAndPayment>> getIncompleteOrdersWithinDays(int days, {String? search}) async {
     final index = _getIndexExpression();
     final totalPayment = _getTotalPaymentExpression();
-    final isIncomplete = (ordersTable.netTotal + ordersTable.rounding - totalPayment).isBiggerThanValue(0.0001);
+    final isIncomplete = (ordersTable.netTotal + ordersTable.rounding).isBiggerThan(totalPayment);
 
     final query = select(ordersTable).join(
       [
@@ -358,17 +358,15 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
           customersTable.nric.like("%$search%"));
     }
 
-    return (await query.get())
-        .map(
-          (row) => OrderWithCustomerAndPayment(
-            screening: row.readTable(screeningsTable),
-            order: row.readTable(ordersTable),
-            customer: row.readTable(customersTable),
-            index: row.read(index),
-            totalPayment: row.read(totalPayment),
-          ),
-        )
-        .toList();
+    return (await query.get()).map((row) {
+      return OrderWithCustomerAndPayment(
+        screening: row.readTable(screeningsTable),
+        order: row.readTable(ordersTable),
+        customer: row.readTable(customersTable),
+        index: row.read(index),
+        totalPayment: row.read(totalPayment),
+      );
+    }).toList();
   }
 
   Future<List<OrderWithCustomerAndPayment>> getCustomerOrders(Customer customer) async {
