@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:hop_pos/app/api_routes.dart';
 import 'package:hop_pos/app/app_db.dart';
+import 'package:hop_pos/app/app_logger.dart';
 import 'package:hop_pos/src/common/models/api_request.dart';
 import 'package:hop_pos/src/common/models/api_response.dart';
 import 'package:hop_pos/src/common/models/sync_new_record_data.dart';
@@ -16,6 +17,8 @@ import 'package:hop_pos/src/order_items/models/order_item.dart';
 import 'package:hop_pos/src/order_payments/models/order_payment.dart';
 import 'package:hop_pos/src/orders/models/order.dart';
 import 'package:hop_pos/src/payment_methods/models/payment_method.dart';
+import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
+import 'package:hop_pos/src/pos/models/pos_cart.dart';
 import 'package:hop_pos/src/pos_extras/models/pos_extra.dart';
 import 'package:hop_pos/src/product_categories/models/product_category.dart';
 import 'package:hop_pos/src/products/models/product.dart';
@@ -25,7 +28,6 @@ import 'package:hop_pos/src/screening_timeslots/models/screening_timeslot.dart';
 import 'package:hop_pos/src/screening_venues/models/screening_venue.dart';
 import 'package:hop_pos/src/screenings/models/screening.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'syncing_action.g.dart';
@@ -36,6 +38,8 @@ SyncingAction syncingAction(SyncingActionRef ref) {
     apiService: ref.watch(apiServiceProvider),
     syncingState: ref.watch(syncingStateProvider.notifier),
     db: ref.watch(appDbProvider),
+    posCart: ref.watch(posControllerProvider),
+    posController: ref.watch(posControllerProvider.notifier),
   );
 }
 
@@ -43,11 +47,15 @@ class SyncingAction {
   final ApiService apiService;
   final SyncingState syncingState;
   final AppDb db;
+  final PosCart posCart;
+  final PosController posController;
 
   SyncingAction({
     required this.apiService,
     required this.syncingState,
     required this.db,
+    required this.posCart,
+    required this.posController,
   });
 
   Future<bool> checkServerConnection() async {
@@ -116,8 +124,7 @@ class SyncingAction {
         return true;
       });
     } catch (e, stackTrace) {
-      final logger = Logger();
-      logger.e("Sync error.", error: e, stackTrace: stackTrace);
+      AppLogger().e("Sync error", error: e, stackTrace: stackTrace);
       return false;
     }
   }
@@ -205,14 +212,21 @@ class SyncingAction {
     await db.newCustomerDao.deleteByIds(data['customers'] ?? []);
     await db.newScreeningRegistrationDao.deleteByIds(data['registrations'] ?? []);
 
-    final orders = data['orders'] ?? [];
-    if (orders.isNotEmpty) {
-      await db.newOrderDao.deleteByIds(orders);
-      //TODO:: if pos current order is in orders, redo get customer latest order
-    }
-
+    await db.newOrderDao.deleteByIds(data['orders'] ?? []);
     await db.newOrderItemDao.deleteByIds(data['order_items'] ?? []);
     await db.newOrderExtraDao.deleteByIds(data['order_extras'] ?? []);
     await db.newOrderPaymentDao.deleteByIds(data['order_payments'] ?? []);
+    await _reloadPosOrder(data['orders'] ?? []);
+  }
+
+  Future<void> _reloadPosOrder(List<int> orders) async {
+    if (orders.isNotEmpty &&
+        posCart.customer != null &&
+        orders.contains(posCart.order?.order.id) &&
+        posCart.order?.order.isNew == true) {
+      await posController.selectCustomer(customer: posCart.customer!);
+    }
+
+    return;
   }
 }

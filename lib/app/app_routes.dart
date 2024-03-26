@@ -28,7 +28,7 @@ GoRouter goRouter(GoRouterRef ref) {
         return null;
       }
 
-      bool isAuthenticated = await ref.watch(authStateProvider.future) != null;
+      bool isAuthenticated = await ref.read(authStateProvider.future) != null;
       if (state.fullPath == LoginRoute().location) {
         return isAuthenticated ? ScreeningRoute().location : null;
       }

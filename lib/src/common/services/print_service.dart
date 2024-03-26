@@ -5,6 +5,7 @@ import 'package:flutter_pos_printer_platform/esc_pos_utils_platform/src/generato
 import 'package:flutter_pos_printer_platform/flutter_pos_printer_platform.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_extension.dart';
+import 'package:hop_pos/app/app_logger.dart';
 import 'package:hop_pos/src/company/models/company.dart';
 import 'package:hop_pos/src/company/states/company_state.dart';
 import 'package:hop_pos/src/customers/models/customer.dart';
@@ -85,8 +86,8 @@ class PrintService {
       );
 
       return true;
-    } catch (exception) {
-      print('Print error $exception');
+    } catch (exception, stackTrace) {
+      AppLogger().e("Print PDF error", error: exception, stackTrace: stackTrace);
     }
 
     return false;
@@ -132,8 +133,8 @@ class PrintService {
       PrinterManager.instance.send(type: PrinterType.usb, bytes: bytes);
 
       return true;
-    } catch (exception) {
-      print('Print error $exception');
+    } catch (exception, stackTrace) {
+      AppLogger().e("Print receipt error", error: exception, stackTrace: stackTrace);
     } finally {
       await PrinterManager.instance.disconnect(type: PrinterType.usb);
     }
@@ -181,7 +182,6 @@ class PrintService {
   }
 
   Future<bool> printOrderReceipt() async {
-    print('printing receipt');
     if (cart.order == null) {
       return false;
     }
@@ -225,7 +225,6 @@ class PrintService {
   }
 
   Future<bool> printUtfStfReceipt() async {
-    print('printing utf/stf receipt');
     if (cart.screening == null) {
       return false;
     }

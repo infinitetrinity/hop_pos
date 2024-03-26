@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:hop_pos/app/app_logger.dart';
 import 'package:hop_pos/src/common/converters/json_converter.dart';
 import 'package:hop_pos/src/company/daos/company_dao.dart';
 import 'package:hop_pos/src/company/models/company.dart';
@@ -69,7 +70,6 @@ import 'package:hop_pos/src/to_sync_data/models/to_sync_data_table.dart';
 import 'package:hop_pos/src/users/daos/user_dao.dart';
 import 'package:hop_pos/src/users/models/user.dart';
 import 'package:hop_pos/src/users/models/users_table.dart';
-import 'package:logger/logger.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -164,8 +164,7 @@ class AppDb extends _$AppDb {
       try {
         await file.delete();
       } catch (e, stackTrace) {
-        final logger = Logger();
-        logger.e("Fail to delete db", error: e, stackTrace: stackTrace);
+        AppLogger().e("Fail to delete db", error: e, stackTrace: stackTrace);
         rethrow;
       }
     }

@@ -7,7 +7,7 @@ part of 'syncing_server_state.dart';
 // **************************************************************************
 
 String _$syncingServerStateHash() =>
-    r'9cd56ac4e4de424bad8df232699b7445e43b2565';
+    r'8c59c5327e1f895efd681fcabb63a79c7dd0483e';
 
 /// See also [SyncingServerState].
 @ProviderFor(SyncingServerState)

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:hop_pos/app/app_exceptions.dart';
+import 'package:hop_pos/app/app_logger.dart';
 import 'package:hop_pos/src/common/services/flash_message.dart';
-import 'package:logger/logger.dart';
 
 class ApiExceptions {
   ApiExceptions();
@@ -65,7 +65,6 @@ class ApiExceptions {
       return;
     }
 
-    final logger = Logger();
-    logger.e("Api Invalid response error.", error: exception, stackTrace: stackTrace);
+    AppLogger().e("Api Invalid response error", error: exception, stackTrace: stackTrace);
   }
 }

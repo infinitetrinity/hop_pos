@@ -16,7 +16,6 @@ class SeverConnectionState extends _$SeverConnectionState {
   }
 
   FutureOr<bool> checkServerConnection() async {
-    print('checking server');
     state = const AsyncLoading();
     final result = await ref.read(syncingActionProvider).checkServerConnection();
     state = AsyncValue.data(result);

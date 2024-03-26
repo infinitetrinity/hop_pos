@@ -1,6 +1,7 @@
 import 'package:hop_pos/app/api_routes.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/app/app_exceptions.dart';
+import 'package:hop_pos/app/app_logger.dart';
 import 'package:hop_pos/src/common/models/api_request.dart';
 import 'package:hop_pos/src/common/models/api_response.dart';
 import 'package:hop_pos/src/common/services/api_service.dart';
@@ -10,7 +11,6 @@ import 'package:hop_pos/src/login/models/login_request.dart';
 import 'package:hop_pos/src/login/models/login_response.dart';
 import 'package:hop_pos/src/login/state/syncing_state.dart';
 import 'package:hop_pos/src/users/actions/user_actions.dart';
-import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'login_action.g.dart';
@@ -56,8 +56,7 @@ class LoginAction {
       await insertLoginData(LoginResponse.fromJson(response.data!));
       await downloadInitData();
     } catch (e, stackTrace) {
-      final logger = Logger();
-      logger.e("Insert initial data error", error: e, stackTrace: stackTrace);
+      AppLogger().e("Insert initial data error", error: e, stackTrace: stackTrace);
       rethrow;
     } finally {
       await syncingState.syncing(isSyncing: false);
@@ -65,7 +64,6 @@ class LoginAction {
   }
 
   Future<void> insertLoginData(LoginResponse response) async {
-    print('syncing');
     await syncingState.syncing();
     await db.transaction(() async {
       await db.userDao.insertUser(response.getUserData());
@@ -109,7 +107,6 @@ class LoginAction {
   }
 
   Future<void> insertInitData(InitDataResponse response) async {
-    print('setting init data');
     await db.customStatement('PRAGMA foreign_keys = OFF');
     await db.transaction(() async {
       await db.customerDao.insertCustomers(response.getCustomersData());

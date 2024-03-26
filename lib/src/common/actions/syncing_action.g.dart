@@ -6,7 +6,7 @@ part of 'syncing_action.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$syncingActionHash() => r'ea3abea03031c8c598d3befca0897b0337c5dff0';
+String _$syncingActionHash() => r'd3b41fc6c537953ee051e04717df220960ae0862';
 
 /// See also [syncingAction].
 @ProviderFor(syncingAction)
