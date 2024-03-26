@@ -324,7 +324,8 @@ class OrderDao extends DatabaseAccessor<AppDb> with _$OrderDaoMixin {
   Future<List<OrderWithCustomerAndPayment>> getIncompleteOrdersWithinDays(int days, {String? search}) async {
     final index = _getIndexExpression();
     final totalPayment = _getTotalPaymentExpression();
-    final isIncomplete = (ordersTable.netTotal + ordersTable.rounding).isBiggerThan(totalPayment);
+    final isIncomplete =
+        (ordersTable.netTotal + ordersTable.rounding).isBiggerThan(totalPayment + const Variable(0.001));
 
     final query = select(ordersTable).join(
       [
