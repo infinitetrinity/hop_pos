@@ -13,11 +13,15 @@ class AppLogger extends Logger {
     LogOutput? output,
     Level? level,
   }) : super(
-          filter: filter,
+          filter: filter ?? defaultFilter(),
           printer: printer ?? defaultPrinter(),
           output: output ?? defaultOutput(),
           level: level,
         );
+
+  static LogFilter? Function() defaultFilter = () {
+    return kReleaseMode ? AppLoggerFilter() : null;
+  };
 
   static LogPrinter Function() defaultPrinter = () {
     return kReleaseMode ? AppLoggerFilePrinter() : PrettyPrinter();
@@ -26,6 +30,13 @@ class AppLogger extends Logger {
   static LogOutput Function() defaultOutput = () {
     return kReleaseMode ? AppLoggerFileOutput() : ConsoleOutput();
   };
+}
+
+class AppLoggerFilter extends LogFilter {
+  @override
+  bool shouldLog(LogEvent event) {
+    return true;
+  }
 }
 
 class AppLoggerFilePrinter extends LogPrinter {
@@ -56,7 +67,7 @@ class AppLoggerFileOutput extends LogOutput {
     final file = File(p.join(folder.path, 'hop_pos-log.txt'));
 
     if (!(await file.exists())) {
-      file.create();
+      await file.create();
     }
 
     return file;

@@ -115,14 +115,16 @@ class SyncingAction {
         return false;
       }
 
-      return await db.transaction(() async {
+      await db.customStatement('PRAGMA foreign_keys = OFF');
+      await db.transaction(() async {
         await _removeDeletedRecords(ToDeleteRecordData.fromJsonList(result.body!['delete_records']));
         await _removeSyncedRecords(List<int>.from(result.body!['sync_records']));
         await _toSyncRecords(result.body!['data']);
         await _removeCreatedRecords(result.body!['created_records']);
         await db.userDao.updateLastSyncedNow();
-        return true;
       });
+      await db.customStatement('PRAGMA foreign_keys = ON');
+      return true;
     } catch (e, stackTrace) {
       AppLogger().e("Sync error", error: e, stackTrace: stackTrace);
       return false;

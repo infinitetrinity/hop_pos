@@ -7,7 +7,7 @@ part of 'server_connection_state.dart';
 // **************************************************************************
 
 String _$severConnectionStateHash() =>
-    r'c8ebd9158fa3ed49b27b39d67e116bc701dfd177';
+    r'812a8ae5284bb257590b5f30381263bda7925010';
 
 /// See also [SeverConnectionState].
 @ProviderFor(SeverConnectionState)
