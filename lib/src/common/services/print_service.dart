@@ -171,6 +171,10 @@ class PrintService {
             style: textStyle,
           ),
           Text(
+            "DOB: ${customer.displayDob}",
+            style: textStyle,
+          ),
+          Text(
             "Date Screened: ${timeslot?.displayDate ?? ''}",
             style: textStyle,
           ),

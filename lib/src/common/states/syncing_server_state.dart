@@ -14,9 +14,8 @@ class SyncingServerState extends _$SyncingServerState {
 
   @override
   Future<bool> build() async {
-    //syncingServerTimer();
-    return true;
-    //return await syncingServer();
+    syncingServerTimer();
+    return await syncingServer();
   }
 
   FutureOr<bool> syncingServer() async {
