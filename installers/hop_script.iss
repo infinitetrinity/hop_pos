@@ -10,7 +10,7 @@
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{FE7EBCE1-6C65-4A6B-9B61-B9B1764AF33E}
+AppId={{F014A25F-FC83-4EA5-885B-B2DBB2C78B5F}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
@@ -18,7 +18,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={autopf}\{#MyAppName}
+DefaultDirName={localappdata}\Programs\{#MyAppName}
 DisableDirPage=yes
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
@@ -41,7 +41,6 @@ Source: "C:\ITC\HopPos\hop_pos\build\windows\x64\runner\Release\{#MyAppExeName}"
 Source: "C:\ITC\HopPos\hop_pos\build\windows\x64\runner\Release\flutter_pos_printer_platform_plugin.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\ITC\HopPos\hop_pos\build\windows\x64\runner\Release\flutter_secure_storage_windows_plugin.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\ITC\HopPos\hop_pos\build\windows\x64\runner\Release\flutter_windows.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\ITC\HopPos\hop_pos\build\windows\x64\runner\Release\hop_pos.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\ITC\HopPos\hop_pos\build\windows\x64\runner\Release\network_info_plus_plugin.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\ITC\HopPos\hop_pos\build\windows\x64\runner\Release\pdfium.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\ITC\HopPos\hop_pos\build\windows\x64\runner\Release\printing_plugin.dll"; DestDir: "{app}"; Flags: ignoreversion

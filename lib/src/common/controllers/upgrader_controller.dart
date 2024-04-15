@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:hop_pos/src/common/models/api_response.dart';
 import 'package:hop_pos/src/common/services/api_service.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -51,5 +53,13 @@ class UpgraderController extends _$UpgraderController {
     } catch (e) {
       return null;
     }
+  }
+
+  Future<File> getDownloadFileLocation() async {
+    final paths = Platform.resolvedExecutable.replaceAll(".exe", ".zip").split('\\');
+    paths.removeAt(paths.length - 2);
+    final path = paths.join('\\');
+
+    return File(path);
   }
 }
