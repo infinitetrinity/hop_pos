@@ -15,8 +15,7 @@ class PosCompleted extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isUtfOrStf = ref
-        .watch(posControllerProvider.select((prov) => (prov.order?.order.isUtf ?? prov.order?.order.isStf) ?? false));
+    final isUtfOrStf = ref.watch(posControllerProvider.select((prov) => prov.order?.isStfOrUtf ?? false));
 
     printReceipts() async {
       final printService = await ref.read(printServiceProvider.future);

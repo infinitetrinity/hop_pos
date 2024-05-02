@@ -26,6 +26,7 @@ class ScreeningScreen extends HookConsumerWidget {
         return;
       }
 
+      barcode = barcode.trim().replaceAll(RegExp(r"\s+"), "");
       context.loaderOverlay.show();
       final result = await ref.read(customerActionsProvider).findCustomerDetail(barcode);
 

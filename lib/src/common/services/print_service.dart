@@ -142,40 +142,77 @@ class PrintService {
     return false;
   }
 
-  Future<bool> printCustomerRegistrationLabel(Customer customer, ScreeningRegistration? registration) async {
+  Future<bool> printCustomerRegistrationLabel(
+    Customer customer,
+    ScreeningRegistration? registration, {
+    double width = 6,
+    double height = 3,
+    double margin = 0.2,
+  }) async {
     final timeslot = registration != null ? await screeningTimeslotActions.getById(registration.timeslotId) : null;
-    final data = await rootBundle.load("assets/fonts/Inter-SemiBold.ttf");
+
+    final font = await rootBundle.load("assets/fonts/Inter-Regular.ttf");
+    final fontBold = await rootBundle.load("assets/fonts/Inter-SemiBold.ttf");
+
     final textStyle = TextStyle(
-      font: Font.ttf(data),
+      font: Font.ttf(font),
       letterSpacing: 0,
       fontSize: 8,
+      fontFallback: [
+        Font.times(),
+      ],
+    );
+    final textStyleBold = textStyle.copyWith(
+      font: Font.ttf(fontBold),
+      fontWeight: FontWeight.bold,
     );
 
     final page = Page(
-      pageFormat: PdfPageFormat.a4,
-      margin: const EdgeInsets.all(10),
+      pageFormat: PdfPageFormat(
+        width * PdfPageFormat.cm,
+        height * PdfPageFormat.cm,
+        marginAll: margin > 0 ? margin * PdfPageFormat.cm : null,
+      ),
       build: (context) => Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             "SN: ${registration?.index ?? customer.nricIndex}",
-            style: textStyle,
+            style: textStyleBold,
           ),
           Text(
             "Name: ${customer.fullName}",
-            style: textStyle,
+            style: textStyleBold,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "NRIC: ${customer.nric}",
+                style: textStyle,
+              ),
+              Text(
+                "DOB: ${customer.displayDob}",
+                style: textStyle,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Sex: ${customer.displayGender}",
+                style: textStyle,
+              ),
+              Text(
+                "Age: ${customer.age}",
+                style: textStyle,
+              ),
+            ],
           ),
           Text(
-            "NRIC: ${customer.nric}",
-            style: textStyle,
-          ),
-          Text(
-            "DOB: ${customer.displayDob}",
-            style: textStyle,
-          ),
-          Text(
-            "Date Screened: ${timeslot?.displayDate ?? ''}",
+            "Screened On: ${timeslot?.displayDate ?? ''}",
             style: textStyle,
           ),
         ],
@@ -196,7 +233,7 @@ class PrintService {
     final textStyle = TextStyle(
       font: Font.ttf(font),
       letterSpacing: 0,
-      fontSize: 8,
+      fontSize: 9,
       fontFallback: [
         Font.times(),
       ],
@@ -208,7 +245,7 @@ class PrintService {
 
     final page = Page(
       pageFormat: PdfPageFormat.roll80,
-      margin: const EdgeInsets.all(5),
+      margin: const EdgeInsets.all(10),
       build: (context) => Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,7 +262,7 @@ class PrintService {
       ),
     );
 
-    return await printReceipt(page);
+    return await printPdf(page);
   }
 
   Future<bool> printUtfStfReceipt() async {
@@ -240,7 +277,7 @@ class PrintService {
     final textStyle = TextStyle(
       font: Font.ttf(font),
       letterSpacing: 0,
-      fontSize: 8,
+      fontSize: 9,
       fontFallback: [
         Font.times(),
       ],
@@ -252,7 +289,7 @@ class PrintService {
 
     final page = Page(
       pageFormat: PdfPageFormat.roll80,
-      margin: const EdgeInsets.all(5),
+      margin: const EdgeInsets.all(10),
       build: (context) => Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,7 +303,7 @@ class PrintService {
       ),
     );
 
-    return await printReceipt(page);
+    return await printPdf(page);
   }
 
   Widget _printSpecimentHeader(TextStyle textStyle, TextStyle textStyleBold) {
@@ -280,7 +317,8 @@ class PrintService {
           receiptSetting?.outstandingSpecimenTitle ?? 'Outstanding Specimen',
           textAlign: TextAlign.center,
           style: textStyleBold.copyWith(
-            fontSize: 20,
+            fontSize: 32,
+            height: 1,
           ),
         ),
         _printDottedLine(),
@@ -408,7 +446,7 @@ class PrintService {
       child: Text(
         "REF: ${cart.registration?.index ?? cart.customer?.nricIndex}",
         style: textStyleBold.copyWith(
-          fontSize: 20,
+          fontSize: 32,
         ),
       ),
     );
@@ -446,8 +484,8 @@ class PrintService {
           ),
         _printDottedLine(),
         Text(
-          "HOP Medical Centre",
-          style: textStyle,
+          "Health Outreach Clinic Pte Ltd",
+          style: textStyleBold,
         ),
         Text(
           "Palais Renaissance",
@@ -535,6 +573,7 @@ class PrintService {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Flexible(
                     child: Text(
@@ -661,7 +700,7 @@ class PrintService {
           style: textStyle,
           textAlign: TextAlign.center,
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 30),
       ],
     );
   }

@@ -15,8 +15,7 @@ class PosCompletedHeader extends ConsumerWidget {
     final totalPayment = ref.watch(posControllerProvider.select((prov) => prov.order?.totalPayment ?? 0));
     final balance = ref.watch(posControllerProvider.select((prov) => prov.order?.balance ?? 0));
     final change = ref.watch(posControllerProvider.select((prov) => prov.order?.change ?? 0));
-    final isUtfOrStf = ref
-        .watch(posControllerProvider.select((prov) => (prov.order?.order.isUtf ?? prov.order?.order.isStf) ?? false));
+    final isUtfOrStf = ref.watch(posControllerProvider.select((prov) => prov.order?.isStfOrUtf ?? false));
 
     return SizedBox(
       width: double.infinity,

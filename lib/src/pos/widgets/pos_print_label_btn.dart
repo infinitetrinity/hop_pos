@@ -5,6 +5,9 @@ import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/services/flash_message.dart';
 import 'package:hop_pos/src/common/services/print_service.dart';
+import 'package:hop_pos/src/common/widgets/dialog_footer.dart';
+import 'package:hop_pos/src/common/widgets/dialog_title.dart';
+import 'package:hop_pos/src/common/widgets/form_text_field.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 
 class PosPrintLabelBtn extends HookConsumerWidget {
@@ -15,10 +18,19 @@ class PosPrintLabelBtn extends HookConsumerWidget {
     final isHover = useState(false);
     final customer = ref.watch(posControllerProvider.select((prov) => prov.customer));
     final registration = ref.watch(posControllerProvider.select((prov) => prov.registration));
+    final width = useState("6");
+    final height = useState("3");
+    final margin = useState("0.2");
 
     void printLabel() async {
       final printService = await ref.read(printServiceProvider.future);
-      final result = await printService.printCustomerRegistrationLabel(customer!, registration);
+      final result = await printService.printCustomerRegistrationLabel(
+        customer!,
+        registration,
+        width: double.parse(width.value),
+        height: double.parse(height.value),
+        margin: double.parse(margin.value),
+      );
 
       if (!result) {
         ref.read(flashMessageProvider).flash(message: 'Error printing label', type: FlashMessageType.error);
@@ -39,7 +51,61 @@ class PosPrintLabelBtn extends HookConsumerWidget {
                   foregroundColor: isHover.value ? AppColors.white : AppColors.gray700,
                   padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
                 ),
-                onPressed: printLabel,
+                onPressed: () => showDialog(
+                  context: context,
+                  builder: (_) => Center(
+                    child: Material(
+                      child: SizedBox(
+                        width: 900,
+                        height: 400,
+                        child: Column(
+                          children: [
+                            const DialogTitle(title: 'Label Printing'),
+                            Container(
+                              padding: const EdgeInsets.all(15),
+                              child: Column(
+                                children: [
+                                  FormTextField(
+                                    isRequired: true,
+                                    label: 'Width',
+                                    value: width.value,
+                                    onChanged: (value) {
+                                      width.value = value;
+                                    },
+                                  ),
+                                  const SizedBox(height: 15),
+                                  FormTextField(
+                                    isRequired: true,
+                                    label: 'Height',
+                                    value: height.value,
+                                    onChanged: (value) {
+                                      height.value = value;
+                                    },
+                                  ),
+                                  const SizedBox(height: 15),
+                                  FormTextField(
+                                    isRequired: true,
+                                    label: 'Margin',
+                                    value: margin.value,
+                                    onChanged: (value) {
+                                      margin.value = value;
+                                    },
+                                  ),
+                                  const SizedBox(height: 25),
+                                  DialogFooter(
+                                    isSubmitting: false,
+                                    onSubmit: () => printLabel(),
+                                    submitLabel: 'Print',
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 child: Row(
                   children: [
                     Icon(

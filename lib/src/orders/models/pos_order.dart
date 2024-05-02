@@ -84,4 +84,8 @@ class PosOrder with _$PosOrder {
   bool get isFullyPaid {
     return balance == 0 || payLater == true;
   }
+
+  bool get isStfOrUtf {
+    return order.isStf == true || order.isUtf == true;
+  }
 }

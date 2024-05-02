@@ -88,4 +88,18 @@ class Customer with _$Customer {
     int start = (nric?.length ?? 0) >= 5 ? nric!.length - 5 : 0;
     return nric?.substring(start, nric!.length);
   }
+
+  int? get age {
+    if (dob == null) {
+      return null;
+    }
+
+    final now = DateTime.now();
+    int years = now.year - dob!.year;
+    if (now.month >= dob!.month && now.day >= dob!.day) {
+      years++;
+    }
+
+    return years;
+  }
 }
