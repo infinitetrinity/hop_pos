@@ -6,7 +6,7 @@ part of 'print_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$printServiceHash() => r'e0b140d2c0ca4a652b418f0c4608c96066b43fef';
+String _$printServiceHash() => r'f38ac4e11a45777fa80e16581132a289d854f4bb';
 
 /// See also [printService].
 @ProviderFor(printService)

@@ -15,6 +15,8 @@ import 'package:hop_pos/src/order_payments/models/order_payment_with_method.dart
 import 'package:hop_pos/src/payment_methods/actions/payment_method_actions.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/pos/models/pos_cart.dart';
+import 'package:hop_pos/src/pos_licenses/models/pos_license.dart';
+import 'package:hop_pos/src/pos_licenses/states/pos_license_state.dart';
 import 'package:hop_pos/src/receipt_settings/models/receipt_setting.dart';
 import 'package:hop_pos/src/receipt_settings/states/receipt_setting_state.dart';
 import 'package:hop_pos/src/screening_registrations/models/screening_registration.dart';
@@ -38,6 +40,7 @@ Future<PrintService> printService(PrintServiceRef ref) async {
     cart: ref.watch(posControllerProvider),
     company: await ref.watch(companyStateProvider.future),
     receiptSetting: await ref.watch(receiptSettingStateProvider.future),
+    posLicense: await ref.watch(posLicenseStateProvider.future),
   );
 }
 
@@ -48,6 +51,7 @@ class PrintService {
   final PosCart cart;
   final Company? company;
   final ReceiptSetting? receiptSetting;
+  final PosLicense? posLicense;
 
   PrintService({
     required this.screeningActions,
@@ -56,6 +60,7 @@ class PrintService {
     required this.cart,
     required this.company,
     required this.receiptSetting,
+    required this.posLicense,
   });
 
   Future<dynamic> printPdf(Page page, {bool toPreview = false}) async {
@@ -456,48 +461,34 @@ class PrintService {
     if (company == null) {
       return Container();
     }
+
+    String name = cart.screening?.isWhitecoatScreening == true
+        ? "WhiteCoat Holdings Pte. Ltd."
+        : posLicense?.isMedicalCenter == true
+            ? "Health Outreach Clinic Pte. Ltd."
+            : company!.name;
+
+    String address = cart.screening?.isWhitecoatScreening == true
+        ? "201 Henderson Rd, Apex@ Henderson, #05-11/12 S159545"
+        : "2 Venture Drive, #10-16, Vision Exchange S608526";
+
+    String gstReg =
+        cart.screening?.isWhitecoatScreening == true ? "GST Reg. No: 200918399R" : "GST Reg. No: 200918399R";
+
     return Column(
       children: [
         Text(
-          company!.name,
-          style: textStyleBold,
-        ),
-        if (!company!.address.isNullOrEmpty)
-          Text(
-            company!.address!,
-            style: textStyle,
-          ),
-        if (!company!.postalCode.isNullOrEmpty)
-          Text(
-            "Singapore ${company!.postalCode!}",
-            style: textStyle,
-          ),
-        if (!company!.coRegistrationNo.isNullOrEmpty)
-          Text(
-            "Biz Reg No. ${company!.coRegistrationNo!}",
-            style: textStyle,
-          ),
-        if (!company!.telephone.isNullOrEmpty)
-          Text(
-            "Tel: ${company!.telephone!}",
-            style: textStyle,
-          ),
-        _printDottedLine(),
-        Text(
-          "Health Outreach Clinic Pte Ltd",
+          name,
           style: textStyleBold,
         ),
         Text(
-          "Palais Renaissance",
+          gstReg,
           style: textStyle,
         ),
         Text(
-          "390 Orchard Road #11-04 S238871",
+          address,
           style: textStyle,
-        ),
-        Text(
-          "Tel: 6589 0009",
-          style: textStyle,
+          textAlign: TextAlign.center,
         ),
         _printDottedLine(),
       ],
