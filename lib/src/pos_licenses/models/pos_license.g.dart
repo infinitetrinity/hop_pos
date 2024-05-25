@@ -15,6 +15,7 @@ _$PosLicenseImpl _$$PosLicenseImplFromJson(Map<String, dynamic> json) =>
       password: json['password'] as String,
       isActive: json['is_active'] as bool,
       isActivated: json['is_activated'] as bool,
+      isMedicalCenter: json['is_medical_center'] as bool,
     );
 
 Map<String, dynamic> _$$PosLicenseImplToJson(_$PosLicenseImpl instance) =>
@@ -26,4 +27,5 @@ Map<String, dynamic> _$$PosLicenseImplToJson(_$PosLicenseImpl instance) =>
       'password': instance.password,
       'is_active': instance.isActive,
       'is_activated': instance.isActivated,
+      'is_medical_center': instance.isMedicalCenter,
     };

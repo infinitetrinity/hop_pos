@@ -31,6 +31,8 @@ mixin _$PosLicense {
   bool get isActive => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_activated')
   bool get isActivated => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_medical_center')
+  bool get isMedicalCenter => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +53,8 @@ abstract class $PosLicenseCopyWith<$Res> {
       @JsonKey(name: 'license_key') String licenseKey,
       String password,
       @JsonKey(name: 'is_active') bool isActive,
-      @JsonKey(name: 'is_activated') bool isActivated});
+      @JsonKey(name: 'is_activated') bool isActivated,
+      @JsonKey(name: 'is_medical_center') bool isMedicalCenter});
 }
 
 /// @nodoc
@@ -74,6 +77,7 @@ class _$PosLicenseCopyWithImpl<$Res, $Val extends PosLicense>
     Object? password = null,
     Object? isActive = null,
     Object? isActivated = null,
+    Object? isMedicalCenter = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -104,6 +108,10 @@ class _$PosLicenseCopyWithImpl<$Res, $Val extends PosLicense>
           ? _value.isActivated
           : isActivated // ignore: cast_nullable_to_non_nullable
               as bool,
+      isMedicalCenter: null == isMedicalCenter
+          ? _value.isMedicalCenter
+          : isMedicalCenter // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -123,7 +131,8 @@ abstract class _$$PosLicenseImplCopyWith<$Res>
       @JsonKey(name: 'license_key') String licenseKey,
       String password,
       @JsonKey(name: 'is_active') bool isActive,
-      @JsonKey(name: 'is_activated') bool isActivated});
+      @JsonKey(name: 'is_activated') bool isActivated,
+      @JsonKey(name: 'is_medical_center') bool isMedicalCenter});
 }
 
 /// @nodoc
@@ -144,6 +153,7 @@ class __$$PosLicenseImplCopyWithImpl<$Res>
     Object? password = null,
     Object? isActive = null,
     Object? isActivated = null,
+    Object? isMedicalCenter = null,
   }) {
     return _then(_$PosLicenseImpl(
       id: null == id
@@ -174,6 +184,10 @@ class __$$PosLicenseImplCopyWithImpl<$Res>
           ? _value.isActivated
           : isActivated // ignore: cast_nullable_to_non_nullable
               as bool,
+      isMedicalCenter: null == isMedicalCenter
+          ? _value.isMedicalCenter
+          : isMedicalCenter // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -188,7 +202,8 @@ class _$PosLicenseImpl extends _PosLicense {
       @JsonKey(name: 'license_key') required this.licenseKey,
       required this.password,
       @JsonKey(name: 'is_active') required this.isActive,
-      @JsonKey(name: 'is_activated') required this.isActivated})
+      @JsonKey(name: 'is_activated') required this.isActivated,
+      @JsonKey(name: 'is_medical_center') required this.isMedicalCenter})
       : super._();
 
   factory _$PosLicenseImpl.fromJson(Map<String, dynamic> json) =>
@@ -212,10 +227,13 @@ class _$PosLicenseImpl extends _PosLicense {
   @override
   @JsonKey(name: 'is_activated')
   final bool isActivated;
+  @override
+  @JsonKey(name: 'is_medical_center')
+  final bool isMedicalCenter;
 
   @override
   String toString() {
-    return 'PosLicense(id: $id, name: $name, invoicePrefix: $invoicePrefix, licenseKey: $licenseKey, password: $password, isActive: $isActive, isActivated: $isActivated)';
+    return 'PosLicense(id: $id, name: $name, invoicePrefix: $invoicePrefix, licenseKey: $licenseKey, password: $password, isActive: $isActive, isActivated: $isActivated, isMedicalCenter: $isMedicalCenter)';
   }
 
   @override
@@ -234,13 +252,15 @@ class _$PosLicenseImpl extends _PosLicense {
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
             (identical(other.isActivated, isActivated) ||
-                other.isActivated == isActivated));
+                other.isActivated == isActivated) &&
+            (identical(other.isMedicalCenter, isMedicalCenter) ||
+                other.isMedicalCenter == isMedicalCenter));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, invoicePrefix,
-      licenseKey, password, isActive, isActivated);
+      licenseKey, password, isActive, isActivated, isMedicalCenter);
 
   @JsonKey(ignore: true)
   @override
@@ -258,14 +278,15 @@ class _$PosLicenseImpl extends _PosLicense {
 
 abstract class _PosLicense extends PosLicense {
   const factory _PosLicense(
-          {required final int id,
-          required final String name,
-          @JsonKey(name: 'invoice_prefix') required final String invoicePrefix,
-          @JsonKey(name: 'license_key') required final String licenseKey,
-          required final String password,
-          @JsonKey(name: 'is_active') required final bool isActive,
-          @JsonKey(name: 'is_activated') required final bool isActivated}) =
-      _$PosLicenseImpl;
+      {required final int id,
+      required final String name,
+      @JsonKey(name: 'invoice_prefix') required final String invoicePrefix,
+      @JsonKey(name: 'license_key') required final String licenseKey,
+      required final String password,
+      @JsonKey(name: 'is_active') required final bool isActive,
+      @JsonKey(name: 'is_activated') required final bool isActivated,
+      @JsonKey(name: 'is_medical_center')
+      required final bool isMedicalCenter}) = _$PosLicenseImpl;
   const _PosLicense._() : super._();
 
   factory _PosLicense.fromJson(Map<String, dynamic> json) =
@@ -289,6 +310,9 @@ abstract class _PosLicense extends PosLicense {
   @override
   @JsonKey(name: 'is_activated')
   bool get isActivated;
+  @override
+  @JsonKey(name: 'is_medical_center')
+  bool get isMedicalCenter;
   @override
   @JsonKey(ignore: true)
   _$$PosLicenseImplCopyWith<_$PosLicenseImpl> get copyWith =>

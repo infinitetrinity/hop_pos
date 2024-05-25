@@ -23,4 +23,8 @@ class PosLicenseDao extends DatabaseAccessor<AppDb> with _$PosLicenseDaoMixin {
     final count = await (update(posLicensesTable)..where((_) => where)).write(license);
     return count > 0;
   }
+
+  Future<void> insertOrUpdate(PosLicense license) async {
+    await into(posLicensesTable).insert(license.toData(), onConflict: DoUpdate((_) => license.toData()));
+  }
 }

@@ -15,6 +15,7 @@ class PosLicense with _$PosLicense {
     required String password,
     @JsonKey(name: 'is_active') required bool isActive,
     @JsonKey(name: 'is_activated') required bool isActivated,
+    @JsonKey(name: 'is_medical_center') required bool isMedicalCenter,
   }) = _PosLicense;
 
   const PosLicense._();
@@ -30,6 +31,7 @@ class PosLicense with _$PosLicense {
       password: drift.Value(password),
       isActive: drift.Value(isActive),
       isActivated: drift.Value(isActivated),
+      isMedicalCenter: drift.Value(isMedicalCenter),
     );
   }
 }

@@ -13,4 +13,5 @@ class PosLicensesTable extends Table {
   TextColumn get password => text().withLength(max: 255)();
   BoolColumn get isActive => boolean()();
   BoolColumn get isActivated => boolean()();
+  BoolColumn get isMedicalCenter => boolean()();
 }

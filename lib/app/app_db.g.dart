@@ -210,9 +210,26 @@ class $PosLicensesTableTable extends PosLicensesTable
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'CHECK ("is_activated" IN (0, 1))'));
+  static const VerificationMeta _isMedicalCenterMeta =
+      const VerificationMeta('isMedicalCenter');
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, name, invoicePrefix, licenseKey, password, isActive, isActivated];
+  late final GeneratedColumn<bool> isMedicalCenter = GeneratedColumn<bool>(
+      'is_medical_center', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("is_medical_center" IN (0, 1))'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        name,
+        invoicePrefix,
+        licenseKey,
+        password,
+        isActive,
+        isActivated,
+        isMedicalCenter
+      ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -268,6 +285,14 @@ class $PosLicensesTableTable extends PosLicensesTable
     } else if (isInserting) {
       context.missing(_isActivatedMeta);
     }
+    if (data.containsKey('is_medical_center')) {
+      context.handle(
+          _isMedicalCenterMeta,
+          isMedicalCenter.isAcceptableOrUnknown(
+              data['is_medical_center']!, _isMedicalCenterMeta));
+    } else if (isInserting) {
+      context.missing(_isMedicalCenterMeta);
+    }
     return context;
   }
 
@@ -291,6 +316,8 @@ class $PosLicensesTableTable extends PosLicensesTable
           .read(DriftSqlType.bool, data['${effectivePrefix}is_active'])!,
       isActivated: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}is_activated'])!,
+      isMedicalCenter: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}is_medical_center'])!,
     );
   }
 
@@ -308,6 +335,7 @@ class PosLicensesTableCompanion extends UpdateCompanion<PosLicense> {
   final Value<String> password;
   final Value<bool> isActive;
   final Value<bool> isActivated;
+  final Value<bool> isMedicalCenter;
   const PosLicensesTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
@@ -316,6 +344,7 @@ class PosLicensesTableCompanion extends UpdateCompanion<PosLicense> {
     this.password = const Value.absent(),
     this.isActive = const Value.absent(),
     this.isActivated = const Value.absent(),
+    this.isMedicalCenter = const Value.absent(),
   });
   PosLicensesTableCompanion.insert({
     this.id = const Value.absent(),
@@ -325,12 +354,14 @@ class PosLicensesTableCompanion extends UpdateCompanion<PosLicense> {
     required String password,
     required bool isActive,
     required bool isActivated,
+    required bool isMedicalCenter,
   })  : name = Value(name),
         invoicePrefix = Value(invoicePrefix),
         licenseKey = Value(licenseKey),
         password = Value(password),
         isActive = Value(isActive),
-        isActivated = Value(isActivated);
+        isActivated = Value(isActivated),
+        isMedicalCenter = Value(isMedicalCenter);
   static Insertable<PosLicense> custom({
     Expression<int>? id,
     Expression<String>? name,
@@ -339,6 +370,7 @@ class PosLicensesTableCompanion extends UpdateCompanion<PosLicense> {
     Expression<String>? password,
     Expression<bool>? isActive,
     Expression<bool>? isActivated,
+    Expression<bool>? isMedicalCenter,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -348,6 +380,7 @@ class PosLicensesTableCompanion extends UpdateCompanion<PosLicense> {
       if (password != null) 'password': password,
       if (isActive != null) 'is_active': isActive,
       if (isActivated != null) 'is_activated': isActivated,
+      if (isMedicalCenter != null) 'is_medical_center': isMedicalCenter,
     });
   }
 
@@ -358,7 +391,8 @@ class PosLicensesTableCompanion extends UpdateCompanion<PosLicense> {
       Value<String>? licenseKey,
       Value<String>? password,
       Value<bool>? isActive,
-      Value<bool>? isActivated}) {
+      Value<bool>? isActivated,
+      Value<bool>? isMedicalCenter}) {
     return PosLicensesTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -367,6 +401,7 @@ class PosLicensesTableCompanion extends UpdateCompanion<PosLicense> {
       password: password ?? this.password,
       isActive: isActive ?? this.isActive,
       isActivated: isActivated ?? this.isActivated,
+      isMedicalCenter: isMedicalCenter ?? this.isMedicalCenter,
     );
   }
 
@@ -394,6 +429,9 @@ class PosLicensesTableCompanion extends UpdateCompanion<PosLicense> {
     if (isActivated.present) {
       map['is_activated'] = Variable<bool>(isActivated.value);
     }
+    if (isMedicalCenter.present) {
+      map['is_medical_center'] = Variable<bool>(isMedicalCenter.value);
+    }
     return map;
   }
 
@@ -406,7 +444,8 @@ class PosLicensesTableCompanion extends UpdateCompanion<PosLicense> {
           ..write('licenseKey: $licenseKey, ')
           ..write('password: $password, ')
           ..write('isActive: $isActive, ')
-          ..write('isActivated: $isActivated')
+          ..write('isActivated: $isActivated, ')
+          ..write('isMedicalCenter: $isMedicalCenter')
           ..write(')'))
         .toString();
   }
@@ -2153,8 +2192,18 @@ class $ScreeningsTableTable extends ScreeningsTable
       additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 255),
       type: DriftSqlType.string,
       requiredDuringInsert: false);
+  static const VerificationMeta _isWhitecoatScreeningMeta =
+      const VerificationMeta('isWhitecoatScreening');
   @override
-  List<GeneratedColumn> get $columns => [id, name, corporate];
+  late final GeneratedColumn<bool> isWhitecoatScreening = GeneratedColumn<bool>(
+      'is_whitecoat_screening', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("is_whitecoat_screening" IN (0, 1))'));
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, name, corporate, isWhitecoatScreening];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -2178,6 +2227,14 @@ class $ScreeningsTableTable extends ScreeningsTable
       context.handle(_corporateMeta,
           corporate.isAcceptableOrUnknown(data['corporate']!, _corporateMeta));
     }
+    if (data.containsKey('is_whitecoat_screening')) {
+      context.handle(
+          _isWhitecoatScreeningMeta,
+          isWhitecoatScreening.isAcceptableOrUnknown(
+              data['is_whitecoat_screening']!, _isWhitecoatScreeningMeta));
+    } else if (isInserting) {
+      context.missing(_isWhitecoatScreeningMeta);
+    }
     return context;
   }
 
@@ -2193,6 +2250,8 @@ class $ScreeningsTableTable extends ScreeningsTable
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       corporate: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}corporate']),
+      isWhitecoatScreening: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}is_whitecoat_screening'])!,
     );
   }
 
@@ -2206,34 +2265,45 @@ class ScreeningsTableCompanion extends UpdateCompanion<Screening> {
   final Value<int> id;
   final Value<String> name;
   final Value<String?> corporate;
+  final Value<bool> isWhitecoatScreening;
   const ScreeningsTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.corporate = const Value.absent(),
+    this.isWhitecoatScreening = const Value.absent(),
   });
   ScreeningsTableCompanion.insert({
     this.id = const Value.absent(),
     required String name,
     this.corporate = const Value.absent(),
-  }) : name = Value(name);
+    required bool isWhitecoatScreening,
+  })  : name = Value(name),
+        isWhitecoatScreening = Value(isWhitecoatScreening);
   static Insertable<Screening> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<String>? corporate,
+    Expression<bool>? isWhitecoatScreening,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
       if (corporate != null) 'corporate': corporate,
+      if (isWhitecoatScreening != null)
+        'is_whitecoat_screening': isWhitecoatScreening,
     });
   }
 
   ScreeningsTableCompanion copyWith(
-      {Value<int>? id, Value<String>? name, Value<String?>? corporate}) {
+      {Value<int>? id,
+      Value<String>? name,
+      Value<String?>? corporate,
+      Value<bool>? isWhitecoatScreening}) {
     return ScreeningsTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       corporate: corporate ?? this.corporate,
+      isWhitecoatScreening: isWhitecoatScreening ?? this.isWhitecoatScreening,
     );
   }
 
@@ -2249,6 +2319,10 @@ class ScreeningsTableCompanion extends UpdateCompanion<Screening> {
     if (corporate.present) {
       map['corporate'] = Variable<String>(corporate.value);
     }
+    if (isWhitecoatScreening.present) {
+      map['is_whitecoat_screening'] =
+          Variable<bool>(isWhitecoatScreening.value);
+    }
     return map;
   }
 
@@ -2257,7 +2331,8 @@ class ScreeningsTableCompanion extends UpdateCompanion<Screening> {
     return (StringBuffer('ScreeningsTableCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
-          ..write('corporate: $corporate')
+          ..write('corporate: $corporate, ')
+          ..write('isWhitecoatScreening: $isWhitecoatScreening')
           ..write(')'))
         .toString();
   }

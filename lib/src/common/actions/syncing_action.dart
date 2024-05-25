@@ -20,6 +20,7 @@ import 'package:hop_pos/src/payment_methods/models/payment_method.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
 import 'package:hop_pos/src/pos/models/pos_cart.dart';
 import 'package:hop_pos/src/pos_extras/models/pos_extra.dart';
+import 'package:hop_pos/src/pos_licenses/models/pos_license.dart';
 import 'package:hop_pos/src/product_categories/models/product_category.dart';
 import 'package:hop_pos/src/products/models/product.dart';
 import 'package:hop_pos/src/receipt_settings/models/receipt_setting.dart';
@@ -176,6 +177,7 @@ class SyncingAction {
   }
 
   Future<void> _toSyncRecords(Map<String, dynamic> data) async {
+    final license = PosLicense.fromJson(data['pos_license']);
     final company = Company.fromJson(data['company']);
     final receiptSetting = ReceiptSetting.fromJson(data['receipt_settings']);
     final posExtras = PosExtra.fromJsonList(data['pos_extras']);
@@ -192,6 +194,7 @@ class SyncingAction {
     final orderExtras = OrderExtra.fromJsonList(data['order_extras']);
     final orderPayments = OrderPayment.fromJsonList(data['order_payments']);
 
+    await db.posLicenseDao.insertOrUpdate(license);
     await db.companyDao.insertOrUpdate(company);
     await db.receiptSettingDao.insertOrUpdate(receiptSetting);
     await db.posExtraDao.insertOrUpdateMany(posExtras);

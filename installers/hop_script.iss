@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "HOP POS"
-#define MyAppVersion "0.1.1"
+#define MyAppVersion "0.1.2"
 #define MyAppPublisher "ITC"
 #define MyAppURL "https://infinitetrinity.com.sg/"
 #define MyAppExeName "hop_pos.exe"

@@ -11,6 +11,7 @@ class Screening with _$Screening {
     required int id,
     required String name,
     String? corporate,
+    @JsonKey(name: 'is_whitecoat_screening') required bool isWhitecoatScreening,
   }) = _Screening;
 
   const Screening._();
@@ -28,6 +29,7 @@ class Screening with _$Screening {
       id: drift.Value(id),
       name: drift.Value(name),
       corporate: drift.Value(corporate),
+      isWhitecoatScreening: drift.Value(isWhitecoatScreening),
     );
   }
 }

@@ -9,4 +9,5 @@ class ScreeningsTable extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text().withLength(max: 255)();
   TextColumn get corporate => text().withLength(max: 255).nullable()();
+  BoolColumn get isWhitecoatScreening => boolean()();
 }
