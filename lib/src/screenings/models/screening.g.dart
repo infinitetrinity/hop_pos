@@ -11,7 +11,7 @@ _$ScreeningImpl _$$ScreeningImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int,
       name: json['name'] as String,
       corporate: json['corporate'] as String?,
-      isWhitecoatScreening: json['is_whitecoat_screening'] as bool,
+      isWhitecoatScreening: json['is_whitecoat_screening'] as bool?,
     );
 
 Map<String, dynamic> _$$ScreeningImplToJson(_$ScreeningImpl instance) =>

@@ -24,7 +24,7 @@ mixin _$Screening {
   String get name => throw _privateConstructorUsedError;
   String? get corporate => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_whitecoat_screening')
-  bool get isWhitecoatScreening => throw _privateConstructorUsedError;
+  bool? get isWhitecoatScreening => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,7 +41,7 @@ abstract class $ScreeningCopyWith<$Res> {
       {int id,
       String name,
       String? corporate,
-      @JsonKey(name: 'is_whitecoat_screening') bool isWhitecoatScreening});
+      @JsonKey(name: 'is_whitecoat_screening') bool? isWhitecoatScreening});
 }
 
 /// @nodoc
@@ -60,7 +60,7 @@ class _$ScreeningCopyWithImpl<$Res, $Val extends Screening>
     Object? id = null,
     Object? name = null,
     Object? corporate = freezed,
-    Object? isWhitecoatScreening = null,
+    Object? isWhitecoatScreening = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -75,10 +75,10 @@ class _$ScreeningCopyWithImpl<$Res, $Val extends Screening>
           ? _value.corporate
           : corporate // ignore: cast_nullable_to_non_nullable
               as String?,
-      isWhitecoatScreening: null == isWhitecoatScreening
+      isWhitecoatScreening: freezed == isWhitecoatScreening
           ? _value.isWhitecoatScreening
           : isWhitecoatScreening // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
     ) as $Val);
   }
 }
@@ -95,7 +95,7 @@ abstract class _$$ScreeningImplCopyWith<$Res>
       {int id,
       String name,
       String? corporate,
-      @JsonKey(name: 'is_whitecoat_screening') bool isWhitecoatScreening});
+      @JsonKey(name: 'is_whitecoat_screening') bool? isWhitecoatScreening});
 }
 
 /// @nodoc
@@ -112,7 +112,7 @@ class __$$ScreeningImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? corporate = freezed,
-    Object? isWhitecoatScreening = null,
+    Object? isWhitecoatScreening = freezed,
   }) {
     return _then(_$ScreeningImpl(
       id: null == id
@@ -127,10 +127,10 @@ class __$$ScreeningImplCopyWithImpl<$Res>
           ? _value.corporate
           : corporate // ignore: cast_nullable_to_non_nullable
               as String?,
-      isWhitecoatScreening: null == isWhitecoatScreening
+      isWhitecoatScreening: freezed == isWhitecoatScreening
           ? _value.isWhitecoatScreening
           : isWhitecoatScreening // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
     ));
   }
 }
@@ -142,8 +142,7 @@ class _$ScreeningImpl extends _Screening {
       {required this.id,
       required this.name,
       this.corporate,
-      @JsonKey(name: 'is_whitecoat_screening')
-      required this.isWhitecoatScreening})
+      @JsonKey(name: 'is_whitecoat_screening') this.isWhitecoatScreening})
       : super._();
 
   factory _$ScreeningImpl.fromJson(Map<String, dynamic> json) =>
@@ -157,7 +156,7 @@ class _$ScreeningImpl extends _Screening {
   final String? corporate;
   @override
   @JsonKey(name: 'is_whitecoat_screening')
-  final bool isWhitecoatScreening;
+  final bool? isWhitecoatScreening;
 
   @override
   String toString() {
@@ -202,7 +201,7 @@ abstract class _Screening extends Screening {
       required final String name,
       final String? corporate,
       @JsonKey(name: 'is_whitecoat_screening')
-      required final bool isWhitecoatScreening}) = _$ScreeningImpl;
+      final bool? isWhitecoatScreening}) = _$ScreeningImpl;
   const _Screening._() : super._();
 
   factory _Screening.fromJson(Map<String, dynamic> json) =
@@ -216,7 +215,7 @@ abstract class _Screening extends Screening {
   String? get corporate;
   @override
   @JsonKey(name: 'is_whitecoat_screening')
-  bool get isWhitecoatScreening;
+  bool? get isWhitecoatScreening;
   @override
   @JsonKey(ignore: true)
   _$$ScreeningImplCopyWith<_$ScreeningImpl> get copyWith =>
