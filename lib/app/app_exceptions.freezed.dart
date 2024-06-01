@@ -23,6 +23,7 @@ mixin _$AppException {
     required TResult Function(String message, ValidationErrors errors)
         apiValidationError,
     required TResult Function(String message) apiError,
+    required TResult Function(String message) apiUnauthenticatedError,
     required TResult Function(String message) apiInvalidResponseError,
     required TResult Function(dynamic message, dynamic stack) unexpectedError,
     required TResult Function() validationError,
@@ -35,6 +36,7 @@ mixin _$AppException {
     TResult? Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult? Function(String message)? apiError,
+    TResult? Function(String message)? apiUnauthenticatedError,
     TResult? Function(String message)? apiInvalidResponseError,
     TResult? Function(dynamic message, dynamic stack)? unexpectedError,
     TResult? Function()? validationError,
@@ -47,6 +49,7 @@ mixin _$AppException {
     TResult Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult Function(String message)? apiError,
+    TResult Function(String message)? apiUnauthenticatedError,
     TResult Function(String message)? apiInvalidResponseError,
     TResult Function(dynamic message, dynamic stack)? unexpectedError,
     TResult Function()? validationError,
@@ -60,6 +63,8 @@ mixin _$AppException {
         apiServerConnectionError,
     required TResult Function(ApiValidationError value) apiValidationError,
     required TResult Function(ApiError value) apiError,
+    required TResult Function(ApiUnauthenticatedError value)
+        apiUnauthenticatedError,
     required TResult Function(ApiInvalidResponseError value)
         apiInvalidResponseError,
     required TResult Function(UnexpectedError value) unexpectedError,
@@ -72,6 +77,7 @@ mixin _$AppException {
     TResult? Function(ApiServerConnectionError value)? apiServerConnectionError,
     TResult? Function(ApiValidationError value)? apiValidationError,
     TResult? Function(ApiError value)? apiError,
+    TResult? Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
     TResult? Function(ApiInvalidResponseError value)? apiInvalidResponseError,
     TResult? Function(UnexpectedError value)? unexpectedError,
     TResult? Function(ValidationError value)? validationError,
@@ -83,6 +89,7 @@ mixin _$AppException {
     TResult Function(ApiServerConnectionError value)? apiServerConnectionError,
     TResult Function(ApiValidationError value)? apiValidationError,
     TResult Function(ApiError value)? apiError,
+    TResult Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
     TResult Function(ApiInvalidResponseError value)? apiInvalidResponseError,
     TResult Function(UnexpectedError value)? unexpectedError,
     TResult Function(ValidationError value)? validationError,
@@ -179,6 +186,7 @@ class _$NoInternetErrorImpl implements NoInternetError {
     required TResult Function(String message, ValidationErrors errors)
         apiValidationError,
     required TResult Function(String message) apiError,
+    required TResult Function(String message) apiUnauthenticatedError,
     required TResult Function(String message) apiInvalidResponseError,
     required TResult Function(dynamic message, dynamic stack) unexpectedError,
     required TResult Function() validationError,
@@ -194,6 +202,7 @@ class _$NoInternetErrorImpl implements NoInternetError {
     TResult? Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult? Function(String message)? apiError,
+    TResult? Function(String message)? apiUnauthenticatedError,
     TResult? Function(String message)? apiInvalidResponseError,
     TResult? Function(dynamic message, dynamic stack)? unexpectedError,
     TResult? Function()? validationError,
@@ -209,6 +218,7 @@ class _$NoInternetErrorImpl implements NoInternetError {
     TResult Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult Function(String message)? apiError,
+    TResult Function(String message)? apiUnauthenticatedError,
     TResult Function(String message)? apiInvalidResponseError,
     TResult Function(dynamic message, dynamic stack)? unexpectedError,
     TResult Function()? validationError,
@@ -228,6 +238,8 @@ class _$NoInternetErrorImpl implements NoInternetError {
         apiServerConnectionError,
     required TResult Function(ApiValidationError value) apiValidationError,
     required TResult Function(ApiError value) apiError,
+    required TResult Function(ApiUnauthenticatedError value)
+        apiUnauthenticatedError,
     required TResult Function(ApiInvalidResponseError value)
         apiInvalidResponseError,
     required TResult Function(UnexpectedError value) unexpectedError,
@@ -243,6 +255,7 @@ class _$NoInternetErrorImpl implements NoInternetError {
     TResult? Function(ApiServerConnectionError value)? apiServerConnectionError,
     TResult? Function(ApiValidationError value)? apiValidationError,
     TResult? Function(ApiError value)? apiError,
+    TResult? Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
     TResult? Function(ApiInvalidResponseError value)? apiInvalidResponseError,
     TResult? Function(UnexpectedError value)? unexpectedError,
     TResult? Function(ValidationError value)? validationError,
@@ -257,6 +270,7 @@ class _$NoInternetErrorImpl implements NoInternetError {
     TResult Function(ApiServerConnectionError value)? apiServerConnectionError,
     TResult Function(ApiValidationError value)? apiValidationError,
     TResult Function(ApiError value)? apiError,
+    TResult Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
     TResult Function(ApiInvalidResponseError value)? apiInvalidResponseError,
     TResult Function(UnexpectedError value)? unexpectedError,
     TResult Function(ValidationError value)? validationError,
@@ -350,6 +364,7 @@ class _$ApiServerConnectionErrorImpl implements ApiServerConnectionError {
     required TResult Function(String message, ValidationErrors errors)
         apiValidationError,
     required TResult Function(String message) apiError,
+    required TResult Function(String message) apiUnauthenticatedError,
     required TResult Function(String message) apiInvalidResponseError,
     required TResult Function(dynamic message, dynamic stack) unexpectedError,
     required TResult Function() validationError,
@@ -365,6 +380,7 @@ class _$ApiServerConnectionErrorImpl implements ApiServerConnectionError {
     TResult? Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult? Function(String message)? apiError,
+    TResult? Function(String message)? apiUnauthenticatedError,
     TResult? Function(String message)? apiInvalidResponseError,
     TResult? Function(dynamic message, dynamic stack)? unexpectedError,
     TResult? Function()? validationError,
@@ -380,6 +396,7 @@ class _$ApiServerConnectionErrorImpl implements ApiServerConnectionError {
     TResult Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult Function(String message)? apiError,
+    TResult Function(String message)? apiUnauthenticatedError,
     TResult Function(String message)? apiInvalidResponseError,
     TResult Function(dynamic message, dynamic stack)? unexpectedError,
     TResult Function()? validationError,
@@ -399,6 +416,8 @@ class _$ApiServerConnectionErrorImpl implements ApiServerConnectionError {
         apiServerConnectionError,
     required TResult Function(ApiValidationError value) apiValidationError,
     required TResult Function(ApiError value) apiError,
+    required TResult Function(ApiUnauthenticatedError value)
+        apiUnauthenticatedError,
     required TResult Function(ApiInvalidResponseError value)
         apiInvalidResponseError,
     required TResult Function(UnexpectedError value) unexpectedError,
@@ -414,6 +433,7 @@ class _$ApiServerConnectionErrorImpl implements ApiServerConnectionError {
     TResult? Function(ApiServerConnectionError value)? apiServerConnectionError,
     TResult? Function(ApiValidationError value)? apiValidationError,
     TResult? Function(ApiError value)? apiError,
+    TResult? Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
     TResult? Function(ApiInvalidResponseError value)? apiInvalidResponseError,
     TResult? Function(UnexpectedError value)? unexpectedError,
     TResult? Function(ValidationError value)? validationError,
@@ -428,6 +448,7 @@ class _$ApiServerConnectionErrorImpl implements ApiServerConnectionError {
     TResult Function(ApiServerConnectionError value)? apiServerConnectionError,
     TResult Function(ApiValidationError value)? apiValidationError,
     TResult Function(ApiError value)? apiError,
+    TResult Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
     TResult Function(ApiInvalidResponseError value)? apiInvalidResponseError,
     TResult Function(UnexpectedError value)? unexpectedError,
     TResult Function(ValidationError value)? validationError,
@@ -528,6 +549,7 @@ class _$ApiValidationErrorImpl implements ApiValidationError {
     required TResult Function(String message, ValidationErrors errors)
         apiValidationError,
     required TResult Function(String message) apiError,
+    required TResult Function(String message) apiUnauthenticatedError,
     required TResult Function(String message) apiInvalidResponseError,
     required TResult Function(dynamic message, dynamic stack) unexpectedError,
     required TResult Function() validationError,
@@ -543,6 +565,7 @@ class _$ApiValidationErrorImpl implements ApiValidationError {
     TResult? Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult? Function(String message)? apiError,
+    TResult? Function(String message)? apiUnauthenticatedError,
     TResult? Function(String message)? apiInvalidResponseError,
     TResult? Function(dynamic message, dynamic stack)? unexpectedError,
     TResult? Function()? validationError,
@@ -558,6 +581,7 @@ class _$ApiValidationErrorImpl implements ApiValidationError {
     TResult Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult Function(String message)? apiError,
+    TResult Function(String message)? apiUnauthenticatedError,
     TResult Function(String message)? apiInvalidResponseError,
     TResult Function(dynamic message, dynamic stack)? unexpectedError,
     TResult Function()? validationError,
@@ -577,6 +601,8 @@ class _$ApiValidationErrorImpl implements ApiValidationError {
         apiServerConnectionError,
     required TResult Function(ApiValidationError value) apiValidationError,
     required TResult Function(ApiError value) apiError,
+    required TResult Function(ApiUnauthenticatedError value)
+        apiUnauthenticatedError,
     required TResult Function(ApiInvalidResponseError value)
         apiInvalidResponseError,
     required TResult Function(UnexpectedError value) unexpectedError,
@@ -592,6 +618,7 @@ class _$ApiValidationErrorImpl implements ApiValidationError {
     TResult? Function(ApiServerConnectionError value)? apiServerConnectionError,
     TResult? Function(ApiValidationError value)? apiValidationError,
     TResult? Function(ApiError value)? apiError,
+    TResult? Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
     TResult? Function(ApiInvalidResponseError value)? apiInvalidResponseError,
     TResult? Function(UnexpectedError value)? unexpectedError,
     TResult? Function(ValidationError value)? validationError,
@@ -606,6 +633,7 @@ class _$ApiValidationErrorImpl implements ApiValidationError {
     TResult Function(ApiServerConnectionError value)? apiServerConnectionError,
     TResult Function(ApiValidationError value)? apiValidationError,
     TResult Function(ApiError value)? apiError,
+    TResult Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
     TResult Function(ApiInvalidResponseError value)? apiInvalidResponseError,
     TResult Function(UnexpectedError value)? unexpectedError,
     TResult Function(ValidationError value)? validationError,
@@ -699,6 +727,7 @@ class _$ApiErrorImpl implements ApiError {
     required TResult Function(String message, ValidationErrors errors)
         apiValidationError,
     required TResult Function(String message) apiError,
+    required TResult Function(String message) apiUnauthenticatedError,
     required TResult Function(String message) apiInvalidResponseError,
     required TResult Function(dynamic message, dynamic stack) unexpectedError,
     required TResult Function() validationError,
@@ -714,6 +743,7 @@ class _$ApiErrorImpl implements ApiError {
     TResult? Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult? Function(String message)? apiError,
+    TResult? Function(String message)? apiUnauthenticatedError,
     TResult? Function(String message)? apiInvalidResponseError,
     TResult? Function(dynamic message, dynamic stack)? unexpectedError,
     TResult? Function()? validationError,
@@ -729,6 +759,7 @@ class _$ApiErrorImpl implements ApiError {
     TResult Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult Function(String message)? apiError,
+    TResult Function(String message)? apiUnauthenticatedError,
     TResult Function(String message)? apiInvalidResponseError,
     TResult Function(dynamic message, dynamic stack)? unexpectedError,
     TResult Function()? validationError,
@@ -748,6 +779,8 @@ class _$ApiErrorImpl implements ApiError {
         apiServerConnectionError,
     required TResult Function(ApiValidationError value) apiValidationError,
     required TResult Function(ApiError value) apiError,
+    required TResult Function(ApiUnauthenticatedError value)
+        apiUnauthenticatedError,
     required TResult Function(ApiInvalidResponseError value)
         apiInvalidResponseError,
     required TResult Function(UnexpectedError value) unexpectedError,
@@ -763,6 +796,7 @@ class _$ApiErrorImpl implements ApiError {
     TResult? Function(ApiServerConnectionError value)? apiServerConnectionError,
     TResult? Function(ApiValidationError value)? apiValidationError,
     TResult? Function(ApiError value)? apiError,
+    TResult? Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
     TResult? Function(ApiInvalidResponseError value)? apiInvalidResponseError,
     TResult? Function(UnexpectedError value)? unexpectedError,
     TResult? Function(ValidationError value)? validationError,
@@ -777,6 +811,7 @@ class _$ApiErrorImpl implements ApiError {
     TResult Function(ApiServerConnectionError value)? apiServerConnectionError,
     TResult Function(ApiValidationError value)? apiValidationError,
     TResult Function(ApiError value)? apiError,
+    TResult Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
     TResult Function(ApiInvalidResponseError value)? apiInvalidResponseError,
     TResult Function(UnexpectedError value)? unexpectedError,
     TResult Function(ValidationError value)? validationError,
@@ -796,6 +831,185 @@ abstract class ApiError implements AppException {
   @JsonKey(ignore: true)
   _$$ApiErrorImplCopyWith<_$ApiErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ApiUnauthenticatedErrorImplCopyWith<$Res> {
+  factory _$$ApiUnauthenticatedErrorImplCopyWith(
+          _$ApiUnauthenticatedErrorImpl value,
+          $Res Function(_$ApiUnauthenticatedErrorImpl) then) =
+      __$$ApiUnauthenticatedErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$ApiUnauthenticatedErrorImplCopyWithImpl<$Res>
+    extends _$AppExceptionCopyWithImpl<$Res, _$ApiUnauthenticatedErrorImpl>
+    implements _$$ApiUnauthenticatedErrorImplCopyWith<$Res> {
+  __$$ApiUnauthenticatedErrorImplCopyWithImpl(
+      _$ApiUnauthenticatedErrorImpl _value,
+      $Res Function(_$ApiUnauthenticatedErrorImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$ApiUnauthenticatedErrorImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ApiUnauthenticatedErrorImpl implements ApiUnauthenticatedError {
+  const _$ApiUnauthenticatedErrorImpl(this.message);
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'AppException.apiUnauthenticatedError(message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ApiUnauthenticatedErrorImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ApiUnauthenticatedErrorImplCopyWith<_$ApiUnauthenticatedErrorImpl>
+      get copyWith => __$$ApiUnauthenticatedErrorImplCopyWithImpl<
+          _$ApiUnauthenticatedErrorImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String message) noInternetError,
+    required TResult Function(String message) apiServerConnectionError,
+    required TResult Function(String message, ValidationErrors errors)
+        apiValidationError,
+    required TResult Function(String message) apiError,
+    required TResult Function(String message) apiUnauthenticatedError,
+    required TResult Function(String message) apiInvalidResponseError,
+    required TResult Function(dynamic message, dynamic stack) unexpectedError,
+    required TResult Function() validationError,
+  }) {
+    return apiUnauthenticatedError(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String message)? noInternetError,
+    TResult? Function(String message)? apiServerConnectionError,
+    TResult? Function(String message, ValidationErrors errors)?
+        apiValidationError,
+    TResult? Function(String message)? apiError,
+    TResult? Function(String message)? apiUnauthenticatedError,
+    TResult? Function(String message)? apiInvalidResponseError,
+    TResult? Function(dynamic message, dynamic stack)? unexpectedError,
+    TResult? Function()? validationError,
+  }) {
+    return apiUnauthenticatedError?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String message)? noInternetError,
+    TResult Function(String message)? apiServerConnectionError,
+    TResult Function(String message, ValidationErrors errors)?
+        apiValidationError,
+    TResult Function(String message)? apiError,
+    TResult Function(String message)? apiUnauthenticatedError,
+    TResult Function(String message)? apiInvalidResponseError,
+    TResult Function(dynamic message, dynamic stack)? unexpectedError,
+    TResult Function()? validationError,
+    required TResult orElse(),
+  }) {
+    if (apiUnauthenticatedError != null) {
+      return apiUnauthenticatedError(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(NoInternetError value) noInternetError,
+    required TResult Function(ApiServerConnectionError value)
+        apiServerConnectionError,
+    required TResult Function(ApiValidationError value) apiValidationError,
+    required TResult Function(ApiError value) apiError,
+    required TResult Function(ApiUnauthenticatedError value)
+        apiUnauthenticatedError,
+    required TResult Function(ApiInvalidResponseError value)
+        apiInvalidResponseError,
+    required TResult Function(UnexpectedError value) unexpectedError,
+    required TResult Function(ValidationError value) validationError,
+  }) {
+    return apiUnauthenticatedError(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NoInternetError value)? noInternetError,
+    TResult? Function(ApiServerConnectionError value)? apiServerConnectionError,
+    TResult? Function(ApiValidationError value)? apiValidationError,
+    TResult? Function(ApiError value)? apiError,
+    TResult? Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
+    TResult? Function(ApiInvalidResponseError value)? apiInvalidResponseError,
+    TResult? Function(UnexpectedError value)? unexpectedError,
+    TResult? Function(ValidationError value)? validationError,
+  }) {
+    return apiUnauthenticatedError?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NoInternetError value)? noInternetError,
+    TResult Function(ApiServerConnectionError value)? apiServerConnectionError,
+    TResult Function(ApiValidationError value)? apiValidationError,
+    TResult Function(ApiError value)? apiError,
+    TResult Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
+    TResult Function(ApiInvalidResponseError value)? apiInvalidResponseError,
+    TResult Function(UnexpectedError value)? unexpectedError,
+    TResult Function(ValidationError value)? validationError,
+    required TResult orElse(),
+  }) {
+    if (apiUnauthenticatedError != null) {
+      return apiUnauthenticatedError(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ApiUnauthenticatedError implements AppException {
+  const factory ApiUnauthenticatedError(final String message) =
+      _$ApiUnauthenticatedErrorImpl;
+
+  String get message;
+  @JsonKey(ignore: true)
+  _$$ApiUnauthenticatedErrorImplCopyWith<_$ApiUnauthenticatedErrorImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -870,6 +1084,7 @@ class _$ApiInvalidResponseErrorImpl implements ApiInvalidResponseError {
     required TResult Function(String message, ValidationErrors errors)
         apiValidationError,
     required TResult Function(String message) apiError,
+    required TResult Function(String message) apiUnauthenticatedError,
     required TResult Function(String message) apiInvalidResponseError,
     required TResult Function(dynamic message, dynamic stack) unexpectedError,
     required TResult Function() validationError,
@@ -885,6 +1100,7 @@ class _$ApiInvalidResponseErrorImpl implements ApiInvalidResponseError {
     TResult? Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult? Function(String message)? apiError,
+    TResult? Function(String message)? apiUnauthenticatedError,
     TResult? Function(String message)? apiInvalidResponseError,
     TResult? Function(dynamic message, dynamic stack)? unexpectedError,
     TResult? Function()? validationError,
@@ -900,6 +1116,7 @@ class _$ApiInvalidResponseErrorImpl implements ApiInvalidResponseError {
     TResult Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult Function(String message)? apiError,
+    TResult Function(String message)? apiUnauthenticatedError,
     TResult Function(String message)? apiInvalidResponseError,
     TResult Function(dynamic message, dynamic stack)? unexpectedError,
     TResult Function()? validationError,
@@ -919,6 +1136,8 @@ class _$ApiInvalidResponseErrorImpl implements ApiInvalidResponseError {
         apiServerConnectionError,
     required TResult Function(ApiValidationError value) apiValidationError,
     required TResult Function(ApiError value) apiError,
+    required TResult Function(ApiUnauthenticatedError value)
+        apiUnauthenticatedError,
     required TResult Function(ApiInvalidResponseError value)
         apiInvalidResponseError,
     required TResult Function(UnexpectedError value) unexpectedError,
@@ -934,6 +1153,7 @@ class _$ApiInvalidResponseErrorImpl implements ApiInvalidResponseError {
     TResult? Function(ApiServerConnectionError value)? apiServerConnectionError,
     TResult? Function(ApiValidationError value)? apiValidationError,
     TResult? Function(ApiError value)? apiError,
+    TResult? Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
     TResult? Function(ApiInvalidResponseError value)? apiInvalidResponseError,
     TResult? Function(UnexpectedError value)? unexpectedError,
     TResult? Function(ValidationError value)? validationError,
@@ -948,6 +1168,7 @@ class _$ApiInvalidResponseErrorImpl implements ApiInvalidResponseError {
     TResult Function(ApiServerConnectionError value)? apiServerConnectionError,
     TResult Function(ApiValidationError value)? apiValidationError,
     TResult Function(ApiError value)? apiError,
+    TResult Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
     TResult Function(ApiInvalidResponseError value)? apiInvalidResponseError,
     TResult Function(UnexpectedError value)? unexpectedError,
     TResult Function(ValidationError value)? validationError,
@@ -1051,6 +1272,7 @@ class _$UnexpectedErrorImpl implements UnexpectedError {
     required TResult Function(String message, ValidationErrors errors)
         apiValidationError,
     required TResult Function(String message) apiError,
+    required TResult Function(String message) apiUnauthenticatedError,
     required TResult Function(String message) apiInvalidResponseError,
     required TResult Function(dynamic message, dynamic stack) unexpectedError,
     required TResult Function() validationError,
@@ -1066,6 +1288,7 @@ class _$UnexpectedErrorImpl implements UnexpectedError {
     TResult? Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult? Function(String message)? apiError,
+    TResult? Function(String message)? apiUnauthenticatedError,
     TResult? Function(String message)? apiInvalidResponseError,
     TResult? Function(dynamic message, dynamic stack)? unexpectedError,
     TResult? Function()? validationError,
@@ -1081,6 +1304,7 @@ class _$UnexpectedErrorImpl implements UnexpectedError {
     TResult Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult Function(String message)? apiError,
+    TResult Function(String message)? apiUnauthenticatedError,
     TResult Function(String message)? apiInvalidResponseError,
     TResult Function(dynamic message, dynamic stack)? unexpectedError,
     TResult Function()? validationError,
@@ -1100,6 +1324,8 @@ class _$UnexpectedErrorImpl implements UnexpectedError {
         apiServerConnectionError,
     required TResult Function(ApiValidationError value) apiValidationError,
     required TResult Function(ApiError value) apiError,
+    required TResult Function(ApiUnauthenticatedError value)
+        apiUnauthenticatedError,
     required TResult Function(ApiInvalidResponseError value)
         apiInvalidResponseError,
     required TResult Function(UnexpectedError value) unexpectedError,
@@ -1115,6 +1341,7 @@ class _$UnexpectedErrorImpl implements UnexpectedError {
     TResult? Function(ApiServerConnectionError value)? apiServerConnectionError,
     TResult? Function(ApiValidationError value)? apiValidationError,
     TResult? Function(ApiError value)? apiError,
+    TResult? Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
     TResult? Function(ApiInvalidResponseError value)? apiInvalidResponseError,
     TResult? Function(UnexpectedError value)? unexpectedError,
     TResult? Function(ValidationError value)? validationError,
@@ -1129,6 +1356,7 @@ class _$UnexpectedErrorImpl implements UnexpectedError {
     TResult Function(ApiServerConnectionError value)? apiServerConnectionError,
     TResult Function(ApiValidationError value)? apiValidationError,
     TResult Function(ApiError value)? apiError,
+    TResult Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
     TResult Function(ApiInvalidResponseError value)? apiInvalidResponseError,
     TResult Function(UnexpectedError value)? unexpectedError,
     TResult Function(ValidationError value)? validationError,
@@ -1195,6 +1423,7 @@ class _$ValidationErrorImpl implements ValidationError {
     required TResult Function(String message, ValidationErrors errors)
         apiValidationError,
     required TResult Function(String message) apiError,
+    required TResult Function(String message) apiUnauthenticatedError,
     required TResult Function(String message) apiInvalidResponseError,
     required TResult Function(dynamic message, dynamic stack) unexpectedError,
     required TResult Function() validationError,
@@ -1210,6 +1439,7 @@ class _$ValidationErrorImpl implements ValidationError {
     TResult? Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult? Function(String message)? apiError,
+    TResult? Function(String message)? apiUnauthenticatedError,
     TResult? Function(String message)? apiInvalidResponseError,
     TResult? Function(dynamic message, dynamic stack)? unexpectedError,
     TResult? Function()? validationError,
@@ -1225,6 +1455,7 @@ class _$ValidationErrorImpl implements ValidationError {
     TResult Function(String message, ValidationErrors errors)?
         apiValidationError,
     TResult Function(String message)? apiError,
+    TResult Function(String message)? apiUnauthenticatedError,
     TResult Function(String message)? apiInvalidResponseError,
     TResult Function(dynamic message, dynamic stack)? unexpectedError,
     TResult Function()? validationError,
@@ -1244,6 +1475,8 @@ class _$ValidationErrorImpl implements ValidationError {
         apiServerConnectionError,
     required TResult Function(ApiValidationError value) apiValidationError,
     required TResult Function(ApiError value) apiError,
+    required TResult Function(ApiUnauthenticatedError value)
+        apiUnauthenticatedError,
     required TResult Function(ApiInvalidResponseError value)
         apiInvalidResponseError,
     required TResult Function(UnexpectedError value) unexpectedError,
@@ -1259,6 +1492,7 @@ class _$ValidationErrorImpl implements ValidationError {
     TResult? Function(ApiServerConnectionError value)? apiServerConnectionError,
     TResult? Function(ApiValidationError value)? apiValidationError,
     TResult? Function(ApiError value)? apiError,
+    TResult? Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
     TResult? Function(ApiInvalidResponseError value)? apiInvalidResponseError,
     TResult? Function(UnexpectedError value)? unexpectedError,
     TResult? Function(ValidationError value)? validationError,
@@ -1273,6 +1507,7 @@ class _$ValidationErrorImpl implements ValidationError {
     TResult Function(ApiServerConnectionError value)? apiServerConnectionError,
     TResult Function(ApiValidationError value)? apiValidationError,
     TResult Function(ApiError value)? apiError,
+    TResult Function(ApiUnauthenticatedError value)? apiUnauthenticatedError,
     TResult Function(ApiInvalidResponseError value)? apiInvalidResponseError,
     TResult Function(UnexpectedError value)? unexpectedError,
     TResult Function(ValidationError value)? validationError,

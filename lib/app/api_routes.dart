@@ -5,4 +5,5 @@ class ApiRoutes {
   static const downloadInitData = 'download-data';
   static const serverStatus = 'server-status';
   static const syncServer = 'sync';
+  static const refreshToken = 'refresh-token';
 }

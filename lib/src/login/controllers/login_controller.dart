@@ -26,6 +26,13 @@ class LoginController extends _$LoginController {
     return state.hasError ? false : true;
   }
 
+  Future<bool> reauthenticate(LoginRequest request) async {
+    final loginAction = ref.read(loginActionProvider);
+    state = await AsyncValue.guard(() => loginAction.reauthenticate(request));
+    ref.invalidate(authStateProvider);
+    return state.hasError ? false : true;
+  }
+
   Future<void> logout() async {
     await ref.read(loginActionProvider).logout();
     _reset();

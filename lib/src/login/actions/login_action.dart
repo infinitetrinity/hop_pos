@@ -10,6 +10,7 @@ import 'package:hop_pos/src/login/models/init_data_response.dart';
 import 'package:hop_pos/src/login/models/login_request.dart';
 import 'package:hop_pos/src/login/models/login_response.dart';
 import 'package:hop_pos/src/login/state/syncing_state.dart';
+import 'package:hop_pos/src/pos_licenses/actions/pos_license_actions.dart';
 import 'package:hop_pos/src/users/actions/user_actions.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -22,6 +23,7 @@ LoginAction loginAction(LoginActionRef ref) {
     userActions: ref.watch(userActionsProvider),
     apiService: ref.watch(apiServiceProvider),
     syncingState: ref.watch(syncingStateProvider.notifier),
+    posLicenseActions: ref.watch(posLicenseActionsProvider),
   );
 }
 
@@ -30,12 +32,14 @@ class LoginAction {
   final UserActions userActions;
   final ApiService apiService;
   final SyncingState syncingState;
+  final PosLicenseActions posLicenseActions;
 
   LoginAction({
     required this.db,
     required this.userActions,
     required this.apiService,
     required this.syncingState,
+    required this.posLicenseActions,
   });
 
   Future<void> login(LoginRequest request) async {
@@ -60,6 +64,34 @@ class LoginAction {
       rethrow;
     } finally {
       await syncingState.syncing(isSyncing: false);
+    }
+  }
+
+  Future<void> reauthenticate(LoginRequest request) async {
+    final license = await posLicenseActions.getFirst();
+    request = request.copyWith(licenseKey: license?.licenseKey);
+
+    ApiResponse? response = await apiService.post(
+      ApiRequest(
+        path: ApiRoutes.refreshToken,
+        data: request.toJson(),
+      ),
+    );
+
+    if (response == null || response.data == null) {
+      throw AppException.unexpectedError('Unexpected error in refreshing token.', StackTrace.current);
+    }
+
+    try {
+      final token = response.data?['access_token'];
+      if (token != null) {
+        await AuthToken.deleteAuthToken();
+        await AuthToken.setAuthToken(token);
+        return;
+      }
+    } catch (e, stackTrace) {
+      AppLogger().e("Unexpected error in refreshing token.", error: e, stackTrace: stackTrace);
+      rethrow;
     }
   }
 

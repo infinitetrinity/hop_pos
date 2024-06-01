@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hop_pos/app/app_exceptions.dart';
+import 'package:hop_pos/app/app_routes.dart';
 import 'package:hop_pos/src/common/models/api_request.dart';
 import 'package:hop_pos/src/common/models/api_response.dart';
 import 'package:hop_pos/src/common/services/api_exceptions.dart';
@@ -11,11 +13,18 @@ part 'api_service.g.dart';
 
 @riverpod
 ApiService apiService(ApiServiceRef ref) {
-  return ApiService();
+  return ApiService(
+    goRouter: ref.watch(goRouterProvider),
+  );
 }
 
 class ApiService {
   static const int timeOutInSeconds = 30;
+  final GoRouter goRouter;
+
+  ApiService({
+    required this.goRouter,
+  });
 
   Future<Map<String, String>> _getHeaders() async {
     Map<String, String> header = {
@@ -51,7 +60,7 @@ class ApiService {
         supressError: true,
       );
     } catch (e, stackTrace) {
-      ApiExceptions.handle(e, stackTrace);
+      ApiExceptions.handle(e, stackTrace, goRouter);
       rethrow;
     }
   }
@@ -75,7 +84,7 @@ class ApiService {
         return null;
       }
 
-      ApiExceptions.handle(e, stackTrace);
+      ApiExceptions.handle(e, stackTrace, goRouter);
       rethrow;
     }
   }
@@ -103,7 +112,7 @@ class ApiService {
         return null;
       }
 
-      ApiExceptions.handle(e, stackTrace);
+      ApiExceptions.handle(e, stackTrace, goRouter);
       rethrow;
     }
   }

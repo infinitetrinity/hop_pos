@@ -4,12 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hop_pos/app/app_extension.dart';
 import 'package:hop_pos/src/Login/screens/Login_screen.dart';
+import 'package:hop_pos/src/login/screens/reauthenticate_screen.dart';
 import 'package:window_manager/window_manager.dart';
 
 part 'login_routes.g.dart';
 
 @TypedGoRoute<LoginRoute>(
   path: '/',
+  routes: [
+    TypedGoRoute<ReauthenticateRoute>(
+      path: 'reauthenticate',
+    ),
+  ],
 )
 @immutable
 class LoginRoute extends GoRouteData {
@@ -24,6 +30,23 @@ class LoginRoute extends GoRouteData {
     return NoTransitionPage(
       key: state.pageKey,
       child: const LoginScreen(),
+    );
+  }
+}
+
+@immutable
+class ReauthenticateRoute extends GoRouteData {
+  @override
+  FutureOr<String?> redirect(BuildContext context, GoRouterState state) async {
+    await windowManager.setWindowTitle('Login');
+    return null;
+  }
+
+  @override
+  NoTransitionPage buildPage(BuildContext context, GoRouterState state) {
+    return NoTransitionPage(
+      key: state.pageKey,
+      child: const ReauthenticateScreen(),
     );
   }
 }

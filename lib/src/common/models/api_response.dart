@@ -13,6 +13,8 @@ class ApiResponse {
     if (supressError) {
       return;
     }
+
+    checkApiUnauthenticatedError();
     checkValidationException();
     checkApiError();
     checkInvalidResponse();
@@ -41,6 +43,12 @@ class ApiResponse {
   void checkApiError() {
     if (result == 'error' && message != null) {
       throw ApiError(message!);
+    }
+  }
+
+  void checkApiUnauthenticatedError() {
+    if (response.statusCode! == 401) {
+      throw ApiUnauthenticatedError(message ?? 'Api Unauthenticated');
     }
   }
 
