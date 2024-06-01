@@ -316,6 +316,8 @@ class PrintService {
       return Container();
     }
 
+    String name = posLicense?.isMedicalCenter == true ? "Health Outreach Clinic Pte. Ltd." : company?.name ?? '';
+
     return Column(
       children: [
         Text(
@@ -329,7 +331,7 @@ class PrintService {
         _printDottedLine(),
         if (company != null) ...[
           Text(
-            company!.name,
+            name,
             style: textStyleBold,
           ),
           Text(
@@ -470,7 +472,9 @@ class PrintService {
 
     String address = cart.screening?.isWhitecoatScreening == true
         ? "201 Henderson Rd, Apex@ Henderson, #05-11/12 S159545"
-        : "2 Venture Drive, #10-16, Vision Exchange S608526";
+        : posLicense?.isMedicalCenter == true
+            ? "390 Orchard Road, #11-04, Palais Renaissance S238871"
+            : "2 Venture Drive, #10-16, Vision Exchange S608526";
 
     String gstReg =
         cart.screening?.isWhitecoatScreening == true ? "GST Reg. No: 200918399R" : "GST Reg. No: 200918399R";
