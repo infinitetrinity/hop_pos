@@ -16,11 +16,15 @@ class PosCompleted extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isUtfOrStf = ref.watch(posControllerProvider.select((prov) => prov.order?.isStfOrUtf ?? false));
+    final subtotal = ref.watch(posControllerProvider.select((prov) => prov.order?.subtotal ?? 0));
 
     printReceipts() async {
       final printService = await ref.read(printServiceProvider.future);
-      await printService.printOrderReceipt();
-      await printService.printOrderReceipt();
+
+      if (subtotal > 0) {
+        await printService.printOrderReceipt();
+        await printService.printOrderReceipt();
+      }
 
       if (isUtfOrStf) {
         await printService.printUtfStfReceipt();
