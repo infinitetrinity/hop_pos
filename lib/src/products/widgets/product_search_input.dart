@@ -6,6 +6,7 @@ import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/widgets/form_search_input.dart';
 import 'package:hop_pos/src/common/widgets/search_list.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
+import 'package:hop_pos/src/product_categories/controllers/product_category_controller.dart';
 import 'package:hop_pos/src/product_categories/states/to_reorder_product_category_state.dart';
 import 'package:hop_pos/src/products/models/product_with_category.dart';
 import 'package:hop_pos/src/products/states/products_search_state.dart';
@@ -26,7 +27,7 @@ class ProductSearchInput extends HookConsumerWidget {
             child: FormSearchTextInput(
               controller: controller,
               focusNode: focusNode,
-              label: 'Search Product',
+              label: 'Search product or category',
             ),
           ),
           TextButton(
@@ -58,12 +59,16 @@ class ProductSearchInput extends HookConsumerWidget {
         color: AppColors.white,
         width: double.infinity,
         child: Text(
-          'No Product found',
+          'No product or category found',
           style: AppStyles.body,
         ),
       ),
       onSelected: (item) async {
-        await ref.read(posControllerProvider.notifier).addProduct(item.product);
+        if (item.product != null) {
+          await ref.read(posControllerProvider.notifier).addProduct(item.product);
+        } else if (item.category != null) {
+          ref.read(productCategoryControllerProvider().notifier).selectProductCategory(item.category!);
+        }
       },
     );
   }

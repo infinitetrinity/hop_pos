@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:hop_pos/app/app_colors.dart';
 import 'package:hop_pos/app/app_styles.dart';
@@ -15,6 +16,16 @@ class ProductCategoriesTabNav extends HookConsumerWidget {
 
     return categories.when(
       data: (categories) {
+        final controller = useTabController(initialLength: categories.length);
+
+        ref.listen(selectedProductCategoryStateProvider, (_, category) {
+          final index = category != null ? categories.indexOf(category) : -1;
+
+          if (index >= 0 && controller.index != index) {
+            controller.animateTo(index);
+          }
+        });
+
         return Container(
           decoration: const BoxDecoration(
             border: Border(
@@ -27,6 +38,7 @@ class ProductCategoriesTabNav extends HookConsumerWidget {
                 : categories.indexOf(selectedCategory),
             length: categories.length,
             child: TabBar(
+              controller: controller,
               onTap: (index) {
                 ref.read(productCategoryControllerProvider().notifier).selectProductCategory(categories[index]);
               },

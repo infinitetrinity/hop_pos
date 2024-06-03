@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ProductWithCategory {
-  Product get product => throw _privateConstructorUsedError;
+  Product? get product => throw _privateConstructorUsedError;
   ProductCategory? get category => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,9 +30,9 @@ abstract class $ProductWithCategoryCopyWith<$Res> {
           ProductWithCategory value, $Res Function(ProductWithCategory) then) =
       _$ProductWithCategoryCopyWithImpl<$Res, ProductWithCategory>;
   @useResult
-  $Res call({Product product, ProductCategory? category});
+  $Res call({Product? product, ProductCategory? category});
 
-  $ProductCopyWith<$Res> get product;
+  $ProductCopyWith<$Res>? get product;
   $ProductCategoryCopyWith<$Res>? get category;
 }
 
@@ -49,14 +49,14 @@ class _$ProductWithCategoryCopyWithImpl<$Res, $Val extends ProductWithCategory>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? product = null,
+    Object? product = freezed,
     Object? category = freezed,
   }) {
     return _then(_value.copyWith(
-      product: null == product
+      product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
-              as Product,
+              as Product?,
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -66,8 +66,12 @@ class _$ProductWithCategoryCopyWithImpl<$Res, $Val extends ProductWithCategory>
 
   @override
   @pragma('vm:prefer-inline')
-  $ProductCopyWith<$Res> get product {
-    return $ProductCopyWith<$Res>(_value.product, (value) {
+  $ProductCopyWith<$Res>? get product {
+    if (_value.product == null) {
+      return null;
+    }
+
+    return $ProductCopyWith<$Res>(_value.product!, (value) {
       return _then(_value.copyWith(product: value) as $Val);
     });
   }
@@ -93,10 +97,10 @@ abstract class _$$ProductWithCategoryImplCopyWith<$Res>
       __$$ProductWithCategoryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Product product, ProductCategory? category});
+  $Res call({Product? product, ProductCategory? category});
 
   @override
-  $ProductCopyWith<$Res> get product;
+  $ProductCopyWith<$Res>? get product;
   @override
   $ProductCategoryCopyWith<$Res>? get category;
 }
@@ -112,14 +116,14 @@ class __$$ProductWithCategoryImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? product = null,
+    Object? product = freezed,
     Object? category = freezed,
   }) {
     return _then(_$ProductWithCategoryImpl(
-      product: null == product
+      product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
-              as Product,
+              as Product?,
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -135,7 +139,7 @@ class _$ProductWithCategoryImpl implements _ProductWithCategory {
       {required this.product, required this.category});
 
   @override
-  final Product product;
+  final Product? product;
   @override
   final ProductCategory? category;
 
@@ -167,11 +171,11 @@ class _$ProductWithCategoryImpl implements _ProductWithCategory {
 
 abstract class _ProductWithCategory implements ProductWithCategory {
   const factory _ProductWithCategory(
-      {required final Product product,
+      {required final Product? product,
       required final ProductCategory? category}) = _$ProductWithCategoryImpl;
 
   @override
-  Product get product;
+  Product? get product;
   @override
   ProductCategory? get category;
   @override

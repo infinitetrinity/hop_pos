@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/product_categories/models/product_categories_table.dart';
 import 'package:hop_pos/src/product_categories/models/product_category.dart';
+import 'package:hop_pos/src/products/models/product_with_category.dart';
 
 part 'product_category_dao.g.dart';
 
@@ -47,5 +48,19 @@ class ProductCategoryDao extends DatabaseAccessor<AppDb> with _$ProductCategoryD
     for (final category in categories) {
       await into(productCategoriesTable).insert(category.toData(), onConflict: DoUpdate((_) => category.toData()));
     }
+  }
+
+  Future<List<ProductWithCategory>> search(String search) async {
+    final query = select(productCategoriesTable);
+    query.where((table) => table.name.like("%$search%"));
+    query.orderBy([(table) => OrderingTerm.asc(table.name)]);
+    query.limit(20);
+
+    return (await query.get())
+        .map((row) => ProductWithCategory(
+              product: null,
+              category: row,
+            ))
+        .toList();
   }
 }

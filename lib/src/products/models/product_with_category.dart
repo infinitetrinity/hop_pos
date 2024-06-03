@@ -7,7 +7,7 @@ part 'product_with_category.freezed.dart';
 @freezed
 class ProductWithCategory with _$ProductWithCategory {
   const factory ProductWithCategory({
-    required Product product,
+    required Product? product,
     required ProductCategory? category,
   }) = _ProductWithCategory;
 }

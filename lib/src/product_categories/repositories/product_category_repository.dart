@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:hop_pos/app/app_db.dart';
 import 'package:hop_pos/src/product_categories/daos/product_category_dao.dart';
 import 'package:hop_pos/src/product_categories/models/product_category.dart';
+import 'package:hop_pos/src/products/models/product_with_category.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'product_category_repository.g.dart';
@@ -38,5 +39,9 @@ class ProductCategoryRepository {
 
   Future<bool> deleteById(int id) async {
     return productCategoryDao.deleteById(id);
+  }
+
+  Future<List<ProductWithCategory>> search(String search) async {
+    return productCategoryDao.search(search);
   }
 }

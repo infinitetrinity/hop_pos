@@ -23,21 +23,40 @@ class ProductTile extends HookWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "${item.product.name} (${item.product.sku})",
-              overflow: TextOverflow.ellipsis,
-              style: AppStyles.bodyLarge.copyWith(
-                fontWeight: FontWeight.w600,
-                color: isHover.value ? AppColors.white : AppColors.gray800,
+            if (item.product != null) ...[
+              Text(
+                "${item.product!.name} (${item.product!.sku})",
+                overflow: TextOverflow.ellipsis,
+                style: AppStyles.bodyLarge.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: isHover.value ? AppColors.white : AppColors.gray800,
+                ),
               ),
-            ),
-            const SizedBox(height: 5),
-            Text(
-              "${item.product.price?.formatMoney} ${item.category == null ? '' : ' | ${item.category!.name}'}",
-              style: AppStyles.bodySmall.copyWith(
-                color: isHover.value ? AppColors.white : AppColors.gray800,
+              const SizedBox(height: 5),
+              Text(
+                "${item.product!.price?.formatMoney} ${item.category == null ? '' : ' | ${item.category!.name}'}",
+                style: AppStyles.bodySmall.copyWith(
+                  color: isHover.value ? AppColors.white : AppColors.gray800,
+                ),
               ),
-            ),
+            ],
+            if (item.product == null && item.category != null) ...[
+              Text(
+                item.category!.name,
+                overflow: TextOverflow.ellipsis,
+                style: AppStyles.bodyLarge.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: isHover.value ? AppColors.white : AppColors.gray800,
+                ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                "Category",
+                style: AppStyles.bodySmall.copyWith(
+                  color: isHover.value ? AppColors.white : AppColors.gray800,
+                ),
+              ),
+            ]
           ],
         ),
       ),

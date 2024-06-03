@@ -1,6 +1,7 @@
 import 'package:hop_pos/src/product_categories/models/product_category.dart';
 import 'package:hop_pos/src/product_categories/states/selected_product_category_state.dart';
 import 'package:hop_pos/src/products/models/product.dart';
+import 'package:hop_pos/src/products/models/product_with_category.dart';
 import 'package:hop_pos/src/products/repositories/product_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -40,5 +41,9 @@ class ProductActions {
 
   Future<bool> deleteById(int id) async {
     return productRepo.deleteById(id);
+  }
+
+  Future<List<ProductWithCategory>> search(String search) async {
+    return productRepo.search(search);
   }
 }

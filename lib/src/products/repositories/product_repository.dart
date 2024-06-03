@@ -24,7 +24,7 @@ class ProductRepository {
     return productDao.getAll(categoryId: categoryId);
   }
 
-  Future<List<ProductWithCategory>> search(String search) {
+  Future<List<ProductWithCategory>> search(String search) async {
     return productDao.search(search);
   }
 
