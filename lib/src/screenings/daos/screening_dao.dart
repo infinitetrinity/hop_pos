@@ -286,7 +286,7 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
       ..where(coalesce([customersTable.id, newCustomersTable.id]).isNotNull());
 
     if (!search.isNullOrEmpty) {
-      String refSearch = search.startsWith('r') ? search.substring(1) : search;
+      String refSearch = search.toLowerCase().startsWith('r') ? search.substring(1) : search;
       query.where(
         customersTable.fullName.like("%$search%") |
             customersTable.nric.like("%$search%") |
