@@ -63,14 +63,14 @@ class PrintService {
     required this.posLicense,
   });
 
-  Future<dynamic> printPdf(Page page, {bool toPreview = false}) async {
+  Future<dynamic> printPdf(Page page, {bool toPreview = false, printer}) async {
     final info = await Printing.info();
     if (!info.canPrint || !info.directPrint || !info.canListPrinters) {
       return false;
     }
 
-    final printer = (await Printing.listPrinters()).firstWhere((el) => el.isDefault);
-    if (!printer.isAvailable) {
+    printer = printer ?? (await Printing.listPrinters()).firstWhere((el) => el.isDefault);
+    if (printer == null || !printer.isAvailable) {
       return false;
     }
 
@@ -148,6 +148,7 @@ class PrintService {
   }
 
   Future<bool> printCustomerRegistrationLabel(
+    printer,
     Customer customer,
     ScreeningRegistration? registration, {
     double width = 6,
@@ -224,7 +225,7 @@ class PrintService {
       ),
     );
 
-    return await printPdf(page);
+    return await printPdf(page, printer: printer);
   }
 
   Future<bool> printOrderReceipt() async {

@@ -6,6 +6,7 @@ import 'package:hop_pos/app/app_styles.dart';
 import 'package:hop_pos/src/common/services/flash_message.dart';
 import 'package:hop_pos/src/common/services/print_service.dart';
 import 'package:hop_pos/src/pos/controllers/pos_controller.dart';
+import 'package:printing/printing.dart';
 
 class PosPrintLabelBtn extends HookConsumerWidget {
   const PosPrintLabelBtn({super.key});
@@ -20,8 +21,14 @@ class PosPrintLabelBtn extends HookConsumerWidget {
     final margin = useState("0.2");
 
     void printLabel() async {
+      final printer = await Printing.pickPrinter(context: context);
+      if (printer == null) {
+        return;
+      }
+
       final printService = await ref.read(printServiceProvider.future);
       final result = await printService.printCustomerRegistrationLabel(
+        printer,
         customer!,
         registration,
         width: double.parse(width.value),
