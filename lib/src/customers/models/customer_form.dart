@@ -56,7 +56,7 @@ class CustomerForm with _$CustomerForm {
 
   String? validateMobileNo() {
     if (mobileNo.isNullOrEmpty) {
-      return "Mobile No. is required";
+      return null;
     }
 
     if (!mobileNo!.isNumeric) {
@@ -76,7 +76,7 @@ class CustomerForm with _$CustomerForm {
 
   String? validateEmail() {
     if (email.isNullOrEmpty) {
-      return "Email is required";
+      return null;
     }
 
     if (!email!.isEmail) {

@@ -38,9 +38,9 @@ class ProductDao extends DatabaseAccessor<AppDb> with _$ProductDaoMixin {
       ],
     );
 
-    query.where(productsTable.name.like("%$search%") | productsTable.sku.like("%$search%"));
+    query.where(productsTable.name.like("$search%") | productsTable.sku.like("$search%"));
     query.orderBy([OrderingTerm.asc(productsTable.name)]);
-    query.limit(20);
+    query.limit(30);
 
     return (await query.get())
         .map((row) => ProductWithCategory(

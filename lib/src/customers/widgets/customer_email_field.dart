@@ -31,7 +31,9 @@ class CustomerEmailField extends HookConsumerWidget {
     void isUnique(String value) {
       EasyDebounce.debounce('customer-check-email', const Duration(milliseconds: 500), () async {
         isValidating.value = true;
-        final isTaken = value.isEmpty ? false : await ref.read(customerControllerProvider.notifier).isEmailTaken(email: value, excludeId: customer?.id);
+        final isTaken = value.isEmpty
+            ? false
+            : await ref.read(customerControllerProvider.notifier).isEmailTaken(email: value, excludeId: customer?.id);
         isValidating.value = false;
         error.value = isTaken ? "Email is already taken, please try another." : null;
         formKey.currentState?.validate();
@@ -39,7 +41,7 @@ class CustomerEmailField extends HookConsumerWidget {
     }
 
     return FormTextField(
-      isRequired: true,
+      isRequired: false,
       label: label,
       value: value,
       isDisabled: isValidating.value,

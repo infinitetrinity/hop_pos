@@ -18,9 +18,11 @@ class ProductSearchInput extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isSorting = ref.watch(toReorderProductCategoryStateProvider);
+    final textController = TextEditingController();
 
     return TypeAheadField<ProductWithCategory>(
       suggestionsCallback: (search) => ref.read(productsSearchStateProvider(search).future),
+      controller: textController,
       builder: (context, controller, focusNode) => Row(
         children: [
           Expanded(
@@ -64,6 +66,7 @@ class ProductSearchInput extends HookConsumerWidget {
         ),
       ),
       onSelected: (item) async {
+        textController.clear();
         if (item.product != null) {
           await ref.read(posControllerProvider.notifier).addProduct(item.product);
         } else if (item.category != null) {

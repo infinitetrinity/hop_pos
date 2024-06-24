@@ -52,9 +52,9 @@ class ProductCategoryDao extends DatabaseAccessor<AppDb> with _$ProductCategoryD
 
   Future<List<ProductWithCategory>> search(String search) async {
     final query = select(productCategoriesTable);
-    query.where((table) => table.name.like("%$search%"));
+    query.where((table) => table.name.like("$search%"));
     query.orderBy([(table) => OrderingTerm.asc(table.name)]);
-    query.limit(20);
+    query.limit(30);
 
     return (await query.get())
         .map((row) => ProductWithCategory(

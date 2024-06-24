@@ -292,7 +292,7 @@ class ScreeningDao extends DatabaseAccessor<AppDb> with _$ScreeningDaoMixin {
             customersTable.nric.like("%$search%") |
             newCustomersTable.fullName.like("%$search%") |
             newCustomersTable.nric.like("%$search%") |
-            screeningRegistrationsTable.index.like("$refSearch%"),
+            screeningRegistrationsTable.index.equals(refSearch),
       );
     }
 

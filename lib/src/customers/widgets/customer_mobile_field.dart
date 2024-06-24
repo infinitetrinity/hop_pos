@@ -31,7 +31,11 @@ class CustomerMobileField extends HookConsumerWidget {
     void isUnique(String value) {
       EasyDebounce.debounce('customer-check-mobile', const Duration(milliseconds: 500), () async {
         isValidating.value = true;
-        final isTaken = value.isEmpty ? false : await ref.read(customerControllerProvider.notifier).isMobileNoTaken(mobileNo: value, excludeId: customer?.id);
+        final isTaken = value.isEmpty
+            ? false
+            : await ref
+                .read(customerControllerProvider.notifier)
+                .isMobileNoTaken(mobileNo: value, excludeId: customer?.id);
         isValidating.value = false;
         error.value = isTaken ? "Mobile No. is already taken, please try another." : null;
         formKey.currentState?.validate();
@@ -39,7 +43,7 @@ class CustomerMobileField extends HookConsumerWidget {
     }
 
     return FormTextField(
-      isRequired: true,
+      isRequired: false,
       label: label,
       value: value,
       isDisabled: isValidating.value,
